@@ -1,0 +1,14 @@
+{
+    "Library Management System" : "පුස්ථකාල කළමණාකරන පද්ධතිය",
+    "Add Books" : "පොත් ඇතුලත් කිරීම",
+    "This is basic example of how you use Laravel Localizations" : "Dies ist ein grundlegendes Beispiel für die Verwendung von Laravel-Lokalisierungen",
+    "Dashboard":"පාලක පුවරුව",
+    "Library":"පුස්තාකාලය",
+    "Books": "'පොත්",
+    "Search Books":"පොත් සොයන්න",
+    "Detais":"විස්තර",
+    "Books Lending":"පොත් බැහැර දීම",
+    "Issue Books":"පොත් නිකුත් කිරීම",
+    "Return Books":"පොත් නැවත භාරදීම",
+    "Members":"සාමාජිකයින්"
+  }
