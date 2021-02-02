@@ -36,7 +36,6 @@ class BookController extends Controller
     {
        
         $locale = session()->get('locale');
-
         $setting = setting::where('setting','locale_db')->first();
 
         if($setting->value=="0")

@@ -11,8 +11,8 @@ class resource_category extends Model
     protected $table="resource_categories";
     protected $fillable = ['category_si','category_ta','category_en'];
 
-    public function resource()
-    {
-        return $this->belongsTo('App\Models\resource');
-    }
+    // public function resource()
+    // {
+    //     return $this->belongsTo('App\Models\resource');
+    // }
 }

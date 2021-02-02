@@ -57,8 +57,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_resource_cat', [Resource_categoryController::class, 'update_detail'])->name('update_resource_cat');
     Route::post('delete_resource_cat', [Resource_categoryController::class, 'delete'])->name('delete_resource_cat');
     Route::post('import_resource_cat', [Resource_categoryController::class, 'import'])->name('import_resource_cat');
+
+     // --------Resource support/type--------------------------------
+     Route::resource('resource_type', Resource_typeController::class);
+     Route::post('update_resource_type', [Resource_typeController::class, 'update_detail'])->name('update_resource_type');
+     Route::post('delete_resource_type', [Resource_typeController::class, 'delete'])->name('delete_resource_type');
+     Route::post('import_resource_type', [Resource_typeController::class, 'import'])->name('import_resource_type');
+     Route::get('load_resource_category', [Resource_typeController::class, 'category'])->name('load_resource_category');
     
-    Route::resource('resource_type', Resource_typeController::class);
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::resource('resource_dd_class', Resource_dd_classController::class);
     Route::resource('resource_dd_devision', Resource_dd_devisionController::class);
