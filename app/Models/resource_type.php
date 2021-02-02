@@ -15,5 +15,11 @@ class resource_type extends Model
     {
         return $this->belongsTo('App\Models\resource');
     }
+
+    public function category()
+    {
+        // return $this->hasone('App\Models\resource_category','category_id');
+        return $this->belongsTo('App\Models\resource_category');
+    }
     
 }
