@@ -60,7 +60,9 @@ Route::group(['middleware' => ['auth']], function() {
 
      // --------Resource support/type--------------------------------
      Route::resource('resource_type', Resource_typeController::class);
+     Route::post('show_resource_type', [Resource_typeController::class, 'show_detail'])->name('show_resource_type');
      Route::post('update_resource_type', [Resource_typeController::class, 'update_detail'])->name('update_resource_type');
+     Route::post('edit_resource_type', [Resource_typeController::class, 'edit_detail'])->name('edit_resource_type');
      Route::post('delete_resource_type', [Resource_typeController::class, 'delete'])->name('delete_resource_type');
      Route::post('import_resource_type', [Resource_typeController::class, 'import'])->name('import_resource_type');
      Route::get('load_resource_category', [Resource_typeController::class, 'category'])->name('load_resource_category');

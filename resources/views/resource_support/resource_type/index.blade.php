@@ -21,6 +21,7 @@ $category="category".$db_locale;
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
+        
             <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success ml-2" type="button">Resource Category</a>
             <a href="{{ route('resource_type.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Type</a>
             <a href="{{ route('resource_dd_class.index') }}"class="btn btn-outline-success ml-2" type="button">Resource DD Class</a>
@@ -54,7 +55,8 @@ $category="category".$db_locale;
             </div>
         </div>
         <div class="form-row">
-        <div class="table-responsive">               
+        <div class="table-responsive">
+              
             <table class="table table-hover table-bordered" id="book_datatable">
                     <thead class="thead-light">
                         <tr>
@@ -73,7 +75,7 @@ $category="category".$db_locale;
                            
                             <td>
                                
-                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$type }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
+                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" ><i class="fa fa-eye" ></i>&nbsp;Show</a>
                             @can('support_data-edit')
                             <a class="btn btn-info text-white" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
@@ -87,7 +89,7 @@ $category="category".$db_locale;
                    
                     </tbody>
             </table>
-           
+        
             {!! $details->render( "pagination::bootstrap-4") !!}
            
         </div>
@@ -120,11 +122,18 @@ $category="category".$db_locale;
                 
                     <div class="row form-group">
                         
-                        <div class="col-md-12">
-                            <h5><span>ID : &nbsp;</span><span class="badge badge-info" id="id_show"></span></h5>
-                            <h5 class="text-indigo"><span>Category : &nbsp;</span><span id="category_show"></span></h5>
-                            <h5 class="text-indigo"><span>Type : &nbsp;</span><span id="type_show"></span></h5>
+                        <div class="col-md-2">
+                            <label><span>ID </span></label>
+                            <label><span>Category </span></label>
+                            <label><span>Type </span></label>
                         </div>
+                        <div class="col-md-10 text-indigo">
+                            <label><span id="id_show"></span></label></br>
+                            <label><span id="category_show"></span></label></br>
+                            <label><span id="type_show"></span></label></br>
+                        </div>
+                            
+                       
                     </div> 
                 </div>
 
@@ -195,17 +204,17 @@ $category="category".$db_locale;
                     
             </div>
             
-            <form method="POST" action="{{ route('update_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('update_resource_type') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Type</label>
+                    <label for="category">Category</label>
                         <input type="hidden" id="id_update" name="id_update">
-                        <select class="form-control"name="category_update" id="category_update" value="{{old('category')}}"required>
+                        <select class="form-control mb-3"name="category_update" id="category_update" value=""required>
                             <option value="" disabled selected>Resource Category</option>
                         </select>
-                        <hr>
+                        <label for="category">Type</label>
                         <input type="text" class="form-control mb-1" id="name_update_si" name="name_update_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_update_ta" name="name_update_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_update_en" name="name_update_en" value="" placeholder="Name in English" >          
@@ -239,7 +248,7 @@ $category="category".$db_locale;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_resource_cat')}}">
+            <form method="POST" action="{{ route('delete_resource_type')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -280,7 +289,7 @@ $category="category".$db_locale;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_type') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -318,20 +327,42 @@ $(document).ready(function()
        
        var button = $(event.relatedTarget) 
        var d_id = button.data('detail_id') 
-       var d_name = button.data('detail_name')
-       $('#id_show').html(d_id);
-       $('#name_show').html(d_name);
+       // -------------------------------------------
+       $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('show_resource_type')}}", 
+            data: { d_id: d_id, },
+            success:function(data){
+                @if($locale=="si") 
+                $('#category_show').html(data.category.category_si);
+                @elseif($locale=="ta") 
+                $('#category_show').html(data.category.category_ta);
+                @elseif($locale=="en")
+                $('#category_show').html(data.category.category_en);
+                @endif
+                $('#id_show').html(data.id);
+                $('#type_show').html(data.type_si+" /"+data.type_ta+" /"+data.type_en);
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // -------------------------------------------
+
+       
    });
 
     $('#data_update').on('show.bs.modal', function (event) {
        
         var button = $(event.relatedTarget) 
         var d_id = button.data('detail_id') 
-        var d_name_si = button.data('detail_name_si');
-        var d_name_ta = button.data('detail_name_ta');
-        var d_name_en = button.data('detail_name_en');
+        
         $('#id_update').val(d_id);
-        $('#name_update_si').val(d_name_si);  $('#name_update_ta').val(d_name_ta);  $('#name_update_en').val(d_name_en);
         $('#to_updateName').html(d_id);
 
         @if($locale=="si")
@@ -341,6 +372,28 @@ $(document).ready(function()
         @elseif($locale=="en")
         $("#name_update_en").prop('required',true);
         @endif
+
+        // -------------------------------------------
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('edit_resource_type')}}", 
+            data: { d_id: d_id, },
+            success:function(data){
+                $("#category_update").val(data.category.id);
+                $("#name_update_si").val(data.type_si);
+                $("#name_update_ta").val(data.type_ta);
+                $("#name_update_en").val(data.type_en);
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // -------------------------------------------
 
     });
 
@@ -362,8 +415,11 @@ $(document).ready(function()
         $("#name_en").prop('required',true); 
         @endif
 
-        // -------------------------------------------
-        var op="";
+        
+   });
+
+   // -------------------------------------------
+   var op="";
         $.ajax
         ({
             type: "GET",
@@ -379,13 +435,13 @@ $(document).ready(function()
                         '</option>';
                 }
                 $("#category").append(op);
+                $("#category_update").append(op);
             },
             error:function(data){
-                toastr.error('Category Load Faild! Please Refresh')
+
             }
         })
         // -------------------------------------------
-   });
 
 });
 
