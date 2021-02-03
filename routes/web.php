@@ -66,6 +66,12 @@ Route::group(['middleware' => ['auth']], function() {
      Route::post('delete_resource_type', [Resource_typeController::class, 'delete'])->name('delete_resource_type');
      Route::post('import_resource_type', [Resource_typeController::class, 'import'])->name('import_resource_type');
      Route::get('load_resource_category', [Resource_typeController::class, 'category'])->name('load_resource_category');
+
+      // --------Resource support/dd_class--------------------------------
+    Route::resource('resource_dd_class', Resource_dd_classController::class);
+    Route::post('update_resource_dd_class', [Resource_dd_classController::class, 'update_detail'])->name('update_resource_dd_class');
+    Route::post('delete_resource_dd_class', [Resource_dd_classController::class, 'delete'])->name('delete_resource_dd_class');
+    Route::post('import_resource_dd_class', [Resource_dd_classController::class, 'import'])->name('import_resource_dd_class');
     
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::resource('resource_dd_class', Resource_dd_classController::class);

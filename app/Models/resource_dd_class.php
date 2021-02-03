@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class resource_dd_class extends Model
 {
     use HasFactory;
-
-    public function resource()
-    {
-        return $this->belongsTo('App\Models\resource');
-    }
+    protected $table="resource_dd_classes";
+    protected $fillable = ['class_code','class_si','class_ta','class_en'];
 }

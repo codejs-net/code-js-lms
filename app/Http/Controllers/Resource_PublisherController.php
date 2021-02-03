@@ -17,6 +17,7 @@ class Resource_PublisherController extends Controller
          $this->middleware('permission:book_details-create', ['only' => ['create','store']]);
          $this->middleware('permission:book_details-edit', ['only' => ['update_detail']]);
          $this->middleware('permission:book_details-delete', ['only' => ['delete']]);
+         $this->middleware('permission:data-import', ['only' => ['import']]);
     }
     /**
      * Display a listing of the resource.
