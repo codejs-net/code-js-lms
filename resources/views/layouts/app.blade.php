@@ -39,7 +39,7 @@
     
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar-bootstrap/main.min.css') }}">
      <!-- Fonts -->
-     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+     <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> -->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -117,9 +117,9 @@
     <!-- smart_wizard -->
     <script src="{{ asset('plugins/smart_wizard/js/smart_wizard.min.js') }}"defer></script>
     
-    <script>
+    <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)
-    </script>
+    </script> -->
   
     <!-- jQuery-Datatable -->
   <script src="{{ asset('plugins/datatables-jquery/js/jquery.dataTables.min.js') }}" defer></script>
@@ -181,7 +181,7 @@ toastr.options = {
   <script>toastr.error('<?php echo session('error'); ?>')</script>
 @endif
 @if (session('warning'))
-  <script>toastr.success('<?php echo session('warning'); ?>')</script>
+  <script>toastr.warning('<?php echo session('warning'); ?>')</script>
 @endif
 @if (session('info'))
   <script>toastr.info('<?php echo session('info'); ?>')</script>

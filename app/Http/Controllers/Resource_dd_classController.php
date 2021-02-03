@@ -114,7 +114,7 @@ class Resource_dd_classController extends Controller
     {
         $detail=resource_dd_class::find($request->id_delete);
         $detail->delete();
-        return redirect()->route('resource_dd_class.index')->with('success','Details Removed successfully.');
+        return redirect()->route('resource_dd_class.index')->with('warning','Details Removed successfully.');
     }
     public function import() 
     {
