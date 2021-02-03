@@ -20,15 +20,15 @@ $category="category".$lang;
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success ml-2" type="button">Resource Category</a>
-            <a href="{{ route('resource_type.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Type</a>
-            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-outline-success ml-2" type="button">Resource DD Class</a>
-            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-outline-success ml-2" type="button">Resource DD Devision</a>
-            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-outline-success ml-2" type="button">Resource DD Section</a>
-            <a href="{{ route('resource_creator.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Creator</a>
-            <a href="{{ route('resource_lang.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Language</a>
-            <a href="{{ route('resource_publisher.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Publisher</a>
-            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Donates</a>
+            <a href="{{ route('resource_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Resource Category</a>
+            <a href="{{ route('resource_type.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Type</a>
+            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Class</a>
+            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Devision</a>
+            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Section</a>
+            <a href="{{ route('resource_creator.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Creator</a>
+            <a href="{{ route('resource_lang.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Language</a>
+            <a href="{{ route('resource_publisher.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Publisher</a>
+            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Donates</a>
         </form>
     </nav>
     </div>

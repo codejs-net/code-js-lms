@@ -167,11 +167,9 @@ $('.nav-link').on('click',function(){
   $(this).addClass('active');
 });
 
-
-
-// $('.toast').toast({
-//     delay:2000,
-// });
+toastr.options = {
+    positionClass: 'toast-top-center'
+};
 
 </script>
 

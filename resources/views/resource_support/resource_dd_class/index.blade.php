@@ -3,8 +3,9 @@
 
 @php
 $locale = session()->get('locale');
-$lang="_".$locale;
-$category="category".$lang;
+$db_locale = session()->get('db_locale');
+$class="class".$db_locale;
+
 
 @endphp
 
@@ -20,15 +21,15 @@ $category="category".$lang;
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success ml-2" type="button">Resource Category</a>
-            <a href="{{ route('resource_type.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Type</a>
-            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-outline-success ml-2" type="button">Resource DD Class</a>
-            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-outline-success ml-2" type="button">Resource DD Devision</a>
-            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-outline-success ml-2" type="button">Resource DD Section</a>
-            <a href="{{ route('resource_creator.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Creator</a>
-            <a href="{{ route('resource_lang.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Language</a>
-            <a href="{{ route('resource_publisher.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Publisher</a>
-            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-outline-success ml-2" type="button">Resource Donates</a>
+            <a href="{{ route('resource_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Resource Category</a>
+            <a href="{{ route('resource_type.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Type</a>
+            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Class</a>
+            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Devision</a>
+            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Section</a>
+            <a href="{{ route('resource_creator.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Creator</a>
+            <a href="{{ route('resource_lang.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Language</a>
+            <a href="{{ route('resource_publisher.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Publisher</a>
+            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Donates</a>
         </form>
     </nav>
     </div>
@@ -41,7 +42,7 @@ $category="category".$lang;
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 
-                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource Category</h4>
+                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource DD Class</h4>
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h4>
@@ -58,7 +59,8 @@ $category="category".$lang;
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col" style="width: 30%">Category</th>
+                            <th scope="col">Class Code</th>
+                            <th scope="col" style="width: 30%">Class</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -66,16 +68,17 @@ $category="category".$lang;
                     @foreach ($details as $data)
                         <tr>
                             <td>{{ $data->id }}</td>
-                            <td>{{ $data->$category }}</td>
+                            <td>{{ $data->class_code }}</td>
+                            <td>{{ $data->$class }}</td>
                            
                             <td>
                                
-                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$category }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
+                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$class }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
                             @can('support_data-edit')
-                            <a class="btn btn-info text-white" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->category_si }}" data-detail_name_ta="{{ $data->category_ta }}" data-detail_name_en="{{ $data->category_en }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
+                            <a class="btn btn-info text-white" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->class_si }}" data-detail_name_ta="{{ $data->class_ta }}" data-detail_name_en="{{ $data->class_en }}" data-detail_class_code="{{ $data->class_code }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
                             @can('support_data-delete')
-                            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$category }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$class }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                             @endcan
                             
                             </td>
@@ -117,10 +120,19 @@ $category="category".$lang;
                 
                     <div class="row form-group">
                         
-                        <div class="col-md-12">
-                            <h5><span>ID : &nbsp;</span><span class="badge badge-info" id="id_show"></span></h5>
-                            <h5 class="text-indigo"><span>Category : &nbsp;</span><span id="name_show"></span></h5>
+                    <div class="row form-group">
+                        
+                        <div class="col-md-2">
+                            <label><span>ID </span></label>
+                            <label><span>DD Class </span></label>
                         </div>
+                        <div class="col-md-10 text-indigo">
+                            <label><span id="id_show"></span></label></br>
+                            <label><span id="class_show"></span></label></br>
+                        </div>
+                            
+                       
+                    </div> 
                     </div> 
                 </div>
 
@@ -149,12 +161,14 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('resource_catagory.store') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('resource_dd_class.store') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Category</label>
+                        <label for="book_detail">Dewe Decimal Class Code</label>
+                        <input type="text" class="form-control mb-1" id="class_code" name="class_code" value="" placeholder="class Code" required> 
+                        <label for="book_detail">Dewe Decimal Class</label>
                         <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in English" >           
@@ -187,12 +201,14 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('update_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('update_resource_dd_class') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Category</label>
+                        <label for="book_detail">Dewe Decimal Class Code</label>
+                        <input type="text" class="form-control mb-1" id="class_code_update" name="class_code_update" value="" placeholder="class Code" required> 
+                        <label for="book_detail">Dewe Decimal Class</label>
                         <input type="hidden" id="id_update" name="id_update">
                         <input type="text" class="form-control mb-1" id="name_update_si" name="name_update_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_update_ta" name="name_update_ta" value="" placeholder="Name in Tamil" >
@@ -227,7 +243,7 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_resource_cat')}}">
+            <form method="POST" action="{{ route('delete_resource_dd_class')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -268,7 +284,7 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_dd_class') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -308,7 +324,7 @@ $(document).ready(function()
        var d_id = button.data('detail_id') 
        var d_name = button.data('detail_name')
        $('#id_show').html(d_id);
-       $('#name_show').html(d_name);
+       $('#class_show').html(d_name);
    });
 
     $('#data_update').on('show.bs.modal', function (event) {
@@ -318,8 +334,10 @@ $(document).ready(function()
         var d_name_si = button.data('detail_name_si');
         var d_name_ta = button.data('detail_name_ta');
         var d_name_en = button.data('detail_name_en');
+        var d_class_code = button.data('detail_class_code');
         $('#id_update').val(d_id);
-        $('#name_update_si').val(d_name_si);  $('#name_update_ta').val(d_name_ta);  $('#name_update_en').val(d_name_en);
+        $('#name_update_si').val(d_name_si);  $('#name_update_ta').val(d_name_ta);  $('#name_update_en').val(d_name_en); 
+        $('#class_code_update').val(d_class_code);
         $('#to_updateName').html(d_id);
 
         @if($locale=="si")
