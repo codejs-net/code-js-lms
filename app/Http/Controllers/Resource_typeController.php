@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\resource_type;
 use App\Models\resource_category;
 use App\Models\setting;
-use App\Imports\Resource_categoryImport;
+use App\Imports\Resource_typeImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use Session;
@@ -52,7 +52,6 @@ class Resource_typeController extends Controller
         // error_log("ok");
         $data=resource_category::all();
         return response()->json($data);
-       
     }
 
     /**
@@ -88,7 +87,7 @@ class Resource_typeController extends Controller
             'type_en' =>  $request->name_en, 
         );
         resource_type::create($form_data);
-        return redirect()->route('resource_type.index')->with('success','Details created successfully.');
+        return redirect()->route('resource_type.index')->with('success','Data created successfully.');
     }
     
     /**
@@ -97,9 +96,10 @@ class Resource_typeController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show_detail(Request $request)
     {
-        
+        $data = resource_type::where('id',$request->d_id)->with(['category'])->first();
+        return response()->json($data);
     }
     
     /**
@@ -108,9 +108,10 @@ class Resource_typeController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit_detail(Request $request)
     {
-        
+        $data = resource_type::where('id',$request->d_id)->with(['category'])->first();
+        return response()->json($data);
     }
     
     /**
@@ -122,19 +123,13 @@ class Resource_typeController extends Controller
      */
     public function update_detail(Request $request)
     {
-        $locale = session()->get('locale');
-        $lang="_".$locale;
-
-         request()->validate([
-            'name_update'.$lang => 'required',
-        ]);
-    
-        $detail=resource_category::find($request->id_update);
-        $detail->category_si=$request->name_update_si;
-        $detail->category_ta=$request->name_update_ta;
-        $detail->category_en=$request->name_update_en;
+        $detail=resource_type::find($request->id_update);
+        $detail->category_id=$request->category_update;
+        $detail->type_si=$request->name_update_si;
+        $detail->type_ta=$request->name_update_ta;
+        $detail->type_en=$request->name_update_en;
         $detail->save();
-        return redirect()->route('resource_catagory.index')->with('success','Details Updated successfully.');
+        return redirect()->route('resource_type.index')->with('success','Data Updated successfully.');
     }
     
     /**
@@ -145,14 +140,14 @@ class Resource_typeController extends Controller
      */
     public function delete(Request $request)
     {
-        $detail=resource_category::find($request->id_delete);
+        $detail=resource_type::find($request->id_delete);
         $detail->delete();
-        return redirect()->route('resource_catagory.index')->with('success','Details Removed successfully.');
+        return redirect()->route('resource_type.index')->with('success','Data Removed successfully.');
     }
     public function import() 
     {
         // resource_category::query()->truncate();
-        $data=Excel::import(new Resource_categoryImport,request()->file('file'));
-        return redirect()->route('resource_catagory.index')->with('success','Details imported successfully.');
+        $data=Excel::import(new Resource_typeImport,request()->file('file'));
+        return redirect()->route('resource_type.index')->with('success','Data imported successfully.');
     }
 }
