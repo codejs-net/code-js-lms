@@ -17,6 +17,7 @@ class Resource_categoryController extends Controller
          $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
          $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
          $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
+         $this->middleware('permission:data-import', ['only' => ['import']]);
     }
     /**
      * Display a listing of the resource.
