@@ -72,6 +72,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_resource_dd_class', [Resource_dd_classController::class, 'update_detail'])->name('update_resource_dd_class');
     Route::post('delete_resource_dd_class', [Resource_dd_classController::class, 'delete'])->name('delete_resource_dd_class');
     Route::post('import_resource_dd_class', [Resource_dd_classController::class, 'import'])->name('import_resource_dd_class');
+
+    // --------Resource support/dd_devision--------------------------------
+    Route::resource('resource_dd_devision', Resource_dd_devisionController::class);
+    Route::post('show_resource_dd_devision', [Resource_dd_devisionController::class, 'show_detail'])->name('show_resource_dd_devision');
+    Route::post('update_resource_dd_devision', [Resource_dd_devisionController::class, 'update_detail'])->name('update_resource_dd_devision');
+    Route::post('edit_resource_dd_devision', [Resource_dd_devisionController::class, 'edit_detail'])->name('edit_resource_dd_devision');
+    Route::post('delete_resource_dd_devision', [Resource_dd_devisionController::class, 'delete'])->name('delete_resource_dd_devision');
+    Route::post('import_resource_dd_devision', [Resource_dd_devisionController::class, 'import'])->name('import_resource_dd_devision');
+    Route::get('load_resource_dd_class', [Resource_dd_devisionController::class, 'ddclass'])->name('load_resource_dd_class');
     
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::resource('resource_dd_class', Resource_dd_classController::class);

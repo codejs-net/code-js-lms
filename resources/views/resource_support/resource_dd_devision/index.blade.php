@@ -3,8 +3,9 @@
 
 @php
 $locale = session()->get('locale');
-$lang="_".$locale;
-$category="category".$lang;
+$db_locale = session()->get('db_locale');
+$devision="devision".$db_locale;
+$class="class".$db_locale;
 
 @endphp
 
@@ -20,15 +21,16 @@ $category="category".$lang;
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a href="{{ route('resource_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Resource Category</a>
-            <a href="{{ route('resource_type.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Type</a>
-            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Class</a>
-            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Devision</a>
-            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Section</a>
-            <a href="{{ route('resource_creator.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Creator</a>
-            <a href="{{ route('resource_lang.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Language</a>
-            <a href="{{ route('resource_publisher.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Publisher</a>
-            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Donates</a>
+        
+            <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success btn-sm ml-2" type="button">Resource Category</a>
+            <a href="{{ route('resource_type.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Type</a>
+            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Class</a>
+            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Devision</a>
+            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Section</a>
+            <a href="{{ route('resource_creator.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Creator</a>
+            <a href="{{ route('resource_lang.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Language</a>
+            <a href="{{ route('resource_publisher.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Publisher</a>
+            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Donates</a>
         </form>
     </nav>
     </div>
@@ -41,7 +43,7 @@ $category="category".$lang;
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 
-                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource Category</h4>
+                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource Dewe Decimal Devision</h4>
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h4>
@@ -53,12 +55,15 @@ $category="category".$lang;
             </div>
         </div>
         <div class="form-row">
-        <div class="table-responsive">               
+        <div class="table-responsive">
+              
             <table class="table table-hover table-bordered" id="book_datatable">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col" style="width: 30%">Category</th>
+                            <th scope="col" style="width: 30%">DD Class</th>
+                            <th scope="col">Devision Code</th>
+                            <th scope="col" style="width: 30%">DD Devision</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -66,16 +71,18 @@ $category="category".$lang;
                     @foreach ($details as $data)
                         <tr>
                             <td>{{ $data->id }}</td>
-                            <td>{{ $data->$category }}</td>
+                            <td>{{ $data->ddecimal->$class }}</td>
+                            <td>{{ $data->devision_code }}</td>
+                            <td>{{ $data->$devision }}</td>
                            
                             <td>
                                
-                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$category }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
+                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" ><i class="fa fa-eye" ></i>&nbsp;Show</a>
                             @can('support_data-edit')
-                            <a class="btn btn-info text-white" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->category_si }}" data-detail_name_ta="{{ $data->category_ta }}" data-detail_name_en="{{ $data->category_en }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
+                            <a class="btn btn-info text-white" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
                             @can('support_data-delete')
-                            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$category }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$devision }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                             @endcan
                             
                             </td>
@@ -84,7 +91,7 @@ $category="category".$lang;
                    
                     </tbody>
             </table>
-           
+        
             {!! $details->render( "pagination::bootstrap-4") !!}
            
         </div>
@@ -117,10 +124,18 @@ $category="category".$lang;
                 
                     <div class="row form-group">
                         
-                        <div class="col-md-12">
-                            <h5><span>ID : &nbsp;</span><span class="badge badge-info" id="id_show"></span></h5>
-                            <h5 class="text-indigo"><span>Category : &nbsp;</span><span id="name_show"></span></h5>
+                        <div class="col-md-2">
+                            <label><span>ID </span></label>
+                            <label><span>DD Class </span></label>
+                            <label><span>DD Devision </span></label>
                         </div>
+                        <div class="col-md-10 text-indigo">
+                            <label><span id="id_show"></span></label></br>
+                            <label><span id="class_show"></span></label></br>
+                            <label><span id="devision_show"></span></label></br>
+                        </div>
+                            
+                       
                     </div> 
                 </div>
 
@@ -149,15 +164,21 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('resource_catagory.store') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('resource_dd_devision.store') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Category</label>
+                        <label for="category">DD Class</label>
+                        <select class="form-control mb-3"name="ddclass" id="ddclass" value=""required>
+                            <option value="" disabled selected>DD Class</option>
+                        </select>
+                        <label for="category">Devision Code</label>
+                        <input type="text" class="form-control mb-3" id="devision_code" name="devision_code" value="" placeholder="Devision Code"required > 
+                        <label for="category">Devision</label>
                         <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
-                        <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in English" >           
+                        <input type="text" class="form-control mb-1" id="name_en" name="name_en" value="" placeholder="Name in English" >           
                     </div>
                     
                 </div>
@@ -187,13 +208,19 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('update_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('update_resource_dd_devision') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Category</label>
+                    <label for="category">DD Class</label>
                         <input type="hidden" id="id_update" name="id_update">
+                        <select class="form-control mb-3"name="ddclass_update" id="ddclass_update" value=""required>
+                            <option value="" disabled selected>DD Class</option>
+                        </select>
+                        <label for="category">Devision Code</label>
+                        <input type="text" class="form-control mb-3" id="devision_code_update" name="devision_code_update" value="" placeholder="Devision Code"required > 
+                        <label for="category">Devision</label>
                         <input type="text" class="form-control mb-1" id="name_update_si" name="name_update_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_update_ta" name="name_update_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_update_en" name="name_update_en" value="" placeholder="Name in English" >          
@@ -227,7 +254,7 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_resource_cat')}}">
+            <form method="POST" action="{{ route('delete_resource_dd_devision')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -268,7 +295,7 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_dd_devision') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -306,20 +333,42 @@ $(document).ready(function()
        
        var button = $(event.relatedTarget) 
        var d_id = button.data('detail_id') 
-       var d_name = button.data('detail_name')
-       $('#id_show').html(d_id);
-       $('#name_show').html(d_name);
+       // -------------------------------------------
+       $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('show_resource_type')}}", 
+            data: { d_id: d_id, },
+            success:function(data){
+                @if($locale=="si") 
+                $('#category_show').html(data.category.category_si);
+                @elseif($locale=="ta") 
+                $('#category_show').html(data.category.category_ta);
+                @elseif($locale=="en")
+                $('#category_show').html(data.category.category_en);
+                @endif
+                $('#id_show').html(data.id);
+                $('#type_show').html(data.type_si+" /"+data.type_ta+" /"+data.type_en);
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // -------------------------------------------
+
+       
    });
 
     $('#data_update').on('show.bs.modal', function (event) {
        
         var button = $(event.relatedTarget) 
         var d_id = button.data('detail_id') 
-        var d_name_si = button.data('detail_name_si');
-        var d_name_ta = button.data('detail_name_ta');
-        var d_name_en = button.data('detail_name_en');
+        
         $('#id_update').val(d_id);
-        $('#name_update_si').val(d_name_si);  $('#name_update_ta').val(d_name_ta);  $('#name_update_en').val(d_name_en);
         $('#to_updateName').html(d_id);
 
         @if($locale=="si")
@@ -329,6 +378,29 @@ $(document).ready(function()
         @elseif($locale=="en")
         $("#name_update_en").prop('required',true);
         @endif
+
+        // -------------------------------------------
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('edit_resource_dd_devision')}}", 
+            data: { d_id: d_id, },
+            success:function(data){
+                $("#ddclass_update").val(data.ddecimal.id);
+                $("#devision_code_update").val(data.devision_code);
+                $("#name_update_si").val(data.devision_si);
+                $("#name_update_ta").val(data.devision_ta);
+                $("#name_update_en").val(data.devision_en);
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // -------------------------------------------
 
     });
 
@@ -342,15 +414,41 @@ $(document).ready(function()
    });
 
    $('#data_create').on('show.bs.modal', function (event) {
-       
         @if($locale=="si")
-        $("#name_si").prop('required',true);
+        $("#name_si").prop('required',true); 
         @elseif($locale=="ta")
-        $("#name_ta").prop('required',true);
+        $("#name_ta").prop('required',true); 
         @elseif($locale=="en")
-        $("#name_en").prop('required',true);
+        $("#name_en").prop('required',true); 
         @endif
+
+        
    });
+
+   // -------------------------------------------
+   var op="";
+        $.ajax
+        ({
+            type: "GET",
+            url: "{{route('load_resource_dd_class')}}", 
+            success:function(data){
+                for(var i=0;i<data.length;i++)
+                {
+                    op+='<option value="'+data[i].id+'">'+ 
+                        @if($locale=="si") data[i].class_si 
+                        @elseif($locale=="ta") data[i].class_ta 
+                        @elseif($locale=="en") data[i].class_en
+                        @endif +
+                        '</option>';
+                }
+                $("#ddclass").append(op);
+                $("#ddclass_update").append(op);
+            },
+            error:function(data){
+
+            }
+        })
+        // -------------------------------------------
 
 });
 
