@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth']], function() {
     
     // --------Resource--------------------------------
     Route::resource('resources', ResourceController::class);
+    Route::get('load_resource_dd_class', [Resource_dd_devisionController::class, 'ddclass'])->name('load_resource_dd_class');
+    Route::post('load_resource_dd_devision', [Resource_dd_sectionController::class, 'dddevision'])->name('load_resource_dd_devision');
 
     // --------Resource support/category--------------------------------
     Route::resource('resource_catagory', Resource_categoryController::class);
@@ -80,7 +82,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('edit_resource_dd_devision', [Resource_dd_devisionController::class, 'edit_detail'])->name('edit_resource_dd_devision');
     Route::post('delete_resource_dd_devision', [Resource_dd_devisionController::class, 'delete'])->name('delete_resource_dd_devision');
     Route::post('import_resource_dd_devision', [Resource_dd_devisionController::class, 'import'])->name('import_resource_dd_devision');
-    Route::get('load_resource_dd_class', [Resource_dd_devisionController::class, 'ddclass'])->name('load_resource_dd_class');
+    
+
+     // --------Resource support/dd_section--------------------------------
+     Route::resource('resource_dd_section', Resource_dd_sectionController::class);
+     Route::post('show_resource_dd_section', [Resource_dd_sectionController::class, 'show_detail'])->name('show_resource_dd_section');
+     Route::post('update_resource_dd_section', [Resource_dd_sectionController::class, 'update_detail'])->name('update_resource_dd_section');
+     Route::post('edit_resource_dd_section', [Resource_dd_sectionController::class, 'edit_detail'])->name('edit_resource_dd_section');
+     Route::post('delete_resource_dd_section', [Resource_dd_sectionController::class, 'delete'])->name('delete_resource_dd_section');
+     Route::post('import_resource_dd_section', [Resource_dd_sectionController::class, 'import'])->name('import_resource_dd_section');
+    
     
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::resource('resource_dd_class', Resource_dd_classController::class);

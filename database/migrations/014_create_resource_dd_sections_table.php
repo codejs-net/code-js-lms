@@ -15,8 +15,12 @@ class CreateResourceDdSectionsTable extends Migration
     {
         Schema::create('resource_dd_sections', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('dd_class_id')->nullable();
+            $table->foreign('dd_class_id')->references('id')->on('resource_dd_classes');
+
             $table->unsignedBigInteger('dd_devision_id')->nullable();
             $table->foreign('dd_devision_id')->references('id')->on('resource_dd_divisions');
+
             $table->string('section_code')->nullable();
             $table->string('section_si')->nullable();
             $table->string('section_ta')->nullable();
