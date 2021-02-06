@@ -57,7 +57,7 @@ class LoginController extends Controller
             return view('configuration.create');
           }
           else{
-            return redirect()->route('lms');
+            return redirect()->route('lmslogin.index');
           }
     }
 
@@ -86,7 +86,7 @@ class LoginController extends Controller
             return redirect()->route('home');
 
         }else{
-            return redirect()->route('lms')
+            return redirect()->route('lmslogin.index')
                 ->with('error','Email-Address And Password Are Wrong.');
         }
           

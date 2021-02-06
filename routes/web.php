@@ -36,7 +36,7 @@ Auth::routes();
 
 Route::get('lang/{locale}', [LocalizationController::class, 'index'])->name('lang');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/lms', [LoginController::class, 'index'])->name('lms');
+Route::resource('lmslogin', LoginController::class);
 
   
 Route::get('test', [UserController::class, 'index'])->name('users.index');
