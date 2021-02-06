@@ -4,7 +4,7 @@
 @php
 $locale = session()->get('locale');
 $lang="_".$locale;
-$category="category".$lang;
+$publisher="publisher".$lang;
 
 @endphp
 
@@ -20,15 +20,15 @@ $category="category".$lang;
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success btn-sm ml-2" type="button">Resource Category</a>
-            <a href="{{ route('resource_type.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Type</a>
-            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Class</a>
-            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Devision</a>
-            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Section</a>
-            <a href="{{ route('resource_creator.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Creator</a>
-            <a href="{{ route('resource_lang.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Language</a>
-            <a href="{{ route('resource_publisher.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Publisher</a>
-            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Donates</a>
+            <a href="{{ route('resource_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Resource Category</a>
+            <a href="{{ route('resource_type.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Type</a>
+            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Class</a>
+            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Devision</a>
+            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Section</a>
+            <a href="{{ route('resource_creator.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Creator</a>
+            <a href="{{ route('resource_lang.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Language</a>
+            <a href="{{ route('resource_publisher.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Publisher</a>
+            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Donates</a>
         </form>
     </nav>
     </div>
@@ -41,13 +41,13 @@ $category="category".$lang;
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 
-                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource Category</h4>
+                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource Publisher</h4>
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h4>
-                    <a class="btn btn-primary text-white" data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
+                    <a class="btn btn-sm btn-outline-primary " data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
                     @can('data-import')
-                    <a class="btn btn-primary bg-indigo text-white" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+                    <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
                     @endcan
                 </h4>   
             </div>
@@ -58,7 +58,7 @@ $category="category".$lang;
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col" style="width: 30%">Category</th>
+                            <th scope="col" style="width: 30%">Publisher</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -66,16 +66,16 @@ $category="category".$lang;
                     @foreach ($details as $data)
                         <tr>
                             <td>{{ $data->id }}</td>
-                            <td>{{ $data->$category }}</td>
+                            <td>{{ $data->$publisher }}</td>
                            
                             <td>
                                
-                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$category }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
+                            <a class="btn btn-sm btn-outline-success " data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$publisher }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
                             @can('support_data-edit')
-                            <a class="btn btn-info text-white" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->category_si }}" data-detail_name_ta="{{ $data->category_ta }}" data-detail_name_en="{{ $data->category_en }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
+                            <a class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->publisher_si }}" data-detail_name_ta="{{ $data->publisher_ta }}" data-detail_name_en="{{ $data->publisher_en }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
                             @can('support_data-delete')
-                            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$category }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                            <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$publisher }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                             @endcan
                             
                             </td>
@@ -119,13 +119,13 @@ $category="category".$lang;
                         
                         <div class="col-md-12">
                             <h5><span>ID : &nbsp;</span><span class="badge badge-info" id="id_show"></span></h5>
-                            <h5 class="text-indigo"><span>Category : &nbsp;</span><span id="name_show"></span></h5>
+                            <h5 class="text-indigo"><span>Publisher : &nbsp;</span><span id="name_show"></span></h5>
                         </div>
                     </div> 
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
                    
                 </div>
         
@@ -149,12 +149,12 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('resource_catagory.store') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('resource_publisher.store') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Category</label>
+                        <label for="book_detail">Publisher</label>
                         <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in English" >           
@@ -163,8 +163,8 @@ $category="category".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp; Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Save</button>
                 </div>
             </form>
            
@@ -187,12 +187,12 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('update_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('update_resource_publisher') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Category</label>
+                        <label for="book_detail">Publisher</label>
                         <input type="hidden" id="id_update" name="id_update">
                         <input type="text" class="form-control mb-1" id="name_update_si" name="name_update_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_update_ta" name="name_update_ta" value="" placeholder="Name in Tamil" >
@@ -202,8 +202,8 @@ $category="category".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> &nbsp; Update</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i> &nbsp; Update</button>
                 </div>
             </form>
            
@@ -227,7 +227,7 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_resource_cat')}}">
+            <form method="POST" action="{{ route('delete_resource_publisher')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -243,8 +243,8 @@ $category="category".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
                 </div>
             </form>
            
@@ -268,7 +268,7 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_cat') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_publisher') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -286,8 +286,8 @@ $category="category".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
                 </div>
             </form>
            
