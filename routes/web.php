@@ -92,6 +92,11 @@ Route::group(['middleware' => ['auth']], function() {
      Route::post('delete_resource_dd_section', [Resource_dd_sectionController::class, 'delete'])->name('delete_resource_dd_section');
      Route::post('import_resource_dd_section', [Resource_dd_sectionController::class, 'import'])->name('import_resource_dd_section');
     
+     // --------Resource support/creator--------------------------------
+    Route::resource('resource_creator', Resource_creatorController::class);
+    Route::post('update_resource_creator', [Resource_creatorController::class, 'update_detail'])->name('update_resource_creator');
+    // Route::post('delete_resource_creator', [Resource_creatorController::class, 'delete'])->name('delete_resource_creator');
+    Route::post('import_resource_creator', [Resource_creatorController::class, 'import'])->name('import_resource_creator');
     
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::resource('resource_dd_class', Resource_dd_classController::class);
