@@ -23,7 +23,8 @@ class resource_creator extends Model
                     'address2_en',
                     'mobile',
                     'gender',
-                    'description'
+                    'description',
+                    'image'
                     ];
 
 

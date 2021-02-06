@@ -9,7 +9,7 @@ class resource_type extends Model
 {
     use HasFactory;
     protected $table="resource_types";
-    protected $fillable = ['category_id','type_si','type_ta','type_en'];
+    protected $fillable = ['category_id','type_si','type_ta','type_en','image'];
 
     public function resource()
     {

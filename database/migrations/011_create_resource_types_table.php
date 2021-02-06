@@ -20,6 +20,7 @@ class CreateResourceTypesTable extends Migration
             $table->string('type_si')->nullable();
             $table->string('type_ta')->nullable();
             $table->string('type_en')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

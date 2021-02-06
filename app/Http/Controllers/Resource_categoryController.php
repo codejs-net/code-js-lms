@@ -49,18 +49,13 @@ class Resource_categoryController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $locale = session()->get('locale');
-        $lang="_".$locale;
-
-        request()->validate([
-            'name'.$lang => 'required',
-        ]);
-    
+        $imageName = time().'.'.$request->image->extension();   
+        $request->image->move(public_path('images'), $imageName);
         $form_data = array(
             'category_si' =>  $request->name_si,
             'category_ta' =>  $request->name_ta,
             'category_en' =>  $request->name_en, 
+            'image'       =>  $imageName,
         );
         resource_category::create($form_data);
         return redirect()->route('resource_catagory.index')->with('success','Details created successfully.');

@@ -21,6 +21,7 @@ class Resource_typeImport implements ToModel, WithHeadingRow
             'type_si'       => $row['si'],
             'type_ta'       => $row['ta'],
             'type_en'       => $row['en'],
+            'image'         => $row['image'],
         ]);
     }
 }

@@ -30,6 +30,7 @@ class resource_creatorImport implements ToModel, WithHeadingRow
             'mobile'        => $row['mobile'],
             'gender'        => $row['gender'],
             'description'   => $row['description'],
+            'image'         => $row['image'],
 
         ]);
     }

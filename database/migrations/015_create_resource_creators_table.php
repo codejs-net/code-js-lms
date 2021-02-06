@@ -28,6 +28,7 @@ class CreateResourceCreatorsTable extends Migration
             $table->string('mobile')->nullable();
             $table->string('gender')->nullable();
             $table->string('description')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

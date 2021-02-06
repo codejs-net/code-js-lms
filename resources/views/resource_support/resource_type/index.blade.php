@@ -28,7 +28,7 @@ $category="category".$db_locale;
             <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Devision</a>
             <a href="{{ route('resource_dd_section.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Section</a>
             <a href="{{ route('resource_creator.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Creator</a>
-            <a href="{{ route('resource_lang.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Language</a>
+            <a href="{{ route('resource_language.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Language</a>
             <a href="{{ route('resource_publisher.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Publisher</a>
             <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Donates</a>
         </form>

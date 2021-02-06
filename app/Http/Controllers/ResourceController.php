@@ -3,6 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\book;
+use App\Models\book_cat;
+use App\Models\book_lang;
+use App\Models\book_publisher;
+use App\Models\book_medium;
+use App\Models\book_dd;
+use App\Models\setting;
+use Session;
+use DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class ResourceController extends Controller
 {

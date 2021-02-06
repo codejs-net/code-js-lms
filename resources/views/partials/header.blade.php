@@ -37,9 +37,9 @@
                   
                   </a>
                   <div class="dropdown-menu dropdown-menu-right mt-2">
-                    <a class="dropdown-item" href="../lang/si">Sinhala</a>
-                    <a class="dropdown-item" href="../lang/ta">Tamil</a>
-                    <a class="dropdown-item" href="../lang/en">English</a>
+                    <a class="dropdown-item" href="/lang/si">Sinhala</a>
+                    <a class="dropdown-item" href="/lang/ta">Tamil</a>
+                    <a class="dropdown-item" href="/lang/en">English</a>
                   </div>
             </div>
         </li>
