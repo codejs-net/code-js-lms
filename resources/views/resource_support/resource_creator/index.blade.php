@@ -47,9 +47,9 @@ $address2="address2".$lang;
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h4>
-                    <a class="btn btn-primary text-white" data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
+                    <a class="btn btn-sm btn-outline-primary " data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
                     @can('data-import')
-                    <a class="btn btn-primary bg-indigo text-white" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+                    <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
                     @endcan
                 </h4>   
             </div>
@@ -73,12 +73,12 @@ $address2="address2".$lang;
                             <td>{{ $data->$address1 }}&nbsp;{{ $data->$address2 }}</td>
                             <td>
                                
-                            <a class="btn btn-success text-white" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
+                            <a class="btn btn-sm btn-outline-success " data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
                             @can('support_data-edit')
-                            <a class="btn btn-info text-white" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" ><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
+                            <a class="btn btn-sm btn-outline-info " data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" ><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
                             @can('support_data-delete')
-                            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                            <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                             @endcan
                             
                             </td>
@@ -128,7 +128,7 @@ $address2="address2".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
                    
                 </div>
         
@@ -170,8 +170,8 @@ $address2="address2".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
                 </div>
             </form>
            
@@ -212,8 +212,8 @@ $address2="address2".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
                 </div>
             </form>
            
