@@ -36,7 +36,7 @@ Auth::routes();
 
 Route::get('lang/{locale}', [LocalizationController::class, 'index'])->name('lang');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/lms', [LoginController::class, 'index'])->name('lms');
+Route::resource('lmslogin', LoginController::class);
 
   
 Route::get('test', [UserController::class, 'index'])->name('users.index');
@@ -109,14 +109,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_resource_language', [Resource_langController::class, 'update_detail'])->name('update_resource_language');
     Route::post('delete_resource_language', [Resource_langController::class, 'delete'])->name('delete_resource_language');
     Route::post('import_resource_language', [Resource_langController::class, 'import'])->name('import_resource_language');
-    
-    Route::resource('resource_creator', Resource_creatorController::class);
-    Route::resource('resource_dd_class', Resource_dd_classController::class);
-    Route::resource('resource_dd_devision', Resource_dd_devisionController::class);
-    Route::resource('resource_dd_section', Resource_dd_sectionController::class);
+
+    // --------Resource support/Donate--------------------------------
     Route::resource('resource_dd_donate', Resource_donateController::class);
-    Route::resource('resource_lang', Resource_langController::class);
-    Route::resource('resource_publisher', Resource_PublisherController::class);
+
 
 
 
@@ -141,20 +137,6 @@ Route::group(['middleware' => ['auth']], function() {
     // Route::resource('books_medium', Book_MediumController::class);
     // Route::resource('books_publisher', Book_PublisherController::class);
 
-    // Route::post('update_book_cat', [Book_CatController::class, 'update_detail'])->name('update_book_cat');
-    // Route::post('delete_book_cat', [Book_CatController::class, 'delete'])->name('delete_book_cat');
-
-    // Route::post('update_book_dd', [Book_DDController::class, 'update_detail'])->name('update_book_dd');
-    // Route::post('delete_book_dd', [Book_DDController::class, 'delete'])->name('delete_book_dd');
-
-    // Route::post('update_book_medium', [Book_MediumController::class, 'update_detail'])->name('update_book_medium');
-    // Route::post('delete_book_medium', [Book_MediumController::class, 'delete'])->name('delete_book_medium');
-
-    // Route::post('update_book_publisher', [Book_PublisherController::class, 'update_detail'])->name('update_book_publisher');
-    // Route::post('delete_book_publisher', [Book_PublisherController::class, 'delete'])->name('delete_book_publisher');
-
-    // Route::post('update_book_lang', [Book_langController::class, 'update_detail'])->name('update_book_lang');
-    // Route::post('delete_book_lang', [Book_langController::class, 'delete'])->name('update_book_lang');
 
     //--------Member----------------------------------
     Route::resource('members', MemberController::class);

@@ -16,9 +16,12 @@ class CreateSurveyDetailsTable extends Migration
     {
         Schema::create('survey_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('survey_id');
+            $table->integer('survey_id')->unsigned()->nullable();
+            $table->foreign('survey_id')->references('id')->on('surveys');
 
-            $table->integer('resource_id');
+            $table->integer('resource_id')->unsigned()->nullable();
+            $table->foreign('resource_id')->references('id')->on('resources');
+
             $table->string('accessionNo');
             $table->string('standard_number')->nullable();
 

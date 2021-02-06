@@ -26,7 +26,7 @@ $category="category".$lang;
             <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Devision</a>
             <a href="{{ route('resource_dd_section.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Section</a>
             <a href="{{ route('resource_creator.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Creator</a>
-            <a href="{{ route('resource_lang.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Language</a>
+            <a href="{{ route('resource_language.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Language</a>
             <a href="{{ route('resource_publisher.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Publisher</a>
             <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Donates</a>
         </form>
@@ -66,7 +66,7 @@ $category="category".$lang;
                     @foreach ($details as $data)
                         <tr>
                             <td>{{ $data->id }}</td>
-                            <td>{{ $data->$category }}</td>
+                            <td><img class="img-icon" src="images/{{ $data->image}}">{{ $data->$category }}</td>
                            
                             <td>
                                
@@ -149,7 +149,7 @@ $category="category".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('resource_catagory.store') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('resource_catagory.store') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -158,6 +158,10 @@ $category="category".$lang;
                         <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in English" >           
+                    </div>
+                    <div class="row form-group">
+                        <label for="book_detail">Category Icon</label>
+                        <input type="file" name="image" class="form-control">
                     </div>
                     
                 </div>

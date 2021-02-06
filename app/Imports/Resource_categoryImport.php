@@ -20,6 +20,7 @@ class Resource_categoryImport implements ToModel, WithHeadingRow
             'category_si'   => $row['si'],
             'category_ta'   => $row['ta'],
             'category_en'   => $row['en'],
+            'image'         => $row['image'],
         ]);
     }
 }

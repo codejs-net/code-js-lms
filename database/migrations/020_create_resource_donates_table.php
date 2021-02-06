@@ -16,8 +16,10 @@ class CreateResourceDonatesTable extends Migration
     {
         Schema::create('resource_donates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('doner_title')->nullable();
+            $table->integer('resource_id')->unsigned()->nullable();
+            $table->foreign('resource_id')->references('id')->on('resources');
 
+            $table->string('doner_title')->nullable();
             $table->string('doner_name_si')->nullable();
             $table->string('doner_name_ta')->nullable();
             $table->string('doner_name_en')->nullable();
