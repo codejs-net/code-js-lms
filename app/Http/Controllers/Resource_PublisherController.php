@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\resource_publisher;
+use App\Imports\Resource_publisherImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Input;
 
 class Resource_PublisherController extends Controller
 {
@@ -13,10 +17,10 @@ class Resource_PublisherController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:book_details-list|book_details-create|book_details-edit|book_details-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:book_details-create', ['only' => ['create','store']]);
-         $this->middleware('permission:book_details-edit', ['only' => ['update_detail']]);
-         $this->middleware('permission:book_details-delete', ['only' => ['delete']]);
+         $this->middleware('permission:support_data-list|support_data-create|support_data-edit|support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
+         $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
          $this->middleware('permission:data-import', ['only' => ['import']]);
     }
     /**
@@ -26,8 +30,8 @@ class Resource_PublisherController extends Controller
      */
     public function index()
     {
-        $details = book_cat::orderBy('id','ASC')->paginate(5);
-        return view('books_details.book_publisher.index',compact('details'));
+        $details = resource_publisher::orderBy('id','ASC')->paginate(10);
+        return view('resource_support.resource_publisher.index',compact('details'));
        
     }
 
@@ -49,15 +53,21 @@ class Resource_PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => 'required',
-        ]);
+        
+        // $locale = session()->get('locale');
+        // $lang="_".$locale;
+
+        // request()->validate([
+        //     'name'.$lang => 'required',
+        // ]);
     
         $form_data = array(
-            'category' =>  $request->name,   
+            'publisher_si' =>  $request->name_si,
+            'publisher_ta' =>  $request->name_ta,
+            'publisher_en' =>  $request->name_en, 
         );
-        book_cat::create($form_data);
-        return redirect()->route('books_category.index')->with('success','Details created successfully.');
+        resource_publisher::create($form_data);
+        return redirect()->route('resource_publisher.index')->with('success','Details created successfully.');
     }
     
     /**
@@ -91,14 +101,19 @@ class Resource_PublisherController extends Controller
      */
     public function update_detail(Request $request)
     {
-         request()->validate([
-            'name_update' => 'required',
-        ]);
+        // $locale = session()->get('locale');
+        // $lang="_".$locale;
+
+        //  request()->validate([
+        //     'name_update'.$lang => 'required',
+        // ]);
     
-        $detail=book_cat::find($request->id_update);
-        $detail->category=$request->name_update;
+        $detail=resource_publisher::find($request->id_update);
+        $detail->publisher_si=$request->name_update_si;
+        $detail->publisher_ta=$request->name_update_ta;
+        $detail->publisher_en=$request->name_update_en;
         $detail->save();
-        return redirect()->route('books_category.index')->with('success','Details Updated successfully.');
+        return redirect()->route('resource_publisher.index')->with('success','Details Updated successfully.');
     }
     
     /**
@@ -109,8 +124,14 @@ class Resource_PublisherController extends Controller
      */
     public function delete(Request $request)
     {
-        $detail=book_cat::find($request->id_delete);
+        $detail=resource_publisher::find($request->id_delete);
         $detail->delete();
-        return redirect()->route('books_category.index')->with('success','Details Removed successfully.');
+        return redirect()->route('resource_publisher.index')->with('success','Details Removed successfully.');
+    }
+    public function import() 
+    {
+        // resource_publisher::query()->truncate();
+        $data=Excel::import(new Resource_publisherImport,request()->file('file'));
+        return redirect()->route('resource_publisher.index')->with('success','Details imported successfully.');
     }
 }

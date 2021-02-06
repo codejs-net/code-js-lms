@@ -95,8 +95,20 @@ Route::group(['middleware' => ['auth']], function() {
      // --------Resource support/creator--------------------------------
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::post('update_resource_creator', [Resource_creatorController::class, 'update_detail'])->name('update_resource_creator');
-    // Route::post('delete_resource_creator', [Resource_creatorController::class, 'delete'])->name('delete_resource_creator');
+    Route::post('delete_resource_creator', [Resource_creatorController::class, 'delete'])->name('delete_resource_creator');
     Route::post('import_resource_creator', [Resource_creatorController::class, 'import'])->name('import_resource_creator');
+
+    // --------Resource support/publisher--------------------------------
+    Route::resource('resource_publisher', Resource_PublisherController::class);
+    Route::post('update_resource_publisher', [Resource_PublisherController::class, 'update_detail'])->name('update_resource_publisher');
+    Route::post('delete_resource_publisher', [Resource_PublisherController::class, 'delete'])->name('delete_resource_publisher');
+    Route::post('import_resource_publisher', [Resource_PublisherController::class, 'import'])->name('import_resource_publisher');
+
+    // --------Resource support/language--------------------------------
+    Route::resource('resource_language', Resource_langController::class);
+    Route::post('update_resource_language', [Resource_langController::class, 'update_detail'])->name('update_resource_language');
+    Route::post('delete_resource_language', [Resource_langController::class, 'delete'])->name('delete_resource_language');
+    Route::post('import_resource_language', [Resource_langController::class, 'import'])->name('import_resource_language');
     
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::resource('resource_dd_class', Resource_dd_classController::class);

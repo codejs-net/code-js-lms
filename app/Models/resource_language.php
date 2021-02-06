@@ -11,8 +11,8 @@ class resource_language extends Model
     protected $table="resource_languages";
     protected $fillable = ['language_si','language_ta','language_en'];
 
-    public function resource()
-    {
-        return $this->belongsTo('App\Models\resource');
-    }
+    // public function resource()
+    // {
+    //     return $this->belongsTo('App\Models\resource');
+    // }
 }
