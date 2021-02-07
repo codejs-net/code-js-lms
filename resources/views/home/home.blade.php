@@ -118,70 +118,18 @@
 
      </div>
     
-     <div class="card card-body">
+     <!-- <div class="card card-body">
      
         <div class="row text-center">
             <div class="col-md-12">
-                <!-- Widget: user widget style 1 -->
-                <div class="card card-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-gradient-info">
-                    @guest
-                                
-                    @else   
-                    <h3 class="widget-user-username text-dark"><span class="">{{ Auth::user()->name }}</span></h3>
-                    @endguest
+               
                   
                 </div>
-                  <div class="widget-user-image">
-                    <img class="img-circle elevation-2" src="{{ asset('img/user.png') }}" alt="User Avatar">
-                  </div>
-                  <div class="card-footer bg-gradient-light">
-                  <div class="row">
-                        <div class="col">
-                        <div class="description-block">
-                        <h5><span class="description-header badge badge-warning">12</span></h5>
-                        <span class="description-text">Total Book Lending</span>
-                        </div>
-                        <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col">
-                        <div class="description-block">
-                        <h5><span class="description-header badge badge-danger">12</span></h5>
-                        <span class="description-text">Total Book Retun</span>
-                        </div>
-                        <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col">
-                        <div class="description-block">
-                        <h5><span class="description-header badge badge-info">12</span></h5>
-                        <span class="description-text">Total Books Add</span>
-                        </div>
-                        <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col">
-                        <div class="description-block">
-                        <h5><span class="description-header badge badge-success">12</span></h5>
-                        <span class="description-text">Total Members Add</span>
-                        </div>
-                        <!-- /.description-block -->
-                        </div>
-                  </div>
-                  <!-- /.row -->
-                  </div>
-                  </div>
-                  <!-- /.widget-user -->
-            </div>
-           
-      
-            
+
                 
         </div>
 
-     </div>
+     </div> -->
      
 </div>
             

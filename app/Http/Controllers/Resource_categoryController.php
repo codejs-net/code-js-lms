@@ -7,6 +7,7 @@ use App\Models\resource_category;
 use App\Imports\Resource_categoryImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
+use File;
 
 class Resource_categoryController extends Controller
 {
@@ -92,17 +93,24 @@ class Resource_categoryController extends Controller
      */
     public function update_detail(Request $request)
     {
-        $locale = session()->get('locale');
-        $lang="_".$locale;
-
-         request()->validate([
-            'name_update'.$lang => 'required',
-        ]);
-    
         $detail=resource_category::find($request->id_update);
+        $imageName =$detail->image;
+        if($request->hasFile('image_update')){
+            
+            $imageName = time().'.'.$request->image_update->extension();   
+            $request->image_update->move(public_path('images'), $imageName);
+
+            $old_image = "images/".$detail->image;
+            if(File::exists($old_image)) {
+                File::delete($old_image);
+            }
+        }
+
         $detail->category_si=$request->name_update_si;
         $detail->category_ta=$request->name_update_ta;
         $detail->category_en=$request->name_update_en;
+        // $detail->image=$request->hasFile('image_update') ? $image_name : $detail->image;
+        $detail->image=$imageName;
         $detail->save();
         return redirect()->route('resource_catagory.index')->with('success','Details Updated successfully.');
     }

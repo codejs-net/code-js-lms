@@ -41,15 +41,15 @@ $language="language".$lang;
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 
-                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource Language</h4>
+                <h5> <i class="fa fa-object-group"></i>&nbsp;Resource Language</h5>
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
-                <h4>
+                <h5>
                     <a class="btn btn-sm btn-outline-primary " data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
                     @can('data-import')
                     <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
                     @endcan
-                </h4>   
+                </h5>   
             </div>
         </div>
         <div class="form-row">
@@ -104,7 +104,7 @@ $language="language".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Show Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Show Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -140,7 +140,7 @@ $language="language".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Create Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Create Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -178,7 +178,7 @@ $language="language".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Update Support Data - <span id="to_updateName"></span></h4>
+                    <h5 class="modal-title" id="modaltitle">Update Support Data - <span id="to_updateName"></span></h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -218,7 +218,7 @@ $language="language".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Delete Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Delete Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -234,7 +234,7 @@ $language="language".$lang;
                     <input type="hidden" id="id_delete" name="id_delete">
                     <div class="row form-group">
                         <div class="col-md-6">
-                            <h4><label type="text"  id="name_delete"></label></h4>
+                            <h5><label type="text"  id="name_delete"></label></h5>
                         </div>
                         <div class="col-md-8">
                             <h6 id="modallabel">Are you sure Remove Support Data ? </h6>
@@ -259,7 +259,7 @@ $language="language".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Import Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Import Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

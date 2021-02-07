@@ -11,10 +11,10 @@
 <div class="container-fluid">
     <div class="row text-center">
         <div class="col-md-11 col-sm-6 text-center"> 
-            <h4> <i class="fa fa-search"> Search Resources</i></h4>
+            <h5> <i class="fa fa-search"> Search Resources</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
-            <h4><a href="{{ route('books.create') }}" class="btn btn-info btn-md" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a></h4>  
+            <h5><a href="{{ route('books.create') }}" class="btn btn-info btn-md" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a></h5>  
         </div>
     </div>
     
@@ -60,7 +60,7 @@
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Remove Book</h4>
+                    <h5 class="modal-title" id="modaltitle">Remove Book</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -79,7 +79,7 @@
                             <h5 id="modallabel">Are you sure Remove Book </h5>
                         </div>
                         <div class="col-md-8">
-                            <h4><label type="text"  id="bookname"></label></h4>
+                            <h5><label type="text"  id="bookname"></label></h5>
                         </div>
                     </div> 
                 </div>
