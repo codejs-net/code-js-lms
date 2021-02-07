@@ -10,6 +10,7 @@ use App\Imports\Resource_typeImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use Session;
+use File;
 
 class Resource_typeController extends Controller
 {
@@ -74,18 +75,15 @@ class Resource_typeController extends Controller
     public function store(Request $request)
     {
         
-        $locale = session()->get('locale');
-        $lang="_".$locale;
-
-        request()->validate([
-            'name'.$lang => 'required',
-        ]);
+        $imageName = time().'.'.$request->image->extension();   
+        $request->image->move(public_path('images'), $imageName);
     
         $form_data = array(
             'category_id' =>  $request->category,
-            'type_si' =>  $request->name_si,
-            'type_ta' =>  $request->name_ta,
-            'type_en' =>  $request->name_en, 
+            'type_si'     =>  $request->name_si,
+            'type_ta'     =>  $request->name_ta,
+            'type_en'     =>  $request->name_en, 
+            'image'       =>  $imageName,
         );
         resource_type::create($form_data);
         return redirect()->route('resource_type.index')->with('success','Data created successfully.');
@@ -125,10 +123,23 @@ class Resource_typeController extends Controller
     public function update_detail(Request $request)
     {
         $detail=resource_type::find($request->id_update);
+        $imageName =$detail->image;
+        if($request->hasFile('image_update')){
+            $imageName = time().'.'.$request->image_update->extension();   
+            $request->image_update->move(public_path('images'), $imageName);
+
+            $old_image = "images/".$detail->image;
+            if(File::exists($old_image)) {
+                File::delete($old_image);
+            }
+        }
+
+
         $detail->category_id=$request->category_update;
         $detail->type_si=$request->name_update_si;
         $detail->type_ta=$request->name_update_ta;
         $detail->type_en=$request->name_update_en;
+        $detail->image=$imageName;
         $detail->save();
         return redirect()->route('resource_type.index')->with('success','Data Updated successfully.');
     }

@@ -43,15 +43,15 @@ $category="category".$db_locale;
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 
-                <h4> <i class="fa fa-object-group"></i>&nbsp;Resource Type</h4>
+                <h5> <i class="fa fa-object-group"></i>&nbsp;Resource Type</h5>
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
-                <h4>
+                <h5>
                     <a class="btn btn-sm btn-outline-primary " data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
                     @can('data-import')
                     <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
                     @endcan
-                </h4>   
+                </h5>   
             </div>
         </div>
         <div class="form-row">
@@ -70,14 +70,14 @@ $category="category".$db_locale;
                     @foreach ($details as $data)
                         <tr>
                             <td>{{ $data->id }}</td>
-                            <td>{{ $data->category->$category }}</td>
-                            <td>{{ $data->$type }}</td>
+                            <td><img class="img-icon" src="images/{{ $data->category->image}}">&nbsp;{{ $data->category->$category }}</td>
+                            <td><img class="img-icon" src="images/{{ $data->image}}">&nbsp;{{ $data->$type }}</td>
                            
                             <td>
                                
                             <a class="btn btn-sm btn-outline-success " data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" ><i class="fa fa-eye" ></i>&nbsp;Show</a>
                             @can('support_data-edit')
-                            <a class="btn btn-sm btn-outline-info " data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
+                            <a class="btn btn-sm btn-outline-info " data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_image="{{ $data->image }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
                             @can('support_data-delete')
                             <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$type }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
@@ -109,7 +109,7 @@ $category="category".$db_locale;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Show Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Show Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -153,7 +153,7 @@ $category="category".$db_locale;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Create Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Create Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -162,7 +162,7 @@ $category="category".$db_locale;
                     
             </div>
             
-            <form method="POST" action="{{ route('resource_type.store') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('resource_type.store') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -175,6 +175,10 @@ $category="category".$db_locale;
                         <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_en" name="name_en" value="" placeholder="Name in English" >           
+                    </div>
+                    <div class="row form-group">
+                        <label for="image">Type Icon</label>
+                        <input type="file" name="image" class="form-control">
                     </div>
                     
                 </div>
@@ -195,7 +199,7 @@ $category="category".$db_locale;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Update Support Data - <span id="to_updateName"></span></h4>
+                    <h5 class="modal-title" id="modaltitle">Update Support Data - <span id="to_updateName"></span></h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -204,7 +208,7 @@ $category="category".$db_locale;
                     
             </div>
             
-            <form method="POST" action="{{ route('update_resource_type') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('update_resource_type') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -218,6 +222,11 @@ $category="category".$db_locale;
                         <input type="text" class="form-control mb-1" id="name_update_si" name="name_update_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_update_ta" name="name_update_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_update_en" name="name_update_en" value="" placeholder="Name in English" >          
+                    </div>
+                    <label for="image_update">Type Icon</label>
+                    <div class="row form-group">
+                        <div class="col-md-2"><img class="img-icon" id="icon_update">&nbsp;</div>  
+                        <div class="col-md-10"><input type="file" id="image_update" name="image_update" class="form-control"></div> 
                     </div>
                     
                 </div>
@@ -239,7 +248,7 @@ $category="category".$db_locale;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Delete Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Delete Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -255,7 +264,7 @@ $category="category".$db_locale;
                     <input type="hidden" id="id_delete" name="id_delete">
                     <div class="row form-group">
                         <div class="col-md-6">
-                            <h4><label type="text"  id="name_delete"></label></h4>
+                            <h5><label type="text"  id="name_delete"></label></h5>
                         </div>
                         <div class="col-md-8">
                             <h6 id="modallabel">Are you sure Remove Support Data ? </h6>
@@ -280,7 +289,7 @@ $category="category".$db_locale;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Import Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Import Support Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -388,6 +397,7 @@ $(document).ready(function()
                 $("#name_update_si").val(data.type_si);
                 $("#name_update_ta").val(data.type_ta);
                 $("#name_update_en").val(data.type_en);
+                $("#icon_update").attr("src","images/"+data.image);
             },
             error:function(data){
                 toastr.error('Some thing went Wrong!')

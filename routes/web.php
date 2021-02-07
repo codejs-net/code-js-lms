@@ -17,18 +17,13 @@ use App\Http\Controllers\Resource_dd_sectionController;
 use App\Http\Controllers\Resource_donateController;
 use App\Http\Controllers\Resource_langController;
 use App\Http\Controllers\Resource_PublisherController;
-
-
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\Book_DDController;
-use App\Http\Controllers\Book_langController;
-use App\Http\Controllers\Book_MediumController;
-use App\Http\Controllers\Book_PublisherController;
 use App\Http\Controllers\SoapController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
+
+use App\Http\Controllers\BookController;
 
 
 
@@ -149,7 +144,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 Route::get('/sms', [SoapController::class, 'msg_test'])->name('msg_test');
 
-// -----comfig---------------------------
+// -----config---------------------------
 Route::post('create_lib', [ConfigController::class, 'store_library'])->name('create_lib');
 // Route::post('create_center', [ConfigController::class, 'store_center'])->name('create_center');
 Route::post('create_staff', [ConfigController::class, 'store_staff'])->name('create_staff');
