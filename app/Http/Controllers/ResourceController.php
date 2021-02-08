@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\book;
-use App\Models\book_cat;
-use App\Models\book_lang;
+use App\Models\resource_category;
+use App\Models\resource_type;
 use App\Models\book_publisher;
 use App\Models\book_medium;
 use App\Models\book_dd;
@@ -27,7 +27,6 @@ class ResourceController extends Controller
     public function index()
     {
         $locale = session()->get('locale');
-
         $setting = setting::where('setting','locale_db')->first();
 
         if($setting->value=="0")
@@ -50,6 +49,7 @@ class ResourceController extends Controller
         //         $booktitle="book_title".$lang;
 
         $resouredata = DB::table('resources')->get();
+        $resource_category=resource_category::all();
 
             if(request()->ajax())
             {
@@ -78,7 +78,25 @@ class ResourceController extends Controller
                         ->rawColumns(['action','status'])
                         ->make(true);
             }
-        return view('books.index');
+        return view('resources.index')->with('Cat_data',$resource_category);
+    }
+
+    public function load_type(Request $request)
+    {
+       if($request->d_cat=="All")
+       {$data=resource_type::all();}
+       else
+       {$data = resource_type::where('category_id',$request->d_cat)->get();}
+        return response()->json($data);
+    }
+
+    public function filter_by_type($id)
+    {
+        //
+    }
+    public function filter_by_category($id)
+    {
+        //
     }
 
     /**
