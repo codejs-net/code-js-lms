@@ -44,7 +44,7 @@ class Resource_typeController extends Controller
         Session::put('db_locale', $lang);
         //--------------------------------
 
-        $details = resource_type::orderBy('id','ASC')->with('category')->paginate(5);
+        $details = resource_type::orderBy('id','ASC')->with('category')->paginate(10);
         return view('resource_support.resource_type.index',compact('details'));
        
     }

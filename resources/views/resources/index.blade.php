@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('content')
+
+@php
+$locale = session()->get('locale');
+$lang="_".$locale;
+$category="category".$lang;
+$publisher="publisher".$lang;
+
+@endphp
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
@@ -19,25 +28,48 @@
     </div>
     
 </div>
+<div class="container-fluid">
+<div class="card card-body">
+    <div class="row">
+    <div class="col-md-2 col-sm-2 text-center">
+            <div class="form-group">
+                <!-- <label for="category">Category</label> -->
+                <select class="form-control mb-3"name="category" id="category" value="">
+                    <option value="All" selected>All Category</option>
+                        @foreach($Cat_data as $item)
+                            <option value="{{ $item->id }}" style="background-image:url(images/{{ $item->image}});">&nbsp;{{ $item->$category}}</option>
+                        @endforeach
+                </select>     
+            </div>
+        </div>
+        <div class="col-md-10 col-sm-10 text-center">
+            <div class="form-group text-left">
+                <!-- <label for="category">Type</label> -->
+                <span id="type_bar"></span>
+            </div>
+        </div>
+
+    </div>
+</div>   
+</div>
 
         <!-- Main content -->
 <div class="container-fluid">
     <div class="card card-body">
             <div class="form-row">   
             <div class="table-responsive">               
-            <table class="table table-hover" id="book_datatable">
-                    <thead class="thead-dark">
+            <table class="table table-hover" id="resource_datatable">
+                    <thead class="thead-light">
                         <tr>
-                            <th scope="col">Book ID</th>
-                            <th scope="col">Accession No</th>
-                            <!-- <th scope="col">Barcode</th> -->
+                            <th scope="col">Resource ID</th>
+                            <th scope="col">Resource</th>
+                            <th scope="col">ISBN/ISSN</th>
                             <th scope="col">Title</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Language</th>
+                            <th scope="col">Creator</th>
+                            <th scope="col">DDC</th>
                             <th scope="col">Publisher</th>
-                            <th scope="col">Place</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Center</th>
+                            <th scope="col">Price</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -152,6 +184,47 @@ document.getElementById("bookname").innerHTML = b_title;
 // end book delete function
 
 
+load_type("All");
+
+
+});
+
+
+function load_type(d_cat)
+{
+        op="";
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('load_resource_type')}}", 
+            data: { d_cat: d_cat, },
+            success:function(data){
+                for(var i=0;i<data.length;i++)
+                {
+                    op+='<a href="filter_by_type/'+data[i].id+'" class="btn btn-default btn-sm ml-2 mb-2"><img class="img-icon" src="images/'+data[i].image+'">&nbsp;'+
+                        @if($locale=="si") data[i].type_si 
+                        @elseif($locale=="ta") data[i].type_ta 
+                        @elseif($locale=="en") data[i].type_en
+                        @endif +
+                        '&nbsp;</a>';
+                }
+                $("#type_bar").html(op);
+               
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // --------------------------------------------------------
+}
+
+$("#category").change(function () {
+     var d_cat=$('#category').val();
+     load_type(d_cat);  
 });
 
 
