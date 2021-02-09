@@ -7,6 +7,8 @@ $lang="_".$locale;
 $category="category".$lang;
 $center="name".$lang;
 $publisher="publisher".$lang;
+$title="title".$lang;
+$creator="name".$lang;
 
 @endphp
 
@@ -202,31 +204,38 @@ $lang = session()->get('db_locale');
     {
     // ----------view-------------------------
     $('#resource_datatable').DataTable({
+    columnDefs: [
+        {"targets": [0],
+        "visible": false,
+        "searchable": false},
+        { type: 'natural', targets: '_all' }
+    ],
     processing: true,
     serverSide: true,
 
     ajax:{
     url: "{{ route('resources.index') }}",
     },
+    pageLength: 15,
+    
     columns:[
-        {data: "id",name: "ResourceID"},
-        {data: "image",name: "Resource"},
-        {data: "accessionNo",name: "AccessionNo"},
-        {data: "standardnumber",name: "standardnumber"},
-        {data: "title<?php echo $lang; ?>",name: "Title"},
-        {data: "creator<?php echo $lang; ?>",name: "Creator"},
-        {data: "ddc<?php echo $lang; ?>",name: "category"},
-        {data: "publisher<?php echo $lang; ?>",name: "publisher"},
-        {data: "price",name: "price"},
-        {data: "status",name: "status",orderable: false},
+        {data: "id",name: "ResourceID",orderable: true},
+        {data: "images",name: "images",orderable: false},
+        {data: "accessionNo",name: "AccessionNo",orderable: true},
+        {data: "standard_number",name: "standard_number",orderable: true},
+        {data: "title<?php echo $lang; ?>",name: "title",orderable: true},
+        {data: "name<?php echo $lang; ?>",name: "creator",orderable: true},
+        {data: "ddc",name: "ddc",orderable: true},
+        {data: "publisher<?php echo $lang; ?>",name: "publisher",orderable: false},
+        {data: "price",name: "price",orderable: true},
+        {data: "status",name: "status",orderable: true},
         {data: "action",name: "action",orderable: false}
     ],
+    // order:[[4,"asc"]],
     "createdRow": function( row, data, dataIndex ) {
         if ( data['status'] == "Removed" ) {        
-            $('td', row).addClass('bg-warning');
-            //$(row).addClass('bg_red');
-        }
-
+            $('td', row).addClass('font-weight-bold');
+            }
         }
     });
 

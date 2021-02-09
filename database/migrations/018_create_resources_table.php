@@ -53,7 +53,7 @@ class CreateResourcesTable extends Migration
 
             $table->date('purchase_date')->default(Carbon::now());
             $table->string('edition')->nullable();
-            $table->double('price', 4, 2);
+            $table->double('price', 8, 2);
 
             $table->year('publishyear')->nullable();
             $table->string('phydetails')->nullable();

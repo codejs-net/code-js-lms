@@ -18,12 +18,12 @@ class ResourceImport implements ToModel, WithHeadingRow
     {
         return new resource([
             'id'                => $row['id'],
-            'accessionNo'       => $row['accession_No'], 
-            'standardnumber'    => $row['standardnumber'], 
+            'accessionNo'       => $row['accession_no'], 
+            'standard_number'    => $row['standardnumber'], 
             'title_si'          => $row['title_si'], 
             'title_ta'          => $row['title_ta'], 
             'title_en'          => $row['title_en'],
-            'cretor_id'         => $row['cretor_id'],
+            'cretor_id'         => $row['creator_id'],
             'category_id'       => $row['category_id'],
             'type_id'           => $row['type_id'],
             // 'dd_class_id'       => $row['dd_class_id'],
