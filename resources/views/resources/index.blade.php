@@ -5,6 +5,7 @@
 $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
+$center="name".$lang;
 $publisher="publisher".$lang;
 
 @endphp
@@ -31,21 +32,32 @@ $publisher="publisher".$lang;
 <div class="container-fluid">
 <div class="card card-body">
     <div class="row">
-    <div class="col-md-2 col-sm-2 text-center">
-            <div class="form-group">
-                <!-- <label for="category">Category</label> -->
-                <select class="form-control mb-3"name="category" id="category" value="">
-                    <option value="All" selected>All Category</option>
-                        @foreach($Cat_data as $item)
-                            <option value="{{ $item->id }}" style="background-image:url(images/{{ $item->image}});">&nbsp;{{ $item->$category}}</option>
-                        @endforeach
-                </select>     
+        <div class="col-md-2 col-sm-2 text-center">
+                <div class="form-group">
+                    <!-- <label for="category">Category</label> -->
+                    <select class="form-control mb-3"name="category" id="category" value="">
+                        <option value="All" selected>All Categories</option>
+                            @foreach($cat_data as $item)
+                                <option value="{{ $item->id }}" style="background-image:url(images/{{ $item->image}});">&nbsp;{{ $item->$category}}</option>
+                            @endforeach
+                    </select>     
             </div>
         </div>
-        <div class="col-md-10 col-sm-10 text-center">
-            <div class="form-group text-left">
+        <div class="col-md-8 col-sm-8 text-center">
+            <div class="form-group text-center">
                 <!-- <label for="category">Type</label> -->
                 <span id="type_bar"></span>
+            </div>
+        </div>
+
+        <div class="col-md-2 col-sm-2 text-center">
+                <div class="form-group">
+                    <select class="form-control mb-3"name="center" id="center" value="">
+                        <option value="All" selected>All Centers</option>
+                            @foreach($center_data as $item)
+                                <option value="{{ $item->id }}">&nbsp;{{ $item->$center}}</option>
+                            @endforeach
+                    </select>     
             </div>
         </div>
 
@@ -63,13 +75,14 @@ $publisher="publisher".$lang;
                         <tr>
                             <th scope="col">Resource ID</th>
                             <th scope="col">Resource</th>
+                            <th scope="col">Accession No</th>
                             <th scope="col">ISBN/ISSN</th>
                             <th scope="col">Title</th>
                             <th scope="col">Creator</th>
                             <th scope="col">DDC</th>
                             <th scope="col">Publisher</th>
-                            <th scope="col">Center</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -141,29 +154,29 @@ $lang = session()->get('db_locale');
     $(document).ready(function()
     {
     // ----------view-------------------------
-    $('#book_datatable').DataTable({
+    $('#resource_datatable').DataTable({
     processing: true,
     serverSide: true,
 
     ajax:{
-    url: "{{ route('books.index') }}",
+    url: "{{ route('resources.index') }}",
     },
     columns:[
-        {data: "id",name: "Book ID"},
-        {data: "accessionNo",name: "accessionNo"},
-        // {data: "barcode",name: "barcode",orderable: false},
-        {data: "book_title<?php echo $lang; ?>",name: "book_title"},
-        {data: "authors<?php echo $lang; ?>",name: "authors"},
-        {data: "category<?php echo $lang; ?>",name: "category"},
-        {data: "language<?php echo $lang; ?>",name: "language"},
+        {data: "id",name: "ResourceID"},
+        {data: "image",name: "Resource"},
+        {data: "accessionNo",name: "AccessionNo"},
+        {data: "standardnumber",name: "standardnumber"},
+        {data: "title<?php echo $lang; ?>",name: "Title"},
+        {data: "creator<?php echo $lang; ?>",name: "Creator"},
+        {data: "ddc<?php echo $lang; ?>",name: "category"},
         {data: "publisher<?php echo $lang; ?>",name: "publisher"},
-        {data: "rackno",name: "rackno"},
+        {data: "price",name: "price"},
         {data: "status",name: "status",orderable: false},
         {data: "action",name: "action",orderable: false}
     ],
     "createdRow": function( row, data, dataIndex ) {
         if ( data['status'] == "Removed" ) {        
-            $('td', row).addClass('bg-red');
+            $('td', row).addClass('bg-warning');
             //$(row).addClass('bg_red');
         }
 

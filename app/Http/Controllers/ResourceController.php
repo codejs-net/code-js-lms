@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\book;
 use App\Models\resource_category;
 use App\Models\resource_type;
-use App\Models\book_publisher;
-use App\Models\book_medium;
-use App\Models\book_dd;
+use App\Models\center;
 use App\Models\setting;
 use Session;
 use DataTables;
@@ -39,17 +37,18 @@ class ResourceController extends Controller
         }
         Session::put('db_locale', $lang);
 
-        //  $bookdata = DB::table('books')
-        //         ->join('book_cats', 'books.book_category_id', '=', 'book_cats.id')
-        //         ->join('book_langs', 'books.language_id', '=', 'book_langs.id')
-        //         ->join('book_publishers', 'books.publisher_id', '=', 'book_publishers.id')
-        //         ->select('books.*', 'book_cats.category'.$lang, 'book_langs.language'.$lang, 'book_publishers.publisher'.$lang)
-        //         ->get();
+         $resouredata = DB::table('resources')
+                ->leftJoin('resource_categories', 'resources.category_id', '=', 'resource_categories.id')
+                ->leftJoin('resource_types', 'resources.type_id', '=', 'resource_types.id')
+                ->leftJoin('resource_creators', 'resources.cretor_id', '=', 'resource_creators.id')
+                ->leftJoin('resource_publishers', 'resources.publisher_id', '=', 'resource_publishers.id')
+                ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
+                ->get();
 
-        //         $booktitle="book_title".$lang;
+                $resource_title="title".$lang;
 
-        $resouredata = DB::table('resources')->get();
         $resource_category=resource_category::all();
+        $resource_center=center::all();
 
             if(request()->ajax())
             {
@@ -78,7 +77,7 @@ class ResourceController extends Controller
                         ->rawColumns(['action','status'])
                         ->make(true);
             }
-        return view('resources.index')->with('Cat_data',$resource_category);
+        return view('resources.index')->with('cat_data',$resource_category)->with('center_data',$resource_center);
     }
 
     public function load_type(Request $request)
