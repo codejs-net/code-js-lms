@@ -76,8 +76,8 @@ $creator="name".$lang;
 <div class="container-fluid">
     <div class="card card-body">
             <div class="form-row">   
-            <div class="table-responsive">               
-            <table class="table table-hover" id="resource_datatable">
+            <div class="table-responsive"style="overflow-x: auto;">               
+            <table  class="table table-striped table-hover" id="resource_datatable">
                     <thead class="bg-gradient-secondary">
                         <tr>
                             <th scope="col">Resource ID</th>
@@ -85,7 +85,7 @@ $creator="name".$lang;
                             <th scope="col">Accession No</th>
                             <th scope="col">ISBN/ISSN</th>
                             <th scope="col"style="width: 20%">Title</th>
-                            <th scope="col"style="width: 20%">Creator</th>
+                            <th scope="col"style="width: 15%">Creator</th>
                             <th scope="col">DDC</th>
                             <!-- <th scope="col">Publisher</th> -->
                             <th scope="col">Price</th>
@@ -210,6 +210,7 @@ $lang = session()->get('db_locale');
         "searchable": false},
         { type: 'natural', targets: '_all' }
     ],
+    responsive: true,
     processing: true,
     serverSide: true,
 

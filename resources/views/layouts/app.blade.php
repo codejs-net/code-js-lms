@@ -36,6 +36,7 @@
 
     <!-- datatables -->
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar-bootstrap/main.min.css') }}">
      <!-- Fonts -->
@@ -49,6 +50,7 @@
 
      <!-- Site Custom -->
      <link href="{{ asset('css/site.css') }}" rel="stylesheet">
+     
 
     <!-- ======================================================================== -->
 
@@ -123,7 +125,10 @@
   
     <!-- jQuery-Datatable -->
   <script src="{{ asset('plugins/datatables-jquery/js/jquery.dataTables.min.js') }}" defer></script>
+  <!-- <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}" defer></script> -->
+
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" defer></script>
+  <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}" defer></script>
   <script src="{{ asset('plugins/datatables-bs4/js/natural.js') }}" defer></script>
 
     <!-- ======================================================================== -->
