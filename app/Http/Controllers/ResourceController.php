@@ -57,9 +57,11 @@ class ResourceController extends Controller
                 return datatables()->of($resouredata)
                         ->addIndexColumn()
                         ->addColumn('action', function($data){
-                            $button = '<a href="/update_book_view/'.$data->id.'" class="btn btn-success btn-sm"><i class="fa fa-pencil" ></i></a>';
+                            $button = '<a href="/show_resource_view/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
-                            $button .= '<a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#book_delete" data-bookid="'.$data->id.'" data-title="'.$data->title_si.'"><i class="fa fa-trash" ></i></a>';
+                            $button .= '<a href="/update_resource_view/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
+                            $button .= '&nbsp;&nbsp;';
+                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#book_delete" data-bookid="'.$data->id.'" data-title="'.$data->title_si.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
                         })
 
@@ -72,7 +74,7 @@ class ResourceController extends Controller
                         })
 
                         ->addColumn('images', function ($data) {
-                            $images='<img class="img-icon" src="images/resources/'. $data->image.'">';
+                            $images='<img class="img-resource" src="images/resources/'. $data->image.'">';
                             return  $images;
                             
                         })

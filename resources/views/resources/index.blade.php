@@ -78,19 +78,19 @@ $creator="name".$lang;
             <div class="form-row">   
             <div class="table-responsive">               
             <table class="table table-hover" id="resource_datatable">
-                    <thead class="thead-light">
+                    <thead class="bg-gradient-secondary">
                         <tr>
                             <th scope="col">Resource ID</th>
                             <th scope="col">Resource</th>
                             <th scope="col">Accession No</th>
                             <th scope="col">ISBN/ISSN</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Creator</th>
+                            <th scope="col"style="width: 20%">Title</th>
+                            <th scope="col"style="width: 20%">Creator</th>
                             <th scope="col">DDC</th>
-                            <th scope="col">Publisher</th>
+                            <!-- <th scope="col">Publisher</th> -->
                             <th scope="col">Price</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Action</th>
+                            <th scope="col"style="width: 10%">Action</th>
                         </tr>
                     </thead>
                     <tbody>  
@@ -226,7 +226,7 @@ $lang = session()->get('db_locale');
         {data: "title<?php echo $lang; ?>",name: "title",orderable: true},
         {data: "name<?php echo $lang; ?>",name: "creator",orderable: true},
         {data: "ddc",name: "ddc",orderable: true},
-        {data: "publisher<?php echo $lang; ?>",name: "publisher",orderable: false},
+        // {data: "publisher<?php echo $lang; ?>",name: "publisher",orderable: false},
         {data: "price",name: "price",orderable: true},
         {data: "status",name: "status",orderable: true},
         {data: "action",name: "action",orderable: false}
@@ -274,7 +274,7 @@ function load_type(d_cat)
             success:function(data){
                 for(var i=0;i<data.length;i++)
                 {
-                    op+='<a href="filter_by_type/'+data[i].id+'" class="btn btn-default btn-sm ml-2 mb-2"><img class="img-icon" src="images/'+data[i].image+'">&nbsp;'+
+                    op+='<a href="filter_by_type/'+data[i].id+'" class="btn btn-default btn-sm ml-2 mb-2"><img class="img-icon" src="images/'+data[i].image+'"><br>'+
                         @if($locale=="si") data[i].type_si 
                         @elseif($locale=="ta") data[i].type_ta 
                         @elseif($locale=="en") data[i].type_en
