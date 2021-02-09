@@ -11,6 +11,8 @@
         "php": "^7.3",
         "artisaninweb/laravel-soap": "0.3.0.9",
         "barryvdh/laravel-dompdf": "^0.9.0",
+        "datatables.net/datatables.net-bs4": "dev-master",
+        "datatables.net/datatables.net-responsive-bs4": "dev-master",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
