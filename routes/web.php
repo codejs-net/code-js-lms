@@ -51,12 +51,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('load_resource_type', [ResourceController::class, 'load_type'])->name('load_resource_type');
     Route::get('filter_by_type/{id}', [ResourceController::class, 'filter_by_type'])->name('filter_by_type');
     Route::post('import_resource', [ResourceController::class, 'import'])->name('import_resource');
+    Route::get('update_resource_view/{id}', [ResourceController::class, 'edit'])->name('update_resource_view');
+    Route::get('show_resource_view/{id}', [ResourceController::class, 'show'])->name('show_resource_view');
 
     // --------Resource support/category--------------------------------
     Route::resource('resource_catagory', Resource_categoryController::class);
     Route::post('update_resource_cat', [Resource_categoryController::class, 'update_detail'])->name('update_resource_cat');
     Route::post('delete_resource_cat', [Resource_categoryController::class, 'delete'])->name('delete_resource_cat');
     Route::post('import_resource_cat', [Resource_categoryController::class, 'import'])->name('import_resource_cat');
+    
 
      // --------Resource support/type--------------------------------
      Route::resource('resource_type', Resource_typeController::class);
