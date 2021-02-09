@@ -73,7 +73,7 @@
 @endphp 
 
     @include('partials.header')
-    <aside class="main-sidebar sidebar-dark-indigo elevation-4">
+    <aside class="main-sidebar sidebar-light-indigo elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
             <img src="{{ asset('img/js2.png') }}" alt="lms" class="brand-image img-circle elevation-5"
@@ -124,6 +124,7 @@
     <!-- jQuery-Datatable -->
   <script src="{{ asset('plugins/datatables-jquery/js/jquery.dataTables.min.js') }}" defer></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" defer></script>
+  <script src="{{ asset('plugins/datatables-bs4/js/natural.js') }}" defer></script>
 
     <!-- ======================================================================== -->
 

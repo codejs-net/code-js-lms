@@ -92,7 +92,7 @@ class ConfigController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $mbr=new staff;
-        $mbr->center_id=0;
+        // $mbr->center_id=0;
         $mbr->title=$request->title;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
@@ -103,7 +103,7 @@ class ConfigController extends Controller
         $mbr->address2_si=$request->Address2_si;
         $mbr->address2_ta=$request->Address2_ta;
         $mbr->address2_en=$request->Address2_en;
-        $mbr->designetion_id=0;
+        // $mbr->designetion_id=0;
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;

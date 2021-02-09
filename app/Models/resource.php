@@ -11,7 +11,7 @@ class resource extends Model
     protected $table="resources";
     protected $fillable = [
         'accessionNo', 
-        'standardnumber', 
+        'standard_number', 
         'title_si', 
         'title_ta', 
         'title_en',
@@ -21,6 +21,7 @@ class resource extends Model
         'dd_class_id',
         'dd_devision_id',
         'dd_section_id',
+        'ddc',
         'center_id',
         'language_id',
         'publisher_id',
@@ -29,16 +30,17 @@ class resource extends Model
         'price',
         'publishyear',
         'phydetails',
-        'rack',
-        'floor',
-        'note',
+        'note_si',
+        'note_ta',
+        'note_en',
         'status',
         'br_qr_code',
         'image'
     ];
+    
 
-    public function category()
-    {
-        return $this->hasMany('App\Models\resource_category','category_id');
-    }
+    // public function category()
+    // {
+    //     return $this->hasMany('App\Models\resource_category','category_id');
+    // }
 }

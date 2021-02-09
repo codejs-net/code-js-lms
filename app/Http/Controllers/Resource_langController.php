@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\resource_language;
+use App\Imports\Resource_languageImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Input;
 
 class Resource_langController extends Controller
 {
@@ -14,10 +18,10 @@ class Resource_langController extends Controller
   
     function __construct()
     {
-         $this->middleware('permission:book_details-list|book_details-create|book_details-edit|book_details-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:book_details-create', ['only' => ['create','store']]);
-         $this->middleware('permission:book_details-edit', ['only' => ['update_detail']]);
-         $this->middleware('permission:book_details-delete', ['only' => ['delete']]);
+         $this->middleware('permission:support_data-list|support_data-create|support_data-edit|support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
+         $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
          $this->middleware('permission:data-import', ['only' => ['import']]);
     }
     /**
@@ -27,8 +31,8 @@ class Resource_langController extends Controller
      */
     public function index()
     {
-        $details = book_cat::orderBy('id','ASC')->paginate(5);
-        return view('books_details.book_language.index',compact('details'));
+        $details = resource_language::orderBy('id','ASC')->paginate(5);
+        return view('resource_support.resource_language.index',compact('details'));
        
     }
 
@@ -50,15 +54,21 @@ class Resource_langController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => 'required',
-        ]);
+        
+        // $locale = session()->get('locale');
+        // $lang="_".$locale;
+
+        // request()->validate([
+        //     'name'.$lang => 'required',
+        // ]);
     
         $form_data = array(
-            'category' =>  $request->name,   
+            'language_si' =>  $request->name_si,
+            'language_ta' =>  $request->name_ta,
+            'language_en' =>  $request->name_en, 
         );
-        book_cat::create($form_data);
-        return redirect()->route('books_category.index')->with('success','Details created successfully.');
+        resource_language::create($form_data);
+        return redirect()->route('resource_language.index')->with('success','Details created successfully.');
     }
     
     /**
@@ -92,14 +102,19 @@ class Resource_langController extends Controller
      */
     public function update_detail(Request $request)
     {
-         request()->validate([
-            'name_update' => 'required',
-        ]);
+        // $locale = session()->get('locale');
+        // $lang="_".$locale;
+
+        //  request()->validate([
+        //     'name_update'.$lang => 'required',
+        // ]);
     
-        $detail=book_cat::find($request->id_update);
-        $detail->category=$request->name_update;
+        $detail=resource_language::find($request->id_update);
+        $detail->language_si=$request->name_update_si;
+        $detail->language_ta=$request->name_update_ta;
+        $detail->language_en=$request->name_update_en;
         $detail->save();
-        return redirect()->route('books_category.index')->with('success','Details Updated successfully.');
+        return redirect()->route('resource_language.index')->with('success','Details Updated successfully.');
     }
     
     /**
@@ -110,8 +125,14 @@ class Resource_langController extends Controller
      */
     public function delete(Request $request)
     {
-        $detail=book_cat::find($request->id_delete);
+        $detail=resource_language::find($request->id_delete);
         $detail->delete();
-        return redirect()->route('books_category.index')->with('success','Details Removed successfully.');
+        return redirect()->route('resource_language.index')->with('success','Details Removed successfully.');
+    }
+    public function import() 
+    {
+        // resource_language::query()->truncate();
+        $data=Excel::import(new Resource_languageImport,request()->file('file'));
+        return redirect()->route('resource_language.index')->with('success','Details imported successfully.');
     }
 }

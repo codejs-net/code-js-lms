@@ -1,25 +1,75 @@
 @extends('layouts.app')
-
-
 @section('content')
+
+@php
+$locale = session()->get('locale');
+$lang="_".$locale;
+$category="category".$lang;
+$center="name".$lang;
+$publisher="publisher".$lang;
+$title="title".$lang;
+$creator="name".$lang;
+
+@endphp
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Books&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-search"></i> Search Book&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Resources&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-search"></i> Search Resources&nbsp;</a></li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
-        <div class="col-md-11 col-sm-6 text-center"> 
-            <h4> <i class="fa fa-search"> Search Books</i></h4>
+        <div class="col-md-10 col-sm-6 text-center"> 
+            <h5> <i class="fa fa-search"> Search Resources</i></h5>
         </div>  
-        <div class="col-md-1 col-sm-6 text-right">
-            <h4><a href="{{ route('books.create') }}" class="btn btn-info btn-md" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a></h4>  
+        <div class="col-md-2 col-sm-6 text-right">
+            <h5>
+            <a href="{{ route('resources.create') }}" class="btn btn-primary btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            @can('data-import')
+                <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+            @endcan
+            </h5>  
         </div>
     </div>
     
+</div>
+<div class="container-fluid">
+<div class="card card-body">
+    <div class="row">
+        <div class="col-md-2 col-sm-2 text-center">
+                <div class="form-group">
+                    <!-- <label for="category">Category</label> -->
+                    <select class="form-control mb-3"name="category" id="category" value="">
+                        <option value="All" selected>All Categories</option>
+                            @foreach($cat_data as $item)
+                                <option value="{{ $item->id }}" style="background-image:url(images/{{ $item->image}});">&nbsp;{{ $item->$category}}</option>
+                            @endforeach
+                    </select>     
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-8 text-center">
+            <div class="form-group text-center">
+                <!-- <label for="category">Type</label> -->
+                <span id="type_bar"></span>
+            </div>
+        </div>
+
+        <div class="col-md-2 col-sm-2 text-center">
+                <div class="form-group">
+                    <select class="form-control mb-3"name="center" id="center" value="">
+                        <option value="All" selected>All Centers</option>
+                            @foreach($center_data as $item)
+                                <option value="{{ $item->id }}">&nbsp;{{ $item->$center}}</option>
+                            @endforeach
+                    </select>     
+            </div>
+        </div>
+
+    </div>
+</div>   
 </div>
 
         <!-- Main content -->
@@ -27,18 +77,18 @@
     <div class="card card-body">
             <div class="form-row">   
             <div class="table-responsive">               
-            <table class="table table-hover" id="book_datatable">
-                    <thead class="thead-dark">
+            <table class="table table-hover" id="resource_datatable">
+                    <thead class="thead-light">
                         <tr>
-                            <th scope="col">Book ID</th>
+                            <th scope="col">Resource ID</th>
+                            <th scope="col">Resource</th>
                             <th scope="col">Accession No</th>
-                            <!-- <th scope="col">Barcode</th> -->
+                            <th scope="col">ISBN/ISSN</th>
                             <th scope="col">Title</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Language</th>
+                            <th scope="col">Creator</th>
+                            <th scope="col">DDC</th>
                             <th scope="col">Publisher</th>
-                            <th scope="col">Place</th>
+                            <th scope="col">Price</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -62,7 +112,7 @@
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Remove Book</h4>
+                    <h5 class="modal-title" id="modaltitle">Remove Book</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -81,7 +131,7 @@
                             <h5 id="modallabel">Are you sure Remove Book </h5>
                         </div>
                         <div class="col-md-8">
-                            <h4><label type="text"  id="bookname"></label></h4>
+                            <h5><label type="text"  id="bookname"></label></h5>
                         </div>
                     </div> 
                 </div>
@@ -97,6 +147,48 @@
 </div>
 <!-- ---------------------end delete Model------------------------------------- -->
 
+<!---------------------------import Modal --------------------------------------->
+<div class="modal fade" id="data_import" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-indigo">
+                <div class="text-center">
+                    <h5 class="modal-title" id="modaltitle">Import Resources</h5>
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                    
+            </div>
+            
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource') }}"class="needs-validation"  novalidate>
+                {{ csrf_field() }}
+                <div class="modal-body">
+
+                <div class="custom-file form-group text-center m-3">
+                    <div class="col-md-10">
+                        <input type="file" class="form-control-file custom-file-input" id="file" name="file" required>
+                        <label class="custom-file-label " for="customFile">Choose Excel file</label>
+                    </div>
+                    <div class="col-md-2">
+                    @can('code-import')
+                    @endcan
+                </div>
+            </div>
+                    
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
+
 @php
 $lang = session()->get('db_locale');
 @endphp
@@ -111,32 +203,39 @@ $lang = session()->get('db_locale');
     $(document).ready(function()
     {
     // ----------view-------------------------
-    $('#book_datatable').DataTable({
+    $('#resource_datatable').DataTable({
+    columnDefs: [
+        {"targets": [0],
+        "visible": false,
+        "searchable": false},
+        { type: 'natural', targets: '_all' }
+    ],
     processing: true,
     serverSide: true,
 
     ajax:{
-    url: "{{ route('books.index') }}",
+    url: "{{ route('resources.index') }}",
     },
+    pageLength: 15,
+    
     columns:[
-        {data: "id",name: "Book ID"},
-        {data: "accessionNo",name: "accessionNo"},
-        // {data: "barcode",name: "barcode",orderable: false},
-        {data: "book_title<?php echo $lang; ?>",name: "book_title"},
-        {data: "authors<?php echo $lang; ?>",name: "authors"},
-        {data: "category<?php echo $lang; ?>",name: "category"},
-        {data: "language<?php echo $lang; ?>",name: "language"},
-        {data: "publisher<?php echo $lang; ?>",name: "publisher"},
-        {data: "rackno",name: "rackno"},
-        {data: "status",name: "status",orderable: false},
+        {data: "id",name: "ResourceID",orderable: true},
+        {data: "images",name: "images",orderable: false},
+        {data: "accessionNo",name: "AccessionNo",orderable: true},
+        {data: "standard_number",name: "standard_number",orderable: true},
+        {data: "title<?php echo $lang; ?>",name: "title",orderable: true},
+        {data: "name<?php echo $lang; ?>",name: "creator",orderable: true},
+        {data: "ddc",name: "ddc",orderable: true},
+        {data: "publisher<?php echo $lang; ?>",name: "publisher",orderable: false},
+        {data: "price",name: "price",orderable: true},
+        {data: "status",name: "status",orderable: true},
         {data: "action",name: "action",orderable: false}
     ],
+    // order:[[4,"asc"]],
     "createdRow": function( row, data, dataIndex ) {
         if ( data['status'] == "Removed" ) {        
-            $('td', row).addClass('bg-red');
-            //$(row).addClass('bg_red');
-        }
-
+            $('td', row).addClass('font-weight-bold');
+            }
         }
     });
 
@@ -154,8 +253,53 @@ document.getElementById("bookname").innerHTML = b_title;
 // end book delete function
 
 
+load_type("All");
+
+
 });
 
+
+function load_type(d_cat)
+{
+        op="";
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('load_resource_type')}}", 
+            data: { d_cat: d_cat, },
+            success:function(data){
+                for(var i=0;i<data.length;i++)
+                {
+                    op+='<a href="filter_by_type/'+data[i].id+'" class="btn btn-default btn-sm ml-2 mb-2"><img class="img-icon" src="images/'+data[i].image+'">&nbsp;'+
+                        @if($locale=="si") data[i].type_si 
+                        @elseif($locale=="ta") data[i].type_ta 
+                        @elseif($locale=="en") data[i].type_en
+                        @endif +
+                        '&nbsp;</a>';
+                }
+                $("#type_bar").html(op);
+               
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // --------------------------------------------------------
+}
+
+$("#category").change(function () {
+     var d_cat=$('#category').val();
+     load_type(d_cat);  
+});
+
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
 
 
 </script>

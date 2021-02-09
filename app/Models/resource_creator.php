@@ -8,9 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class resource_creator extends Model
 {
     use HasFactory;
+    protected $table="resource_creators";
+    protected $fillable = 
+                    [
+                    'title',
+                    'name_si',
+                    'name_ta',
+                    'name_en',
+                    'address1_si',
+                    'address1_ta',
+                    'address1_en',
+                    'address2_si',
+                    'address2_ta',
+                    'address2_en',
+                    'mobile',
+                    'gender',
+                    'description',
+                    'image'
+                    ];
 
-    public function resource()
-    {
-        return $this->belongsTo('App\Models\resource');
-    }
+
+    
 }

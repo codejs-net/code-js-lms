@@ -11,8 +11,8 @@ class resource_publisher extends Model
     protected $table="resource_publishers";
     protected $fillable = ['publisher_si','publisher_ta','publisher_en'];
 
-    public function resource()
-    {
-        return $this->belongsTo('App\Models\resource');
-    }
+    // public function resource()
+    // {
+    //     return $this->belongsTo('App\Models\resource');
+    // }
 }

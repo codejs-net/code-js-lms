@@ -18,6 +18,7 @@ class CreateResourceCategoriesTable extends Migration
             $table->string('category_si')->nullable();
             $table->string('category_ta')->nullable();
             $table->string('category_en')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -40,6 +40,8 @@ class CreateResourcesTable extends Migration
             $table->unsignedBigInteger('dd_section_id')->nullable();
             $table->foreign('dd_section_id')->references('id')->on('resource_dd_sections');
 
+            $table->string('ddc')->nullable();
+
             $table->integer('center_id')->unsigned()->default(1);
             $table->foreign('center_id')->references('id')->on('centers')->default(1);
 
@@ -51,16 +53,10 @@ class CreateResourcesTable extends Migration
 
             $table->date('purchase_date')->default(Carbon::now());
             $table->string('edition')->nullable();
-            $table->double('price', 4, 2);
-
-            $table->integer('donate_id')->unsigned()->nullable();
-            $table->foreign('donate_id')->references('id')->on('resource_donates');
+            $table->double('price', 8, 2);
 
             $table->year('publishyear')->nullable();
             $table->string('phydetails')->nullable();
-            $table->string('rack')->nullable();
-            $table->string('floor')->nullable();
-
             $table->string('note_si')->nullable();
             $table->string('note_ta')->nullable();
             $table->string('note_en')->nullable();

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2021 at 12:30 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.14
+-- Generation Time: Feb 06, 2021 at 09:07 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,6 +46,13 @@ CREATE TABLE `centers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `centers`
+--
+
+INSERT INTO `centers` (`id`, `library_id`, `name_si`, `name_ta`, `name_en`, `address1_si`, `address1_ta`, `address1_en`, `address2_si`, `address2_ta`, `address2_en`, `telephone`, `fax`, `email`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, 'ප්‍රාදේශීය සභා මහජන පුස්ථකාලය', 'பிரதேச சபா பொது நூலகம்', 'Pradeshiya Sabha Public Library', 'ප්‍රාදේශීය සභාව', 'பிரதேச சபா', 'Pradeshiya Sabha', 'බුලත්කොහුපිටිය', 'புலத்கோஹுபிட்டி', 'Bulathkohupitiya', '0362247575', '0362247575', NULL, NULL, '2021-02-06 14:33:11', '2021-02-06 14:33:11');
 
 -- --------------------------------------------------------
 
@@ -120,7 +127,7 @@ CREATE TABLE `lendings` (
 CREATE TABLE `lending_details` (
   `id` int(10) UNSIGNED NOT NULL,
   `lending_id` int(10) UNSIGNED DEFAULT NULL,
-  `issue_date` date NOT NULL DEFAULT '2021-02-02',
+  `issue_date` date NOT NULL DEFAULT '2021-02-06',
   `return_date` date NOT NULL,
   `fine_amount` double(4,2) NOT NULL,
   `remark_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -156,6 +163,13 @@ CREATE TABLE `libraries` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `libraries`
+--
+
+INSERT INTO `libraries` (`id`, `name_si`, `name_ta`, `name_en`, `address1_si`, `address1_ta`, `address1_en`, `address2_si`, `address2_ta`, `address2_en`, `telephone`, `fax`, `email`, `description`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'ප්‍රාදේශීය සභා මහජන පුස්ථකාලය', 'பிரதேச சபா பொது நூலகம்', 'Pradeshiya Sabha Public Library', 'ප්‍රාදේශීය සභාව', 'பிரதேச சபா', 'Pradeshiya Sabha', 'බුලත්කොහුපිටිය', 'புலத்கோஹுபிட்டி', 'Bulathkohupitiya', '0362247575', '0362247575', NULL, NULL, NULL, '2021-02-06 14:33:11', '2021-02-06 14:33:11');
+
 -- --------------------------------------------------------
 
 --
@@ -180,7 +194,7 @@ CREATE TABLE `members` (
   `birthday` date DEFAULT NULL,
   `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `regdate` date NOT NULL DEFAULT '2021-02-02',
+  `regdate` date NOT NULL DEFAULT '2021-02-06',
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -235,18 +249,19 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '015_create_resource_creators_table', 1),
 (16, '016_create_resource_languages_table', 1),
 (17, '017_create_resource_publishers_table', 1),
-(18, '018_create_resource_donates_table', 1),
-(19, '019_create_resources_table', 1),
-(20, '020_create_member_cats_table', 1),
-(21, '021_create_members_table', 1),
-(22, '022_create_lendings_table', 1),
-(23, '023_create_lending_details_table', 1),
-(24, '024_create_code_table', 1),
-(25, '025_create_survey_suggestions_table', 1),
-(26, '026_create_surveys_table', 1),
-(27, '027_create_survey_detail_temps_table', 1),
-(28, '028_create_survey_details_table', 1),
-(29, '029_create_survey_boards_table', 1);
+(18, '018_create_resources_table', 1),
+(19, '019_create_resource_places_table', 1),
+(20, '020_create_resource_donates_table', 1),
+(21, '021_create_member_cats_table', 1),
+(22, '022_create_members_table', 1),
+(23, '023_create_lendings_table', 1),
+(24, '024_create_lending_details_table', 1),
+(25, '025_create_code_table', 1),
+(26, '026_create_survey_suggestions_table', 1),
+(27, '027_create_surveys_table', 1),
+(28, '028_create_survey_detail_temps_table', 1),
+(29, '029_create_survey_details_table', 1),
+(30, '030_create_survey_boards_table', 1);
 
 -- --------------------------------------------------------
 
@@ -271,6 +286,13 @@ CREATE TABLE `model_has_roles` (
   `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `model_has_roles`
+--
+
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+(1, 'App\\Models\\User', 1);
 
 -- --------------------------------------------------------
 
@@ -359,17 +381,15 @@ CREATE TABLE `resources` (
   `dd_class_id` bigint(20) UNSIGNED DEFAULT NULL,
   `dd_devision_id` bigint(20) UNSIGNED DEFAULT NULL,
   `dd_section_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ddc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `center_id` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `language_id` bigint(20) UNSIGNED DEFAULT NULL,
   `publisher_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `purchase_date` date NOT NULL DEFAULT '2021-02-02',
+  `purchase_date` date NOT NULL DEFAULT '2021-02-06',
   `edition` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` double(4,2) NOT NULL,
-  `donate_id` int(10) UNSIGNED DEFAULT NULL,
   `publishyear` year(4) DEFAULT NULL,
   `phydetails` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rack` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `floor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -391,6 +411,7 @@ CREATE TABLE `resource_categories` (
   `category_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `category_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `category_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -416,6 +437,7 @@ CREATE TABLE `resource_creators` (
   `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -461,6 +483,7 @@ CREATE TABLE `resource_dd_divisions` (
 
 CREATE TABLE `resource_dd_sections` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `dd_class_id` bigint(20) UNSIGNED DEFAULT NULL,
   `dd_devision_id` bigint(20) UNSIGNED DEFAULT NULL,
   `section_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `section_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -478,6 +501,7 @@ CREATE TABLE `resource_dd_sections` (
 
 CREATE TABLE `resource_donates` (
   `id` int(10) UNSIGNED NOT NULL,
+  `resource_id` int(10) UNSIGNED DEFAULT NULL,
   `doner_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `doner_name_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `doner_name_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -491,7 +515,7 @@ CREATE TABLE `resource_donates` (
   `doner_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `doner_gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `donete_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `donate_date` date NOT NULL DEFAULT '2021-02-02',
+  `donate_date` date NOT NULL DEFAULT '2021-02-06',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -507,6 +531,22 @@ CREATE TABLE `resource_languages` (
   `language_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `language_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `language_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resource_places`
+--
+
+CREATE TABLE `resource_places` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `resource_id` int(10) UNSIGNED DEFAULT NULL,
+  `rack` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `floor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `index` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -538,6 +578,7 @@ CREATE TABLE `resource_types` (
   `type_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -561,7 +602,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'web', '2021-02-02 05:57:42', '2021-02-02 05:57:42');
+(1, 'Admin', 'web', '2021-02-06 14:31:13', '2021-02-06 14:31:13');
 
 -- --------------------------------------------------------
 
@@ -663,11 +704,18 @@ CREATE TABLE `staff` (
   `birthday` date DEFAULT NULL,
   `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `regdate` date NOT NULL DEFAULT '2021-02-02',
+  `regdate` date NOT NULL DEFAULT '2021-02-06',
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`id`, `center_id`, `title`, `name_si`, `name_ta`, `name_en`, `address1_si`, `address1_ta`, `address1_en`, `address2_si`, `address2_ta`, `address2_en`, `designetion_id`, `nic`, `mobile`, `birthday`, `gender`, `description`, `regdate`, `image`, `created_at`, `updated_at`) VALUES
+(1, 0, 'Mr', 'ඒ.එම්.එන් ශානුක අලහකෝන්', NULL, 'A.M.N.S Alahakoon', 'ගැටියමුල්ල', NULL, 'Getiyamulla', 'අලවතුර', NULL, 'Alawathura', 0, '910053094V', '94715151050', '2021-02-05', 'Male', NULL, '2021-02-01', '', '2021-02-06 14:33:12', '2021-02-06 14:33:12');
 
 -- --------------------------------------------------------
 
@@ -677,7 +725,7 @@ CREATE TABLE `staff` (
 
 CREATE TABLE `surveys` (
   `id` int(10) UNSIGNED NOT NULL,
-  `start_date` date NOT NULL DEFAULT '2021-02-02',
+  `start_date` date NOT NULL DEFAULT '2021-02-06',
   `total_resources` int(11) DEFAULT NULL,
   `removed_resources` int(11) DEFAULT NULL,
   `lending_resources` int(11) DEFAULT NULL,
@@ -723,8 +771,8 @@ CREATE TABLE `survey_boards` (
 
 CREATE TABLE `survey_details` (
   `id` int(10) UNSIGNED NOT NULL,
-  `survey_id` int(11) NOT NULL,
-  `resource_id` int(11) NOT NULL,
+  `survey_id` int(10) UNSIGNED DEFAULT NULL,
+  `resource_id` int(10) UNSIGNED DEFAULT NULL,
   `accessionNo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `standard_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -746,7 +794,7 @@ CREATE TABLE `survey_details` (
   `center_name_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `center_name_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `center_name_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `purchase_date` date NOT NULL DEFAULT '2021-02-02',
+  `purchase_date` date NOT NULL DEFAULT '2021-02-06',
   `edition` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` double(4,2) NOT NULL,
   `phydetails` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -812,6 +860,13 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `email_verified_at`, `username`, `password`, `staff_id`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'shanuka.pvt@gmail.com', NULL, 'shanuka', '$2y$10$60FaX3f8FPhGbbK2ASdkNuYq/rcVazd8wCoSEklHyiNvjb8VqVHEm', 1, NULL, '2021-02-06 14:33:12', '2021-02-06 14:33:12');
 
 --
 -- Indexes for dumped tables
@@ -921,8 +976,7 @@ ALTER TABLE `resources`
   ADD KEY `resources_dd_section_id_foreign` (`dd_section_id`),
   ADD KEY `resources_center_id_foreign` (`center_id`),
   ADD KEY `resources_language_id_foreign` (`language_id`),
-  ADD KEY `resources_publisher_id_foreign` (`publisher_id`),
-  ADD KEY `resources_donate_id_foreign` (`donate_id`);
+  ADD KEY `resources_publisher_id_foreign` (`publisher_id`);
 
 --
 -- Indexes for table `resource_categories`
@@ -954,19 +1008,28 @@ ALTER TABLE `resource_dd_divisions`
 --
 ALTER TABLE `resource_dd_sections`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `resource_dd_sections_dd_class_id_foreign` (`dd_class_id`),
   ADD KEY `resource_dd_sections_dd_devision_id_foreign` (`dd_devision_id`);
 
 --
 -- Indexes for table `resource_donates`
 --
 ALTER TABLE `resource_donates`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `resource_donates_resource_id_foreign` (`resource_id`);
 
 --
 -- Indexes for table `resource_languages`
 --
 ALTER TABLE `resource_languages`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `resource_places`
+--
+ALTER TABLE `resource_places`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `resource_places_resource_id_foreign` (`resource_id`);
 
 --
 -- Indexes for table `resource_publishers`
@@ -1026,7 +1089,9 @@ ALTER TABLE `survey_boards`
 -- Indexes for table `survey_details`
 --
 ALTER TABLE `survey_details`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `survey_details_survey_id_foreign` (`survey_id`),
+  ADD KEY `survey_details_resource_id_foreign` (`resource_id`);
 
 --
 -- Indexes for table `survey_detail_temps`
@@ -1060,7 +1125,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `centers`
 --
 ALTER TABLE `centers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `codes`
@@ -1096,7 +1161,7 @@ ALTER TABLE `lending_details`
 -- AUTO_INCREMENT for table `libraries`
 --
 ALTER TABLE `libraries`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `members`
@@ -1114,7 +1179,7 @@ ALTER TABLE `member_cats`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1171,6 +1236,12 @@ ALTER TABLE `resource_languages`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `resource_places`
+--
+ALTER TABLE `resource_places`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `resource_publishers`
 --
 ALTER TABLE `resource_publishers`
@@ -1198,7 +1269,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `surveys`
@@ -1234,7 +1305,7 @@ ALTER TABLE `survey_suggestions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -1286,7 +1357,6 @@ ALTER TABLE `resources`
   ADD CONSTRAINT `resources_dd_class_id_foreign` FOREIGN KEY (`dd_class_id`) REFERENCES `resource_dd_classes` (`id`),
   ADD CONSTRAINT `resources_dd_devision_id_foreign` FOREIGN KEY (`dd_devision_id`) REFERENCES `resource_dd_divisions` (`id`),
   ADD CONSTRAINT `resources_dd_section_id_foreign` FOREIGN KEY (`dd_section_id`) REFERENCES `resource_dd_sections` (`id`),
-  ADD CONSTRAINT `resources_donate_id_foreign` FOREIGN KEY (`donate_id`) REFERENCES `resource_donates` (`id`),
   ADD CONSTRAINT `resources_language_id_foreign` FOREIGN KEY (`language_id`) REFERENCES `resource_languages` (`id`),
   ADD CONSTRAINT `resources_publisher_id_foreign` FOREIGN KEY (`publisher_id`) REFERENCES `resource_publishers` (`id`),
   ADD CONSTRAINT `resources_type_id_foreign` FOREIGN KEY (`type_id`) REFERENCES `resource_types` (`id`);
@@ -1301,7 +1371,20 @@ ALTER TABLE `resource_dd_divisions`
 -- Constraints for table `resource_dd_sections`
 --
 ALTER TABLE `resource_dd_sections`
+  ADD CONSTRAINT `resource_dd_sections_dd_class_id_foreign` FOREIGN KEY (`dd_class_id`) REFERENCES `resource_dd_classes` (`id`),
   ADD CONSTRAINT `resource_dd_sections_dd_devision_id_foreign` FOREIGN KEY (`dd_devision_id`) REFERENCES `resource_dd_divisions` (`id`);
+
+--
+-- Constraints for table `resource_donates`
+--
+ALTER TABLE `resource_donates`
+  ADD CONSTRAINT `resource_donates_resource_id_foreign` FOREIGN KEY (`resource_id`) REFERENCES `resources` (`id`);
+
+--
+-- Constraints for table `resource_places`
+--
+ALTER TABLE `resource_places`
+  ADD CONSTRAINT `resource_places_resource_id_foreign` FOREIGN KEY (`resource_id`) REFERENCES `resources` (`id`);
 
 --
 -- Constraints for table `resource_types`
@@ -1334,6 +1417,13 @@ ALTER TABLE `surveys`
 --
 ALTER TABLE `survey_boards`
   ADD CONSTRAINT `survey_boards_survey_id_foreign` FOREIGN KEY (`survey_id`) REFERENCES `surveys` (`id`);
+
+--
+-- Constraints for table `survey_details`
+--
+ALTER TABLE `survey_details`
+  ADD CONSTRAINT `survey_details_resource_id_foreign` FOREIGN KEY (`resource_id`) REFERENCES `resources` (`id`),
+  ADD CONSTRAINT `survey_details_survey_id_foreign` FOREIGN KEY (`survey_id`) REFERENCES `surveys` (`id`);
 
 --
 -- Constraints for table `survey_detail_temps`

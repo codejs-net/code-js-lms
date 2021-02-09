@@ -2,7 +2,7 @@
     $locale = session()->get('locale');
     $usernme="name_".$locale;
 @endphp
-<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-gradient-blue mb-1">
+<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-gradient-indigo mb-1">
         <!-- Left navbar links -->
         <ul class="navbar-nav text-white">
             <li class="nav-item">
@@ -23,7 +23,7 @@
       <ul class="navbar-nav ml-auto">
        <li class="nav-item dropdown">
             <div class="dropdown pull-right">
-                  <a type="button" class="dropdown-toggle text-white badge badge-primary mr-3" data-toggle="dropdown">
+                  <a type="button" class="dropdown-toggle mr-3" data-toggle="dropdown">
                   @switch($locale)
                       @case('si')
                       <img src="{{ asset('img/si.png') }}" width="32px" height="30px">&nbsp; සිංහල
@@ -37,9 +37,9 @@
                   
                   </a>
                   <div class="dropdown-menu dropdown-menu-right mt-2">
-                    <a class="dropdown-item" href="../lang/si">Sinhala</a>
-                    <a class="dropdown-item" href="../lang/ta">Tamil</a>
-                    <a class="dropdown-item" href="../lang/en">English</a>
+                    <a class="dropdown-item" href="lang/si">Sinhala</a>
+                    <a class="dropdown-item" href="lang/ta">Tamil</a>
+                    <a class="dropdown-item" href="lang/en">English</a>
                   </div>
             </div>
         </li>
