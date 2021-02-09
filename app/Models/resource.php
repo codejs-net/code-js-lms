@@ -11,7 +11,7 @@ class resource extends Model
     protected $table="resources";
     protected $fillable = [
         'accessionNo', 
-        'standardnumber', 
+        'standard_number', 
         'title_si', 
         'title_ta', 
         'title_en',

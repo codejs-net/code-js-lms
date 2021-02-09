@@ -124,6 +124,7 @@
     <!-- jQuery-Datatable -->
   <script src="{{ asset('plugins/datatables-jquery/js/jquery.dataTables.min.js') }}" defer></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" defer></script>
+  <script src="{{ asset('plugins/datatables-bs4/js/natural.js') }}" defer></script>
 
     <!-- ======================================================================== -->
 
