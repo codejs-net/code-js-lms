@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('load_resource_dd_devision', [Resource_dd_sectionController::class, 'dddevision'])->name('load_resource_dd_devision');
     Route::post('load_resource_type', [ResourceController::class, 'load_type'])->name('load_resource_type');
     Route::get('filter_by_type/{id}', [ResourceController::class, 'filter_by_type'])->name('filter_by_type');
+    Route::post('import_resource', [ResourceController::class, 'import'])->name('import_resource');
 
     // --------Resource support/category--------------------------------
     Route::resource('resource_catagory', Resource_categoryController::class);

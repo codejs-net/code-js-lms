@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\book;
 use App\Models\resource_category;
 use App\Models\resource_type;
 use App\Models\center;
@@ -14,6 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use App\Imports\ResourceImport;
 
 class ResourceController extends Controller
 {
@@ -162,5 +162,12 @@ class ResourceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function import() 
+    {
+        // resource_category::query()->truncate();
+        $data=Excel::import(new ResourceImport,request()->file('file'));
+        return redirect()->route('resources.index')->with('success','Details imported successfully.');
     }
 }
