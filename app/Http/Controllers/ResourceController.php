@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\resource_category;
 use App\Models\resource_type;
+use App\Models\resource;
 use App\Models\center;
 use App\Models\setting;
 use Session;
@@ -23,8 +24,9 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->dta);
         $locale = session()->get('locale');
         $setting = setting::where('setting','locale_db')->first();
 
@@ -38,22 +40,38 @@ class ResourceController extends Controller
         }
         Session::put('db_locale', $lang);
         
-         $resouredata = DB::table('resources')
-                ->leftJoin('resource_categories', 'resources.category_id', '=', 'resource_categories.id')
-                ->leftJoin('resource_types', 'resources.type_id', '=', 'resource_types.id')
-                ->leftJoin('resource_creators', 'resources.cretor_id', '=', 'resource_creators.id')
-                ->leftJoin('resource_publishers', 'resources.publisher_id', '=', 'resource_publishers.id')
-                ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
-                ->get();
-
-                $resource_title="title".$lang;
+        $resource_title="title".$lang;
 
         $resource_category=resource_category::all();
         $resource_center=center::all();
 
             if(request()->ajax())
             {
+                error_log("________________________".$request->cdta);
+                if($request->cdta=="All")
+                {
+                    $resouredata = DB::table('resources')
+                    ->leftJoin('resource_categories', 'resources.category_id', '=', 'resource_categories.id')
+                    ->leftJoin('resource_types', 'resources.type_id', '=', 'resource_types.id')
+                    ->leftJoin('resource_creators', 'resources.cretor_id', '=', 'resource_creators.id')
+                    ->leftJoin('resource_publishers', 'resources.publisher_id', '=', 'resource_publishers.id')
+                    ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
+                    ->get();
+                }
+                else
+                {
+                    $resouredata = DB::table('resources')
+                    ->leftJoin('resource_categories', 'resources.category_id', '=', 'resource_categories.id')
+                    ->leftJoin('resource_types', 'resources.type_id', '=', 'resource_types.id')
+                    ->leftJoin('resource_creators', 'resources.cretor_id', '=', 'resource_creators.id')
+                    ->leftJoin('resource_publishers', 'resources.publisher_id', '=', 'resource_publishers.id')
+                    ->where('resources.category_id', $request->cdta)
+                    ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
+                    ->get();
+
+                }
                
+
                 return datatables()->of($resouredata)
                         ->addIndexColumn()
                         ->addColumn('action', function($data){
@@ -87,10 +105,10 @@ class ResourceController extends Controller
 
     public function load_type(Request $request)
     {
-       if($request->d_cat=="All")
+       if($request->cdta=="All")
        {$data=resource_type::all();}
        else
-       {$data = resource_type::where('category_id',$request->d_cat)->get();}
+       {$data = resource_type::where('category_id',$request->cdta)->get();}
         return response()->json($data);
     }
 

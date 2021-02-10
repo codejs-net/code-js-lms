@@ -27,7 +27,7 @@ $creator="name".$lang;
         </div>  
         <div class="col-md-2 col-sm-6 text-right">
             <h5>
-            <a href="{{ route('resources.create') }}" class="btn btn-primary btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            <a href="{{ route('resource.create') }}" class="btn btn-primary btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
             @can('data-import')
                 <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
             @endcan
@@ -77,18 +77,18 @@ $creator="name".$lang;
     <div class="card card-body">
             <div class="form-row">   
             <div class="table-responsive"style="overflow-x: auto;">               
-            <table  class="table table-striped table-hover" id="resource_datatable">
+            <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
                     <thead class="bg-gradient-secondary">
                         <tr>
                             <th scope="col">Resource ID</th>
                             <th scope="col">Resource</th>
                             <th scope="col">Accession No</th>
-                            <th scope="col">ISBN/ISSN</th>
+                            <!-- <th scope="col">ISBN/ISSN</th> -->
                             <th scope="col"style="width: 20%">Title</th>
                             <th scope="col"style="width: 15%">Creator</th>
                             <th scope="col">DDC</th>
                             <!-- <th scope="col">Publisher</th> -->
-                            <th scope="col">Price</th>
+                            <!-- <th scope="col">Price</th> -->
                             <th scope="col">Status</th>
                             <th scope="col"style="width: 10%">Action</th>
                         </tr>
@@ -200,49 +200,15 @@ $lang = session()->get('db_locale');
 @section('script')
 <script>
 
-    $(document).ready(function()
-    {
+$(document).ready(function()
+{
     // ----------view-------------------------
-    $('#resource_datatable').DataTable({
-    columnDefs: [
-        {"targets": [0],
-        "visible": false,
-        "searchable": false},
-        { type: 'natural', targets: '_all' }
-    ],
-    responsive: true,
-    processing: true,
-    serverSide: true,
-
-    ajax:{
-    url: "{{ route('resources.index') }}",
-    },
-    pageLength: 15,
-    
-    columns:[
-        {data: "id",name: "ResourceID",orderable: true},
-        {data: "images",name: "images",orderable: false},
-        {data: "accessionNo",name: "AccessionNo",orderable: true},
-        {data: "standard_number",name: "standard_number",orderable: true},
-        {data: "title<?php echo $lang; ?>",name: "title",orderable: true},
-        {data: "name<?php echo $lang; ?>",name: "creator",orderable: true},
-        {data: "ddc",name: "ddc",orderable: true},
-        // {data: "publisher<?php echo $lang; ?>",name: "publisher",orderable: false},
-        {data: "price",name: "price",orderable: true},
-        {data: "status",name: "status",orderable: true},
-        {data: "action",name: "action",orderable: false}
-    ],
-    // order:[[4,"asc"]],
-    "createdRow": function( row, data, dataIndex ) {
-        if ( data['status'] == "Removed" ) {        
-            $('td', row).addClass('font-weight-bold');
-            }
-        }
-    });
+   
 
 
     // start book delete function
-$('#book_delete').on('show.bs.modal', function (event) {
+$('#book_delete').on('show.bs.modal', function (event) 
+{
 
 var button = $(event.relatedTarget) 
 
@@ -256,11 +222,15 @@ document.getElementById("bookname").innerHTML = b_title;
 
 load_type("All");
 
+var route="{{ route('resource.index') }}";
+var cdta=$("#category").val();
+load_datatable(route,cdta);
+
 
 });
 
 
-function load_type(d_cat)
+function load_type(cdta)
 {
         op="";
         $.ajaxSetup({
@@ -271,7 +241,7 @@ function load_type(d_cat)
             type: "POST",
             dataType : 'json',
             url: "{{route('load_resource_type')}}", 
-            data: { d_cat: d_cat, },
+            data: { cdta: cdta, },
             success:function(data){
                 for(var i=0;i<data.length;i++)
                 {
@@ -291,11 +261,82 @@ function load_type(d_cat)
         })
         // --------------------------------------------------------
 }
+function load_by_category(d_cat)
+{
+        op="";
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "filter_by_category", 
+            data: { d_cat: d_cat, },
+            success:function(data){
+             
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // --------------------------------------------------------
+}
 
 $("#category").change(function () {
-     var d_cat=$('#category').val();
-     load_type(d_cat);  
+    var cdta=$("#category").val();
+    load_type(cdta);  
+    $('#resource_datatable').DataTable().clear().destroy();
+    var route="{{ route('resource.index') }}";
+    load_datatable(route,cdta);
 });
+
+function load_datatable(route,cdta)
+{
+    $('#resource_datatable').DataTable({
+    columnDefs: [
+        {"targets": [0],
+        "visible": false,
+        "searchable": false},
+        // { type: 'natural', targets: '_all' }
+    ],
+    responsive: true,
+    processing: true,
+    serverSide: false,
+    ordering: true,
+    searching: true,
+
+    ajax:{
+        type: "GET",
+        dataType : 'json',
+        data: { 
+            cdta: cdta, 
+        },
+        url: route,
+    },
+    pageLength: 15,
+    
+    columns:[
+        {data: "id",name: "ResourceID",orderable: true},
+        {data: "images",name: "images",orderable: false},
+        {data: "accessionNo",name: "AccessionNo",orderable: true},
+        // {data: "standard_number",name: "standard_number",orderable: true},
+        {data: "title<?php echo $lang; ?>",name: "title"},
+        {data: "name<?php echo $lang; ?>",name: "creator"},
+        {data: "ddc",name: "ddc",orderable: true},
+        // {data: "publisher<?php echo $lang; ?>",name: "publisher",orderable: false},
+        // {data: "price",name: "price",orderable: true},
+        {data: "status",name: "status",orderable: true},
+        {data: "action",name: "action",orderable: false}
+    ],
+    // order:[[4,"asc"]],
+    "createdRow": function( row, data, dataIndex ) {
+        if ( data['status'] == "Removed" ) {        
+            $('td', row).addClass('font-weight-bold');
+            }
+        }
+    });
+}
 
 $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();

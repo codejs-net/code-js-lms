@@ -49,13 +49,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('resources.create') }}" class="nav-link">
+                            <a href="{{ route('resource.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Add Resources</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('resources.index') }}">
+                                <a class="nav-link" href="{{ route('resource.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Search Resources</p>
                                 </a>
