@@ -32,3 +32,14 @@ php artisan db:seed --class=librarySeeder
 php artisan db:seed --class=BookSeeder
 
 
+// $resouredata = DB::table('resources')
+// ->leftJoin('resource_categories', 'resources.category_id', '=', 'resource_categories.id')
+// ->leftJoin('resource_types', 'resources.type_id', '=', 'resource_types.id')
+// ->leftJoin('resource_creators', 'resources.cretor_id', '=', 'resource_creators.id')
+// ->leftJoin('resource_publishers', 'resources.publisher_id', '=', 'resource_publishers.id')
+// ->where('resources.category_id', $request->cdta)
+// ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
+// ->get();
+
+
+
