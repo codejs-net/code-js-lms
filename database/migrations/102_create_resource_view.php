@@ -34,6 +34,10 @@ class CreateResourceView extends Migration
                 SELECT  resources.id,
                         resources.accessionNo,
                         resources.standard_number,
+                        resources.category_id,
+                        resources.type_id,
+                        resources.center_id,
+                        resources.publisher_id,
                         resources.image,
                         resources.title_si,
                         resources.title_ta,
@@ -69,7 +73,6 @@ class CreateResourceView extends Migration
     private function dropView(): string
     {
         return <<<SQL
-
             DROP VIEW IF EXISTS `view_resource_data`;
         SQL;
     }

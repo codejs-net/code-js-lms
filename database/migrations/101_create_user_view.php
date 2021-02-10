@@ -45,9 +45,8 @@ class CreateUserView extends Migration
 
     private function dropView(): string
     {
-        return <<<SQL
-
+            return <<<SQL
             DROP VIEW IF EXISTS `view_user_data`;
-        SQL;
+            SQL;
     }
 }

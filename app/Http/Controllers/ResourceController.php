@@ -8,6 +8,7 @@ use App\Models\resource_type;
 use App\Models\resource;
 use App\Models\center;
 use App\Models\setting;
+use App\Models\view_resource_data;
 use Session;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -47,29 +48,26 @@ class ResourceController extends Controller
 
             if(request()->ajax())
             {
-                error_log("________________________".$request->cdta);
-                if($request->cdta=="All")
-                {
-                    $resouredata = DB::table('resources')
-                    ->leftJoin('resource_categories', 'resources.category_id', '=', 'resource_categories.id')
-                    ->leftJoin('resource_types', 'resources.type_id', '=', 'resource_types.id')
-                    ->leftJoin('resource_creators', 'resources.cretor_id', '=', 'resource_creators.id')
-                    ->leftJoin('resource_publishers', 'resources.publisher_id', '=', 'resource_publishers.id')
-                    ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
-                    ->get();
-                }
-                else
-                {
-                    $resouredata = DB::table('resources')
-                    ->leftJoin('resource_categories', 'resources.category_id', '=', 'resource_categories.id')
-                    ->leftJoin('resource_types', 'resources.type_id', '=', 'resource_types.id')
-                    ->leftJoin('resource_creators', 'resources.cretor_id', '=', 'resource_creators.id')
-                    ->leftJoin('resource_publishers', 'resources.publisher_id', '=', 'resource_publishers.id')
-                    ->where('resources.category_id', $request->cdta)
-                    ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
-                    ->get();
+                $catg="";$cent="";$type="";
 
-                }
+                if($request->catdata=="All"){$catg="%";}
+                else{$catg= $request->catdata;}
+
+                if($request->centerdata=="All"){$cent="%";}
+                else{$cent= $request->centerdata;}
+
+                if($request->typedata=="All"){$type="%";}
+                else{$type= $request->typedata;}
+
+
+                // $resouredata =view_resource_data::all();
+                $resouredata = view_resource_data::select('*')
+                ->where('category_id','LIKE',$catg)
+                ->where('center_id','LIKE',$cent)
+                ->where('type_id','LIKE',$type)
+                ->get();
+
+        
                
 
                 return datatables()->of($resouredata)

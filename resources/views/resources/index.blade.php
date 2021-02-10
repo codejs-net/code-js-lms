@@ -39,32 +39,37 @@ $creator="name".$lang;
 <div class="container-fluid">
 <div class="card card-body">
     <div class="row">
-        <div class="col-md-2 col-sm-2 text-center">
-                <div class="form-group">
-                    <!-- <label for="category">Category</label> -->
-                    <select class="form-control mb-3"name="category" id="category" value="">
+        <div class="col-md-2 col-sm-2 text-left">
+                <div class="form-group border border-secondary bg-light">
+                    <div class="m-2">
+                    <span for="category">Category :</span>
+                    <select class="form-control form-control-sm mb-3"name="category" id="category" value="">
                         <option value="All" selected>All Categories</option>
                             @foreach($cat_data as $item)
                                 <option value="{{ $item->id }}" style="background-image:url(images/{{ $item->image}});">&nbsp;{{ $item->$category}}</option>
                             @endforeach
                     </select>     
+                    </div>
             </div>
         </div>
         <div class="col-md-8 col-sm-8 text-center">
             <div class="form-group text-center">
                 <!-- <label for="category">Type</label> -->
-                <span id="type_bar"></span>
+                <div id="type_bar"></div>
             </div>
         </div>
 
-        <div class="col-md-2 col-sm-2 text-center">
-                <div class="form-group">
-                    <select class="form-control mb-3"name="center" id="center" value="">
+        <div class="col-md-2 col-sm-2 text-left">
+                <div class="form-group border border-secondary bg-light">
+                <div class="m-2">
+                <span for="category">Center :</span>
+                    <select class="form-control form-control-sm mb-3"name="center" id="center" value="">
                         <option value="All" selected>All Centers</option>
                             @foreach($center_data as $item)
                                 <option value="{{ $item->id }}">&nbsp;{{ $item->$center}}</option>
                             @endforeach
-                    </select>     
+                    </select> 
+                </div>    
             </div>
         </div>
 
@@ -78,7 +83,7 @@ $creator="name".$lang;
             <div class="form-row">   
             <div class="table-responsive"style="overflow-x: auto;">               
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
-                    <thead class="bg-gradient-secondary">
+                    <thead class="bg-gradient-light">
                         <tr>
                             <th scope="col">Resource ID</th>
                             <th scope="col">Resource</th>
@@ -202,11 +207,7 @@ $lang = session()->get('db_locale');
 
 $(document).ready(function()
 {
-    // ----------view-------------------------
-   
-
-
-    // start book delete function
+load_type("All");
 $('#book_delete').on('show.bs.modal', function (event) 
 {
 
@@ -220,12 +221,13 @@ document.getElementById("bookname").innerHTML = b_title;
 // end book delete function
 
 
-load_type("All");
+
 
 var route="{{ route('resource.index') }}";
-var cdta=$("#category").val();
-load_datatable(route,cdta);
-
+var catdata=$("#category").val();
+var centerdata=$("#center").val();
+var typedata="All";
+load_datatable(route,catdata,centerdata,typedata);
 
 });
 
@@ -243,14 +245,15 @@ function load_type(cdta)
             url: "{{route('load_resource_type')}}", 
             data: { cdta: cdta, },
             success:function(data){
+                op+='<button type="button" value="All" class="btn btn-white btn-outline-secondary bg-light ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/all_type.png"><br>{{trans('All')}}&nbsp;</button>';
                 for(var i=0;i<data.length;i++)
                 {
-                    op+='<a href="filter_by_type/'+data[i].id+'" class="btn btn-default btn-sm ml-2 mb-2"><img class="img-icon" src="images/'+data[i].image+'"><br>'+
+                    op+='<button type="button" value="'+data[i].id+'" class="btn btn-white btn-outline-secondary bg-light ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/'+data[i].image+'"><br>'+
                         @if($locale=="si") data[i].type_si 
                         @elseif($locale=="ta") data[i].type_ta 
                         @elseif($locale=="en") data[i].type_en
                         @endif +
-                        '&nbsp;</a>';
+                        '&nbsp;</button>';
                 }
                 $("#type_bar").html(op);
                
@@ -261,37 +264,41 @@ function load_type(cdta)
         })
         // --------------------------------------------------------
 }
-function load_by_category(d_cat)
-{
-        op="";
-        $.ajaxSetup({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        });
-        $.ajax
-        ({
-            type: "POST",
-            dataType : 'json',
-            url: "filter_by_category", 
-            data: { d_cat: d_cat, },
-            success:function(data){
-             
-            },
-            error:function(data){
-                toastr.error('Some thing went Wrong!')
-            }
-        })
-        // --------------------------------------------------------
-}
+
 
 $("#category").change(function () {
-    var cdta=$("#category").val();
-    load_type(cdta);  
+    var catdata=$("#category").val();
+    var centerdata=$("#center").val();
+    var typedata="All";
+    load_type(catdata);  
     $('#resource_datatable').DataTable().clear().destroy();
     var route="{{ route('resource.index') }}";
-    load_datatable(route,cdta);
+    load_datatable(route,catdata,centerdata,typedata);
 });
 
-function load_datatable(route,cdta)
+$("#center").change(function () {
+    var catdata=$("#category").val();
+    var centerdata=$("#center").val();
+    var typedata="All";
+    $('#resource_datatable').DataTable().clear().destroy();
+    var route="{{ route('resource.index') }}";
+    load_datatable(route,catdata,centerdata,typedata);
+});
+
+
+$(document).on("click", ".btntype", function(){
+
+    var catdata=$("#category").val();
+    var centerdata=$("#center").val();
+    var typedata=$(this).val();
+    $('#resource_datatable').DataTable().clear().destroy();
+    var route="{{ route('resource.index') }}";
+    load_datatable(route,catdata,centerdata,typedata);
+
+
+});
+
+function load_datatable(route,catdata,centerdata,typedata)
 {
     $('#resource_datatable').DataTable({
     columnDefs: [
@@ -302,15 +309,17 @@ function load_datatable(route,cdta)
     ],
     responsive: true,
     processing: true,
-    serverSide: false,
-    ordering: true,
+    serverSide: true,
+    ordering: false,
     searching: true,
 
     ajax:{
         type: "GET",
         dataType : 'json',
         data: { 
-            cdta: cdta, 
+            catdata: catdata,
+            centerdata: centerdata,
+            typedata: typedata,
         },
         url: route,
     },
