@@ -49,7 +49,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('resource.create') }}" class="nav-link">
+                            <a href="{{ route('create_resource') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Add Resources</p>
                                 </a>
@@ -101,13 +101,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('members.create') }}" class="nav-link">
+                            <a href="{{ route('create_member') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Add Member</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{!! url('/createOT') !!}">
+                                <a class="nav-link" href="{{ route('members.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Search Member</p>
                                 </a>
