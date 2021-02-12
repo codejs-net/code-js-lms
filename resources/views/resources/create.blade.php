@@ -7,9 +7,11 @@
 $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
+$type="type".$lang;
 $publisher="publisher".$lang;
 $medium="phymedia".$lang;
 $language="language".$lang;
+$creator="name".$lang;
 @endphp
 
 
@@ -27,50 +29,78 @@ $language="language".$lang;
             <h4> <i class="fa fa-plus-circle"> {{__("Add Resources")}}</i></h4>
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
-            <!-- <h4><button class="btn btn-info btn-md" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</button></h4>   -->
+        @can('data-import')
+                <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+            @endcan
         </div>
     </div>
     
 </div>
 
         <!-- Main content -->
-<div class="container bg-white">
-    <div class="card-body">
+<div class="container">
+    <div class="card card-body">
          <div class="row">
          <div class="col-md-12">
                 <!-- --------------------------- section 1------------------------------------- -->
     
                 <form action="{{ route('resource.store') }}" method="post" name="book_save" id="book_save" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
+
+                <div class="form-row border border-secondary bg-light">
+
+                    <div class="form-group col-md-5">
+                        <label for="book_category">Category</label>
+                        <select class="form-control" id="book_category" name="book_category" value="{{old('category')}}"required>
+                        <option value="" selected disabled hidden>Choose here</option>
+                        @foreach($cat_data as $item)
+                                <option value="{{ $item->id }}">{{ $item->$category}}</option>
+                        @endforeach
+                        </select>
+                        <span class="text-danger">{{ $errors->first('category') }}</span>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="new_category">&nbsp;</label></br>
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal"  data-backdrop="static" data-opp_name="Book Category" onclick="add_by_modal('/save_Book_category')"><i class="fa fa-plus"></i></button>
+
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <label for="language">Type</label>
+                        <select class="form-control" id="language" name="language" value="{{old('language')}}"required>
+                        <option value="" selected disabled hidden>Choose here</option>
+                        @foreach($type_data as $item)
+                                <option value="{{ $item->id }}">{{ $item->$type }}</option>
+                            @endforeach
+                        </select>
+                        <span class="text-danger">{{ $errors->first('language') }}</span>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="new_language">&nbsp;</label></br>
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Language" onclick="add_by_modal('/save_Book_language')"><i class="fa fa-plus"></i></button>
+                    </div>
+
+                </div>
+
+                <hr>
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
-                    <label for="isbn">ISBN/ISSN</label>
-                        <input type="text" class="form-control" id="isbn" name="isbn"  value="{{old('isbn')}}"  placeholder="ISBN">
+                    <label for="isbn">ISBN/ISSN/ISMN</label>
+                        <input type="text" class="form-control" id="isbn" name="isbn"  value="{{old('isbn')}}"  placeholder="ISBN/ISSN/ISMN">
                         <span class="text-danger">{{ $errors->first('isbn') }}</span>
                     </div>
-                    <div class="form-group col-md-2">
-                        <div class="form-check-inline">
-                            <label class="form-check-label"></label>
-                                <!-- <input type="radio" class="form-check-input" name="br_qr_code" value="bar_code"> BarCode
-                                <input type="radio" class="form-check-input" name="br_qr_code" value="qr_code"> QRCode -->
-                                <!-- <button class="btn btn-primary"><i class="fa fa-circle-o">Genarete</i></button> -->
+                   
 
-                        </div>
-                        <div id="code_view_bq" class="form-group">
-                        <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('code-js', 'C128',1,60,array(0,0,0), true)}}" alt="barcode" />
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                        
                         <label for="accessionNo">Accession Number</label>
                         <input type="text" class="form-control" id="book_aNo" name="accessionNo" value="{{old('accessionNo')}}" placeholder="Accession Number:" required>
                         <span class="text-danger" >{{ $errors->first('accessionNo') }}</span>
                     </div>
-
+                    
                 </div>
-
+                <hr>
                     
                 <div class="form-row">
                     
@@ -81,19 +111,19 @@ $language="language".$lang;
                         <input type="text" class="form-control mb-1" id="book_title_en" name="book_title_en" value="{{old('book_title_en')}}" placeholder="Title in English" >
                         <span class="text-danger">{{ $errors->first('book_title') }}</span>
                     </div>
-                    <div class="form-group col-md-10">
+                    <div class="form-group col-md-11">
                         <label for="authors">Creator</label>
                             <select class="form-control" id="book_category" name="book_category" value="{{old('category')}}"required>
                                 <option value="" selected disabled hidden>Choose here</option>
-                                @foreach($cat_data as $item)
-                                        <option value="{{ $item->id }}">{{ $item->$category}}</option>
+                                @foreach($creator_data as $item)
+                                        <option value="{{ $item->id }}">{{ $item->$creator}}</option>
                                 @endforeach
                             </select>
                         <span class="text-danger">{{ $errors->first('authors') }}</span>
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="new_category">New Creator</label>  </br>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"  data-backdrop="static" data-opp_name="Book Category"
+                    <div class="form-group col-md-1">
+                        <label for="new_category">&nbsp;</label>  </br>
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal"  data-backdrop="static" data-opp_name="Book Category"
                         onclick="add_by_modal('/save_Book_category')"><i class="fa fa-plus"></i></button>
                     </div>
 
@@ -102,45 +132,7 @@ $language="language".$lang;
                 <hr>
                 <div class="form-row">
 
-                    <div class="form-group col-md-4">
-                        <label for="book_category">Category</label> &nbsp; &nbsp;
-                        <select class="form-control" id="book_category" name="book_category" value="{{old('category')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
-                        @foreach($cat_data as $item)
-                                <option value="{{ $item->id }}">{{ $item->$category}}</option>
-                        @endforeach
-                        </select>
-                        <span class="text-danger">{{ $errors->first('category') }}</span>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="new_category">New Category</label>  </br>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"  data-backdrop="static" data-opp_name="Book Category"
-                        onclick="add_by_modal('/save_Book_category')"><i class="fa fa-plus"></i></button>
-
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="language">Language</label>
-                        <select class="form-control" id="language" name="language" value="{{old('language')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
-                        @foreach($lang_data as $item)
-                                <option value="{{ $item->id }}">{{ $item->$language }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger">{{ $errors->first('language') }}</span>
-                    </div>
-                    <div class="form-group col-md-2">
-                    <label for="new_language">New Language</label>  </br>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Language"
-                    onclick="add_by_modal('/save_Book_language')"><i class="fa fa-plus"></i></button>
-
-                    </div>
-                    
-                </div>
-
-                <div class="form-row">
-                    
-                    <div class="form-group col-md-4">
+                <div class="form-group col-md-5">
                         <label for="publisher">Publisher</label>
                         <select class="form-control" id="publisher" name="publisher" value="{{old('publisher')}}"required>
                         <option value="" selected disabled hidden>Choose here</option>
@@ -150,49 +142,94 @@ $language="language".$lang;
                         </select>
                         <span class="text-danger">{{ $errors->first('publisher') }}</span>
                     </div>
-                    <div class="form-group col-md-2">
-                    <label for="new_publisher">New Publisher</label> </br>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Publisher"
+                    <div class="form-group col-md-1">
+                    <label for="new_publisher">&nbsp;</label> </br>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Publisher"
                     onclick="add_by_modal('/save_Book_publisher')"><i class="fa fa-plus"></i></button>
 
                     </div>
 
-           
-
-                </div>
-
-                <div class="form-row">
-
-
-                <div class="form-group col-md-4">
-                        <label for="dewey_decimal">Dewey Decimal Classification</label>
-                        <select class="form-control" id="dewey_decimal" name="dewey_decimal" value="{{old('dewey_decimal')}}"required>
+                    <div class="form-group col-md-5">
+                        <label for="language">Language</label>
+                        <select class="form-control" id="language" name="language" value="{{old('language')}}"required>
                         <option value="" selected disabled hidden>Choose here</option>
-                        @foreach($dd_class as $item)
-                                <option value="{{ $item->id }}">{{ $item->class_si}}</option>
+                        @foreach($lang_data as $item)
+                                <option value="{{ $item->id }}">{{ $item->$language }}</option>
                             @endforeach
                         </select>
-                        <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
+                        <span class="text-danger">{{ $errors->first('language') }}</span>
                     </div>
-                    <div class="form-group col-md-2">
-                    <label for="new_dewey_decimal"> New DDC </label></br>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Dewey Decimal"
-                    onclick="add_by_modal('/save_Book_Ddecimal')"><i class="fa fa-plus"></i></button>
+                    <div class="form-group col-md-1">
+                    <label for="new_language">&nbsp;</label>  </br>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Language"
+                    onclick="add_by_modal('/save_Book_language')"><i class="fa fa-plus"></i></button>
 
                     </div>
                     
-                    <div class="form-group col-md-4">
+                </div>
+                <hr>
+                <div class="form-row border border-secondary bg-light">
+                    <!-- -------------------------------------------- -->
+                    <div class="form-group col-md-3">
+                            <label for="dewey_decimal">Dewey Decimal Class</label>
+                            <select class="form-control" id="dewey_decimal" name="dewey_decimal" value="{{old('dewey_decimal')}}"required>
+                            <option value="" selected disabled hidden>Choose here</option>
+                            @foreach($dd_class as $item)
+                                    <option value="{{ $item->id }}">{{ $item->class_si}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
+                    </div>
+
+                    <!-- -------------------------------------------- -->
+                    <div class="form-group col-md-3">
+                            <label for="dewey_decimal">Dewey Decimal Devision</label>
+                            <select class="form-control" id="dewey_decimal" name="dewey_decimal" value="{{old('dewey_decimal')}}"required>
+                            <option value="" selected disabled hidden>Choose here</option>
+                            @foreach($dd_class as $item)
+                                    <option value="{{ $item->id }}">{{ $item->class_si}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
+                    </div>
+
+                    <!-- -------------------------------------------- -->
+                    <div class="form-group col-md-3">
+                            <label for="dewey_decimal">Dewey Decimal Section</label>
+                            <select class="form-control" id="dewey_decimal" name="dewey_decimal" value="{{old('dewey_decimal')}}"required>
+                            <option value="" selected disabled hidden>Choose here</option>
+                            @foreach($dd_class as $item)
+                                    <option value="{{ $item->id }}">{{ $item->class_si}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
+                    </div>
+
+                     <!-- -------------------------------------------- -->
+                     <div class="form-group col-md-3">
+                            <label for="dewey_decimal">Dewey Decimal Classificetion</label>
+                            <input type="text" class="form-control" id="book_aNo" name="accessionNo" value="{{old('accessionNo')}}" placeholder="DDC:">
+                            <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
+                    </div>
+                    
+                    <!-- -------------------------------------------- -->
+                </div>
+                <hr>
+                <div class="form-row">
+                
+                    <div class="form-group col-md-3">
                         <label for="purchase_date" >Purchase Date</label>
                         <input class="form-control" type="date" name="purchase_date" value="{{old('purchase_date')}}" id="purchase_date"required>
                         <span class="text-danger">{{ $errors->first('purchase_date') }}</span>
                     </div>
-                    <div class="form-group col-md-2"></div>
-                  
-                </div>
 
-                <div class="form-row">
-                    
-                    <div class="form-group col-md-4">
+                     <div class="form-group col-md-3">
+                        <label for="price">Price</label>
+                        <input type="value" class="form-control" name="price"  value="{{old('price')}}" placeholder="Price:"required>
+                        <span class="text-danger">{{ $errors->first('price') }}</span>
+                    </div>
+
+                   <div class="form-group col-md-3">
                         <label for="edition">Edition</label>
                         <select class="form-control" id="edition" name="edition">
                         <option value="" selected disabled hidden>Choose here</option>
@@ -201,66 +238,36 @@ $language="language".$lang;
                         <option>3</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-2"></div>
-                    <div class="form-group col-md-4">
-                        <label for="price">Price</label>
-                        <input type="value" class="form-control" name="price"  value="{{old('price')}}" placeholder="Price:"required>
-                        <span class="text-danger">{{ $errors->first('price') }}</span>
-                    </div>
 
-
-                </div>
-                <div class="form-row">
-
-                <div class="form-group col-md-4">
+                     <div class="form-group col-md-3">
                         <label for="publishyear">Publication year</label>
                         <input class="form-control" type="year" name="publishyear"value="{{old('publishyear')}}" id="">
                         <span class="text-danger">{{ $errors->first('publishyear') }}</span>
                     </div>
-                    <div class="form-group col-md-2"></div>
-                    <div class="form-group col-md-4">
+                  
+                </div>
+                 <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
                         <label for="phy_details">Physical Details</label>
                         <input type="text" class="form-control" name="phydetails" value="{{old('phydetails')}}" placeholder="Physical Details">
                         <span class="text-danger">{{ $errors->first('phydetails') }}</span>
                     </div>
-                    </div>
-                    <div class="form-row">
-                    <div class="form-group col-md-4">
-                    <label for="rackno">Rack No</label>
-                        <select class="form-control" id="rackno" name="rackno">
-                        <option value="" selected disabled hidden>Choose here</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2"></div>
-                    <div class="form-group col-md-4">
-                    <label for="rowno">Row No</label>
-                        <select class="form-control" id="rowno" name="rowno">
-                        <option value="" selected disabled hidden>Choose here</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                        <option>E</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-12">
+                    <!-- ------------------------ -->
+                     <div class="form-group col-md-9">
                         <label for="note">Note</label>
                         <textarea class="form-control" id="note" name="note" placeholder="Note" value="{{old('note')}}" rows="3"></textarea>
                         <span class="text-danger">{{ $errors->first('note') }}</span>
                     </div>
-
                 </div>
 
-
+               <hr>
             <div class="box-footer clearfix pull-right">
-                <button type="submit" class="btn btn-primary btn-md" value="Save" id="save_book" >
-                <i class="fa fa-floppy-o"></i> Save</button>
-                &nbsp; &nbsp;
-                <button type="button" class="btn btn-warning btn-md" id="reset_book">
+                <button type="button" class="btn btn-md btn-warning" id="reset_book">
                 <i class="fa fa-times"></i> Reset</button>
+                &nbsp; &nbsp;
+                <button type="submit" class="btn btn-md btn-success" value="Save" id="save_book" >
+                <i class="fa fa-floppy-o"></i> Save</button>
             </div>   
             </form>
                         
