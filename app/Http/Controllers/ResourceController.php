@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\resource_category;
 use App\Models\resource_type;
+use App\Models\resource_creator;
+use App\Models\resource_dd_class;
+use App\Models\resource_dd_division;
+use App\Models\resource_dd_section;
+use App\Models\resource_language;
+use App\Models\resource_place;
+use App\Models\resource_donate;
+use App\Models\resource_publisher;
 use App\Models\resource;
 use App\Models\center;
 use App\Models\setting;
@@ -73,9 +81,9 @@ class ResourceController extends Controller
                 return datatables()->of($resouredata)
                         ->addIndexColumn()
                         ->addColumn('action', function($data){
-                            $button = '<a href="/show_resource_view/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
+                            $button = '<a href="show_resource/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
-                            $button .= '<a href="/update_resource_view/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
+                            $button .= '<a href="update_resource/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
                             $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#book_delete" data-bookid="'.$data->id.'" data-title="'.$data->title_si.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
@@ -126,7 +134,19 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        //
+        // $locale = session()->get('locale');
+        // $lang="_".$locale;
+
+        $categorydata=resource_category::all();
+        $languagedata=resource_language::all();
+        $publisherdata=resource_publisher::all();
+        $creatordata=resource_creator::all();
+        $dd_classdata=resource_dd_class::all();
+        $dd_devisiondata=resource_dd_division::all();
+        $dd_sectiondata=resource_dd_section::all();
+        $typedata=resource_type::all();
+        return view('resources.create')->with('cat_data',$categorydata)->with('lang_data',$languagedata)->with('pub_data',$publisherdata)
+        ->with('type_data',$typedata)->with('dd_class',$dd_classdata)->with('dd_devision',$dd_devisiondata)->with('dd_section',$dd_sectiondata)->with('creator_data',$creatordata);
     }
 
     /**

@@ -52,8 +52,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('filter_by_type/{id}', [ResourceController::class, 'filter_by_type'])->name('filter_by_type');
     Route::get('filter_by_category', [ResourceController::class, 'filter_by_category'])->name('filter_by_category');
     Route::post('import_resource', [ResourceController::class, 'import'])->name('import_resource');
-    Route::get('update_resource_view/{id}', [ResourceController::class, 'edit'])->name('update_resource_view');
-    Route::get('show_resource_view/{id}', [ResourceController::class, 'show'])->name('show_resource_view');
+    Route::get('create_resource', [ResourceController::class, 'create'])->name('create_resource');
+    Route::get('update_resource/{id}', [ResourceController::class, 'edit'])->name('update_resource');
+    Route::get('show_resource/{id}', [ResourceController::class, 'show'])->name('show_resource');
 
     // --------Resource support/category--------------------------------
     Route::resource('resource_catagory', Resource_categoryController::class);
@@ -143,6 +144,7 @@ Route::group(['middleware' => ['auth']], function() {
     //--------Member----------------------------------
     Route::resource('members', MemberController::class);
     Route::post('store_member', [MemberController::class, 'store'])->name('store_member');
+    Route::get('create_member', [MemberController::class, 'create'])->name('create_member');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);
