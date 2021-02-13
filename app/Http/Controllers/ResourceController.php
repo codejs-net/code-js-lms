@@ -146,7 +146,7 @@ class ResourceController extends Controller
         $dd_sectiondata=resource_dd_section::all();
         $typedata=resource_type::all();
         return view('resources.create')->with('cat_data',$categorydata)->with('lang_data',$languagedata)->with('pub_data',$publisherdata)
-        ->with('type_data',$typedata)->with('dd_class',$dd_classdata)->with('dd_devision',$dd_devisiondata)->with('dd_section',$dd_sectiondata)->with('creator_data',$creatordata);
+        ->with('type_data',$typedata)->with('dd_class_data',$dd_classdata)->with('dd_devision_data',$dd_devisiondata)->with('dd_section_data',$dd_sectiondata)->with('creator_data',$creatordata);
     }
 
     /**
@@ -157,7 +157,47 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+
+        $res=new resource;
+        $this->validate($request,[
+        'resoure_accession'     =>'required|max:100|min:5',
+        'resource_title'.$lang  =>'required',
+        'resoure_category'      =>'required',
+        'resource_price'        =>'required',
+        ]);
+
+        $res->accessionNo       =  $request->resoure_accession;
+        $res->standard_number   =  $request->resoure_isn;
+        $res->title_si          =  $request->resource_title_si;
+        $res->title_ta          =  $request->resource_title_ta;
+        $res->title_en          =  $request->resource_title_en;
+        $res->cretor_id         =  $request->resource_creator;
+        $res->category_id       =  $request->resoure_category;
+        $res->type_id           =  $request->resoure_type;
+        $res->dd_class_id       =  $request->resource_dd_class;
+        $res->dd_devision_id    =  $request->resource_dd_devision;
+        $res->dd_section_id     =  $request->resource_dd_section;
+        $res->ddc               =  $request->resource_ddc;
+        $res->center_id         =  1;
+        $res->language_id       =  $request->resource_language;
+        $res->publisher_id      =  $request->resource_publisher;
+        $res->purchase_date     =  $request->resource_purchase_date;
+        $res->edition           =  $request->resource_edition;
+        $res->price             =  $request->resource_price;
+        $res->publishyear       =  $request->resource_publishyear;
+        $res->phydetails        =  $request->resource_phydetails;
+        $res->note_si           =  $request->resource_note;
+        $res->note_ta           =  $request->resource_note;
+        $res->note_en           =  $request->resource_note;
+        $res->status            =  "1";
+        $res->br_qr_code        =  "";
+        $res->image             =  "";
+
+        $res->save();
+        return response()->json(['data' => "Success"]);
+        
     }
 
     /**
