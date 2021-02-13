@@ -49,42 +49,42 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('create_resource') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Resources</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('resource.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Search Resources</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                            <a href="{{ route('create_resource') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add Resources</p>
+                                </a>
+                            </li> 
                            
                         </ul>
                     </li>
                    
-                    <!-- Book Lending -->
+                    <!-- Resources Lending -->
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-handshake"></i>
                             <p>
-                                Books Lending
+                                 Lending
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('issue.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Issue Books</p>
+                                    <p>Issue Resources</p>
                                 </a>
                             </li>
                           
                             <li class="nav-item">
                                 <a href="{{ route('codes.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Return Books</p>
+                                    <p>Return Resources</p>
                                 </a>
                             </li>
                             

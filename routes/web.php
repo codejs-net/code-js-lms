@@ -22,6 +22,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\IssueController;
 
 use App\Http\Controllers\BookController;
 
@@ -116,6 +117,8 @@ Route::group(['middleware' => ['auth']], function() {
     // --------Resource support/Donate--------------------------------
     Route::resource('resource_dd_donate', Resource_donateController::class);
 
+   // ----------------------Issue-------------------------------------
+   Route::resource('issue', IssueController::class);
 
 
 
