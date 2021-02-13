@@ -139,3 +139,17 @@ width: 100%;
   background-image: linear-gradient(top, #efedec, #f7f4f4);
   box-shadow: 0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5);
 } */
+
+
+  .input-group-addon{
+    color:#0a0a0a; background-color: #c0b6b6be;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .card-name{
+    background-color: #dff2fd;
+  }
+
+

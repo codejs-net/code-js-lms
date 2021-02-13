@@ -74,6 +74,7 @@ class MemberController extends Controller
         $mbr->gender=$request->gender;
         $mbr->description=$request->Description;
         $mbr->regdate=$request->registeredDate;
+        $mbr->image="";
 
         $mbr->save();
        

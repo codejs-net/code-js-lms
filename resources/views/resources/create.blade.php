@@ -11,7 +11,11 @@ $type="type".$lang;
 $publisher="publisher".$lang;
 $medium="phymedia".$lang;
 $language="language".$lang;
+$dd_class="class".$lang;
+$dd_devision="devision".$lang;
+$dd_section="section".$lang;
 $creator="name".$lang;
+
 @endphp
 
 
@@ -44,14 +48,14 @@ $creator="name".$lang;
          <div class="col-md-12">
                 <!-- --------------------------- section 1------------------------------------- -->
     
-                <form action="{{ route('resource.store') }}" method="post" name="book_save" id="book_save" class="needs-validation"  novalidate>
+                <form onSubmit="return false;" name="resource_save" id="resource_save" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
 
                 <div class="form-row border border-secondary bg-light">
 
                     <div class="form-group col-md-5">
                         <label for="book_category">Category</label>
-                        <select class="form-control" id="book_category" name="book_category" value="{{old('category')}}"required>
+                        <select class="form-control" id="resoure_category" name="resoure_category" value="{{old('resoure_category')}}"required>
                         <option value="" selected disabled hidden>Choose here</option>
                         @foreach($cat_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$category}}</option>
@@ -67,7 +71,7 @@ $creator="name".$lang;
 
                     <div class="form-group col-md-5">
                         <label for="language">Type</label>
-                        <select class="form-control" id="language" name="language" value="{{old('language')}}"required>
+                        <select class="form-control" id="resoure_type" name="resoure_type" value="{{old('resoure_type')}}"required>
                         <option value="" selected disabled hidden>Choose here</option>
                         @foreach($type_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$type }}</option>
@@ -87,7 +91,7 @@ $creator="name".$lang;
 
                     <div class="form-group col-md-6">
                     <label for="isbn">ISBN/ISSN/ISMN</label>
-                        <input type="text" class="form-control" id="isbn" name="isbn"  value="{{old('isbn')}}"  placeholder="ISBN/ISSN/ISMN">
+                        <input type="text" class="form-control" id="resoure_isn" name="resoure_isn"  value="{{old('resoure_isn')}}"  placeholder="ISBN/ISSN/ISMN">
                         <span class="text-danger">{{ $errors->first('isbn') }}</span>
                     </div>
                    
@@ -95,7 +99,7 @@ $creator="name".$lang;
                     <div class="form-group col-md-6">
                        
                         <label for="accessionNo">Accession Number</label>
-                        <input type="text" class="form-control" id="book_aNo" name="accessionNo" value="{{old('accessionNo')}}" placeholder="Accession Number:" required>
+                        <input type="text" class="form-control" id="resoure_accession" name="resoure_accession" value="{{old('resoure_accession')}}" placeholder="Accession Number:" required>
                         <span class="text-danger" >{{ $errors->first('accessionNo') }}</span>
                     </div>
                     
@@ -106,14 +110,14 @@ $creator="name".$lang;
                     
                     <div class="form-group col-md-12">
                         <label for="book_title">Title</label>
-                        <input type="text" class="form-control mb-1" id="book_title_si" name="book_title_si" value="{{old('book_title_si')}}" placeholder="Title in sinhala" >
-                        <input type="text" class="form-control mb-1" id="book_title_ta" name="book_title_ta" value="{{old('book_title_ta')}}" placeholder="Title in Tamil" >
-                        <input type="text" class="form-control mb-1" id="book_title_en" name="book_title_en" value="{{old('book_title_en')}}" placeholder="Title in English" >
+                        <input type="text" class="form-control mb-1" id="resource_title_si" name="resource_title_si" value="{{old('book_title_si')}}" placeholder="Title in sinhala" >
+                        <input type="text" class="form-control mb-1" id="resource_title_ta" name="resource_title_ta" value="{{old('book_title_ta')}}" placeholder="Title in Tamil" >
+                        <input type="text" class="form-control mb-1" id="resource_title_en" name="resource_title_en" value="{{old('book_title_en')}}" placeholder="Title in English" >
                         <span class="text-danger">{{ $errors->first('book_title') }}</span>
                     </div>
                     <div class="form-group col-md-11">
                         <label for="authors">Creator</label>
-                            <select class="form-control" id="book_category" name="book_category" value="{{old('category')}}"required>
+                            <select class="form-control" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}"required>
                                 <option value="" selected disabled hidden>Choose here</option>
                                 @foreach($creator_data as $item)
                                         <option value="{{ $item->id }}">{{ $item->$creator}}</option>
@@ -134,7 +138,7 @@ $creator="name".$lang;
 
                 <div class="form-group col-md-5">
                         <label for="publisher">Publisher</label>
-                        <select class="form-control" id="publisher" name="publisher" value="{{old('publisher')}}"required>
+                        <select class="form-control" id="resource_publisher" name="resource_publisher" value="{{old('resource_publisher')}}"required>
                         <option value="" selected disabled hidden>Choose here</option>
                         @foreach($pub_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$publisher}}</option>
@@ -151,7 +155,7 @@ $creator="name".$lang;
 
                     <div class="form-group col-md-5">
                         <label for="language">Language</label>
-                        <select class="form-control" id="language" name="language" value="{{old('language')}}"required>
+                        <select class="form-control" id="resource_language" name="resource_language" value="{{old('resource_language')}}"required>
                         <option value="" selected disabled hidden>Choose here</option>
                         @foreach($lang_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$language }}</option>
@@ -172,10 +176,10 @@ $creator="name".$lang;
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
                             <label for="dewey_decimal">Dewey Decimal Class</label>
-                            <select class="form-control" id="dewey_decimal" name="dewey_decimal" value="{{old('dewey_decimal')}}"required>
+                            <select class="form-control" id="resource_dd_class" name="resource_dd_class" value="{{old('resource_dd_class')}}"required>
                             <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_class as $item)
-                                    <option value="{{ $item->id }}">{{ $item->class_si}}</option>
+                            @foreach($dd_class_data as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$dd_class}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
@@ -184,10 +188,10 @@ $creator="name".$lang;
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
                             <label for="dewey_decimal">Dewey Decimal Devision</label>
-                            <select class="form-control" id="dewey_decimal" name="dewey_decimal" value="{{old('dewey_decimal')}}"required>
+                            <select class="form-control" id="resource_dd_devision" name="resource_dd_devision" value="{{old('resource_dd_devision')}}"required>
                             <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_class as $item)
-                                    <option value="{{ $item->id }}">{{ $item->class_si}}</option>
+                            @foreach($dd_devision_data as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$dd_devision}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
@@ -196,10 +200,10 @@ $creator="name".$lang;
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
                             <label for="dewey_decimal">Dewey Decimal Section</label>
-                            <select class="form-control" id="dewey_decimal" name="dewey_decimal" value="{{old('dewey_decimal')}}"required>
+                            <select class="form-control" id="resource_dd_section" name="resource_dd_section" value="{{old('resource_dd_section')}}"required>
                             <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_class as $item)
-                                    <option value="{{ $item->id }}">{{ $item->class_si}}</option>
+                            @foreach($dd_section_data as $item)
+                                    <option value="{{ $item->id }}">{{ $item->section_code}}-{{ $item->$dd_section}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
@@ -208,7 +212,7 @@ $creator="name".$lang;
                      <!-- -------------------------------------------- -->
                      <div class="form-group col-md-3">
                             <label for="dewey_decimal">Dewey Decimal Classificetion</label>
-                            <input type="text" class="form-control" id="book_aNo" name="accessionNo" value="{{old('accessionNo')}}" placeholder="DDC:">
+                            <input type="text" class="form-control" id="resource_ddc" name="resource_ddc" value="{{old('resource_ddc')}}" placeholder="DDC:">
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
                     </div>
                     
@@ -219,19 +223,19 @@ $creator="name".$lang;
                 
                     <div class="form-group col-md-3">
                         <label for="purchase_date" >Purchase Date</label>
-                        <input class="form-control" type="date" name="purchase_date" value="{{old('purchase_date')}}" id="purchase_date"required>
+                        <input class="form-control" type="date" name="resource_purchase_date" value="{{old('resource_purchase_date')}}" id="resource_purchase_date"required>
                         <span class="text-danger">{{ $errors->first('purchase_date') }}</span>
                     </div>
 
                      <div class="form-group col-md-3">
                         <label for="price">Price</label>
-                        <input type="value" class="form-control" name="price"  value="{{old('price')}}" placeholder="Price:"required>
+                        <input type="value" class="form-control" name="resource_price"  value="{{old('resource_price')}}" placeholder="resource_price:"required>
                         <span class="text-danger">{{ $errors->first('price') }}</span>
                     </div>
 
                    <div class="form-group col-md-3">
                         <label for="edition">Edition</label>
-                        <select class="form-control" id="edition" name="edition">
+                        <select class="form-control" id="resource_edition" name="resource_edition">
                         <option value="" selected disabled hidden>Choose here</option>
                         <option>1</option>
                         <option>2</option>
@@ -241,7 +245,7 @@ $creator="name".$lang;
 
                      <div class="form-group col-md-3">
                         <label for="publishyear">Publication year</label>
-                        <input class="form-control" type="year" name="publishyear"value="{{old('publishyear')}}" id="">
+                        <input class="form-control" type="year" name="resource_publishyear"value="{{old('resource_publishyear')}}" id="resource_publishyear">
                         <span class="text-danger">{{ $errors->first('publishyear') }}</span>
                     </div>
                   
@@ -250,23 +254,23 @@ $creator="name".$lang;
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="phy_details">Physical Details</label>
-                        <input type="text" class="form-control" name="phydetails" value="{{old('phydetails')}}" placeholder="Physical Details">
+                        <input type="text" class="form-control" name="resource_phydetails" id="resource_phydetails" value="{{old('resource_phydetails')}}" placeholder="Physical Details">
                         <span class="text-danger">{{ $errors->first('phydetails') }}</span>
                     </div>
                     <!-- ------------------------ -->
                      <div class="form-group col-md-9">
                         <label for="note">Note</label>
-                        <textarea class="form-control" id="note" name="note" placeholder="Note" value="{{old('note')}}" rows="3"></textarea>
+                        <textarea class="form-control" id="resource_note" name="resource_note" placeholder="Note" value="{{old('resource_note')}}" rows="3"></textarea>
                         <span class="text-danger">{{ $errors->first('note') }}</span>
                     </div>
                 </div>
 
                <hr>
             <div class="box-footer clearfix pull-right">
-                <button type="button" class="btn btn-md btn-warning" id="reset_book">
+                <button type="button" class="btn btn-md btn-warning" id="reset_resource">
                 <i class="fa fa-times"></i> Reset</button>
                 &nbsp; &nbsp;
-                <button type="submit" class="btn btn-md btn-success" value="Save" id="save_book" >
+                <button type="submit" class="btn btn-md btn-success" value="Save" id="save_resource" >
                 <i class="fa fa-floppy-o"></i> Save</button>
             </div>   
             </form>
@@ -295,17 +299,44 @@ $("#book_aNo").change(function(){
     {
         
         @if($locale=="si")
-        $("#book_title_si").prop('required',true);
-        $("#authors_si").prop('required',true);
+        $("#resource_title_si").prop('required',true);
         @elseif($locale=="ta")
-        $("#book_title_ta").prop('required',true);
-        $("#authors_ta").prop('required',true);
+        $("#resource_title_ta").prop('required',true);
         @elseif($locale=="en")
-        $("#book_title_en").prop('required',true);
-        $("#authors_en").prop('required',true);
+        $("#resource_title_en").prop('required',true);
         @endif
 
     });
+
+// -------------------------save resource----------------------------------
+$("#save_resource").click(function () {
+   
+   $.ajax
+       ({
+           type: "POST",
+           dataType : 'json',
+           url: "{{ route('resource.store') }}", 
+           data: $('#resource_save').serialize(),
+
+           beforeSend: function(){
+            //    $("#loader").show();
+           },
+
+           success:function(data){
+               toastr.success('Resource Created Successfully')
+               $("#resource_save").trigger("reset");
+           },
+           error:function(data){
+               toastr.error('Resource Created faild Plese try again')
+           },
+           complete:function(data){
+            //    $("#loader").hide();
+           }
+       })
+       
+});
+//--------------------------end resource Save-----------------------------
+
 </script>
 
 
