@@ -21,7 +21,13 @@ class SettingSeeder extends Seeder
         'category'=>'1',
         'value'=>'0',
         'detail'=>'db details show according to locale'
-        ]    
+        ],
+        [  
+        'setting'=>'lending_count',
+        'category'=>'2',
+        'value'=>'2',
+        'detail'=>'Limit of tha Resources lending in one Job]'
+        ]
     ];
     $insert= DB::table('settings')->insert($mul_rows_settings);
 

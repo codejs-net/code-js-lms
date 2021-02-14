@@ -119,6 +119,8 @@ Route::group(['middleware' => ['auth']], function() {
 
    // ----------------------Issue-------------------------------------
    Route::resource('issue', IssueController::class);
+   Route::post('member_view', [IssueController::class, 'memberview'])->name('member_view');
+   Route::post('resource_view', [IssueController::class, 'resourceview'])->name('resource_view');
 
 
 

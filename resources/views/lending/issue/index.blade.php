@@ -41,6 +41,8 @@ $creator="name".$lang;
 <div class="container-fluid">
     <div class="card card-body">
         <div class="row">
+        <input type="hidden" name="member_Name_id"id="member_Name_id">
+        <input type="hidden" name="lending_limit" id="lending_limit" value="{{$lending_setting->value}}">
 
             <div class="col-md-3 col-sm-12 text-left mt-1">
               <div class="input-group">
@@ -48,9 +50,8 @@ $creator="name".$lang;
                      <span class="input-group-addon"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
                   </div>
                     <input type="text" class="form-control" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
-                 <input type="hidden" name="member_id_select" class="form-control" id="member_Name_id">
-                 <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrowmember"><i class="fa fa-plus"></i></button>
-                <button type="button" class="btn btn-sm btn-outline-success" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrowmember"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
                 </div>  
             </div>
 
@@ -59,7 +60,7 @@ $creator="name".$lang;
                   <div class="input-group-prepend">
                      <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control" id="bookB_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
+                    <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
                     <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-plus"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
@@ -78,13 +79,14 @@ $creator="name".$lang;
         </div>
 
         <div class="row text-center mt-4">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <!-- small box -->
-                    <div class="card card-body card-name" style="height:2.5rem;">
-                        <div class="d-flex">
-                        
-                        <h4 id="member_Name"class="d-flex p-2 text-center text-body"></h4>
-                        <!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
+                    <div class="card card-name" style="height:2.5rem;">
+                        <div class="text-center ">
+                        <span><i class="fa fa-user-circle-o">&nbsp;
+                            <span id="member_Name"class="text-indigo font-weight-bold"></span>
+                            <!-- <span id="member_show_id"class="font-weight-bold badge badge-info"></span> -->
+                        </i></span>
                         
                         </div>
                     </div>
@@ -93,31 +95,32 @@ $creator="name".$lang;
         </div>
 
             <div class="form-row ">
-                
-                <table class="table table-hover" id="BookTable">
+            <div class="table-responsive"style="overflow-x: auto;"> 
+                <table class="table table-hover" id="resourceTable">
                 <thead class="thead-light">
                     <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col" class="td_id">ID</th>
                     <th scope="col">Accession No</th>
                     <th scope="col">ISBN/ISSN</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Category</th>
+                    <th scope="col">Creator</th>
+                    <!-- <th scope="col">Category</th> -->
                     <th scope="col">Type</th>
                     <th scope="col">&nbsp;</th>
-                        <!-- <td><a href="" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> </a></td> -->
                     </tr>    
                     </thead>
 
-                    <tbody class="tbody_data" id="bookdata">
+                    <tbody class="tbody_data" id="resourcedata">
                            
                     </tbody>
                 </table>
+                </div>
             </div>
 
     </div>
     <hr>
         <div class="box-footer clearfix pull-right">
-            <button type="button" class="btn btn-primary btn-md" id="issue_book">
+            <button type="button" class="btn btn-primary btn-md" id="issue_resource">
             <i class="fa fa-floppy-o"></i> Save</button>
             &nbsp; &nbsp;
             <button type="button" class="btn btn-warning btn-md" id="reset_issue">
@@ -135,7 +138,7 @@ $creator="name".$lang;
             <script>
             $(document).ready(function() {
 
-                    document.getElementById("member_id").focus();
+                document.getElementById("member_id").focus();
                 // -------------------------date------------------
                 var today = new Date();
                 var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -152,26 +155,26 @@ $creator="name".$lang;
                 event.preventDefault();
                 document.getElementById("addbarrowmember").click();
                 $('#member_id').val('');
-                document.getElementById("bookB_details").focus();
+                
                 }
-                $("#BookTable tbody").empty();
+                $("#resourceTable tbody").empty();
 
                 });
-                    var input = document.getElementById("bookB_details");
+                    var input = document.getElementById("resource_details");
                     input.addEventListener("keyup", function(event) {
                     if (event.keyCode === 13) {
                     event.preventDefault();
                     document.getElementById("addbarrow").click();
-                    $('#bookB_details').val('');
-                    document.getElementById("bookB_details").focus();
+                    $('#resource_details').val('');
+                    document.getElementById("resource_details").focus();
                 }
                 });
-                });
+            });
                 // ----------------------------------------------------------------------------
 
-            $("#member_id").change(function(){
+                $('#addbarrowmember').on("click",function(){
                 var memberid = $("#member_id").val();
-                $('#bookB_details').val('');
+                $('#resource_details').val('');
                 $('#member_Name_id').val('');
                 $('#member_Name').html('');
                 $('#issue_error').html('');
@@ -184,19 +187,21 @@ $creator="name".$lang;
                 });
 
                 $.ajax({
-                    method: 'POST',
+                    type: 'POST',
+                    dataType : 'json',
                     data: { memberid: memberid },
-                    url: '/member_view',
-                    success: function(response){
+                    url: "{{route('member_view')}}",
+                    success: function(data){
             
-                        var mem_detail=response.member_id+" - "+response.member_nme+" ("+response.member_adds+")";
+                        var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
                         $('#member_Name').html(mem_detail);
-                        $('#member_Name_id').val(response.member_id);
+                        $('#member_Name_id').val(data.member_id);
                         $('#member_id').val('');
+                        document.getElementById("resource_details").focus();
                     
                     },
-                    error: function(response){
-                    $('#issue_error').html('Member not found !');
+                    error: function(data){
+                    toastr.error('Member Not Found!')
                     $('#member_id').val('');
                     document.getElementById("member_id").focus();
                     }
@@ -204,27 +209,60 @@ $creator="name".$lang;
             });
             // ------------------------------------------------------------------------
 
-                $('#addbarrow').on("click",function(){
-                        var bookid = $("#bookB_details").val();
-                        var member_id1 = $("#member_Name_id").val();
-                        var op ="";
-                        var bexsist=false;
-                        $('#issue_error').html('');
-                        $('#issue_success').html('');
+            $('#addbarrow').on("click",function(){
+                var resourceinput = $("#resource_details").val();
+                var limit = $("#lending_limit").val();
+                var op ="";
+                var bexsist=false;
+               
+                if(resourceinput)
+                {
+                    // -------------------------------------------------------
+                    $.ajaxSetup({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType : 'json',
+                        url: "{{route('resource_view')}}",
+                        data:{resourceinput: resourceinput},
+                        success: function(data){
+                        if(data.massage=="success")
+                            {
+                            op+='<tr>';
+                            op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button value="'+data.id+'" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button></td>';
+                            op+='</tr>';
+                            $("#resourceTable tbody").append(op);
+                            }
+                            else{toastr.error('Resource Not Found!')}
+                    
+                        },
+                        error: function(data){
+                        toastr.error('Something Went Wrong!')
+                        }
+                    });
+                    // -------------------------------------------------------------
+                }
+                else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
+               
+                
                     
                         if($('#member_Name_id').val())
                         {
-                            var rowCount = $('#BookTable tr').length;
+                            var rowCount = $('#resourceTable tr').length;
                             if(rowCount<4) //3+1 must get by settings
                             {
-                            var oTable = document.getElementById('BookTable');
+                            var oTable = document.getElementById('resourceTable');
                             var rowLength = oTable.rows.length;
                             
                             for (j = 1; j < rowLength; j++)
                             {
                                 var oCells = oTable.rows.item(j).cells;
                                 var cellVal = oCells.item(1).innerHTML;
-                                if(bookid.toUpperCase()==cellVal.toUpperCase())
+                                if(resourceid.toUpperCase()==cellVal.toUpperCase())
                                 { 
                                     bexsist=true;   
                                 }
@@ -232,36 +270,7 @@ $creator="name".$lang;
 
                             if(bexsist==false)
                             {
-                                // -------------------------------------------------------
-                                $.ajaxSetup({
-                                        headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        }
-                                        });
-
-                                        $.ajax({
-                                        type:'post',
-                                        url: '/barrowbook_d',
-                                        data:{
-                                        bookid: bookid,
-                                        member_id1: member_id1
-                                        },
-                                        success: function(data2){
-                                    
-                                        for(var i=0;i<data2.length;i++){
-                                        op+='<tr>';
-                                        op+='<td>'+data2[i].id+'</td><td>'+data2[i].accessionNo+'</td><td>'+data2[i].book_title+'</td><td>'+data2[i].authors+'</td><td><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button></td>';
-                                        op+='</tr>';
-                                        }
-                                        $("#BookTable tbody").append(op);
-                                        console.log(data2);
-                                    },
-                                        error: function(data2){
-                                        $('#issue_error').html('Book Not Found');   
-                                        console.log("Error Occurred");
-                                        }
-                                    });
-                        // -------------------------------------------------------------
+                               
                             }
                             else{$('#issue_error').html('Book Allready Exsists');}
                     
