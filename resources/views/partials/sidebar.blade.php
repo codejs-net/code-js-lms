@@ -67,7 +67,7 @@
                     <!-- Resources Lending -->
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-handshake"></i>
+                            <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>
                                  Lending
                                 <i class="right fas fa-angle-left"></i>

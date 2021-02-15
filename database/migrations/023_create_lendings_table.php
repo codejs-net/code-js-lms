@@ -16,14 +16,11 @@ class CreateLendingsTable extends Migration
     {
         Schema::create('lendings', function (Blueprint $table) {
             $table->increments('id');
-
+            $table->date('issue_date')->default(Carbon::now());
             $table->integer('member_id')->unsigned()->nullable();
             $table->foreign('member_id')->references('id')->on('members');
 
-            $table->text('description_si')->nullable();
-            $table->text('description_ta')->nullable();
-            $table->text('description_en')->nullable();
-
+            $table->text('description')->nullable();
             $table->string('remark_si')->nullable();
             $table->string('remark_ta')->nullable();
             $table->string('remark_en')->nullable();

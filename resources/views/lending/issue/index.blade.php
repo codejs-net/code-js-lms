@@ -31,7 +31,7 @@ $creator="name".$lang;
 <div class="container-fluid">
     <div class="row text-center mb-2">
         <div class="col-md-12 col-sm-12 text-center"> 
-            <h5> <i class="fa fa-handshake-o">&nbsp;Resources Lending</i></h5>
+            <h5> <i class="fa fa-shopping-cart">&nbsp;Resources Lending</i></h5>
         </div> 
 
     </div>
@@ -72,7 +72,7 @@ $creator="name".$lang;
                     <div class="input-group-prepend">
                         <span class="input-group-addon"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
                     </div>
-                    <input type="date" class="form-control" name="issuedte" id="issuedte" aria-describedby="basic-addon1">
+                    <input type="date" class="form-control" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1">
                 </div>
             </div>
 
@@ -135,198 +135,232 @@ $creator="name".$lang;
 @endsection
 @push('scripts')
 
-            <script>
-            $(document).ready(function() {
+    <script>
+    $(document).ready(function() {
 
-                document.getElementById("member_id").focus();
-                // -------------------------date------------------
-                var today = new Date();
-                var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-                var dd = today.getDate();
-                var mm = today.getMonth()+1; //January is 0!
-                var yyyy = today.getFullYear();
-                if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
-                $('#issuedte').attr('value', today);
-                // -----------------------------------------------
+        document.getElementById("member_id").focus();
+        $("#resourceTable tbody").empty();
 
-                var inputm = document.getElementById("member_id");
-                inputm.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                event.preventDefault();
-                document.getElementById("addbarrowmember").click();
+        var inputm = document.getElementById("member_id");
+        inputm.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("addbarrowmember").click();
+            $('#member_id').val('');
+            }
+        });
+            var input = document.getElementById("resource_details");
+            input.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("addbarrow").click();
+            $('#resource_details').val('');
+            document.getElementById("resource_details").focus();
+            }
+        });
+    });
+// ----------------------------------------------------------------------------
+
+        $('#addbarrowmember').on("click",function(){
+        var memberid = $("#member_id").val();
+        $('#resource_details').val('');
+        $('#member_Name_id').val('');
+        $('#member_Name').html('');
+        $('#issue_error').html('');
+        $('#issue_success').html('');
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            dataType : 'json',
+            data: { memberid: memberid },
+            url: "{{route('member_view')}}",
+            success: function(data){
+    
+                var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
+                $('#member_Name').html(mem_detail);
+                $('#member_Name_id').val(data.member_id);
                 $('#member_id').val('');
-                
+                document.getElementById("resource_details").focus();
+            
+            },
+            error: function(data){
+            toastr.error('Member Not Found!')
+            $('#member_id').val('');
+            document.getElementById("member_id").focus();
+            }
+        });
+    });
+    // ------------------------------------------------------------------------
+
+    $('#addbarrow').on("click",function(){
+        var resourceinput = $("#resource_details").val();
+        var limit = $("#lending_limit").val();
+        var op ="";
+        var bexsist=false;
+        if($('#member_Name_id').val())
+        {
+                var rowCount = $('#resourceTable tr').length;
+                if(rowCount <= limit) 
+                {
+                    var oTable = document.getElementById('resourceTable');
+                    var rowLength = oTable.rows.length;
+                    
+                    for (j = 1; j < rowLength; j++)
+                    {
+                        var oCells = oTable.rows.item(j).cells;
+                        var cellVal_accno = oCells.item(1).innerHTML;
+                        var cellVal_snumber = oCells.item(2).innerHTML;
+                        if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
+                        { 
+                            bexsist=true;   
+                        }
+                    }
+
+                    if(bexsist==false)
+                    {
+                        if(resourceinput)
+                        { 
+                            // -------------------------------------------------------
+                            $.ajaxSetup({
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+
+                            $.ajax({
+                                type: 'POST',
+                                dataType : 'json',
+                                url: "{{route('resource_view')}}",
+                                data:{resourceinput: resourceinput},
+                                success: function(data){
+                                if(data.massage=="success")
+                                    {
+                                    op+='<tr>';
+                                    op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
+                                    op+='</tr>';
+                                    $("#resourceTable tbody").append(op);
+                                    }
+                                    else if(data.massage=="lend")
+                                    {
+                                        toastr.error('Resource Alredy Lend');
+                                    }
+                                    else{toastr.error('Resource Not Found!');}
+                            
+                                },
+                                error: function(data){
+                                toastr.error('Something Went Wrong!')
+                                }
+                            });
+                            // -------------------------------------------------------------
+                        }
+                        else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
+                        
+                    }
+                    else{toastr.error('Resource Alrady in Cart')}
                 }
-                $("#resourceTable tbody").empty();
+                else{toastr.error('Maximam Resource lending Limit reached!')}
+        }
+        else
+        {
+            toastr.error('Plese Select Member first');
+            document.getElementById("member_id").focus();
+        }
+        
 
-                });
-                    var input = document.getElementById("resource_details");
-                    input.addEventListener("keyup", function(event) {
-                    if (event.keyCode === 13) {
-                    event.preventDefault();
-                    document.getElementById("addbarrow").click();
-                    $('#resource_details').val('');
-                    document.getElementById("resource_details").focus();
-                }
-                });
-            });
-                // ----------------------------------------------------------------------------
+    });
+    // -----------------------------------------------------
+    $('#issue_resource').on("click",function(){
 
-                $('#addbarrowmember').on("click",function(){
-                var memberid = $("#member_id").val();
-                $('#resource_details').val('');
-                $('#member_Name_id').val('');
-                $('#member_Name').html('');
-                $('#issue_error').html('');
-                $('#issue_success').html('');
+        var oTable = document.getElementById('resourceTable');
+        var rowLength = oTable.rows.length;
+        var mem_id = $("#member_Name_id").val();
+        var dteissue = $("#issuedte").val();
+        var descript=[];
+        if(rowLength>1)
+        {
+            for (i = 1; i < rowLength; i++)
+            {
+                var oCells = oTable.rows.item(i).cells;
+                var resourcename = oCells.item(1).innerHTML;
+                descript[i]=resourcename;
+            }
+            var description = descript.toString();
 
+            // ------------------------lending save--------------------------------
                 $.ajaxSetup({
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
 
                 $.ajax({
                     type: 'POST',
                     dataType : 'json',
-                    data: { memberid: memberid },
-                    url: "{{route('member_view')}}",
-                    success: function(data){
-            
-                        var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
-                        $('#member_Name').html(mem_detail);
-                        $('#member_Name_id').val(data.member_id);
-                        $('#member_id').val('');
-                        document.getElementById("resource_details").focus();
-                    
-                    },
-                    error: function(data){
-                    toastr.error('Member Not Found!')
-                    $('#member_id').val('');
-                    document.getElementById("member_id").focus();
-                    }
-                });
-            });
-            // ------------------------------------------------------------------------
-
-            $('#addbarrow').on("click",function(){
-                var resourceinput = $("#resource_details").val();
-                var limit = $("#lending_limit").val();
-                var op ="";
-                var bexsist=false;
-               
-                if(resourceinput)
-                {
-                    // -------------------------------------------------------
-                    $.ajaxSetup({
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    $.ajax({
-                        type: 'POST',
-                        dataType : 'json',
-                        url: "{{route('resource_view')}}",
-                        data:{resourceinput: resourceinput},
-                        success: function(data){
-                        if(data.massage=="success")
-                            {
-                            op+='<tr>';
-                            op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button value="'+data.id+'" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button></td>';
-                            op+='</tr>';
-                            $("#resourceTable tbody").append(op);
-                            }
-                            else{toastr.error('Resource Not Found!')}
-                    
+                    url: "{{route('issue.store')}}",
+                    data:{
+                        description: description,
+                        mem_id: mem_id,
+                        dteissue: dteissue
                         },
-                        error: function(data){
-                        toastr.error('Something Went Wrong!')
-                        }
-                    });
-                    // -------------------------------------------------------------
-                }
-                else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
-               
-                
-                    
-                        if($('#member_Name_id').val())
-                        {
-                            var rowCount = $('#resourceTable tr').length;
-                            if(rowCount<4) //3+1 must get by settings
-                            {
-                            var oTable = document.getElementById('resourceTable');
-                            var rowLength = oTable.rows.length;
-                            
-                            for (j = 1; j < rowLength; j++)
-                            {
-                                var oCells = oTable.rows.item(j).cells;
-                                var cellVal = oCells.item(1).innerHTML;
-                                if(resourceid.toUpperCase()==cellVal.toUpperCase())
-                                { 
-                                    bexsist=true;   
-                                }
-                            }
-
-                            if(bexsist==false)
-                            {
-                               
-                            }
-                            else{$('#issue_error').html('Book Allready Exsists');}
-                    
-                            }
-                            else{$('#issue_error').html('* Maximam Books allowd');}
-                            }
-                            else{$('#issue_error').html('* Select Member First');
-                            document.getElementById("member_id").focus();
-                        }
-
-
-                    });
-                    // -----------------------------------------------------
-                    $('#issue_book').on("click",function(){
-
-                        var oTable = document.getElementById('BookTable');
-                        var rowLength = oTable.rows.length;
-                        var mem_id = $("#member_Name_id").val();
-                        var dteissue = $("#issuedte").val();
-                        //var dteissue =new Date().toLocaleDateString();
+                    success: function(data){
+                        var lendid=data.lend_id;
+                        // ---------------------lending Details save--------------
                         for (j = 1; j < rowLength; j++)
                         {
                             var oCells = oTable.rows.item(j).cells;
-                            var Bookid = oCells.item(0).innerHTML;
-                            // -----------------------
+                            var resourceid = oCells.item(0).innerHTML;
                             $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
                             $.ajax({
-                                method: 'POST',
+                                type: 'POST',
+                                dataType : 'json',
                                 data:{
-                                    Bookid: Bookid,
+                                    resourceid: resourceid,
                                     mem_id: mem_id,
-                                    dteissue: dteissue
-                                
+                                    dteissue: dteissue,
+                                    lendid: lendid
                                     },
-                                url: '/issue_save',
-                                success: function(response){
-                                $('#issue_success').html("Books Issue Sucessfully");
-                                $('#bookB_details').val('');
-                                $('#member_Name_id').val('');
-                                $('#member_Name').html('');
-                                $('#issue_error').html('');
-                                $("#BookTable tbody").empty();
-                                document.getElementById("member_id").focus();
-
-
+                                url: "{{route('store_issue')}}",
+                                success: function(data){  
+                                    $('#resource_details').val('');
+                                    $('#member_Name_id').val('');
+                                    $('#member_Name').html('');
+                                    $("#resourceTable tbody").empty();
+                                    document.getElementById("member_id").focus();
                                 },
-                                error: function(response){
-                                $('#issue_error').html('Books Issued Fali!');
+                                error: function(data){
+                                   
                                 }
                             });
-                            }
-                        });
-            </script>
-        @endpush
+                        }
+                        //------------------------end-----------------------------
+                        toastr.success('lending Processe Successfuly Completed');
+                    },
+                    error: function(data){
+                        toastr.error('lending Processe faild');
+                    }
+            });
+            // ----------------------end lending save-------------------------------
+        }
+        else
+        {
+            toastr.warning('Lending Cart is empty');
+        }
+         
+    });
+
+    $("#resourceTable").on('click', '.remove_resources', function () {
+        $(this).closest('tr').remove();
+        document.getElementById("resource_details").focus();
+
+    });
+
+
+</script>
+@endpush

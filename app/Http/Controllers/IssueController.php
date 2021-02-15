@@ -7,7 +7,12 @@ use App\Models\member;
 use App\Models\resource;
 use App\Models\setting;
 use App\Models\view_resource_data;
+use App\Models\lending_detail;
+use App\Models\lending;
 use Session;
+use Carbon\Carbon;
+use Auth;
+
 
 class IssueController extends Controller
 {
@@ -24,8 +29,11 @@ class IssueController extends Controller
         else{$lang="_".$db_setting->value;}
         Session::put('db_locale', $lang);
 
+        $issuedate=Carbon::now()->isoFormat('YYYY-MM-DD');
+        error_log($issuedate);
+
         $lending_setting = setting::where('setting','lending_count')->first();
-        return view('lending.issue.index')->with('lending_setting',$lending_setting);
+        return view('lending.issue.index')->with('lending_setting',$lending_setting)->with('issuedate',$issuedate);
     }
     
     public function memberview(Request $request)
@@ -51,14 +59,26 @@ class IssueController extends Controller
                 ->first();
         if($reso)
         {
-            return response()->json(['id' => $reso->id,
-                                    'title' => $reso->$title,
-                                    'accno'=>$reso->accessionNo,
-                                    'snumber'=>$reso->standard_number,
-                                    'category'=>$reso->$category,
-                                    'type'=>$reso->$type,
-                                    'creator'=>$reso->$creator,
-                                    'massage' => "success"]);   
+            $lend = lending_detail::select('*')
+                ->where('resource_id', $reso->id)
+                ->Where('return',0)
+                ->first();
+                if(!$lend)
+                {
+                    return response()->json(['id' => $reso->id,
+                    'title' => $reso->$title,
+                    'accno'=>$reso->accessionNo,
+                    'snumber'=>$reso->standard_number,
+                    'category'=>$reso->$category,
+                    'type'=>$reso->$type,
+                    'creator'=>$reso->$creator,
+                    'massage' => "success"]);   
+                }
+                else
+                {
+                    return response()->json(['massage' => "lend"]);
+                }
+           
         }
         else 
         {
@@ -87,7 +107,32 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $lend=new lending;
+
+        $lend->member_id     =  $request->mem_id;
+        $lend->description   =  $request->description;
+        $lend->issue_date    =  $request->dteissue;
+
+        $lend->save();
+        return response()->json(['lend_id' => $lend->id]);
+    }
+
+    public function store_issue(Request $request)
+    {
+        $lend=new lending_detail;;
+        // $issudate = Carbon::parse($request->dteissue);
+        // $returndate=$issudate->addDays(14);
+
+        $lend->lending_id     =  $request->lendid;
+        $lend->member_id      =  $request->mem_id;
+        $lend->resource_id    =  $request->resourceid;
+        $lend->issue_date     =  $request->dteissue;
+        $lend->return         =  0;
+        $lend->fine           =  0;
+        $lend->issue_by       =  Auth::user()->id;
+
+        $lend->save();
+        return response()->json(['massage' => "success"]);
     }
 
     /**

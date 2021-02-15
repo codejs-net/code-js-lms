@@ -20,16 +20,24 @@ class CreateLendingDetailsTable extends Migration
             $table->integer('lending_id')->unsigned()->nullable();
             $table->foreign('lending_id')->references('id')->on('lendings');
 
+            $table->integer('member_id')->unsigned()->nullable();
+            $table->foreign('member_id')->references('id')->on('members');
+
+            $table->integer('resource_id')->unsigned()->nullable();
+            $table->foreign('resource_id')->references('id')->on('resources');
+
             $table->date('issue_date')->default(Carbon::now());
 
-            $table->boolean('return')->default(0)->change();
-            $table->date('return_date');
-            $table->boolean('fine')->default(0)->change();
-            $table->double('fine_amount', 4, 2);
+            $table->integer('return')->default(0);
+            $table->date('return_date')->nullable();
+            $table->integer('fine')->default(0);
+            $table->double('fine_amount', 8, 2)->nullable();
 
             $table->string('remark_si')->nullable();
             $table->string('remark_ta')->nullable();
             $table->string('remark_en')->nullable();
+            $table->string('issue_by')->nullable();
+            $table->string('return_by')->nullable();
             $table->timestamps();
         });
     }
