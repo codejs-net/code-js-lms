@@ -119,11 +119,15 @@ $creator="name".$lang;
 
     </div>
     <hr>
-        <div class="box-footer clearfix pull-right">
-            <button type="button" class="btn btn-primary btn-md" id="issue_resource">
+        <div class="input-group box-footer clearfix pull-right">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="check_print">
+            <label class="form-check-label" for="check_print">Print Recipt</label>
+        </div>
+            <button type="button" class="btn btn-sm btn-primary btn-md ml-2" id="issue_resource">
             <i class="fa fa-floppy-o"></i> Save</button>
             &nbsp; &nbsp;
-            <button type="button" class="btn btn-warning btn-md" id="reset_issue">
+            <button type="button" class="btn btn-sm btn-warning btn-md ml-2" id="reset_issue">
             <i class="fa fa-times"></i> Reset</button>
         </div> 
 </div>
@@ -341,6 +345,7 @@ $creator="name".$lang;
                         }
                         //------------------------end-----------------------------
                         toastr.success('lending Processe Successfuly Completed');
+                        window.open('./issue_riceipt/'+lendid, '_blank')
                     },
                     error: function(data){
                         toastr.error('lending Processe faild');

@@ -9,6 +9,7 @@ use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
+use App\Models\view_lending_data;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -178,5 +179,11 @@ class IssueController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function issue_receipt($id)
+    {
+        // $lending = lending::where('lending_id',$id )->first();
+        $lendingdata = view_lending_data::where('lending_id',$id )->get();
+        return view('receipts.issue_receipt')->with('lendingdata',$lendingdata); 
     }
 }
