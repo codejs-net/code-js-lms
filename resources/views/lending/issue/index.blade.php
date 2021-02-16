@@ -132,8 +132,37 @@ $creator="name".$lang;
         </div> 
 </div>
 </form>
+
+<div id="printdiv" style="display: none;">
+    <div class="col-md-4">
+        <div id="print_lendding" style="text-align: center;">
+            <div class="text-center"><u><h3>Issue Receipt</h3></u></div>
+            </br>
+            
+                <h5 >Member : <span id="print_member"></span></h5>
+                <h5 >Issue Date : <span id="print_issuedate"></span></h5>
+                <h5>Return Date :<span id="print_returndate"></span></h5>
+                
+                <table id="print_table">
+                    <!-- <thead>
+                        <tr>
+                            <th>Accession No</th>
+                            <th>Title</th>
+                            <th>&nbsp;</th>
+                        </tr>    
+                    </thead> -->
+                    <tbody> 
+                    </tbody>
+                </table>
+
+                </br>
+                <div class="text-center mb-3"><h3>Thank You!</h3></div>
+            </div>
+        </div>
+</div>
+
               
-<!-----------------------------------------form start--------------------------------------------------->
+<!------------------------------------------------------------------------------------------->
                             
                         
 @endsection
@@ -170,8 +199,8 @@ $creator="name".$lang;
         $('#resource_details').val('');
         $('#member_Name_id').val('');
         $('#member_Name').html('');
-        $('#issue_error').html('');
-        $('#issue_success').html('');
+        $("#resourceTable tbody").empty();
+        $("#print_table tbody").empty();
 
         $.ajaxSetup({
             headers: {
@@ -317,8 +346,10 @@ $creator="name".$lang;
                         // ---------------------lending Details save--------------
                         for (j = 1; j < rowLength; j++)
                         {
+                            var op="";
                             var oCells = oTable.rows.item(j).cells;
                             var resourceid = oCells.item(0).innerHTML;
+
                             $.ajaxSetup({
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
                             $.ajax({
@@ -332,11 +363,7 @@ $creator="name".$lang;
                                     },
                                 url: "{{route('store_issue')}}",
                                 success: function(data){  
-                                    $('#resource_details').val('');
-                                    $('#member_Name_id').val('');
-                                    $('#member_Name').html('');
-                                    $("#resourceTable tbody").empty();
-                                    document.getElementById("member_id").focus();
+                                   
                                 },
                                 error: function(data){
                                    
@@ -345,7 +372,35 @@ $creator="name".$lang;
                         }
                         //------------------------end-----------------------------
                         toastr.success('lending Processe Successfuly Completed');
-                        window.open('./issue_riceipt/'+lendid, '_blank')
+                        if($("#check_print").prop("checked") == true)
+                        {
+                            // --------------print--------------------------
+                            $('#print_member').html($('#member_Name').html());
+                            $('#print_issuedate').html(dteissue);
+                            
+                            for (k = 1; k < rowLength; k++)
+                            {
+                                var op="";
+                                var oCells = oTable.rows.item(k).cells;
+                                var resourceacceno = oCells.item(1).innerHTML;
+                                var resourcetitle = oCells.item(3).innerHTML;
+                                var resourcetype = oCells.item(5).innerHTML;
+                            
+                                op+='<tr>';
+                                op+='<td>'+resourceacceno+'</td><td>&nbsp;-&nbsp;'+resourcetitle+'</td><td>&nbsp;('+resourcetype+')</td>';
+                                op+='</tr>';
+                                $("#print_table tbody").append(op);
+                            }
+                            printDiv();
+                            //---------------end print----------------------  
+                        }
+                        
+                        $('#resource_details').val('');
+                        $('#member_Name_id').val('');
+                        $('#member_Name').html('');
+                        $("#resourceTable tbody").empty();
+                        $("#print_table tbody").empty();
+                        document.getElementById("member_id").focus();
                     },
                     error: function(data){
                         toastr.error('lending Processe faild');
@@ -365,7 +420,34 @@ $creator="name".$lang;
         document.getElementById("resource_details").focus();
 
     });
-
+   
+    function printDiv(){
+        var contents = $("#print_lendding").html();
+        
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1[0].id = "frame1";
+        frame1[0].width = "250px";
+        frame1.css({ "position": "absolute", "top": "-1000000px" });
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write('<html><head><title>Riceipt</title>');
+        frameDoc.document.write('</head><body>');
+        frameDoc.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
+        frameDoc.document.write('<link href="{{ asset('css/riceipt.css') }}" rel="stylesheet">');
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        // window.frames["frame1"].focus();
+        // window.frames["frame1"].print();
+        
+        $("#frame1").get(0).contentWindow.print();
+        setTimeout(function () {
+           frame1.remove();
+        }, 10000);
+    }
+    
 
 </script>
 @endpush

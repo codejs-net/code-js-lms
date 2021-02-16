@@ -1,0 +1,6 @@
+  /* style sheet for "A4" printing */
+  @media print and (width: 7cm) and (height: 10cm) {
+    @page {
+       margin: 1cm;
+    }
+  }

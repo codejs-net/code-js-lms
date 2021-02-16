@@ -15,7 +15,7 @@ $member="member".$lang;
     <title>Receipt</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 </head>
-<body onload="printlending()">
+<body onload="printDiv()">
 
     <div id="print_lendding">
     <h4>Issue Receipt</h4>
@@ -45,6 +45,23 @@ $member="member".$lang;
     <script>
 
 // $('#genaral35a').css('width', '816px');
+
+function printDiv() 
+{
+
+  var divToPrint=document.getElementById('print_lendding');
+
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+  newWin.document.close();
+
+  setTimeout(function(){newWin.close();},10);
+
+}
 
     function printlending(){
         var contents = $("#print_lendding").html();
