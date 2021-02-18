@@ -8,13 +8,6 @@ $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
 $type="type".$lang;
-$publisher="publisher".$lang;
-$medium="phymedia".$lang;
-$language="language".$lang;
-$dd_class="class".$lang;
-$dd_devision="devision".$lang;
-$dd_section="section".$lang;
-$creator="name".$lang;
 
 @endphp
 
@@ -22,7 +15,7 @@ $creator="name".$lang;
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
     <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Lending&nbsp;</a></li>
-    <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> Resources Issue&nbsp;</a></li>
+    <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> Resources Return&nbsp;</a></li>
 </ol>
 </nav>
       <!-- Content Header (Page header) -->
@@ -31,7 +24,7 @@ $creator="name".$lang;
 <div class="container-fluid">
     <div class="row text-center mb-2">
         <div class="col-md-12 col-sm-12 text-center"> 
-            <h5> <i class="fa fa-shopping-cart">&nbsp;Resources Lending</i></h5>
+            <h5> <i class="fa fa-shopping-cart">&nbsp;Resources Return</i></h5>
         </div> 
 
     </div>
@@ -42,7 +35,6 @@ $creator="name".$lang;
     <div class="card card-body">
         <div class="row">
         <input type="hidden" name="member_Name_id"id="member_Name_id">
-        <input type="hidden" name="lending_limit" id="lending_limit" value="{{$lending_setting->value}}">
 
             <div class="col-md-3 col-sm-12 text-left mt-1">
               <div class="input-group">
@@ -61,7 +53,7 @@ $creator="name".$lang;
                      <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
                     <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fas fa-cart-plus"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-level-down fa-lg"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
             </div>
@@ -72,7 +64,7 @@ $creator="name".$lang;
                     <div class="input-group-prepend">
                         <span class="input-group-addon"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
                     </div>
-                    <input type="date" class="form-control" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1">
+                    <input type="date" class="form-control" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1">
                 </div>
             </div>
 
@@ -81,10 +73,10 @@ $creator="name".$lang;
         <div class="row text-center mt-4">
             <div class="col-md-12">
                 <!-- small box -->
-                    <div class="card card-name-1" style="height:2.5rem;">
-                        <div class="text-center ">
+                    <div class="card card-name" style="height:2.5rem;">
+                        <div class="text-center">
                         <span><i class="fa fa-user-circle-o">&nbsp;
-                            <span id="member_Name"class="text-indigo font-weight-bold"></span>
+                            <span id="member_Name"class="text-dark font-weight-bold"></span>
                             <!-- <span id="member_show_id"class="font-weight-bold badge badge-info"></span> -->
                         </i></span>
                         
@@ -99,14 +91,17 @@ $creator="name".$lang;
                 <table class="table table-hover" id="resourceTable">
                 <thead class="thead-light">
                     <tr>
-                    <th scope="col" class="td_id">ID</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Resource ID</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Accession No</th>
                     <th scope="col">ISBN/ISSN</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Creator</th>
-                    <!-- <th scope="col">Category</th> -->
-                    <th scope="col">Type</th>
-                    <th scope="col">&nbsp;</th>
+                    <th scope="col">Issue Date</th>
+                    <th scope="col">Dateof Return</th>
+                    <th scope="col">Fine</th>
+                    <th scope="col">Return</th>
+                    <th scope="col">Action</th>
                     </tr>    
                     </thead>
 
@@ -201,7 +196,7 @@ $creator="name".$lang;
         $('#member_Name').html('');
         $("#resourceTable tbody").empty();
         $("#print_table tbody").empty();
-
+        var op="";
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -212,18 +207,50 @@ $creator="name".$lang;
             type: 'POST',
             dataType : 'json',
             data: { memberid: memberid },
-            url: "{{route('member_view')}}",
+            url: "{{route('get_lending')}}",
             success: function(data){
-    
-                var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
-                $('#member_Name').html(mem_detail);
-                $('#member_Name_id').val(data.member_id);
+                // console.log(data);
                 $('#member_id').val('');
-                document.getElementById("resource_details").focus();
+                if(data[0]['status']=="success")
+                {
+                    var membr=data[0]['member_id']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
+                    $('#member_Name').html(membr);
+                    $('#member_Name_id').val(data[0]['id']);
+                    // ------------table-----------------------------
+                    for (j = 0; j < data.length; j++)
+                    {
+                        op+='<tr>';
+                        op+='<td class="td_id">'+data[j]['id']+'</td>';
+                        op+='<td>'+data[j]['resource_id']+'</td>';
+                        op+='<td>'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
+                        op+='<td class="td_input">'+data[j]['resource_accno']+'</td>';
+                        op+='<td class="td_input">'+data[j]['resource_isn']+'</td>';
+                        op+='<td>'+data[j]['resource_title']+'</td>';
+                        op+='<td>'+data[j]['issue_date']+'</td>';
+                        op+='<td>'+data[j]['return_date']+'</td>';
+                        op+='<td>'+data[j]['fine']+'</td>';
+                        op+='<td>'+data[j]['return']+'</td>';
+                        op+='<td><button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-success return_resources"><i class="fa fa-level-down"></i></button></td>';
+                        op+='</tr>';  
+                    }
+                    //-------------end table-------------------------
+                    $("#resourceTable tbody").append(op);
+                    document.getElementById("resource_details").focus();
+                }
+                else if(data[0]['status']=="no")
+                {
+                    toastr.info('No resources to return by '+data[0]['member_name']);
+                    document.getElementById("member_id").focus();
+                }
+                else
+                {
+                    toastr.error('Member Not Registerd!')
+                    document.getElementById("member_id").focus();
+                }
             
             },
             error: function(data){
-            toastr.error('Member Not Found!')
+            toastr.error('Something Went Wrong!')
             $('#member_id').val('');
             document.getElementById("member_id").focus();
             }
@@ -237,64 +264,78 @@ $creator="name".$lang;
         var op ="";
         var bexsist=false;
         if($('#member_Name_id').val())
-        {
+        {    
+            if(resourceinput)
+            {
                 var rowCount = $('#resourceTable tr').length;
-                if(rowCount <= limit) 
+                var oTable = document.getElementById('resourceTable');
+                var mem_id = $("#member_Name_id").val();
+                var dtereturn = $("#returndte").val();
+                for (j = 1; j < rowCount; j++)
                 {
-                    var oTable = document.getElementById('resourceTable');
-                    
-                    if(resourceinput)
-                    {
-                        for (j = 1; j < rowCount; j++)
-                        {
-                            var oCells = oTable.rows.item(j).cells;
-                            var cellVal_accno = oCells.item(1).innerHTML;
-                            var cellVal_snumber = oCells.item(2).innerHTML;
-                            if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
-                            { 
-                                bexsist=true;   
-                            }
-                        }
-                        if(bexsist==false)
-                        { 
-                            // -------------------------------------------------------
-                            $.ajaxSetup({
-                                headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-
+                    var oCells = oTable.rows.item(j).cells;
+                    var cellVal_accno = oCells.item(3).innerHTML;
+                    var cellVal_snumber = oCells.item(4).innerHTML;
+                    var cellVal_lend_id = oCells.item(0).innerHTML;
+                    var cellVal_fine = oCells.item(8).innerHTML;
+                    if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
+                    { 
+                        //-------------------------------------------------------
+                        $.ajaxSetup({
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
                             $.ajax({
                                 type: 'POST',
                                 dataType : 'json',
-                                url: "{{route('resource_view')}}",
-                                data:{resourceinput: resourceinput},
-                                success: function(data){
-                                if(data.massage=="success")
+                                data:{
+                                    mem_id: mem_id,
+                                    dtereturn: dtereturn,
+                                    cellVal_lend_id: cellVal_lend_id,
+                                    cellVal_fine:cellVal_fine
+                                    },
+                                url: "{{route('store_return')}}",
+                                success: function(data){  
+                                    // console.log(data);
+                                    if(data.massage=="success")
                                     {
-                                    op+='<tr>';
-                                    op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
-                                    op+='</tr>';
-                                    $("#resourceTable tbody").append(op);
+                                        // $(function(){
+                                        //     $("#resourceTable .td_input").filter(function() {
+                                        //         return $(this).text() == data.lendid;
+                                        //     }).parent('tr').remove();
+                                        // });
+
+                                        $('#resourceTable').find('.td_id').each(function(){
+                                            if($(this).text() == data.lendid){
+                                                $(this).parent('tr').remove();
+                                            }
+                                        });
+
+                                        // $('#mytable tr').each(function() {
+                                        //     $(this).find(".customerIDCell").html();    
+                                        // });
+                                        toastr.success('Resources Successfully Returnd')
                                     }
-                                    else if(data.massage=="lend")
-                                    {
-                                        toastr.error('Resource Alredy Lend');
-                                    }
-                                    else{toastr.error('Resource Not Found!');}
-                            
+                                   
                                 },
                                 error: function(data){
-                                toastr.error('Something Went Wrong!')
+                                    toastr.error('Returing Error')
                                 }
                             });
-                            // -------------------------------------------------------------
-                        }
-                        else{toastr.error('Resource Alrady in Cart')} 
+                        //-------------------------------------------------------
+                        // oCells.item(9).innerHTML='<button type="button" value="1" class="btn btn-sm btn-success return_resources"><i class="fa fa-check"></i></button>'
                     }
-                    else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
+                    
                 }
-                else{toastr.error('Maximam Resource lending Limit reached!')}
+                // -------------------------------------------------------
+                // resourceinput= $("#resourceTable tr").filter(function() {
+                //     var customerId = $(this).find(".customerIDCell").html();
+                // }).closest("tr");
+               
+                //  $('#resourceTable tr:contains("'+resourceinput+'")').addClass('text-success');
+                //  $("#resourceTable .td_input:contains('" + resourceinput + "')").addClass('text-success');
+                // --------------------------------------------------------  
+               
+            }
+            else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
         }
         else
         {

@@ -31,7 +31,7 @@ class IssueController extends Controller
         Session::put('db_locale', $lang);
 
         $issuedate=Carbon::now()->isoFormat('YYYY-MM-DD');
-        error_log($issuedate);
+        // error_log($issuedate);
 
         $lending_setting = setting::where('setting','lending_count')->first();
         return view('lending.issue.index')->with('lending_setting',$lending_setting)->with('issuedate',$issuedate);
