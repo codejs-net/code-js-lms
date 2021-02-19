@@ -129,7 +129,7 @@ class IssueController extends Controller
         $lend->resource_id    =  $request->resourceid;
         $lend->issue_date     =  $request->dteissue;
         $lend->return         =  0;
-        $lend->fine           =  0;
+        $lend->fine_amount    =  0;
         $lend->issue_by       =  Auth::user()->id;
 
         $lend->save();

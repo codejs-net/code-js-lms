@@ -30,14 +30,18 @@ class CreateLendingDetailsTable extends Migration
 
             $table->integer('return')->default(0);
             $table->date('return_date')->nullable();
-            $table->integer('fine')->default(0);
             $table->double('fine_amount', 8, 2)->nullable();
 
             $table->string('remark_si')->nullable();
             $table->string('remark_ta')->nullable();
             $table->string('remark_en')->nullable();
-            $table->string('issue_by')->nullable();
-            $table->string('return_by')->nullable();
+
+            $table->unsignedBigInteger('issue_by')->nullable();
+            $table->foreign('issue_by')->references('id')->on('users');
+
+            $table->unsignedBigInteger('return_by')->nullable();
+            $table->foreign('return_by')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

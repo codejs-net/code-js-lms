@@ -252,7 +252,7 @@ class ResourceController extends Controller
         if($request->hasFile('file'))
         {
             $data=Excel::import(new ResourceImport,request()->file('file'));
-            return redirect()->route('resources.index')->with('success','Details imported successfully.');
+            return redirect()->route('resource.index')->with('success','Details imported successfully.');
         }
         else
         {

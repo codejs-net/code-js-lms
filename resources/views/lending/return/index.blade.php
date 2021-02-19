@@ -53,7 +53,7 @@ $type="type".$lang;
                      <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
                     <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-level-down fa-lg"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-check-square-o fa-lg"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
             </div>
@@ -99,7 +99,7 @@ $type="type".$lang;
                     <th scope="col">Title</th>
                     <th scope="col">Issue Date</th>
                     <th scope="col">Dateof Return</th>
-                    <th scope="col">Fine</th>
+                    <th scope="col">Fine(Rs)</th>
                     <th scope="col">Return</th>
                     <th scope="col">Action</th>
                     </tr>    
@@ -219,7 +219,8 @@ $type="type".$lang;
                     // ------------table-----------------------------
                     for (j = 0; j < data.length; j++)
                     {
-                        op+='<tr>';
+                        if(data[j]['fine_amount']!=0){op+='<tr class="text-danger font-weight-bold">';}
+                        else{op+='<tr>';}
                         op+='<td class="td_id">'+data[j]['id']+'</td>';
                         op+='<td>'+data[j]['resource_id']+'</td>';
                         op+='<td>'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
@@ -228,9 +229,19 @@ $type="type".$lang;
                         op+='<td>'+data[j]['resource_title']+'</td>';
                         op+='<td>'+data[j]['issue_date']+'</td>';
                         op+='<td>'+data[j]['return_date']+'</td>';
-                        op+='<td>'+data[j]['fine']+'</td>';
+                        op+='<td class="fine_amount">'+data[j]['fine_amount']+'</td>';
                         op+='<td>'+data[j]['return']+'</td>';
-                        op+='<td><button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-success return_resources"><i class="fa fa-level-down"></i></button></td>';
+                        op+='<td>';
+                        if(data[j]['fine_amount']!=0)
+                        {
+                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine"><i class="fa fa-money"></i></button>';
+                        }
+                        else
+                        {
+                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
+                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
+                        }
+                        op+='</td>';
                         op+='</tr>';  
                     }
                     //-------------end table-------------------------
@@ -271,6 +282,7 @@ $type="type".$lang;
                 var oTable = document.getElementById('resourceTable');
                 var mem_id = $("#member_Name_id").val();
                 var dtereturn = $("#returndte").val();
+                var resource_found=0;
                 for (j = 1; j < rowCount; j++)
                 {
                     var oCells = oTable.rows.item(j).cells;
@@ -280,60 +292,50 @@ $type="type".$lang;
                     var cellVal_fine = oCells.item(8).innerHTML;
                     if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
                     { 
-                        //-------------------------------------------------------
-                        $.ajaxSetup({
-                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-                            $.ajax({
-                                type: 'POST',
-                                dataType : 'json',
-                                data:{
-                                    mem_id: mem_id,
-                                    dtereturn: dtereturn,
-                                    cellVal_lend_id: cellVal_lend_id,
-                                    cellVal_fine:cellVal_fine
+                        resource_found=1;
+                        if(cellVal_fine==0)
+                        {
+                            //-------------------------------------------------------
+                            $.ajaxSetup({
+                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                                $.ajax({
+                                    type: 'POST',
+                                    dataType : 'json',
+                                    data:{
+                                        mem_id: mem_id,
+                                        dtereturn: dtereturn,
+                                        cellVal_lend_id: cellVal_lend_id,
+                                        cellVal_fine:cellVal_fine
+                                        },
+                                    url: "{{route('store_return')}}",
+                                    success: function(data){  
+                                        // console.log(data);
+                                        if(data.massage=="success")
+                                        {
+                                            
+                                            $('#resourceTable').find('.td_id').each(function(){
+                                                if($(this).text() == data.lendid){
+                                                    $(this).parent('tr').remove();
+                                                }
+                                            });
+                                            toastr.success('Resources Successfully Returnd');
+                                        }
                                     },
-                                url: "{{route('store_return')}}",
-                                success: function(data){  
-                                    // console.log(data);
-                                    if(data.massage=="success")
-                                    {
-                                        // $(function(){
-                                        //     $("#resourceTable .td_input").filter(function() {
-                                        //         return $(this).text() == data.lendid;
-                                        //     }).parent('tr').remove();
-                                        // });
-
-                                        $('#resourceTable').find('.td_id').each(function(){
-                                            if($(this).text() == data.lendid){
-                                                $(this).parent('tr').remove();
-                                            }
-                                        });
-
-                                        // $('#mytable tr').each(function() {
-                                        //     $(this).find(".customerIDCell").html();    
-                                        // });
-                                        toastr.success('Resources Successfully Returnd')
+                                    error: function(data){
+                                        toastr.error('Returing Error');
                                     }
-                                   
-                                },
-                                error: function(data){
-                                    toastr.error('Returing Error')
-                                }
-                            });
-                        //-------------------------------------------------------
-                        // oCells.item(9).innerHTML='<button type="button" value="1" class="btn btn-sm btn-success return_resources"><i class="fa fa-check"></i></button>'
-                    }
+                                });
+                            //---------------------------------------------------------
+                        }
+                        else
+                        {
+                            toastr.warning('Plese Settle the Fine Before Return');
+                        }
                     
+                    }
                 }
-                // -------------------------------------------------------
-                // resourceinput= $("#resourceTable tr").filter(function() {
-                //     var customerId = $(this).find(".customerIDCell").html();
-                // }).closest("tr");
                
-                //  $('#resourceTable tr:contains("'+resourceinput+'")').addClass('text-success');
-                //  $("#resourceTable .td_input:contains('" + resourceinput + "')").addClass('text-success');
-                // --------------------------------------------------------  
-               
+                if(resource_found==0){  toastr.error('Resource Not Found!');}
             }
             else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
         }
@@ -347,114 +349,44 @@ $type="type".$lang;
     });
     // -----------------------------------------------------
     $('#issue_resource').on("click",function(){
-
-        var oTable = document.getElementById('resourceTable');
-        var rowLength = oTable.rows.length;
-        var mem_id = $("#member_Name_id").val();
-        var dteissue = $("#issuedte").val();
-        var descript=[];
-        if(rowLength>1)
-        {
-            for (i = 1; i < rowLength; i++)
-            {
-                var oCells = oTable.rows.item(i).cells;
-                var resourcename = oCells.item(1).innerHTML;
-                descript[i]=resourcename;
-            }
-            var description = descript.toString();
-
-            // ------------------------lending save--------------------------------
-                $.ajaxSetup({
-                    headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    type: 'POST',
-                    dataType : 'json',
-                    url: "{{route('issue.store')}}",
-                    data:{
-                        description: description,
-                        mem_id: mem_id,
-                        dteissue: dteissue
-                        },
-                    success: function(data){
-                        var lendid=data.lend_id;
-                        // ---------------------lending Details save--------------
-                        for (j = 1; j < rowLength; j++)
-                        {
-                            var op="";
-                            var oCells = oTable.rows.item(j).cells;
-                            var resourceid = oCells.item(0).innerHTML;
-
-                            $.ajaxSetup({
-                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-                            $.ajax({
-                                type: 'POST',
-                                dataType : 'json',
-                                data:{
-                                    resourceid: resourceid,
-                                    mem_id: mem_id,
-                                    dteissue: dteissue,
-                                    lendid: lendid
-                                    },
-                                url: "{{route('store_issue')}}",
-                                success: function(data){  
-                                   
-                                },
-                                error: function(data){
-                                   
-                                }
-                            });
-                        }
-                        //------------------------end-----------------------------
-                        toastr.success('lending Processe Successfuly Completed');
-                        if($("#check_print").prop("checked") == true)
-                        {
-                            // --------------print--------------------------
-                            $('#print_member').html($('#member_Name').html());
-                            $('#print_issuedate').html(dteissue);
-                            
-                            for (k = 1; k < rowLength; k++)
-                            {
-                                var op="";
-                                var oCells = oTable.rows.item(k).cells;
-                                var resourceacceno = oCells.item(1).innerHTML;
-                                var resourcetitle = oCells.item(3).innerHTML;
-                                var resourcetype = oCells.item(5).innerHTML;
-                            
-                                op+='<tr>';
-                                op+='<td>'+resourceacceno+'</td><td>&nbsp;-&nbsp;'+resourcetitle+'</td><td>&nbsp;('+resourcetype+')</td>';
-                                op+='</tr>';
-                                $("#print_table tbody").append(op);
-                            }
-                            printDiv();
-                            //---------------end print----------------------  
-                        }
-                        
-                        $('#resource_details').val('');
-                        $('#member_Name_id').val('');
-                        $('#member_Name').html('');
-                        $("#resourceTable tbody").empty();
-                        $("#print_table tbody").empty();
-                        document.getElementById("member_id").focus();
-                    },
-                    error: function(data){
-                        toastr.error('lending Processe faild');
-                    }
-            });
-            // ----------------------end lending save-------------------------------
-        }
-        else
-        {
-            toastr.warning('Lending Cart is empty');
-        }
          
     });
 
-    $("#resourceTable").on('click', '.remove_resources', function () {
-        $(this).closest('tr').remove();
+
+    $("#resourceTable").on('click', '.return_lending', function () {
+        // $(this).closest('tr').remove();
+        var dtereturn = $("#returndte").val();
+        var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
+        var cellVal_lend_id=$(this).val();
+        // toastr.error("lend id:"+lend_id+" fine:"+fine_amount);
+        //-------------------------------------------------------
+        $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                type: 'POST',
+                dataType : 'json',
+                data:{
+                    dtereturn: dtereturn,
+                    cellVal_lend_id: cellVal_lend_id
+                    },
+                url: "{{route('store_return')}}",
+                success: function(data){  
+                    // console.log(data);
+                    if(data.massage=="success")
+                    {
+                        $('#resourceTable').find('.td_id').each(function(){
+                            if($(this).text() == data.lendid){
+                                $(this).parent('tr').remove();
+                            }
+                        });
+                        toastr.success('Resources Successfully Returnd');
+                    }
+                },
+                error: function(data){
+                    toastr.error('Returing Error');
+                }
+            });
+        //---------------------------------------------------------
         document.getElementById("resource_details").focus();
 
     });

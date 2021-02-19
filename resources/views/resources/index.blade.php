@@ -83,7 +83,7 @@ $creator="name".$lang;
             <div class="form-row">   
             <div class="table-responsive"style="overflow-x: auto;">               
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
-                    <thead class="bg-gradient-light">
+                    <thead class="card-name-1">
                         <tr>
                             <th scope="col">Resource ID</th>
                             <th scope="col">Resource</th>

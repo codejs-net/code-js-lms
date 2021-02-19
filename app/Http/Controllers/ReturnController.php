@@ -60,7 +60,7 @@ class ReturnController extends Controller
             {
                 for($i=0;$i<$lend->count();$i++)
                 {
-                    $fine=0.00;
+                    $fine_amount=0;
                     $issudate = Carbon::parse($lend[$i]['issue_date']);
                     $_issudate=Carbon::parse($lend[$i]['issue_date']);
                     $returndate=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
@@ -68,7 +68,7 @@ class ReturnController extends Controller
                     $diff = Carbon::now()->diffInDays($_issudate);
                     if($diff>$lending_period)
                     {
-                        $fine=number_format($fine_rate * ($diff-$lending_period),2);
+                        $fine_amount=number_format($fine_rate * ($diff-$lending_period),2);
                     }
 
                     $lenddata[$i]['status']           ="success";
@@ -87,8 +87,7 @@ class ReturnController extends Controller
                     $lenddata[$i]['issue_date']       =$lend[$i]['issue_date'];
                     $lenddata[$i]['return_date']      =$returndate;
                     $lenddata[$i]['return']           =$lend[$i]['return'];
-                    $lenddata[$i]['fine']             =$fine;
-                    $lenddata[$i]['fine_amount']      =$lend[$i]['fine_amount'];
+                    $lenddata[$i]['fine_amount']      =$fine_amount;
                     
                 }
             }
@@ -122,11 +121,18 @@ class ReturnController extends Controller
     public function store_return(Request $request)
     {
         $detail=lending_detail::find($request->cellVal_lend_id);
-        $detail->return=1;
-        $detail->return_date=$request->dtereturn;
-        $detail->fine_amount=$request->cellVal_fine;
-        $detail->save();
-        return response()->json(['massage' => "success",'lendid' =>$request->cellVal_lend_id]);
+        if($detail)
+        {
+            $detail->return=1;
+            $detail->return_date=$request->dtereturn;
+            $detail->save();
+            return response()->json(['massage' => "success",'lendid' =>$request->cellVal_lend_id]);
+        }
+        else
+        {
+            return response()->json(['massage' => "error"]);
+        }
+       
     }
 
     /**
