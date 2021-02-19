@@ -114,17 +114,25 @@ $type="type".$lang;
 
     </div>
     <hr>
-        <div class="input-group box-footer clearfix pull-right">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="check_print">
-            <label class="form-check-label" for="check_print">Print Recipt</label>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <span class="text-dark ml-3">&nbsp;Actions :</span>
+            <span class="text-warning ml-3"><i class="fa fa-money"></i>&nbsp;Settle Fine&nbsp;|</span>
+            <span class="text-success ml-3"><i class="fa fa-check-square-o"></i>&nbsp;Return Resource&nbsp;|</span>
+            <span class="text-info ml-3"><i class="fa fa-calendar-plus-o"></i>&nbsp;Extend Days</span>
+
         </div>
-            <button type="button" class="btn btn-sm btn-primary btn-md ml-2" id="issue_resource">
-            <i class="fa fa-floppy-o"></i> Save</button>
-            &nbsp; &nbsp;
-            <button type="button" class="btn btn-sm btn-warning btn-md ml-2" id="reset_issue">
-            <i class="fa fa-times"></i> Reset</button>
-        </div> 
+        <div class="col-md-6">
+            <div class="input-group box-footer clearfix pull-right">
+                <button type="button" class="btn btn-sm btn-primary btn-md ml-2" id="print_return">
+                <i class="fa fa-print"></i> Print</button>
+                &nbsp; &nbsp;
+                <button type="button" class="btn btn-sm btn-warning btn-md ml-2" id="reset_issue">
+                <i class="fa fa-times"></i> Reset</button>
+            </div> 
+        </div>
+    </div>
+        
 </div>
 </form>
 
