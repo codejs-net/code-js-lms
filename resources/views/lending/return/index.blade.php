@@ -101,6 +101,7 @@ $type="type".$lang;
                     <th scope="col">Dateof Return</th>
                     <th scope="col">Fine(Rs)</th>
                     <th scope="col">Return</th>
+                    <th scope="col">Fine Status</th>
                     <th scope="col">Action</th>
                     </tr>    
                     </thead>
@@ -166,6 +167,83 @@ $type="type".$lang;
 
               
 <!------------------------------------------------------------------------------------------->
+
+<!--settel Modal -->
+<div class="modal fade" id="settel_show" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-indigo">
+                <div class="text-center">
+                    <h5 class="modal-title" id="modaltitle">Fine Settlement</h5>
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                    
+            </div>
+            
+            <form class="needs-validation" onSubmit="return false;" novalidate>
+                {{ csrf_field() }}
+            <div class="modal-body">
+                <div class="form-row ">
+                    <div class="table-responsive"style="overflow-x: auto;"> 
+                        <table class="table" id="fineTable">
+                        <thead class="thead-light">
+                            <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Accession No</th>
+                            <th scope="col">Fine(Rs)</th>
+                            <th scope="col">Pay</th>
+                            </tr>    
+                            </thead>
+
+                            <tbody class="tbody_data" id="finedata">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <h6 class="font-weight-bold text-info">Total Amount :<span id="tot_fine"></span></h6>
+                </div>
+                    <hr>
+                    <div class="form-row">
+                        <label for="settle_ype">Settle Type :</label>
+                        <select class="form-control mb-3"name="settle_type" id="settle_type" value=""required>
+                            <option value="Payment" selected>Payment</option>
+                            <option value="Ignore">Ignore</option>
+                        </select>      
+                    </div>
+
+                    <div class="form-row" id="div_mannual">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="receipt_type">
+                            <label class="form-check-label" for="receipt_type">Mannal Receipt</label>
+                        </div>
+                    </div>
+                    <div class="form-row" style="display: none;" id="div_receiptno">
+                        <label for="category">Receipt No</label>
+                        <input type="text" class="form-control mb-1" id="receipt_no" name="receipt_no" value="" placeholder="Receipt no" >
+                    </div>
+                    <div class="form-row" style="display: none;" id="div_description">
+                        <label for="category">Description</label>
+                        <input type="text" class="form-control mb-1" id="description_si" name="description_si" value="" placeholder="Name in Sinhala" >   
+                        <input type="text" class="form-control mb-1" id="description_ta" name="description_ta" value="" placeholder="Name in Tamil" >
+                        <input type="text" class="form-control mb-1" id="description_en" name="description_en" value="" placeholder="Name in English" > 
+                    </div>
+                   
+                    
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btn_fine_settle" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Save</button>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
+<!-- end settle model -->
                             
                         
 @endsection
@@ -194,8 +272,31 @@ $type="type".$lang;
             document.getElementById("resource_details").focus();
             }
         });
+
+        // --------settel Model------------------------------------------
+        $('#settel_show').on('show.bs.modal', function (event) {
+        var op="";
+        var tot_fine=0;
+        $("#fineTable tbody").empty();
+
+            $('#resourceTable tr').each(function(){
+                if($(this).find(".fine_settle").html() == "unsettled"){
+                    op+='<tr>';
+                    op+='<td class="td_id">'+$(this).find(".td_id").html()+'</td>';
+                    op+='<td class="td_acceno">'+$(this).find(".td_acceno").html()+'</td>';
+                    op+='<td class="fine_amount">'+$(this).find(".fine_amount").html()+'</td>';
+                    op+='<td class="fine_pay"><input class="form-check-input pay_check" type="checkbox" value="1"></td>';
+                    op+='</tr>';  
+                    tot_fine += parseFloat($(this).find(".fine_amount").html());
+                }
+            });
+            $("#fineTable tbody").append(op);
+            $("#tot_fine").html(tot_fine);
+        });
+        // --------end settel Model------------------------------------------
+
     });
-// ----------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 
         $('#addbarrowmember').on("click",function(){
         var memberid = $("#member_id").val();
@@ -227,22 +328,25 @@ $type="type".$lang;
                     // ------------table-----------------------------
                     for (j = 0; j < data.length; j++)
                     {
-                        if(data[j]['fine_amount']!=0){op+='<tr class="text-danger font-weight-bold">';}
+                        if(data[j]['fine_settle']=="unsettled"){op+='<tr class="text-danger font-weight-bold">';}
+                        else if(data[j]['fine_settle']=="settled"){op+='<tr class="text-info font-weight-bold">';}
                         else{op+='<tr>';}
                         op+='<td class="td_id">'+data[j]['id']+'</td>';
                         op+='<td>'+data[j]['resource_id']+'</td>';
                         op+='<td>'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
-                        op+='<td class="td_input">'+data[j]['resource_accno']+'</td>';
+                        op+='<td class="td_input td_acceno">'+data[j]['resource_accno']+'</td>';
                         op+='<td class="td_input">'+data[j]['resource_isn']+'</td>';
                         op+='<td>'+data[j]['resource_title']+'</td>';
                         op+='<td>'+data[j]['issue_date']+'</td>';
                         op+='<td>'+data[j]['return_date']+'</td>';
                         op+='<td class="fine_amount">'+data[j]['fine_amount']+'</td>';
                         op+='<td>'+data[j]['return']+'</td>';
+                        op+='<td class="fine_settle">'+data[j]['fine_settle']+'</td>';
+
                         op+='<td>';
-                        if(data[j]['fine_amount']!=0)
+                        if(data[j]['fine_settle']=="unsettled")
                         {
-                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine"><i class="fa fa-money"></i></button>';
+                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine" data-toggle="modal" data-target="#settel_show"><i class="fa fa-money"></i></button>';
                         }
                         else
                         {
@@ -356,8 +460,62 @@ $type="type".$lang;
 
     });
     // -----------------------------------------------------
-    $('#issue_resource').on("click",function(){
-         
+    $('#btn_fine_settle').on("click",function(){
+        var payment_check=0; 
+        var opp_status=null;
+        $('#fineTable tbody tr').each(function(){
+
+            if($(this).find(".pay_check").prop("checked") == true)
+            {
+                payment_check=1;
+                var lend_id = parseInt($(this).find(".td_id").html());
+                var fine_amount = parseFloat($(this).find(".fine_amount").html());
+                var date_settle = $("#returndte").val();
+                var settlement_type = $("#settle_type").val();
+                var receipt_type= "system";
+                if($("#receipt_type").prop("checked") == true)
+                {receipt_type= "manual";}
+
+                //-------------------------------------------------------
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                });
+                $.ajax({
+                    type: 'POST',
+                    dataType : 'json',
+                    data:{
+                        lend_id: lend_id,
+                        fine_amount: fine_amount,
+                        date_settle: date_settle,
+                        settlement_type:settlement_type,
+                        receipt_type:receipt_type
+                        },
+                    url: "{{route('settle_fine')}}",
+                    success: function(data){ 
+                        opp_status=data.massage; 
+                        // console.log(data);
+                        if(data.massage=="success"){
+                        toastr.success('Fine Settled Successfully');
+                        }
+                    },
+                    error: function(data){
+                        toastr.error('Fine Settled Error');
+                        opp_status=data.massage; 
+                    }
+                });
+                //---------------------------------------------------------
+            }
+            else{payment_check==0}
+            
+        });
+       
+        if(opp_status=="success")
+        {
+            $("#settel_show").modal('hide');
+        }
+        if(payment_check==0)
+        {toastr.error('Plece Check the resources to settle fine');}
+
     });
 
 

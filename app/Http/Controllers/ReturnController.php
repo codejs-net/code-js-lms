@@ -10,6 +10,7 @@ use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
 use App\Models\view_lending_data;
+use App\Models\fine_settle;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -60,16 +61,26 @@ class ReturnController extends Controller
             {
                 for($i=0;$i<$lend->count();$i++)
                 {
-                    $fine_amount=0;
+                    $fine_amount=0; $fine_settle="N/A";
                     $issudate = Carbon::parse($lend[$i]['issue_date']);
                     $_issudate=Carbon::parse($lend[$i]['issue_date']);
                     $returndate=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
-                   
                     $diff = Carbon::now()->diffInDays($_issudate);
-                    if($diff>$lending_period)
+
+                    if($lend[$i]['fine_settle']=="")
                     {
-                        $fine_amount=number_format($fine_rate * ($diff-$lending_period),2);
+                        if($diff>$lending_period)
+                        {
+                            $fine_amount=number_format($fine_rate * ($diff-$lending_period),2);
+                            $fine_settle="unsettled";
+                        }
                     }
+                    else
+                    { 
+                        $fine_amount=$lend[$i]['fine_amount'];
+                        $fine_settle="settled";
+                    }
+                   
 
                     $lenddata[$i]['status']           ="success";
                     $lenddata[$i]['id']               =$lend[$i]['id'];
@@ -88,6 +99,7 @@ class ReturnController extends Controller
                     $lenddata[$i]['return_date']      =$returndate;
                     $lenddata[$i]['return']           =$lend[$i]['return'];
                     $lenddata[$i]['fine_amount']      =$fine_amount;
+                    $lenddata[$i]['fine_settle']      =$fine_settle;
                     
                 }
             }
@@ -107,9 +119,20 @@ class ReturnController extends Controller
     }
 
     
-    public function create()
+    public function settle_fine(Request $request)
     {
-        //
+        $detail=lending_detail::find($request->lend_id);
+            $detail->fine_amount=$request->fine_amount;
+            $detail->save();
+
+            $settle=new fine_settle;
+            $settle->lending_detail_id  =$request->lend_id;
+            $settle->settlement_type    =$request->settlement_type;
+            $settle->settlement_date    =$request->date_settle;
+            $settle->receipt_type       =$request->receipt_type;
+            $settle->save();
+            // $settle->receipt_id=$request->lend_id;
+            return response()->json(['massage' => "success"]);
     }
 
     /**

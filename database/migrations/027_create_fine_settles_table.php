@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 class CreateFineSettlesTable extends Migration
 {
@@ -20,7 +21,9 @@ class CreateFineSettlesTable extends Migration
             $table->foreign('lending_detail_id')->references('id')->on('lending_details');
 
             $table->string('settlement_type')->nullable();
-            $table->string('receipt_id')->nullable();
+            $table->date('settlement_date')->default(Carbon::now());
+            $table->string('receipt_type')->nullable();
+            $table->integer('receipt_id')->nullable();
 
             $table->timestamps();
         });

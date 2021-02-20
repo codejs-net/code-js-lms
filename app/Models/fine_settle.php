@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class fine_settle extends Model
 {
     use HasFactory;
+    protected $table="fine_settles";
 }
