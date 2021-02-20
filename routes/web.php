@@ -23,6 +23,7 @@ use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\IssueController;
+use App\Http\Controllers\ReturnController;
 
 use App\Http\Controllers\BookController;
 
@@ -119,6 +120,18 @@ Route::group(['middleware' => ['auth']], function() {
 
    // ----------------------Issue-------------------------------------
    Route::resource('issue', IssueController::class);
+   Route::post('member_view', [IssueController::class, 'memberview'])->name('member_view');
+   Route::post('resource_view', [IssueController::class, 'resourceview'])->name('resource_view');
+   Route::post('store_issue', [IssueController::class, 'store_issue'])->name('store_issue');
+   Route::get('/issue_riceipt/{id}', [IssueController::class, 'issue_receipt'])->name('issue_riceipt');
+
+   // ----------------------Return-------------------------------------
+   Route::resource('return', ReturnController::class);
+   Route::post('get_lending', [ReturnController::class, 'get_lending'])->name('get_lending');
+   Route::post('extend_lending', [ReturnController::class, 'extend_lending'])->name('extend_lending');
+   Route::post('store_return', [ReturnController::class, 'store_return'])->name('store_return');
+   Route::post('settle_fine', [ReturnController::class, 'settle_fine'])->name('settle_fine');
+   Route::get('/return_riceipt/{id}', [ReturnController::class, 'return_riceipt'])->name('return_riceipt');
 
 
 

@@ -41,5 +41,34 @@ php artisan db:seed --class=BookSeeder
 // ->select('resources.*', 'resource_categories.category'.$lang, 'resource_types.type'.$lang, 'resource_creators.name'.$lang, 'resource_publishers.publisher'.$lang)
 // ->get();
 
+// window.open('./issue_riceipt/'+lendid, '_blank')
 
+function printDiv1() 
+    {
+        $('#print_lendding').css('width', '400px');
+        var divToPrint=document.getElementById('print_lendding');
+        var newWin=window.open('','Print-Window');
+        newWin.document.open();
+        newWin.document.write('<html><head><title>Riceipt</title>');
+        newWin.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
+        newWin.document.write('</head><body onload="window.print()">');
+        newWin.document.write(divToPrint.innerHTML+'</body></html>');
+        newWin.document.close();
+        setTimeout(function(){newWin.close();},500);
+    }
+
+    // -------------------------------------------------------
+                // resourceinput= $("#resourceTable tr").filter(function() {
+                //     var customerId = $(this).find(".customerIDCell").html();
+                // }).closest("tr");
+               
+                //  $('#resourceTable tr:contains("'+resourceinput+'")').addClass('text-success');
+                //  $("#resourceTable .td_input:contains('" + resourceinput + "')").addClass('text-success');
+// --------------------------------------------------------  
+
+// $(function(){
+    //     $("#resourceTable .td_input").filter(function() {
+    //         return $(this).text() == data.lendid;
+    //     }).parent('tr').remove();
+    // });
 

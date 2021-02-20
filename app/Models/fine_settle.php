@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class designetion extends Model
+class fine_settle extends Model
 {
     use HasFactory;
-    protected $table="designetions";
+    protected $table="fine_settles";
 }

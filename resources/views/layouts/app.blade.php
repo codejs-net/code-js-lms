@@ -119,17 +119,19 @@
     <!-- smart_wizard -->
     <script src="{{ asset('plugins/smart_wizard/js/smart_wizard.min.js') }}"defer></script>
     
-    <script>
+    <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)
-    </script>
+    </script> -->
   
     <!-- jQuery-Datatable -->
   <script src="{{ asset('plugins/datatables-jquery/js/jquery.dataTables.min.js') }}" defer></script>
   <!-- <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}" defer></script> -->
 
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" defer></script>
-  <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}" defer></script>
+  <!-- <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}" defer></script> -->
   <script src="{{ asset('plugins/datatables-bs4/js/natural.js') }}" defer></script>
+
+  <!-- <script src="{{ asset('plugins/popper/popper.js.map') }}" defer></script> -->
 
     <!-- ======================================================================== -->
 

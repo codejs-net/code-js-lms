@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Carbon\Carbon;
 
-class CreateLendingDetailsTable extends Migration
+class CreateLendingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,19 +14,13 @@ class CreateLendingDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lending_details', function (Blueprint $table) {
+        Schema::create('lendings', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('lending_id')->unsigned()->nullable();
-            $table->foreign('lending_id')->references('id')->on('lendings');
-
             $table->date('issue_date')->default(Carbon::now());
+            $table->integer('member_id')->unsigned()->nullable();
+            $table->foreign('member_id')->references('id')->on('members');
 
-            $table->boolean('return')->default(0)->change();
-            $table->date('return_date');
-            $table->boolean('fine')->default(0)->change();
-            $table->double('fine_amount', 4, 2);
-
+            $table->text('description')->nullable();
             $table->string('remark_si')->nullable();
             $table->string('remark_ta')->nullable();
             $table->string('remark_en')->nullable();
@@ -41,6 +35,6 @@ class CreateLendingDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lending_details');
+        Schema::dropIfExists('lendings');
     }
 }

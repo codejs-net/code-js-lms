@@ -11,6 +11,12 @@
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{ url('/home') }}" class="nav-link text-white"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Home</a>
             </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ route('issue.index') }}" class="nav-link text-white"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;Issue</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ route('return.index') }}" class="nav-link text-white"><i class="fa fa-level-down" aria-hidden="true"></i>&nbsp;Return</a>
+            </li>
             
             
         </ul>
