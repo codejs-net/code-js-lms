@@ -42,6 +42,7 @@ $creator="name".$lang;
     <div class="card card-body">
         <div class="row">
         <input type="hidden" name="member_Name_id"id="member_Name_id">
+        <input type="hidden" name="db_count"id="db_count">
         <input type="hidden" name="lending_limit" id="lending_limit" value="{{$lending_setting->value}}">
 
             <div class="col-md-3 col-sm-12 text-left mt-1">
@@ -72,7 +73,12 @@ $creator="name".$lang;
                     <div class="input-group-prepend">
                         <span class="input-group-addon"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
                     </div>
+                    @if(auth()->user()->can('date-change'))
                     <input type="date" class="form-control" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1">
+                    @else
+                    <input type="date" class="form-control" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1"disabled>
+                    @endif
+                    
                 </div>
             </div>
 
@@ -198,6 +204,7 @@ $creator="name".$lang;
         var memberid = $("#member_id").val();
         $('#resource_details').val('');
         $('#member_Name_id').val('');
+        $('#db_count').val('');
         $('#member_Name').html('');
         $("#resourceTable tbody").empty();
         $("#print_table tbody").empty();
@@ -218,6 +225,7 @@ $creator="name".$lang;
                 var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
                 $('#member_Name').html(mem_detail);
                 $('#member_Name_id').val(data.member_id);
+                $('#db_count').val(data.db_count);
                 $('#member_id').val('');
                 document.getElementById("resource_details").focus();
             
@@ -233,68 +241,73 @@ $creator="name".$lang;
 
     $('#addbarrow').on("click",function(){
         var resourceinput = $("#resource_details").val();
-        var limit = $("#lending_limit").val();
+        var limit = parseInt($("#lending_limit").val());
+        var db_count = parseInt($("#db_count").val());
+        var memberid=$('#member_Name_id').val();
         var op ="";
         var bexsist=false;
         if($('#member_Name_id').val())
         {
-                var rowCount = $('#resourceTable tr').length;
-                if(rowCount <= limit) 
+            var rowCount = $('#resourceTable tr').length;
+            if(rowCount + db_count <= limit) 
+            {
+                var oTable = document.getElementById('resourceTable');
+                
+                if(resourceinput)
                 {
-                    var oTable = document.getElementById('resourceTable');
-                    
-                    if(resourceinput)
+                    for (j = 1; j < rowCount; j++)
                     {
-                        for (j = 1; j < rowCount; j++)
-                        {
-                            var oCells = oTable.rows.item(j).cells;
-                            var cellVal_accno = oCells.item(1).innerHTML;
-                            var cellVal_snumber = oCells.item(2).innerHTML;
-                            if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
-                            { 
-                                bexsist=true;   
-                            }
-                        }
-                        if(bexsist==false)
+                        var oCells = oTable.rows.item(j).cells;
+                        var cellVal_accno = oCells.item(1).innerHTML;
+                        var cellVal_snumber = oCells.item(2).innerHTML;
+                        if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
                         { 
-                            // -------------------------------------------------------
-                            $.ajaxSetup({
-                                headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
+                            bexsist=true;   
+                        }
+                    }
+                    if(bexsist==false)
+                    { 
+                        // -------------------------------------------------------
+                        $.ajaxSetup({
+                            headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
 
-                            $.ajax({
-                                type: 'POST',
-                                dataType : 'json',
-                                url: "{{route('resource_view')}}",
-                                data:{resourceinput: resourceinput},
-                                success: function(data){
-                                if(data.massage=="success")
-                                    {
+                        $.ajax({
+                            type: 'POST',
+                            dataType : 'json',
+                            url: "{{route('resource_view')}}",
+                            data:{
+                                    resourceinput: resourceinput,
+                                    memberid:memberid
+                                },
+                            success: function(data){
+                            if(data.massage=="success")
+                                {
                                     op+='<tr>';
                                     op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
                                     op+='</tr>';
                                     $("#resourceTable tbody").append(op);
-                                    }
-                                    else if(data.massage=="lend")
-                                    {
-                                        toastr.error('Resource Alredy Lend');
-                                    }
-                                    else{toastr.error('Resource Not Found!');}
-                            
-                                },
-                                error: function(data){
-                                toastr.error('Something Went Wrong!')
                                 }
-                            });
-                            // -------------------------------------------------------------
-                        }
-                        else{toastr.error('Resource Alrady in Cart')} 
+                                else if(data.massage=="lend")
+                                {
+                                    toastr.error('Resource Alredy Lend');
+                                }
+                                else{toastr.error('Resource Not Found!');}
+                        
+                            },
+                            error: function(data){
+                            toastr.error('Something Went Wrong!')
+                            }
+                        });
+                        // -------------------------------------------------------------
                     }
-                    else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
+                    else{toastr.error('Resource Alrady in Cart')} 
                 }
-                else{toastr.error('Maximam Resource lending Limit reached!')}
+                else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
+            }
+            else{toastr.error('Maximam Resource lending Limit reached!')}
         }
         else
         {

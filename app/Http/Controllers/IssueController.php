@@ -34,6 +34,7 @@ class IssueController extends Controller
         // error_log($issuedate);
 
         $lending_setting = setting::where('setting','lending_count')->first();
+        Session::put('lending_limit', $lending_setting->value);
         return view('lending.issue.index')->with('lending_setting',$lending_setting)->with('issuedate',$issuedate);
     }
     
@@ -44,47 +45,48 @@ class IssueController extends Controller
         $name="name".$lang;  $address1="address1".$lang;  $address2="address2".$lang;
 
         $mbr=member::find($request->memberid);
+        $lendm = view_lending_data::select('*')
+        ->where('member_id', $request->memberid)
+        ->Where('return',0)
+        ->get();
+        error_log("----count-------". $lendm->count());
         // return response()->json($data);
-        return response()->json(['member_nme' => $mbr->$name,'member_id'=>$mbr->id,'member_adds1'=>$mbr->$address1,'member_adds2'=>$mbr->$address2]);   
+        return response()->json(['member_nme' => $mbr->$name,'member_id'=>$mbr->id,'member_adds1'=>$mbr->$address1,'member_adds2'=>$mbr->$address2,'db_count'=>$lendm->count()]);   
     }
 
     public function resourceview(Request $request)
     {
         $lang = session()->get('db_locale');
-
+        $lending_limit = session()->get('lending_limit');
         $title="title".$lang;  $category="category".$lang;  $type="type".$lang; $creator="name".$lang;
 
         $reso = view_resource_data::select('*')
+                ->where('status','1')
                 ->where('accessionNo', $request->resourceinput)
                 ->orWhere('standard_number',$request->resourceinput)
                 ->first();
         if($reso)
         {
             $lend = lending_detail::select('*')
-                ->where('resource_id', $reso->id)
-                ->Where('return',0)
-                ->first();
-                if(!$lend)
-                {
-                    return response()->json(['id' => $reso->id,
-                    'title' => $reso->$title,
-                    'accno'=>$reso->accessionNo,
-                    'snumber'=>$reso->standard_number,
-                    'category'=>$reso->$category,
-                    'type'=>$reso->$type,
-                    'creator'=>$reso->$creator,
-                    'massage' => "success"]);   
-                }
-                else
-                {
-                    return response()->json(['massage' => "lend"]);
-                }
-           
+            ->where('resource_id', $reso->id)
+            ->Where('return',0)
+            ->first();
+            if(!$lend)
+            {
+                return response()->json(['id' => $reso->id,
+                'title' => $reso->$title,
+                'accno'=>$reso->accessionNo,
+                'snumber'=>$reso->standard_number,
+                'category'=>$reso->$category,
+                'type'=>$reso->$type,
+                'creator'=>$reso->$creator,
+                'massage' => "success"]);   
+            }
+            else
+            {return response()->json(['massage' => "lend"]);}
         }
         else 
-        {
-            return response()->json(['massage' => "error"]);
-        }
+        {return response()->json(['massage' => "error"]);}
 
         
     }
@@ -120,7 +122,7 @@ class IssueController extends Controller
 
     public function store_issue(Request $request)
     {
-        $lend=new lending_detail;;
+        $lend=new lending_detail;
         // $issudate = Carbon::parse($request->dteissue);
         // $returndate=$issudate->addDays(14);
 

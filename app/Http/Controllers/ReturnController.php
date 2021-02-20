@@ -65,7 +65,8 @@ class ReturnController extends Controller
                     $issudate = Carbon::parse($lend[$i]['issue_date']);
                     $_issudate=Carbon::parse($lend[$i]['issue_date']);
                     $returndate=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
-                    $diff = Carbon::now()->diffInDays($_issudate);
+                    $nowdate = Carbon::parse($request->dtereturn);
+                    $diff =  $nowdate->diffInDays($_issudate);
 
                     if($lend[$i]['fine_settle']=="")
                     {
@@ -121,18 +122,56 @@ class ReturnController extends Controller
     
     public function settle_fine(Request $request)
     {
+        $settle=new fine_settle;
+        $settle->lending_detail_id  =$request->lend_id;
+        $settle->settlement_type    =$request->settlement_type;
+        $settle->settlement_date    =$request->date_settle;
+        $settle->receipt_type       =$request->receipt_type;
+        // $settle->receipt_id      =$request->lend_id;
+        $settle->save();
+
         $detail=lending_detail::find($request->lend_id);
-            $detail->fine_amount=$request->fine_amount;
+
+        if($request->methord=="1")
+        {
+            $detail->fine_amount    =$request->fine_amount;
+            $detail->save();
+        }
+        else if($request->methord=="2")
+        {
+
+            $detail->fine_amount    =$request->fine_amount;
+            $detail->return         =1;
+            $detail->return_date    =$request->date_settle;
+            $detail->return_by      =Auth::user()->id;
             $detail->save();
 
-            $settle=new fine_settle;
-            $settle->lending_detail_id  =$request->lend_id;
-            $settle->settlement_type    =$request->settlement_type;
-            $settle->settlement_date    =$request->date_settle;
-            $settle->receipt_type       =$request->receipt_type;
-            $settle->save();
-            // $settle->receipt_id=$request->lend_id;
-            return response()->json(['massage' => "success"]);
+            $lend=new lending;
+            $lend->member_id        =  $detail->member_id;
+            $lend->description      =  $request->accno;
+            $lend->issue_date       =  $request->date_settle;
+            $lend->save();
+
+            $lendd=new lending_detail;
+            $lendd->lending_id     =  $lend->id;
+            $lendd->member_id      =  $detail->member_id;
+            $lendd->resource_id    =  $detail->resource_id;
+            $lendd->issue_date     =  $request->date_settle;
+            $lendd->return         =  0;
+            $lendd->fine_amount    =  0;
+            $lendd->issue_by       =  Auth::user()->id;
+            $lendd->save();
+        }
+        else
+        {
+            $detail->fine_amount    =$request->fine_amount;
+            $detail->return         =1;
+            $detail->return_date    =$request->date_settle;
+            $detail->return_by      =Auth::user()->id;
+            $detail->save();
+        }
+
+        return response()->json(['massage' => "success"]);
     }
 
     /**
@@ -148,8 +187,44 @@ class ReturnController extends Controller
         {
             $detail->return=1;
             $detail->return_date=$request->dtereturn;
+            $detail->return_by=Auth::user()->id;
             $detail->save();
             return response()->json(['massage' => "success",'lendid' =>$request->cellVal_lend_id]);
+        }
+        else
+        {
+            return response()->json(['massage' => "error"]);
+        }
+       
+    }
+
+    public function extend_lending(Request $request)
+    {
+        $detail=lending_detail::find($request->lend_id);
+        if($detail)
+        {
+            $detail->fine_amount    =$request->fine_amount;
+            $detail->return         =1;
+            $detail->return_date    =$request->dtereturn;
+            $detail->return_by      =Auth::user()->id;
+            $detail->save();
+
+            $lend=new lending;
+            $lend->member_id        =  $detail->member_id;
+            $lend->description      =  $request->accno;
+            $lend->issue_date       =  $request->dtereturn;
+            $lend->save();
+
+            $lendd=new lending_detail;
+            $lendd->lending_id     =  $lend->id;
+            $lendd->member_id      =  $detail->member_id;
+            $lendd->resource_id    =  $detail->resource_id;
+            $lendd->issue_date     =  $request->dtereturn;
+            $lendd->return         =  0;
+            $lendd->fine_amount    =  0;
+            $lendd->issue_by       =  Auth::user()->id;
+            $lendd->save();
+            return response()->json(['massage' => "success"]);
         }
         else
         {

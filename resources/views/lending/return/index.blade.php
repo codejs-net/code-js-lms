@@ -64,7 +64,12 @@ $type="type".$lang;
                     <div class="input-group-prepend">
                         <span class="input-group-addon"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
                     </div>
+                    @if(auth()->user()->can('date-change'))
                     <input type="date" class="form-control" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1">
+                    @else
+                    <input type="date" class="form-control" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1" disabled>
+                    @endif
+                   
                 </div>
             </div>
 
@@ -102,7 +107,7 @@ $type="type".$lang;
                     <th scope="col">Fine(Rs)</th>
                     <th scope="col">Return</th>
                     <th scope="col">Fine Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" style="width:10%;">Action</th>
                     </tr>    
                     </thead>
 
@@ -235,9 +240,29 @@ $type="type".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="btn_fine_settle" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Save</button>
+                    <div class="form-group text-center">
+                        <div class="form-check form-check-inline text-primary" >
+                            <label class="form-check-label"><i class="fa fa-check"></i> &nbsp;save&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="methord" value="1" required>|
+                        </div>
+                        <div class="form-check form-check-inline text-info" >
+                            <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;save & Extend&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="methord" value="2" required>|
+                        </div>
+                        <div class="form-check form-check-inline text-success" >
+                            <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp; save & Return&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="methord" value="3" required>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group text-right mt-3">
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" id="btn_fine_settle" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> &nbsp; Save</button>
+                    </div>
+                    
+                    
                 </div>
+                <input type="hidden" id="opp_status" name="opp_status">
             </form>
            
         </div>
@@ -277,6 +302,7 @@ $type="type".$lang;
         $('#settel_show').on('show.bs.modal', function (event) {
         var op="";
         var tot_fine=0;
+        $('input:radio[name="methord"]').filter('[value="3"]').attr('checked', true);
         $("#fineTable tbody").empty();
 
             $('#resourceTable tr').each(function(){
@@ -295,15 +321,28 @@ $type="type".$lang;
         });
         // --------end settel Model------------------------------------------
 
+        $('#settel_show').on('hidden.bs.modal', function (event) {
+            var memberid=$('#member_Name_id').val();
+            memberSelect(memberid);
+        })
+
     });
 // --------------------------------------------------------------------------
 
-        $('#addbarrowmember').on("click",function(){
+    $('#addbarrowmember').on("click",function(){
         var memberid = $("#member_id").val();
+        memberSelect(memberid);
+    });
+    // ------------------------------------------------------------------------
+    function memberSelect(member)
+    {
+        var memberid = member;
+        var dtereturn = $("#returndte").val();
         $('#resource_details').val('');
         $('#member_Name_id').val('');
         $('#member_Name').html('');
         $("#resourceTable tbody").empty();
+        $("#fineTable tbody").empty();
         $("#print_table tbody").empty();
         var op="";
         $.ajaxSetup({
@@ -315,7 +354,10 @@ $type="type".$lang;
         $.ajax({
             type: 'POST',
             dataType : 'json',
-            data: { memberid: memberid },
+            data:{
+                    memberid: memberid,
+                    dtereturn:dtereturn
+                 },
             url: "{{route('get_lending')}}",
             success: function(data){
                 // console.log(data);
@@ -324,7 +366,7 @@ $type="type".$lang;
                 {
                     var membr=data[0]['member_id']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
                     $('#member_Name').html(membr);
-                    $('#member_Name_id').val(data[0]['id']);
+                    $('#member_Name_id').val(data[0]['member_id']);
                     // ------------table-----------------------------
                     for (j = 0; j < data.length; j++)
                     {
@@ -378,8 +420,7 @@ $type="type".$lang;
             document.getElementById("member_id").focus();
             }
         });
-    });
-    // ------------------------------------------------------------------------
+    }
 
     $('#addbarrow').on("click",function(){
         var resourceinput = $("#resource_details").val();
@@ -460,9 +501,11 @@ $type="type".$lang;
 
     });
     // -----------------------------------------------------
+    var opp_status=0;
     $('#btn_fine_settle').on("click",function(){
         var payment_check=0; 
-        var opp_status=null;
+        // var mem_id = $("#member_Name_id").val();
+        // var elems = $('#fineTable tbody tr').nextAll(), count = elems.length;
         $('#fineTable tbody tr').each(function(){
 
             if($(this).find(".pay_check").prop("checked") == true)
@@ -470,12 +513,15 @@ $type="type".$lang;
                 payment_check=1;
                 var lend_id = parseInt($(this).find(".td_id").html());
                 var fine_amount = parseFloat($(this).find(".fine_amount").html());
+                var accno = $(this).find(".td_acceno").html();
                 var date_settle = $("#returndte").val();
                 var settlement_type = $("#settle_type").val();
                 var receipt_type= "system";
+                var methord =$('input[name=methord]:checked').val()
+
                 if($("#receipt_type").prop("checked") == true)
                 {receipt_type= "manual";}
-
+                console.log(methord);
                 //-------------------------------------------------------
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
@@ -488,33 +534,41 @@ $type="type".$lang;
                         fine_amount: fine_amount,
                         date_settle: date_settle,
                         settlement_type:settlement_type,
-                        receipt_type:receipt_type
+                        receipt_type:receipt_type,
+                        methord:methord,
+                        accno:accno
                         },
                     url: "{{route('settle_fine')}}",
                     success: function(data){ 
-                        opp_status=data.massage; 
-                        // console.log(data);
+                        //
                         if(data.massage=="success"){
-                        toastr.success('Fine Settled Successfully');
+                            opp_status=1; 
+                            toastr.success('Fine Settled Successfully');
+                            // console.log(data.massage);
+                            // $("#opp_status").val(data.massage);
                         }
                     },
                     error: function(data){
                         toastr.error('Fine Settled Error');
-                        opp_status=data.massage; 
+                        opp_status=0; 
                     }
                 });
                 //---------------------------------------------------------
             }
             else{payment_check==0}
             
+        }).promise().done(function(){
+            // var stu=$("#opp_status").val();
+            if(payment_check==0){
+                toastr.error('Plece Check the resources to settle fine');
+            }
+            else{
+                $("#settel_show").modal('hide');
+            }
+            
         });
        
-        if(opp_status=="success")
-        {
-            $("#settel_show").modal('hide');
-        }
-        if(payment_check==0)
-        {toastr.error('Plece Check the resources to settle fine');}
+       
 
     });
 
@@ -555,6 +609,53 @@ $type="type".$lang;
         //---------------------------------------------------------
         document.getElementById("resource_details").focus();
 
+    });
+
+    $("#resourceTable").on('click', '.extend_lending', function () {
+        // $(this).closest('tr').remove();
+        var dtereturn = $("#returndte").val();
+        var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
+        var accno =  $(this).closest('tr').find(".td_acceno").html();
+        var lend_id=$(this).val();
+        // toastr.error("lend id:"+lend_id+" fine:"+fine_amount);
+        //-------------------------------------------------------
+        $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                type: 'POST',
+                dataType : 'json',
+                data:{
+                    dtereturn: dtereturn,
+                    lend_id: lend_id,
+                    fine_amount: fine_amount,
+                    accno: accno
+                    },
+                url: "{{route('extend_lending')}}",
+                success: function(data){  
+                    // console.log(data);
+                    if(data.massage=="success")
+                    {
+                        var memberid=$('#member_Name_id').val();
+                        memberSelect(memberid);
+                        toastr.success('Lending Period Extend Successfully');
+                    }
+                },
+                error: function(data){
+                    toastr.error('Extend Error');
+                }
+            });
+        //---------------------------------------------------------
+        document.getElementById("resource_details").focus();
+
+    });
+
+    $('#returndte').change(function() {
+        var memberid=$('#member_Name_id').val();
+        if(memberid!="")
+        {
+            memberSelect(memberid);
+        }
+       
     });
    
     function printDiv(){
