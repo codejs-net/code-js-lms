@@ -42,6 +42,8 @@ $creator="name".$lang;
     <div class="card card-body">
         <div class="row">
         <input type="hidden" name="member_Name_id"id="member_Name_id">
+        <input type="hidden" name="member_Name_sms"id="member_Name_sms">
+        <input type="hidden" name="member_mobile"id="member_mobile">
         <input type="hidden" name="db_count"id="db_count">
         <input type="hidden" name="lending_limit" id="lending_limit" value="{{$lending_setting->value}}">
 
@@ -224,6 +226,8 @@ $creator="name".$lang;
     
                 var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
                 $('#member_Name').html(mem_detail);
+                $('#member_Name_sms').val(data.member_nme);
+                $('#member_mobile').val(data.mobile);
                 $('#member_Name_id').val(data.member_id);
                 $('#db_count').val(data.db_count);
                 $('#member_id').val('');
@@ -243,7 +247,7 @@ $creator="name".$lang;
         var resourceinput = $("#resource_details").val();
         var limit = parseInt($("#lending_limit").val());
         var db_count = parseInt($("#db_count").val());
-        var memberid=$('#member_Name_id').val();
+        var memberid= $('#member_Name_id').val();
         var op ="";
         var bexsist=false;
         if($('#member_Name_id').val())
@@ -324,14 +328,17 @@ $creator="name".$lang;
         var rowLength = oTable.rows.length;
         var mem_id = $("#member_Name_id").val();
         var dteissue = $("#issuedte").val();
+        var membername=$('#member_Name_sms').val();
+        var membermobile=$('#member_mobile').val();
         var descript=[];
         if(rowLength>1)
         {
             for (i = 1; i < rowLength; i++)
             {
                 var oCells = oTable.rows.item(i).cells;
-                var resourcename = oCells.item(1).innerHTML;
-                descript[i]=resourcename;
+                var resourceaccno = oCells.item(1).innerHTML;
+                var resourcetitles = oCells.item(3).innerHTML;
+                descript[i]=resourcetitles+"("+resourceaccno+")";
             }
             var description = descript.toString();
 
@@ -349,7 +356,9 @@ $creator="name".$lang;
                     data:{
                         description: description,
                         mem_id: mem_id,
-                        dteissue: dteissue
+                        dteissue: dteissue,
+                        membername:membername,
+                        membermobile:membermobile
                         },
                     success: function(data){
                         var lendid=data.lend_id;

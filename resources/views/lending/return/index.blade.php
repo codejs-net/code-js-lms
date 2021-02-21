@@ -213,7 +213,7 @@ $type="type".$lang;
                     
             </div>
             
-            <form class="needs-validation" onSubmit="return false;" novalidate>
+            <form class="needs-validation" id="form_settle_fine" onSubmit="return false;" novalidate>
                 {{ csrf_field() }}
             <div class="modal-body">
                 <div class="form-row ">
@@ -329,6 +329,8 @@ $type="type".$lang;
         var op="";
         var tot_fine=0;
         $('input:radio[name="methord"]').filter('[value="3"]').attr('checked', true);
+        $("#div_description").hide();
+        $("#div_receiptno").hide();
         $("#fineTable tbody").empty();
 
             $('#resourceTable tr').each(function(){
@@ -346,19 +348,16 @@ $type="type".$lang;
             $("#fineTable tbody").append(op);
             $("#tot_fine").html(tot_fine);
 
-            @if($locale=="si")
-            $("#description_si").prop('required',true);
-            @elseif($locale=="ta")
-            $("#description_ta").prop('required',true);
-            @elseif($locale=="en")
-            $("#description_en").prop('required',true);
-            @endif
+           
+        
+        
         });
         // --------end settel Model------------------------------------------
 
         $('#settel_show').on('hidden.bs.modal', function (event) {
             var memberid=$('#member_Name_id').val();
             memberSelect(memberid);
+            $('#form_settle_fine')[0].reset();
         })
 
     });
@@ -537,153 +536,162 @@ $type="type".$lang;
     });
     // -----------------------------------------------------
     
-    $('#btn_fine_settle').on("click",function(){
-        var opp_status=0;
-        var payment_check=0; 
-        var mem_id = $("#member_Name_id").val();
-        var settlement_type = $("#settle_type").val();
-        var receipt_type= "system";
-        if($("#receipt_type").prop("checked") == true)
-        {receipt_type= "manual";}
-        var op="";
-        var receipt_tot_fine=0;
-        var date_settle = $("#returndte").val();
-        var receipt="fine";
-        var receipt_id="";
-        var methord= $("input[name='methord']:checked").val();
-        // ==============receipt=============================
-       if(settlement_type=="Payment" && receipt_type=="system")
-       {
+    $('#btn_fine_settle').on("click",function(event){
+
+        if ($('#form_settle_fine')[0].checkValidity() === false) {
+            event.stopPropagation();
+        } 
+        else 
+        {
+       
+            var opp_status=0;
+            var payment_check=0; 
+            var mem_id = $("#member_Name_id").val();
+            var settlement_type = $("#settle_type").val();
+            var receipt_type= "system";
+            if($("#receipt_type").prop("checked") == true)
+            {receipt_type= "manual";}
+            if(settlement_type=="Ignore")
+            {receipt_type= "";}
+            var op="";
+            var receipt_tot_fine=0;
+            var date_settle = $("#returndte").val();
+            var receipt="fine";
+            var receipt_id="";
+            var methord= $("input[name='methord']:checked").val();
+            // ==============receipt=============================
+            if(settlement_type=="Payment" && receipt_type=="system")
+            {
+                $('#fineTable tbody tr').each(function(){
+
+                    if($(this).find(".pay_check").prop("checked") == true)
+                    {
+                        payment_check=1;
+                        op+='<tr>';
+                        op+='<td class="td_id">'+$(this).find(".td_id").html()+'</td>';
+                        op+='<td class="td_acceno">'+$(this).find(".td_acceno").html()+'</td>';
+                        op+='<td class="td_title">'+$(this).find(".td_title").html()+'</td>';
+                        op+='<td class="fine_amount">'+$(this).find(".fine_amount").html()+'</td>';
+                        op+='</tr>';  
+                        receipt_tot_fine += parseFloat($(this).find(".fine_amount").html());
+                        
+                    }
+                    else{payment_check==0}
+
+                }).promise().done(function(){
+                
+                        if(payment_check==0){
+                            toastr.error('Plece Check the resources to settle fine');
+                        }
+                        else{
+                            //-------------------------------------------------------
+                            $.ajaxSetup({
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                            });
+                            $.ajax({
+                                type: 'POST',
+                                dataType : 'json',
+                                data:{
+                                    receipt: receipt,
+                                    mem_id: mem_id,
+                                    date_settle: date_settle,
+                                    receipt_tot_fine:receipt_tot_fine
+                                    },
+                                url: "{{route('fine_receipt')}}",
+                                success: function(data){ 
+                                    if(data.massage=="success"){
+                                    toastr.success('Receipt Success');
+                                    }
+                                },
+                                error: function(data){
+                                    toastr.error('Receipt Error');
+                                }
+                            });
+                            //---------------------------------------------------------
+                        }
+
+                });
+                $("#fine_receiptTable tbody").append(op);
+                $("#receipt_tot_fine").html(tot_fine);
+            }
+            receipt_id= $("#receipt_no").val();
+            //================end================================
             $('#fineTable tbody tr').each(function(){
 
                 if($(this).find(".pay_check").prop("checked") == true)
                 {
                     payment_check=1;
-                    op+='<tr>';
-                    op+='<td class="td_id">'+$(this).find(".td_id").html()+'</td>';
-                    op+='<td class="td_acceno">'+$(this).find(".td_acceno").html()+'</td>';
-                    op+='<td class="td_title">'+$(this).find(".td_title").html()+'</td>';
-                    op+='<td class="fine_amount">'+$(this).find(".fine_amount").html()+'</td>';
-                    op+='</tr>';  
-                    receipt_tot_fine += parseFloat($(this).find(".fine_amount").html());
-                    
+                    var lend_id = parseInt($(this).find(".td_id").html());
+                    var fine_amount = parseFloat($(this).find(".fine_amount").html());
+                    var accno = $(this).find(".td_acceno").html();
+                    var discrtpt_si= $("#description_si").val();
+                    var discrtpt_ta= $("#description_ta").val();
+                    var discrtpt_en= $("#description_en").val();
+                
+                    //-------------------------------------------------------
+                    $.ajaxSetup({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        dataType : 'json',
+                        data:{
+                            lend_id: lend_id,
+                            fine_amount: fine_amount,
+                            date_settle: date_settle,
+                            settlement_type:settlement_type,
+                            receipt_type:receipt_type,
+                            methord:methord,
+                            accno:accno,
+                            receipt_id:receipt_id,
+                            discrtpt_si:discrtpt_si,
+                            discrtpt_ta:discrtpt_ta,
+                            discrtpt_en:discrtpt_en
+                            },
+                        url: "{{route('settle_fine')}}",
+                        success: function(data){ 
+                            //
+                            if(data.massage=="success"){
+                                opp_status=1; 
+                                toastr.success('Fine Settled Successfully');
+                                // console.log(data.massage);
+                                // $("#opp_status").val(data.massage);
+                            }
+                        },
+                        error: function(data){
+                            toastr.error('Fine Settled Error');
+                            opp_status=0; 
+                        }
+                    });
+                    //---------------------------------------------------------
                 }
                 else{payment_check==0}
-
+                
             }).promise().done(function(){
-            
-                    if(payment_check==0){
-                        toastr.error('Plece Check the resources to settle fine');
-                    }
-                    else{
-                        //-------------------------------------------------------
-                        $.ajaxSetup({
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-                        });
-                        $.ajax({
-                            type: 'POST',
-                            dataType : 'json',
-                            data:{
-                                receipt: receipt,
-                                mem_id: mem_id,
-                                date_settle: date_settle,
-                                receipt_tot_fine:receipt_tot_fine
-                                },
-                            url: "{{route('fine_receipt')}}",
-                            success: function(data){ 
-                                if(data.massage=="success"){
-                                    receipt_id=data.receipt_id;
-                                    console.log(receipt_id);
-                                }
-                            },
-                            error: function(data){
-                                toastr.error('Receipt Error');
-                            }
-                        });
-                        //---------------------------------------------------------
-                    }
-
-            });
-            $("#fine_receiptTable tbody").append(op);
-            $("#receipt_tot_fine").html(tot_fine);
-        }
-        receipt_id= $("#receipt_no").val();
-        //================end================================
-        $('#fineTable tbody tr').each(function(){
-
-            if($(this).find(".pay_check").prop("checked") == true)
-            {
-                payment_check=1;
-                var lend_id = parseInt($(this).find(".td_id").html());
-                var fine_amount = parseFloat($(this).find(".fine_amount").html());
-                var accno = $(this).find(".td_acceno").html();
-                var discrtpt_si= $("#description_si").val();
-                var discrtpt_ta= $("#description_ta").val();
-                var discrtpt_en= $("#description_en").val();
-                console.log("------receiptid :"+receipt_id);
-                //-------------------------------------------------------
-                $.ajaxSetup({
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-                });
-                $.ajax({
-                    type: 'POST',
-                    dataType : 'json',
-                    data:{
-                        lend_id: lend_id,
-                        fine_amount: fine_amount,
-                        date_settle: date_settle,
-                        settlement_type:settlement_type,
-                        receipt_type:receipt_type,
-                        methord:methord,
-                        accno:accno,
-                        receipt_id:receipt_id,
-                        discrtpt_si:discrtpt_si,
-                        discrtpt_ta:discrtpt_ta,
-                        discrtpt_en:discrtpt_en
-                        },
-                    url: "{{route('settle_fine')}}",
-                    success: function(data){ 
-                        //
-                        if(data.massage=="success"){
-                            opp_status=1; 
-                            toastr.success('Fine Settled Successfully');
-                            // console.log(data.massage);
-                            // $("#opp_status").val(data.massage);
-                        }
-                    },
-                    error: function(data){
-                        toastr.error('Fine Settled Error');
-                        opp_status=0; 
-                    }
-                });
-                //---------------------------------------------------------
-            }
-            else{payment_check==0}
-            
-        }).promise().done(function(){
-            
-            if(settlement_type=="Payment" && receipt_type=="system")
-            {
-                if(payment_check==1)
+                
+                if(settlement_type=="Payment" && receipt_type=="system")
                 {
-                    print_receiptDiv();
-                    $("#settel_show").modal('hide');
-                }
-            }
-            else
-            {
-                if(payment_check==0)
-                {
-                    toastr.error('Plece Check the resources to settle fine');
+                    if(payment_check==1)
+                    {
+                        print_receiptDiv();
+                        $("#settel_show").modal('hide');
+                    }
                 }
                 else
                 {
-                    $("#settel_show").modal('hide');
+                    if(payment_check==0)
+                    {
+                        toastr.error('Plece Check the resources to settle fine');
+                    }
+                    else
+                    {
+                        $("#settel_show").modal('hide');
+                    }
                 }
-            }
-        });
-       
-       
+            });
+        
+        }
+        $('#form_settle_fine').addClass('was-validated');
 
     });
 
@@ -775,30 +783,49 @@ $type="type".$lang;
 
     $('#settle_type').change(function() {
         var settle_type=$(this).val();
+        $('#receipt_type').prop('checked', false);
         if(settle_type=="Ignore")
         {
+            @if($locale=="si")
+            $("#description_si").prop('required',true);
+            @elseif($locale=="ta")
+            $("#description_ta").prop('required',true);
+            @elseif($locale=="en")
+            $("#description_en").prop('required',true);
+            @endif
+
            $("#div_description").show();
            $("#div_receiptno").hide();
            $("#div_mannual").hide();
         }
         else if(settle_type=="Payment")
         {
-           $("#div_description").hide();
-           $("#div_receiptno").hide();
-           $("#div_mannual").show();
+            $("#description_si").prop('required',false);
+            $("#description_ta").prop('required',false);
+            $("#description_en").prop('required',false);
+
+            $("#div_description").hide();
+            $("#div_receiptno").hide();
+            $("#div_mannual").show();
         }
-       
+        $("#receipt_no").val('');
+        $("#receipt_no").prop('required',false);
     });
     $('#receipt_type').change(function() {
         if($("#receipt_type").prop("checked") == true){
+            $("#receipt_no").prop('required',true);
             $("#div_description").hide();
             $("#div_receiptno").show();
         }
         else{
             $("#div_description").hide();
             $("#div_receiptno").hide();
+            $("#receipt_no").prop('required',false);
         }
+        $("#receipt_no").val('');
+
     });
+
     function print_receiptDiv(){
         var contents = $("#fine_receipt").html();
         

@@ -10,6 +10,7 @@ use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
 use App\Models\view_lending_data;
+use App\Http\Controllers\SoapController;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -49,9 +50,9 @@ class IssueController extends Controller
         ->where('member_id', $request->memberid)
         ->Where('return',0)
         ->get();
-        error_log("----count-------". $lendm->count());
+        // error_log("----count-------". $lendm->count());
         // return response()->json($data);
-        return response()->json(['member_nme' => $mbr->$name,'member_id'=>$mbr->id,'member_adds1'=>$mbr->$address1,'member_adds2'=>$mbr->$address2,'db_count'=>$lendm->count()]);   
+        return response()->json(['member_nme' => $mbr->$name,'member_id'=>$mbr->id,'member_adds1'=>$mbr->$address1,'member_adds2'=>$mbr->$address2,'mobile'=>$mbr->mobile,'db_count'=>$lendm->count()]);   
     }
 
     public function resourceview(Request $request)
@@ -110,13 +111,28 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        $lend=new lending;
+        $lang = session()->get('db_locale');
 
+        $lend=new lending;
         $lend->member_id     =  $request->mem_id;
         $lend->description   =  $request->description;
         $lend->issue_date    =  $request->dteissue;
 
         $lend->save();
+
+        $SoapController =new SoapController;
+        $mobile_no=$request->membermobile;
+        if($lang=="_si"){
+            $message_text=$request->membername." ඔබ විසින් ලබාගත් ".$request->description."පුස්ථකාල සම්පත් ";
+        }
+        elseif($lang=="_en"){
+
+        }
+        else{
+
+        }
+        $SoapController->multilang_msg_Send($mobile_no,$message_text);
+
         return response()->json(['lend_id' => $lend->id]);
     }
 
@@ -135,6 +151,7 @@ class IssueController extends Controller
         $lend->issue_by       =  Auth::user()->id;
 
         $lend->save();
+
         return response()->json(['massage' => "success"]);
     }
 

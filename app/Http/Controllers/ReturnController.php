@@ -121,12 +121,19 @@ class ReturnController extends Controller
     public function settle_fine(Request $request)
     {
         $settle=new fine_settle;
+        $receiptid=$request->receipt_id;
+        if($request->settlement_type=="Payment" && $request->receipt_type=="system")
+        {
+            $receiptid= session()->get('receipt_id');
+            error_log("settlment type-".$request->settlement_type." /receipt type-".$request->receipt_type." /receipt-".$receiptid);
+        }
+      
         $settle->lending_detail_id  =$request->lend_id;
         $settle->settlement_type    =$request->settlement_type;
         $settle->settlement_date    =$request->date_settle;
         $settle->receipt_type       =$request->receipt_type;
 
-        $settle->receipt_id         =$request->receipt_id;
+        $settle->receipt_id         =$receiptid;
         $settle->description_si     =$request->discrtpt_si;
         $settle->description_ta     =$request->discrtpt_ta;
         $settle->description_en     =$request->discrtpt_en;
@@ -203,10 +210,11 @@ class ReturnController extends Controller
         $receipt->payment      =$request->receipt_tot_fine;
         $receipt->user_id       =Auth::user()->id;
         $receipt->save();
+        Session::put('receipt_id', $receipt->id);
 
         if($receipt)
         {
-            return response()->json(['massage' => "success",'receipt_id' =>$receipt->id]);
+            return response()->json(['massage' => "success"]);
         }
         else
         {
