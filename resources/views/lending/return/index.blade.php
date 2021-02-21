@@ -170,6 +170,31 @@ $type="type".$lang;
         </div>
 </div>
 
+<div id="receiptdiv" style="display: none;">
+    <div class="col-md-6">
+        <div id="fine_receipt" style="text-align: center;">
+            <div class="text-center"><u><h3>Fine Receipt</h3></u></div>
+            </br>
+            
+                <h5 >Member : <span id="print_member"></span></h5>
+                <h5 >Issue Date : <span id="print_issuedate"></span></h5>
+                <h5>Return Date :<span id="print_returndate"></span></h5>
+                
+                <table id="fine_receiptTable">
+                    <!-- <thead>
+                        <tr>
+                            <th>Accession No</th>
+                            <th>Title</th>
+                            <th>&nbsp;</th>
+                        </tr>    
+                    </thead> -->
+                    <tbody> 
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+
               
 <!------------------------------------------------------------------------------------------->
 
@@ -198,6 +223,7 @@ $type="type".$lang;
                             <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Accession No</th>
+                            <th scope="col">Title</th>
                             <th scope="col">Fine(Rs)</th>
                             <th scope="col">Pay</th>
                             </tr>    
@@ -231,9 +257,9 @@ $type="type".$lang;
                     </div>
                     <div class="form-row" style="display: none;" id="div_description">
                         <label for="category">Description</label>
-                        <input type="text" class="form-control mb-1" id="description_si" name="description_si" value="" placeholder="Name in Sinhala" >   
-                        <input type="text" class="form-control mb-1" id="description_ta" name="description_ta" value="" placeholder="Name in Tamil" >
-                        <input type="text" class="form-control mb-1" id="description_en" name="description_en" value="" placeholder="Name in English" > 
+                        <input type="text" class="form-control mb-1" id="description_si" name="description_si" value="" placeholder="Description in Sinhala" >   
+                        <input type="text" class="form-control mb-1" id="description_ta" name="description_ta" value="" placeholder="Description in Tamil" >
+                        <input type="text" class="form-control mb-1" id="description_en" name="description_en" value="" placeholder="Description in English" > 
                     </div>
                    
                     
@@ -310,6 +336,7 @@ $type="type".$lang;
                     op+='<tr>';
                     op+='<td class="td_id">'+$(this).find(".td_id").html()+'</td>';
                     op+='<td class="td_acceno">'+$(this).find(".td_acceno").html()+'</td>';
+                    op+='<td class="td_title">'+$(this).find(".td_title").html()+'</td>';
                     op+='<td class="fine_amount">'+$(this).find(".fine_amount").html()+'</td>';
                     op+='<td class="fine_pay"><input class="form-check-input pay_check" type="checkbox" value="1"></td>';
                     op+='</tr>';  
@@ -318,6 +345,14 @@ $type="type".$lang;
             });
             $("#fineTable tbody").append(op);
             $("#tot_fine").html(tot_fine);
+
+            @if($locale=="si")
+            $("#description_si").prop('required',true);
+            @elseif($locale=="ta")
+            $("#description_ta").prop('required',true);
+            @elseif($locale=="en")
+            $("#description_en").prop('required',true);
+            @endif
         });
         // --------end settel Model------------------------------------------
 
@@ -378,7 +413,7 @@ $type="type".$lang;
                         op+='<td>'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
                         op+='<td class="td_input td_acceno">'+data[j]['resource_accno']+'</td>';
                         op+='<td class="td_input">'+data[j]['resource_isn']+'</td>';
-                        op+='<td>'+data[j]['resource_title']+'</td>';
+                        op+='<td class="td_title">'+data[j]['resource_title']+'</td>';
                         op+='<td>'+data[j]['issue_date']+'</td>';
                         op+='<td>'+data[j]['return_date']+'</td>';
                         op+='<td class="fine_amount">'+data[j]['fine_amount']+'</td>';
@@ -501,11 +536,79 @@ $type="type".$lang;
 
     });
     // -----------------------------------------------------
-    var opp_status=0;
+    
     $('#btn_fine_settle').on("click",function(){
+        var opp_status=0;
         var payment_check=0; 
-        // var mem_id = $("#member_Name_id").val();
-        // var elems = $('#fineTable tbody tr').nextAll(), count = elems.length;
+        var mem_id = $("#member_Name_id").val();
+        var settlement_type = $("#settle_type").val();
+        var receipt_type= "system";
+        if($("#receipt_type").prop("checked") == true)
+        {receipt_type= "manual";}
+        var op="";
+        var receipt_tot_fine=0;
+        var date_settle = $("#returndte").val();
+        var receipt="fine";
+        var receipt_id="";
+        var methord= $("input[name='methord']:checked").val();
+        // ==============receipt=============================
+       if(settlement_type=="Payment" && receipt_type=="system")
+       {
+            $('#fineTable tbody tr').each(function(){
+
+                if($(this).find(".pay_check").prop("checked") == true)
+                {
+                    payment_check=1;
+                    op+='<tr>';
+                    op+='<td class="td_id">'+$(this).find(".td_id").html()+'</td>';
+                    op+='<td class="td_acceno">'+$(this).find(".td_acceno").html()+'</td>';
+                    op+='<td class="td_title">'+$(this).find(".td_title").html()+'</td>';
+                    op+='<td class="fine_amount">'+$(this).find(".fine_amount").html()+'</td>';
+                    op+='</tr>';  
+                    receipt_tot_fine += parseFloat($(this).find(".fine_amount").html());
+                    
+                }
+                else{payment_check==0}
+
+            }).promise().done(function(){
+            
+                    if(payment_check==0){
+                        toastr.error('Plece Check the resources to settle fine');
+                    }
+                    else{
+                        //-------------------------------------------------------
+                        $.ajaxSetup({
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            dataType : 'json',
+                            data:{
+                                receipt: receipt,
+                                mem_id: mem_id,
+                                date_settle: date_settle,
+                                receipt_tot_fine:receipt_tot_fine
+                                },
+                            url: "{{route('fine_receipt')}}",
+                            success: function(data){ 
+                                if(data.massage=="success"){
+                                    receipt_id=data.receipt_id;
+                                    console.log(receipt_id);
+                                }
+                            },
+                            error: function(data){
+                                toastr.error('Receipt Error');
+                            }
+                        });
+                        //---------------------------------------------------------
+                    }
+
+            });
+            $("#fine_receiptTable tbody").append(op);
+            $("#receipt_tot_fine").html(tot_fine);
+        }
+        receipt_id= $("#receipt_no").val();
+        //================end================================
         $('#fineTable tbody tr').each(function(){
 
             if($(this).find(".pay_check").prop("checked") == true)
@@ -514,14 +617,10 @@ $type="type".$lang;
                 var lend_id = parseInt($(this).find(".td_id").html());
                 var fine_amount = parseFloat($(this).find(".fine_amount").html());
                 var accno = $(this).find(".td_acceno").html();
-                var date_settle = $("#returndte").val();
-                var settlement_type = $("#settle_type").val();
-                var receipt_type= "system";
-                var methord =$('input[name=methord]:checked').val()
-
-                if($("#receipt_type").prop("checked") == true)
-                {receipt_type= "manual";}
-                console.log(methord);
+                var discrtpt_si= $("#description_si").val();
+                var discrtpt_ta= $("#description_ta").val();
+                var discrtpt_en= $("#description_en").val();
+                console.log("------receiptid :"+receipt_id);
                 //-------------------------------------------------------
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
@@ -536,7 +635,11 @@ $type="type".$lang;
                         settlement_type:settlement_type,
                         receipt_type:receipt_type,
                         methord:methord,
-                        accno:accno
+                        accno:accno,
+                        receipt_id:receipt_id,
+                        discrtpt_si:discrtpt_si,
+                        discrtpt_ta:discrtpt_ta,
+                        discrtpt_en:discrtpt_en
                         },
                     url: "{{route('settle_fine')}}",
                     success: function(data){ 
@@ -558,14 +661,26 @@ $type="type".$lang;
             else{payment_check==0}
             
         }).promise().done(function(){
-            // var stu=$("#opp_status").val();
-            if(payment_check==0){
-                toastr.error('Plece Check the resources to settle fine');
-            }
-            else{
-                $("#settel_show").modal('hide');
-            }
             
+            if(settlement_type=="Payment" && receipt_type=="system")
+            {
+                if(payment_check==1)
+                {
+                    print_receiptDiv();
+                    $("#settel_show").modal('hide');
+                }
+            }
+            else
+            {
+                if(payment_check==0)
+                {
+                    toastr.error('Plece Check the resources to settle fine');
+                }
+                else
+                {
+                    $("#settel_show").modal('hide');
+                }
+            }
         });
        
        
@@ -657,9 +772,35 @@ $type="type".$lang;
         }
        
     });
-   
-    function printDiv(){
-        var contents = $("#print_lendding").html();
+
+    $('#settle_type').change(function() {
+        var settle_type=$(this).val();
+        if(settle_type=="Ignore")
+        {
+           $("#div_description").show();
+           $("#div_receiptno").hide();
+           $("#div_mannual").hide();
+        }
+        else if(settle_type=="Payment")
+        {
+           $("#div_description").hide();
+           $("#div_receiptno").hide();
+           $("#div_mannual").show();
+        }
+       
+    });
+    $('#receipt_type').change(function() {
+        if($("#receipt_type").prop("checked") == true){
+            $("#div_description").hide();
+            $("#div_receiptno").show();
+        }
+        else{
+            $("#div_description").hide();
+            $("#div_receiptno").hide();
+        }
+    });
+    function print_receiptDiv(){
+        var contents = $("#fine_receipt").html();
         
         var frame1 = $('<iframe />');
         frame1[0].name = "frame1";

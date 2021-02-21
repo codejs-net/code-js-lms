@@ -131,6 +131,7 @@ Route::group(['middleware' => ['auth']], function() {
    Route::post('extend_lending', [ReturnController::class, 'extend_lending'])->name('extend_lending');
    Route::post('store_return', [ReturnController::class, 'store_return'])->name('store_return');
    Route::post('settle_fine', [ReturnController::class, 'settle_fine'])->name('settle_fine');
+   Route::post('fine_receipt', [ReturnController::class, 'fine_receipt'])->name('fine_receipt');
    Route::get('/return_riceipt/{id}', [ReturnController::class, 'return_riceipt'])->name('return_riceipt');
 
 

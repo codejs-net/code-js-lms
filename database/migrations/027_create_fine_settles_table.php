@@ -24,6 +24,9 @@ class CreateFineSettlesTable extends Migration
             $table->date('settlement_date')->default(Carbon::now());
             $table->string('receipt_type')->nullable();
             $table->integer('receipt_id')->nullable();
+            $table->string('description_si')->nullable();
+            $table->string('description_ta')->nullable();
+            $table->string('description_en')->nullable();
 
             $table->timestamps();
         });
