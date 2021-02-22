@@ -4,8 +4,14 @@
 .form-control.is-invalid, .was-validated .form-control:invalid  {
   background-image: none !important;
 }
-#loader{
-  background: none repeat scroll 0 0 black;
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#loader1{
+background: none repeat scroll 0 0 black;
 position: fixed;
 display: block;
 opacity: 0.5;

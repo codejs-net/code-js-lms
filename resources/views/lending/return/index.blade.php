@@ -35,6 +35,8 @@ $type="type".$lang;
     <div class="card card-body">
         <div class="row">
         <input type="hidden" name="member_Name_id"id="member_Name_id">
+        <input type="hidden" name="member_Name_sms"id="member_Name_sms">
+        <input type="hidden" name="member_mobile"id="member_mobile">
 
             <div class="col-md-3 col-sm-12 text-left mt-1">
               <div class="input-group">
@@ -53,7 +55,7 @@ $type="type".$lang;
                      <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
                     <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-check-square-o fa-lg"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-check-square-o fa-lg" id="loader_icon"></i><span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
                     <button type="button" class="btn btn-sm btn-outline-success" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
             </div>
@@ -401,6 +403,8 @@ $type="type".$lang;
                     var membr=data[0]['member_id']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
                     $('#member_Name').html(membr);
                     $('#member_Name_id').val(data[0]['member_id']);
+                    $('#member_Name_sms').val(data[0]['member_name']);
+                    $('#member_mobile').val(data[0]['mobile']);
                     // ------------table-----------------------------
                     for (j = 0; j < data.length; j++)
                     {
@@ -469,6 +473,8 @@ $type="type".$lang;
                 var oTable = document.getElementById('resourceTable');
                 var mem_id = $("#member_Name_id").val();
                 var dtereturn = $("#returndte").val();
+                var membername=$('#member_Name_sms').val();
+                var membermobile=$('#member_mobile').val();
                 var resource_found=0;
                 for (j = 1; j < rowCount; j++)
                 {
@@ -477,6 +483,7 @@ $type="type".$lang;
                     var cellVal_snumber = oCells.item(4).innerHTML;
                     var cellVal_lend_id = oCells.item(0).innerHTML;
                     var cellVal_fine = oCells.item(8).innerHTML;
+                    var description=oCells.item(5).innerHTML +"("+oCells.item(3).innerHTML+")";
                     if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
                     { 
                         resource_found=1;
@@ -492,9 +499,16 @@ $type="type".$lang;
                                         mem_id: mem_id,
                                         dtereturn: dtereturn,
                                         cellVal_lend_id: cellVal_lend_id,
-                                        cellVal_fine:cellVal_fine
+                                        cellVal_fine:cellVal_fine,
+                                        membername:membername,
+                                        membermobile:membermobile,
+                                        description:description
                                         },
                                     url: "{{route('store_return')}}",
+                                    beforeSend: function(){
+                                        $("#loader_icon").hide();
+                                        $("#loader").show();
+                                    },
                                     success: function(data){  
                                         // console.log(data);
                                         if(data.massage=="success")
@@ -510,6 +524,10 @@ $type="type".$lang;
                                     },
                                     error: function(data){
                                         toastr.error('Returing Error');
+                                    },
+                                    complete:function(data){
+                                    $("#loader").hide();
+                                    $("#loader_icon").show();
                                     }
                                 });
                             //---------------------------------------------------------

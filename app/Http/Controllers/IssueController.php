@@ -31,6 +31,9 @@ class IssueController extends Controller
         else{$lang="_".$db_setting->value;}
         Session::put('db_locale', $lang);
 
+        $lending_period = setting::where('setting','lending_period')->first();
+        Session::put('lending_period', $lending_period->value);
+
         $issuedate=Carbon::now()->isoFormat('YYYY-MM-DD');
         // error_log($issuedate);
 
@@ -112,6 +115,8 @@ class IssueController extends Controller
     public function store(Request $request)
     {
         $lang = session()->get('db_locale');
+        $lending_period = session()->get('lending_period');
+        $lib_name="name".$lang;
 
         $lend=new lending;
         $lend->member_id     =  $request->mem_id;
@@ -119,19 +124,29 @@ class IssueController extends Controller
         $lend->issue_date    =  $request->dteissue;
 
         $lend->save();
-
+        //-------------------SMS Alert-----------------------------
         $SoapController =new SoapController;
         $mobile_no=$request->membermobile;
+        $issudate = Carbon::parse($lend->issue_date);
+        $returndate=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
+
+        $library = session()->get('library');
+        if(!empty($library))
+        {
+            $library_name=$library->$lib_name;
+        }
+
         if($lang=="_si"){
-            $message_text=$request->membername." ඔබ විසින් ලබාගත් ".$request->description."පුස්ථකාල සම්පත් ";
+            $message_text= $library_name."-බැහැර දීම්\r\n \r\n"."සාමාජික විස්තර -".$request->membername."(".$request->member_id.")"."\r\n"."බැහැර දීම් විස්තර - ".$request->description."\r\n"."බැහැර දුන් දිනය - ".$lend->issue_date."\r\n"."ආපසු භාරදිය යුතු දිනය - ".$returndate."\r\n"."ස්තූතියි!";
         }
         elseif($lang=="_en"){
-
+            $message_text= $library_name."\r\n"."සාමාජික විස්තර - (".$lend->member_id.")".$request->membername."\r\n"."බැහැර දීම් විස්තර - ".$request->description."\r\n"."බැහැර දුන් දිනය - ".$lend->issue_date."\r\n"."ආපසු භාරදිය යුතු දිනය - ".$returndate."\r\n"."ස්තූතියි!";
         }
         else{
-
+            $message_text= $library_name."\r\n"."සාමාජික විස්තර - (".$lend->member_id.")".$request->membername."\r\n"."බැහැර දීම් විස්තර - ".$request->description."\r\n"."බැහැර දුන් දිනය - ".$lend->issue_date."\r\n"."ආපසු භාරදිය යුතු දිනය - ".$returndate."\r\n"."ස්තූතියි!";
         }
         $SoapController->multilang_msg_Send($mobile_no,$message_text);
+        //-----------------------End SMS Alert----------------------
 
         return response()->json(['lend_id' => $lend->id]);
     }

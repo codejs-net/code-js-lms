@@ -25,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $lib = library::first();
+        $library = session()->get('library');
+        if(empty($library))
+        {
+            Session::put('library', $lib);
+        }
+
         // $locale = session()->get('locale');
         // if(empty($locale))
         // {
