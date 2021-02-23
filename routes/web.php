@@ -24,6 +24,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\SurveyController;
 
 use App\Http\Controllers\BookController;
 
@@ -150,18 +151,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('generate-Codepdf', [CodeController::class, 'generateCodePDF'])->name('generateCodePDF');
     Route::post('CodeRangepdf', [CodeController::class, 'CodeRangepdf'])->name('CodeRangepdf');
 
-    // --------Book_details--------------------------------
-    // Route::resource('books_category', Book_CatController::class);
-    // Route::resource('books_dd', Book_DDController::class);
-    // Route::resource('books_language', Book_langController::class);
-    // Route::resource('books_medium', Book_MediumController::class);
-    // Route::resource('books_publisher', Book_PublisherController::class);
-
-
     //--------Member----------------------------------
     Route::resource('members', MemberController::class);
     Route::post('store_member', [MemberController::class, 'store'])->name('store_member');
     Route::get('create_member', [MemberController::class, 'create'])->name('create_member');
+
+    //--------Survey----------------------------------
+    Route::resource('survey', SurveyController::class);
+    Route::post('store_survey', [SurveyController::class, 'store'])->name('store_survey');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);

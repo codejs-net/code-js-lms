@@ -191,7 +191,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('Barcoderange') }}" class="nav-link">
+                            <a href="{{ route('survey.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Survey</p>
                                 </a>
