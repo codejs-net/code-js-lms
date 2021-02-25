@@ -75,7 +75,7 @@
 @endphp 
 
     @include('partials.header')
-    <aside class="main-sidebar sidebar-light-indigo elevation-4">
+    <aside class="main-sidebar sidebar-light-indigo  card-name-2 elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
             <img src="{{ asset('img/js2.png') }}" alt="lms" class="brand-image img-circle elevation-5"

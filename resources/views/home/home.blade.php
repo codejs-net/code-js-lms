@@ -5,20 +5,9 @@
 
 
 <div class="container-fluid">
-<div class="card-body">
-
-        <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="box box-info">
-            <div class="box-header text-center">
-                <div class=" header"> <h4><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h4></div>
-            </div>
-        </div>
-         
-    </section>
-
-        <!-- Main content -->
-        <section class="content p-2">
+<div class="contant p-2">
+<div class="row">
+    <div class="col-6">
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col">
@@ -68,7 +57,7 @@
                 <!-- ./col -->
                 <div class="col">
                     <!-- small box -->
-                    <div class="small-box bg-red">
+                    <div class="small-box bg-blue">
                         <div class="inner">
                             <h3>65</h3>
 
@@ -96,42 +85,37 @@
                 </div>
                 <!-- ./col -->
             </div>
-            
-          
 
-     </section>
-     </div>
-     
-      <div class="card card-body">
-
-        <div class="row text-center">
-            <div class="col-md-6 text-center bg-gradient-white">
-                <div id="chart1"></div>
-                <!-- <img src="img/dash2.png" class="dash-image" alt="User Image" style="width: 80%;"> -->
-            </div>
-            <div class="col-md-6 text-center bg-gradient-white">
-                <div id="chart"></div>
-                
-            </div>
-                
-        </div>
-
-     </div>
-    
-     <!-- <div class="card card-body">
-     
-        <div class="row text-center">
-            <div class="col-md-12">
-               
-                  
+            <div class="row text-center">
+                <div class="col-md-12 text-center ">
+                    <div id="chart1"></div>
                 </div>
+                <div class="col-md-12 text-center ">
+                    <div id="chart"></div>
+                </div>
+            </div>
+    </div>
 
-                
-        </div>
-
-     </div> -->
-     
+    <div class="col-6 card-name-1">
+        <section class="content-header">
+            <div class="box box-info">
+                <div class="box-header text-center">
+                    <div class=" header"> <h4><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h4></div>
+                </div>
+            </div>
+            
+        </section>
+        <div class="row text-center">
+            <img src="{{ asset('img/dash2.png') }}" class="img-dash">
+        </div>      
+    </div>
 </div>
+</diV>
+
+</div>
+
+    
+
             
             
             

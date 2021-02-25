@@ -2,7 +2,7 @@
     $locale = session()->get('locale');
     $usernme="name_".$locale;
 @endphp
-<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-gradient-indigo mb-1">
+<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-gradient-blue mb-1">
         <!-- Left navbar links -->
         <ul class="navbar-nav text-white">
             <li class="nav-item">

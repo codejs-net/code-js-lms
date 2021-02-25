@@ -15,9 +15,9 @@
             </div>
         </div> -->
             <!-- Sidebar Menu -->
-            <nav class="mt-2">
+            <nav class="mt-2 ">
             
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
                 <!-- dashboard -->
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link">
