@@ -3,137 +3,224 @@
 @section('content')
 
 
-
-<div class="container-fluid">
-<div class="contant p-2">
-<div class="row">
-    <div class="col-6">
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
-                <div class="col">
-                    <!-- small box -->
-                    <div class="small-box bg-blue">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>Total Books</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col">
-                    <!-- small box -->
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Total members</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col">
-                    <!-- small box -->
-                    <div class="small-box bg-yellow">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>Books Leading</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col">
-                    <!-- small box -->
-                    <div class="small-box bg-blue">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>Total Books</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div>
-
-            <div class="row text-center">
-                <div class="col-md-12 text-center ">
-                    <div id="chart1"></div>
-                </div>
-                <div class="col-md-12 text-center ">
-                    <div id="chart"></div>
-                </div>
-            </div>
-    </div>
-
-    <div class="col-6 card-name-1">
-        <section class="content-header">
-            <div class="box box-info">
-                <div class="box-header text-center">
-                    <div class=" header"> <h4><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h4></div>
-                </div>
-            </div>
-            
-        </section>
-        <div class="row text-center">
-            <img src="{{ asset('img/dash2.png') }}" class="img-dash">
-        </div>      
-    </div>
-</div>
-</diV>
-
-</div>
-
     
 
-            
-            
-            
-            
-       
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+               
+                <div class="col-12 col-sm-6 col-md-9 card-name-4">
+                    <div class="content-header p-3">
+                        <div class="box box-info">
+                            <div class="box-header text-center">
+                                <div class=" header"> <h4>{{ __("Bulathkohupitiya Public Library")}}&nbsp;<i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h4></div>
+                                {{-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <div class="col">
+                            <!-- small box -->
+                            <div class="small-box bg-blue">
+                                <div class="inner">
+                                    <h3>150</h3>
+                                    <p>Total Books</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+        
+                                    <p>Total members</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>44</h3>
+        
+                                    <p>Books Leading</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col">
+                            <!-- small box -->
+                            <div class="small-box bg-blue">
+                                <div class="inner">
+                                    <h3>65</h3>
+        
+                                    <p>Unique Visitors</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>150</h3>
+        
+                                    <p>Total Books</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
                 
+                            <div class="info-box-content">
+                                <span class="info-box-text">CPU Traffic</span>
+                                <span class="info-box-number">
+                                10
+                                <small>%</small>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                
+                            <div class="info-box-content">
+                                <span class="info-box-text">Likes</span>
+                                <span class="info-box-number">41,410</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                
+                        <!-- fix for small devices only -->
+                        {{-- <div class="clearfix hidden-md-up"></div> --}}
+                
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                
+                            <div class="info-box-content">
+                                <span class="info-box-text">Sales</span>
+                                <span class="info-box-number">760</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+                
+                            <div class="info-box-content">
+                                <span class="info-box-text">New Members</span>
+                                <span class="info-box-number">2,000</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <div class="col-12 col-sm-12 col-md-12">
+                            {{-- <div id="chart" class=""></div> --}}
+                           
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 mt-2">
+                           
+                            {{-- <div id="chart1" class=""></div> --}}
+                        </div>
+                      </div>
+        
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 p-1">
+                    
+                    <img src="{{ asset('img/dashline1.png') }}" width="100%">
+                    {{-- <div id="calendar" class="m-2"></div> --}}
+                     <!-- Responsive calendar - START -->
+                    <div class="responsive-calendar border border-white p-2">
+                        <div class="controls bg-orange">
+                            <a class="pull-center" data-go="prev"><span><i class="fa fa-caret-left fa-lg" aria-hidden="true"></i></span></a>
+                            <h4><span data-head-year></span> <span data-head-month></span></h4>
+                            <a class="pull-center" data-go="next"><span><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i></span></a>
+                            <hr/>
+                        </div>
+                        <div class="day-headers bg-white">
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                        <div class="day header">Sun</div>
+                        </div>
+                        <div class="days" data-group="days">
+                        
+                        </div>
+                    </div>
+                    <!-- Responsive calendar - END -->
 
-@push('scripts')
- 
-<script type="text/javascript">
+                </div>
+            </div>
+       
+            
 
-</script>
+             
 
-@endpush
+        </div>
+    </section> 
+
+            
+            
+            
+        
 
 @endsection
 
 @section('script')
+<script>
+	$(document).ready(function(e){
+        var month=moment().format("YYYY-MM");
+        var todayy=moment().format("YYYY-MM-DD");
+        console.log(todayy);
+        $(".responsive-calendar").responsiveCalendar({
+          time:month,
+          events: {"'+todayy+'":{}}
+        });
+	});
+</script>
+
 <script>
  var options = {
             chart: {

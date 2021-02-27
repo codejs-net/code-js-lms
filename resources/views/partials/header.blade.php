@@ -2,9 +2,9 @@
     $locale = session()->get('locale');
     $usernme="name_".$locale;
 @endphp
-<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-gradient-blue mb-1">
+<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-gradient-indigo text-white">
         <!-- Left navbar links -->
-        <ul class="navbar-nav text-white">
+        <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
@@ -52,7 +52,7 @@
         
         <li class="nav-item dropdown user user-menu">
             
-            <a href="#" class="dropdown-toggle text-white " data-toggle="dropdown">
+            <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown">
                 <img src="{{ asset('img/user.png') }}" class="user-image" alt="User Image">
                 <span class="hidden-xs">Code-JS</span>
             </a>

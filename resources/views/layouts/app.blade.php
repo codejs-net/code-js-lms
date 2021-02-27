@@ -18,6 +18,9 @@
     <!-- ============================== Styles============================= -->
     <!-- Bootstrap -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- MDBootstrap -->
+    {{-- <link href="{{ asset('plugins/MDB5/css/mdb.min.css') }}" rel="stylesheet"> --}}
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/fa-fa/css/font-awesome.min.css') }}">
@@ -47,6 +50,9 @@
     <!-- SmartWizard -->
     <link href="{{ asset('plugins/smart_wizard/css/smart_wizard.min.css') }}" rel="stylesheet">
 
+     <!-- calendar -->
+     <link href="{{ asset('plugins/calendar/css/calendar.css') }}" rel="stylesheet">
+
 
      <!-- Site Custom -->
      <link href="{{ asset('css/site.css') }}" rel="stylesheet">
@@ -61,7 +67,7 @@
 
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
-<!-- <body class="hold-transition sidebar-mini layout-fixed"> -->
+<body class="hold-transition sidebar-mini layout-fixed">
 
 <div class="wrapper">
 @php 
@@ -75,7 +81,7 @@
 @endphp 
 
     @include('partials.header')
-    <aside class="main-sidebar sidebar-light-indigo  card-name-2 elevation-4">
+    <aside class="main-sidebar sidebar-dark-indigo  elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
             <img src="{{ asset('img/js2.png') }}" alt="lms" class="brand-image img-circle elevation-5"
@@ -86,7 +92,7 @@
     </aside>
 
     <div class="content-wrapper">
-        <main role="main" class="pb-4">
+        <main role="main">
         @yield('content')
         </main>
     </div>
@@ -97,10 +103,15 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!-- MDBootstrap-->
+    {{-- <script src="{{ asset('plugins/MDB5/js/mdb.min.js') }}" defer></script> --}}
+
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery-validation -->
     <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <!-- jQuery-moment -->
+    <script src="{{ asset('plugins/moment/moment-with-locales.min.js') }}"></script>
     
     <!-- SweetAlert2 -->
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -118,6 +129,9 @@
 
     <!-- smart_wizard -->
     <script src="{{ asset('plugins/smart_wizard/js/smart_wizard.min.js') }}"defer></script>
+
+     <!-- calendar -->
+     <script src="{{ asset('plugins/calendar/js/calendar.js') }}"defer></script>
     
     <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)
