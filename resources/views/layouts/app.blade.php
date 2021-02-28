@@ -46,7 +46,11 @@
      <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Source+Sans+Condensed+Pro+Shippori+Mincho+Crimson:300,400,400i,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@1,600&display=swap" rel="stylesheet"> --}}
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet"> --}}
     <!-- SmartWizard -->
     <link href="{{ asset('plugins/smart_wizard/css/smart_wizard.min.css') }}" rel="stylesheet">
 
@@ -57,6 +61,38 @@
      <!-- Site Custom -->
      <link href="{{ asset('css/site.css') }}" rel="stylesheet">
      
+    <?php
+    
+    session_start();
+    $user = session()->get('user'); 
+    $locale = session()->get('locale');
+    $theme = session()->get('theme');
+    if(empty($locale))
+    {
+        Session::put('locale', 'si');
+    }
+    if(!empty($theme))
+    {
+      if($theme=="js-default")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-default.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-blue")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-blue.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-dark")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-dark.css') }}" rel="stylesheet">
+      <?php
+      }
+    }
+    ?>
 
     <!-- ======================================================================== -->
 
@@ -70,23 +106,14 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 
 <div class="wrapper">
-@php 
-    session_start();
-    $user = session()->get('user'); 
-    $locale = session()->get('locale');
-    if(empty($locale))
-    {
-        Session::put('locale', 'si');
-    }
-@endphp 
 
     @include('partials.header')
-    <aside class="main-sidebar sidebar-dark-indigo  elevation-4">
+    <aside class="main-sidebar js-sidebar elevation-5">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="" class="brand-link">
             <img src="{{ asset('img/js2.png') }}" alt="lms" class="brand-image img-circle elevation-5"
                  style="opacity: 1">
-            <span class="brand-text font-weight-light">LMS</span>
+            <span class="brand-text font-weight-bold text-dark">LMS</span>
         </a>
         @include('partials.sidebar')
     </aside>

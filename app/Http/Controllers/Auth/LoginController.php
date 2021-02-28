@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\staff;
 use Session;
 use App\Models\library;
+use App\Models\theme;
 
 class LoginController extends Controller
 {
@@ -83,6 +84,18 @@ class LoginController extends Controller
             $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
             // dd($loguser);
             Session::put('user', $loguser->staff);
+            //-----------theme--------------------------------
+           
+            $theme_option = theme::where('user_id', Auth::user()->id)->first();
+            if ($theme_option){
+                Session::put('theme', $theme_option->theme);
+            } 
+            else {
+                Session::put('theme', 'js-default');
+            }
+            
+            //----------end theme-----------------------------
+
             return redirect()->route('home');
 
         }else{

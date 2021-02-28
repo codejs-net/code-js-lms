@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use App\Models\library;
+use App\Models\theme;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -38,6 +40,7 @@ class HomeController extends Controller
         //     Session::put('locale', 'si');
         // }
 
+       
         return view('home.home');
         // $library = library::all();
         // if ($library) {

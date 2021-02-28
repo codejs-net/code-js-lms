@@ -13,7 +13,7 @@
                     <div class="content-header p-3">
                         <div class="box box-info">
                             <div class="box-header text-center">
-                                <div class=" header"> <h4>{{ __("Bulathkohupitiya Public Library")}}&nbsp;<i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h4></div>
+                                <div class=" header js-dash-h"> <h5>{{ __("Bulathkohupitiya Public Library")}}&nbsp;<i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div>
                                 {{-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> --}}
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                     <div class="row p-3">
                         <div class="col">
                             <!-- small box -->
-                            <div class="small-box bg-blue">
+                            <div class="small-box js-box-bg-1 elevation-5">
                                 <div class="inner">
                                     <h3>150</h3>
                                     <p>Total Books</p>
@@ -35,7 +35,7 @@
                         <!-- ./col -->
                         <div class="col">
                             <!-- small box -->
-                            <div class="small-box bg-green">
+                            <div class="small-box js-box-bg-2 elevation-5">
                                 <div class="inner">
                                     <h3>53<sup style="font-size: 20px">%</sup></h3>
         
@@ -50,7 +50,7 @@
                         <!-- ./col -->
                         <div class="col">
                             <!-- small box -->
-                            <div class="small-box bg-yellow">
+                            <div class="small-box js-box-bg-3 elevation-5">
                                 <div class="inner">
                                     <h3>44</h3>
         
@@ -65,7 +65,7 @@
                         <!-- ./col -->
                         <div class="col">
                             <!-- small box -->
-                            <div class="small-box bg-blue">
+                            <div class="small-box js-box-bg-4 elevation-5">
                                 <div class="inner">
                                     <h3>65</h3>
         
@@ -78,8 +78,8 @@
                             </div>
                         </div>
                         <div class="col">
-                            <!-- small box -->
-                            <div class="small-box bg-info">
+                          
+                            <div class="small-box js-box-bg-5 elevation-5">
                                 <div class="inner">
                                     <h3>150</h3>
         
@@ -92,91 +92,135 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row p-3">
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box">
-                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-                
-                            <div class="info-box-content">
-                                <span class="info-box-text">CPU Traffic</span>
-                                <span class="info-box-number">
-                                10
-                                <small>%</small>
-                                </span>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-12">
+                            <div class="box-header text-center">
+                                <h6 class="info-box-icon"><i class="fas fa-cog"></i>Quick Links</h6>
                             </div>
-                            <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-thumbs-up"></i></span>
-                
-                            <div class="info-box-content">
-                                <span class="info-box-text">Likes</span>
-                                <span class="info-box-number">41,410</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
-                        </div>
-                        <!-- /.col -->
-                
-                        <!-- fix for small devices only -->
-                        {{-- <div class="clearfix hidden-md-up"></div> --}}
-                
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-shopping-cart"></i></span>
-                
-                            <div class="info-box-content">
-                                <span class="info-box-text">Sales</span>
-                                <span class="info-box-number">760</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
-                
-                            <div class="info-box-content">
-                                <span class="info-box-text">New Members</span>
-                                <span class="info-box-number">2,000</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                            <hr>
                         </div>
                     </div>
-                    <div class="row p-3">
-                        <div class="col-12 col-sm-12 col-md-12">
-                            {{-- <div id="chart" class=""></div> --}}
-                           
+                        
+                    <div class="row pl-4 pr-2 js-dash-link">
+                        
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white mt-2 ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span>
+                            <span class="info-box-text pt-2">Add Resources</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span>
+                            <span class="info-box-text">Add Members</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span>
+                            <span class="info-box-text">Catalog</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
+                            <span class="info-box-text">Supports</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span>
+                            <span class="info-box-text">Issue</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span>
+                            <span class="info-box-text">Return</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span>
+                            <span class="info-box-text">Receipt</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span>
+                            <span class="info-box-text">Reports</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fa fa-user-o fa-md"></i></span>
+                            <span class="info-box-text">Staff</span>
+                        </a>
+
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span>
+                            <span class="info-box-text">Members</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-user-circle fa-md"></i></span>
+                            <span class="info-box-text">Member Account</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon"><i class="fas fa-cog fa-md  pt-2"></i></span>
+                            <span class="info-box-text">Setting</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-barcode fa-md pt-2"></i></span>
+                            <span class="info-box-text">Code Genarate</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-list fa-md pt-2"></i></span>
+                            <span class="info-box-text">Survey</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
+                            <span class="info-box-text">Member Support</span>
+                        </a>
+
+                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fas fa-bars fa-md"></i></span>
+                            <span class="info-box-text">Resource Support</span>
+                        </a>
+                       
+                    </div>
+                    <div class="row pt-4 pb-2">
+                        <div class="col-12 col-sm-6 col-md-12">
+                            <hr>
+                            <div class="box-header text-center bg-light">
+                                <h6 class="info-box-icon"><i class="fas fa-cog"></i>Transaction Summary</h6>
+                            </div>
+                            <hr>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-6 mt-2">
-                           
-                            {{-- <div id="chart1" class=""></div> --}}
+                    </div>
+                    <div class="row pl-3 pr-3">
+                        <div class="col-12 col-sm-12 col-md-6 pb-2">
+                            <div id="chart" class="elevation-3"></div>
                         </div>
-                      </div>
+                        <div class="col-12 col-sm-12 col-md-6 pb-2">
+                            <div id="chart1" class="elevation-3"></div>
+                        </div>
+                    </div>
+            </div>
         
-                </div>
-                <div class="col-12 col-sm-6 col-md-3 p-1">
-                    
-                    <img src="{{ asset('img/dashline1.png') }}" width="100%">
-                    {{-- <div id="calendar" class="m-2"></div> --}}
-                     <!-- Responsive calendar - START -->
-                    <div class="responsive-calendar border border-white p-2">
-                        <div class="controls bg-orange">
-                            <a class="pull-center" data-go="prev"><span><i class="fa fa-caret-left fa-lg" aria-hidden="true"></i></span></a>
-                            <h4><span data-head-year></span> <span data-head-month></span></h4>
-                            <a class="pull-center" data-go="next"><span><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i></span></a>
-                            <hr/>
+            <div class="col-12 col-sm-6 col-md-3 p-2 js-dashboard-side">
+                    <div class="code-js p-2 text-center">
+                        <h4 class="text-center js-dashboard-side-text font-weight-bold">Code-JS LMS</h4>
+                        <p class="text-left js-dashboard-side-text">
+                            Code-JS LMS is an interactive solution that allows 
+                            librarians and staff to keep real-time track of inventory and media assets<br>
+                             and allows Members digital means of discovery and reading.
+                        </p>
+                        {{-- <img src="{{ asset('img/dashline2.png') }}" class="" width="100%"> --}}
+                    </div>
+                    <div class="responsive-calendar p-1 pl-4 pr-4">
+                        <div class="controls bg-dark text-center form-inline">
+                            <a class="text-center" data-go="prev"><span>&nbsp;<i class="fa fa-caret-left fa-lg" aria-hidden="true"></i>&emsp;</span></a>
+                            <h5 class="text-center"><span data-head-year></span> <span data-head-month></span>&emsp;</h5>
+                            <a class="text-center" data-go="next"><span>&nbsp;<i class="fa fa-caret-right fa-lg" aria-hidden="true"></i></span></a>
                         </div>
-                        <div class="day-headers bg-white">
+                        <div class="day-headers bg-info mt-0">
                         <div class="day header">Mon</div>
                         <div class="day header">Tue</div>
                         <div class="day header">Wed</div>
@@ -185,12 +229,12 @@
                         <div class="day header">Sat</div>
                         <div class="day header">Sun</div>
                         </div>
-                        <div class="days" data-group="days">
+                        <div class="days bg-light text-dark" data-group="days">
                         
                         </div>
                     </div>
                     <!-- Responsive calendar - END -->
-
+                    <br><br><br>
                 </div>
             </div>
        
@@ -238,7 +282,7 @@
                     },
                 }
             },
-            colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e', '#f48024', '#69d2e7'],
+            colors: ['#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df'],
             dataLabels: {
                 enabled: true,
                 textAnchor: 'start',
@@ -258,7 +302,7 @@
             },
             series: [{
 
-                 data: [28500, 11600, 32400, 5500, 7900, 5500, 2500, 0, 38000, 15780,0, 0]
+                 data: [2500, 11600, 3400, 5500, 7900, 5500, 2500, 1025, 10254, 6524,5245, 3254]
             }],
             stroke: {
                 width: 1,
