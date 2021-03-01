@@ -87,7 +87,7 @@ class LoginController extends Controller
             //-----------theme--------------------------------
            
             $theme_option = theme::where('user_id', Auth::user()->id)->first();
-            if ($theme_option){
+            if (!empty($theme_option)){
                 Session::put('theme', $theme_option->theme);
             } 
             else {
