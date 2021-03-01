@@ -54,10 +54,6 @@
     <!-- SmartWizard -->
     <link href="{{ asset('plugins/smart_wizard/css/smart_wizard.min.css') }}" rel="stylesheet">
 
-     <!-- calendar -->
-     <link href="{{ asset('plugins/calendar/css/calendar.css') }}" rel="stylesheet">
-
-
      <!-- Site Custom -->
      <link href="{{ asset('css/site.css') }}" rel="stylesheet">
      
@@ -108,12 +104,12 @@
 <div class="wrapper">
 
     @include('partials.header')
-    <aside class="main-sidebar js-sidebar elevation-5">
+    <aside class="main-sidebar js-sidebar elevation-4">
         <!-- Brand Logo -->
         <a href="" class="brand-link">
             <img src="{{ asset('img/js2.png') }}" alt="lms" class="brand-image img-circle elevation-5"
                  style="opacity: 1">
-            <span class="brand-text font-weight-bold text-dark">LMS</span>
+            <span class="brand-text font-weight-bold js-sidebar-heding">LMS</span>
         </a>
         @include('partials.sidebar')
     </aside>
@@ -157,8 +153,6 @@
     <!-- smart_wizard -->
     <script src="{{ asset('plugins/smart_wizard/js/smart_wizard.min.js') }}"defer></script>
 
-     <!-- calendar -->
-     <script src="{{ asset('plugins/calendar/js/calendar.js') }}"defer></script>
     
     <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)

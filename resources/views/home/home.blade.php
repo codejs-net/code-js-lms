@@ -1,15 +1,16 @@
 
 @extends('layouts.app')
+@section('style')
+<!-- calendar -->
+<link href="{{ asset('plugins/calendar/css/calendar.css') }}" rel="stylesheet">
+@endsection
 @section('content')
-
-
-    
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                
-                <div class="col-12 col-sm-6 col-md-9 card-name-4">
+                <div class="col-12 col-sm-6 col-md-9 js-bg">
                     <div class="content-header p-3">
                         <div class="box box-info">
                             <div class="box-header text-center">
@@ -22,7 +23,7 @@
                         <div class="col">
                             <!-- small box -->
                             <div class="small-box js-box-bg-1 elevation-5">
-                                <div class="inner">
+                                <div class="inner js-box-text">
                                     <h3>150</h3>
                                     <p>Total Books</p>
                                 </div>
@@ -36,7 +37,7 @@
                         <div class="col">
                             <!-- small box -->
                             <div class="small-box js-box-bg-2 elevation-5">
-                                <div class="inner">
+                                <div class="inner js-box-text">
                                     <h3>53<sup style="font-size: 20px">%</sup></h3>
         
                                     <p>Total members</p>
@@ -51,7 +52,7 @@
                         <div class="col">
                             <!-- small box -->
                             <div class="small-box js-box-bg-3 elevation-5">
-                                <div class="inner">
+                                <div class="inner js-box-text">
                                     <h3>44</h3>
         
                                     <p>Books Leading</p>
@@ -66,7 +67,7 @@
                         <div class="col">
                             <!-- small box -->
                             <div class="small-box js-box-bg-4 elevation-5">
-                                <div class="inner">
+                                <div class="inner js-box-text">
                                     <h3>65</h3>
         
                                     <p>Unique Visitors</p>
@@ -80,7 +81,7 @@
                         <div class="col">
                           
                             <div class="small-box js-box-bg-5 elevation-5">
-                                <div class="inner">
+                                <div class="inner js-box-text">
                                     <h3>150</h3>
         
                                     <p>Total Books</p>
@@ -103,58 +104,58 @@
                         
                     <div class="row pl-4 pr-2 js-dash-link">
                         
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white mt-2 ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white mt-2 ml-2 mb-2 elevation-2">
                             <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span>
                             <span class="info-box-text pt-2">Add Resources</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span>
                             <span class="info-box-text">Add Members</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span>
                             <span class="info-box-text">Catalog</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
                             <span class="info-box-text">Supports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span>
                             <span class="info-box-text">Issue</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span>
                             <span class="info-box-text">Return</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span>
                             <span class="info-box-text">Receipt</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span>
                             <span class="info-box-text">Reports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
-                            <span class="info-box-icon  "><i class="fa fa-user-o fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                            <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span>
                             <span class="info-box-text">Staff</span>
                         </a>
 
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span>
                             <span class="info-box-text">Members</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        {{-- <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-user-circle fa-md"></i></span>
                             <span class="info-box-text">Member Account</span>
                         </a>
@@ -171,7 +172,7 @@
 
                         <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-list fa-md pt-2"></i></span>
-                            <span class="info-box-text">Survey</span>
+                            <span class="info-box-text">Board of Survey</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
@@ -182,7 +183,7 @@
                         <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-bars fa-md"></i></span>
                             <span class="info-box-text">Resource Support</span>
-                        </a>
+                        </a> --}}
                        
                     </div>
                     <div class="row pt-4 pb-2">
@@ -204,39 +205,42 @@
                     </div>
             </div>
         
-            <div class="col-12 col-sm-6 col-md-3 p-2 js-dashboard-side">
-                    <div class="code-js p-2 text-center">
-                        <h4 class="text-center js-dashboard-side-text font-weight-bold">Code-JS LMS</h4>
+            <div class="col-12 col-sm-6 col-md-3 p-3 js-rightbar-bg">
+                    <div class="js-dashboard-side text-center elevation-2">
+                        <div id="MyClockDisplay" class="clock text-center" onload="showTime()"></div>
+                    </div>
+                   
+                    
+                    <div class="p-3 text-center js-dashboard-side elevation-1">
+                        <h4 class="text-center js-dashboard-side-text-heding font-weight-bold">Code-JS LMS</h4>
                         <p class="text-left js-dashboard-side-text">
                             Code-JS LMS is an interactive solution that allows 
                             librarians and staff to keep real-time track of inventory and media assets<br>
-                             and allows Members digital means of discovery and reading.
+                                and allows Members digital means of discovery and reading.
                         </p>
                         {{-- <img src="{{ asset('img/dashline2.png') }}" class="" width="100%"> --}}
+                    </div> 
+         
+                
+                   
+                    <div class="calendar">
+                        <div class="header">
+                            <a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
+                            <div class="text" data-render="month-year"></div>
+                            <a data-action="next-month" href="javascript:void(0)" title="Next Month"><i></i></a>
+                        </div>
+                        <div class="months" data-flow="left">
+                            <div class="month month-a">
+                                <div class="render render-a"></div>
+                            </div>
+                            <div class="month month-b">
+                                <div class="render render-b"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="responsive-calendar p-1 pl-4 pr-4">
-                        <div class="controls bg-dark text-center form-inline">
-                            <a class="text-center" data-go="prev"><span>&nbsp;<i class="fa fa-caret-left fa-lg" aria-hidden="true"></i>&emsp;</span></a>
-                            <h5 class="text-center"><span data-head-year></span> <span data-head-month></span>&emsp;</h5>
-                            <a class="text-center" data-go="next"><span>&nbsp;<i class="fa fa-caret-right fa-lg" aria-hidden="true"></i></span></a>
-                        </div>
-                        <div class="day-headers bg-info mt-0">
-                        <div class="day header">Mon</div>
-                        <div class="day header">Tue</div>
-                        <div class="day header">Wed</div>
-                        <div class="day header">Thu</div>
-                        <div class="day header">Fri</div>
-                        <div class="day header">Sat</div>
-                        <div class="day header">Sun</div>
-                        </div>
-                        <div class="days bg-light text-dark" data-group="days">
-                        
-                        </div>
-                    </div>
-                    <!-- Responsive calendar - END -->
-                    <br><br><br>
-                </div>
+               
             </div>
+        </div>
        
             
 
@@ -253,17 +257,9 @@
 @endsection
 
 @section('script')
-<script>
-	$(document).ready(function(e){
-        var month=moment().format("YYYY-MM");
-        var todayy=moment().format("YYYY-MM-DD");
-        console.log(todayy);
-        $(".responsive-calendar").responsiveCalendar({
-          time:month,
-          events: {"'+todayy+'":{}}
-        });
-	});
-</script>
+
+<!-- calendar -->
+<script src="{{ asset('plugins/calendar/js/calendar.js') }}"defer></script>
 
 <script>
  var options = {

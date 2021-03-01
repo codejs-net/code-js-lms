@@ -198,6 +198,38 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-briefcase"></i>
+                            <p>
+                            Settings
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                            <a href="{{ route('theme.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Theme Settings</p>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a href="{{ route('codes.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Lending Settings</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('codes.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>DataBase Settings</p>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+
                     @can('role-list')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">

@@ -25,6 +25,7 @@ use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\ThemeController;
 
 use App\Http\Controllers\BookController;
 
@@ -162,6 +163,10 @@ Route::group(['middleware' => ['auth']], function() {
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);
+
+    // -------Setting- Theme--------------------------
+    Route::resource('theme', ThemeController::class);
+    Route::post('update_theme', [ThemeController::class, 'update_theme'])->name('update_theme');
 
 });
 

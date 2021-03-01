@@ -142,7 +142,7 @@ $category="category".$lang;
                 </div>
             </div>
             
-            <div class="box-footer clearfix pull-right">
+        <div class="box-footer clearfix pull-right">
             
             <button type="submit" class="btn btn-success btn-md toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
             &nbsp; &nbsp;
@@ -154,7 +154,7 @@ $category="category".$lang;
                 <div id="page-overlay"></div>
             </div>
             <!-- Image loader -->
-    </div>
+        </div>
             
         </form>
            
