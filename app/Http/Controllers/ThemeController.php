@@ -30,6 +30,7 @@ class ThemeController extends Controller
             $theme->save();
             Session::put('theme', $theme->theme);
         }
-        return redirect()->route('home')->with('success','Theme Change successfully.');
+        // return redirect()->route('home')->with('success','Theme Change successfully.');
+        return redirect()->route('home');
     }
 }

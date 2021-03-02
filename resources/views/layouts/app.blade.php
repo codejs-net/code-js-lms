@@ -49,8 +49,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Open+Source+Sans+Condensed+Pro+Shippori+Mincho+Crimson:300,400,400i,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@1,600&display=swap" rel="stylesheet"> --}}
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet"> -->
     <!-- SmartWizard -->
     <link href="{{ asset('plugins/smart_wizard/css/smart_wizard.min.css') }}" rel="stylesheet">
 
@@ -85,6 +86,12 @@
       { 
       ?>
       <link href="{{ asset('css/theme/js-dark.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-orange")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-orange.css') }}" rel="stylesheet">
       <?php
       }
     }

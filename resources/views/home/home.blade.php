@@ -5,6 +5,9 @@
 <link href="{{ asset('plugins/calendar/css/calendar.css') }}" rel="stylesheet">
 @endsection
 @section('content')
+@php
+$theme = session()->get('theme');
+@endphp
 
     <section class="content">
         <div class="container-fluid">
@@ -15,10 +18,28 @@
                         <div class="box box-info">
                             <div class="box-header text-center">
                                 <div class=" header js-dash-h"> <h5>{{ __("Bulathkohupitiya Public Library")}}&nbsp;<i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div>
-                                {{-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> --}}
+                                <!-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> -->
                             </div>
                         </div>
                     </div>
+                    <!-- ------------------------------------------------------------------- -->
+                    <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 ">
+                            <div class="js-img-box text-left">
+                                    <div class="js-box">
+                                        <img src="{{ asset('img/js-box.png') }}" class="js-box-img">
+                                    </div>
+                                    <h4 class="text-center js-dashboard-side-text-heding font-weight-bold">Code-JS LMS</h4>
+                                    <p class="js-dashboard-side-text col-md-10">
+                                        Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets and allows Members digital means of discovery and reading.
+                                        an interactive solution that allows Code-JS LMS is an interactive solution that allows 
+                                        librarians and staff to keep real-time track of inventory and media assets
+                                    </p>
+                    
+                            </div> 
+                        </div>
+                    </div>
+                    <!-- ------------------------------------------------------------------- -->
                     <div class="row p-3">
                         <div class="col">
                             <!-- small box -->
@@ -210,19 +231,6 @@
                         <div id="MyClockDisplay" class="clock text-center" onload="showTime()"></div>
                     </div>
                    
-                    
-                    <div class="p-3 text-center js-dashboard-side elevation-1">
-                        <h4 class="text-center js-dashboard-side-text-heding font-weight-bold">Code-JS LMS</h4>
-                        <p class="text-left js-dashboard-side-text">
-                            Code-JS LMS is an interactive solution that allows 
-                            librarians and staff to keep real-time track of inventory and media assets<br>
-                                and allows Members digital means of discovery and reading.
-                        </p>
-                        {{-- <img src="{{ asset('img/dashline2.png') }}" class="" width="100%"> --}}
-                    </div> 
-         
-                
-                   
                     <div class="calendar">
                         <div class="header">
                             <a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
@@ -278,7 +286,14 @@
                     },
                 }
             },
+            @if($theme=="js-default")
             colors: ['#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df'],
+            @elseif($theme=="js-orange")
+            colors: ['#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14'],
+            @elseif($theme=="js-blue")
+            colors: ['#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df'],
+            @endif
+           
             dataLabels: {
                 enabled: true,
                 textAnchor: 'start',
@@ -362,10 +377,18 @@ var options1 = {
                     endingShape: 'rounded'	
                 },
             },
+            @if($theme=="js-default")
+            colors: ['#33b2df'],
+            @elseif($theme=="js-orange")
+            colors: ['#f56403'],
+            @elseif($theme=="js-blue")
+            colors: ['#33b2df'],
+            @endif
+
             dataLabels: {
                 enabled: true,
                 style: {
-                colors: ['#f1f1f1']
+                colors: ['#010102']
                 }
 
             },

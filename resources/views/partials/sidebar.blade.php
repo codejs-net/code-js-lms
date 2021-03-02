@@ -20,7 +20,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link active">
+                                <a href="{{ url('/home') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Library</p>
                                 </a>
@@ -324,13 +324,13 @@
                     </li>
 
 
-                    <li class="nav-header">CODE-JS</li>
-                    <li class="nav-item">
+                    <li class="nav-header"></li>
+                    <!-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>Calculater</p>
                         </a>
-                    </li>
+                    </li> -->
 
                 </ul>
 

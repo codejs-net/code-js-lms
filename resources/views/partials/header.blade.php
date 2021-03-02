@@ -2,20 +2,20 @@
     $locale = session()->get('locale');
     $usernme="name_".$locale;
 @endphp
-<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light js-nav-bg text-white elevation-1">
+<nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light js-nav-bg elevation-1 js-nav-text">
         <!-- Left navbar links -->
-        <ul class="navbar-nav">
+        <ul class="navbar-nav js-nav-text">
             <li class="nav-item">
-                <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                <a class="nav-link js-nav-text" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ url('/home') }}" class="nav-link text-white"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Home</a>
+                <a href="{{ url('/home') }}" class="nav-link js-nav-text"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('issue.index') }}" class="nav-link text-white"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;Issue</a>
+                <a href="{{ route('issue.index') }}" class="nav-link js-nav-text"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;Issue</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('return.index') }}" class="nav-link text-white"><i class="fa fa-level-down" aria-hidden="true"></i>&nbsp;Return</a>
+                <a href="{{ route('return.index') }}" class="nav-link js-nav-text"><i class="fa fa-level-down" aria-hidden="true"></i>&nbsp;Return</a>
             </li>
             
             
@@ -50,9 +50,9 @@
             </div>
         </li>
         
-        <li class="nav-item dropdown user user-menu">
+        <li class="nav-item dropdown user user-menu mt-1">
             
-            <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown">
+            <a href="#" class="dropdown-toggle js-nav-text" data-toggle="dropdown">
                 <img src="{{ asset('img/user.png') }}" class="user-image" alt="User Image">
                 <span class="hidden-xs">Code-JS</span>
             </a>

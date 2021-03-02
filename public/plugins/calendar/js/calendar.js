@@ -68,7 +68,7 @@ function showTime() {
     var h = date.getHours(); // 0 - 23
     var m = date.getMinutes(); // 0 - 59
     var s = date.getSeconds(); // 0 - 59
-    var session = "AM";
+    var session = "am";
 
     if (h == 0) {
         h = 12;
@@ -76,7 +76,7 @@ function showTime() {
 
     if (h > 12) {
         h = h - 12;
-        session = "PM";
+        session = "pm";
     }
 
     h = (h < 10) ? "0" + h : h;

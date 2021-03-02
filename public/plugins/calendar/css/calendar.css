@@ -37,16 +37,7 @@
     border-radius: 20px;
 }
 
-.calendar .header .text {
-    background-color: #308ff0;
-    padding: 0px;
-    transform: rotateX(90deg);
-    transform-origin: bottom;
-    backface-visibility: hidden;
-    transition: .4s ease-in-out 0s;
-    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, .19), 0 8px 17px 0 rgba(0, 0, 0, .2);
-    opacity: 0
-}
+
 
 .calendar .header .text>span {
     text-align: center;
@@ -79,7 +70,9 @@
     position: absolute;
     backface-visibility: hidden;
     transition: all .4s ease-in-out 0s;
-    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, .19), 0 8px 17px 0 rgba(0, 0, 0, .2)
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, .19), 0 8px 17px 0 rgba(0, 0, 0, .2);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .months[data-flow="left"] .month {
@@ -101,10 +94,7 @@
     display: table-row
 }
 
-.table .row.head {
-    color: #308ff0;
-    text-transform: uppercase
-}
+
 
 .table .row .cell {
     width: 14.28%;
@@ -115,6 +105,7 @@
 
 .table .row .cell.disable {
     color: #ccc
+    
 }
 
 .table .row .cell span {
@@ -127,7 +118,7 @@
 
 .table .row .cell.active span {
     color: #fff;
-    background-color: #308ff0
+    background-color: #ce7b10
 }
 
 .months .month[data-active="true"] {
@@ -147,24 +138,24 @@
 }
 
 .header [data-action]>i {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     display: block;
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-top: -10px;
-    margin-left: -10px
+    margin-top: -5px;
+    margin-left: -5px
 }
 
 .header [data-action]>i:before,
 .header [data-action]>i:after {
     top: 50%;
-    margin-top: -1px;
+    margin-top: -4px;
     content: '';
     position: absolute;
-    height: 2px;
-    width: 20px;
+    height: 3px;
+    width: 15px;
     border-top: 2px solid;
     border-radius: 2px
 }
@@ -212,7 +203,7 @@
 .header.active [data-action] {
     opacity: 1
 }
-
+/* 
 [data-theme="jan"] {
     background-color: #90CAF9
 }
@@ -367,4 +358,5 @@
 [data-theme="dec"] .header .text,
 [data-theme="dec"] .table .row .cell.active span {
     background-color: #546E7A
-}
+} */
+
