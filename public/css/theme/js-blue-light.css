@@ -1,7 +1,7 @@
 /* -----------navbar---------------------------------- */
 .js-nav-bg {
-    background: #4c10f2;
-    background: linear-gradient(90deg, rgba(25, 63, 232, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
+    background: #2b2e31;
+    background: linear-gradient(90deg, rgba(73, 74, 82, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
 }
 .js-nav-text{
     color: #fcfafa !important;
@@ -22,7 +22,7 @@
 }
 
 .js-img-box{
-    background: #286caf;
+    background: #039BE5;
     margin: 20px;
     padding: 30px;
     border-radius: 20px;
@@ -66,43 +66,60 @@
 }
 /* ---------------side bar--------------------------- */
 .js-sidebar {
-    background-color:#2b2e31;
+    background-color:#ffffff
 }
 
 .js-sidebar-text {
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
+   
 }
 .js-sidebar a.nav-link:hover {
-    background-color:#007bff;
+    background-color:#1981f1;
     border-radius: 5px;
+    color: #fff ;
 }
+.js-sidebar a.nav-link:hover p {
+    color: #fff ;
+}
+.js-sidebar a.nav-link:hover i.nav-icon{
+    color: #fff;
+}
+
 .js-sidebar i.nav-icon::before {
-    color:#efeff2 ;
+    color:#343a40 ;
+}
+.js-sidebar i.nav-icon:after {
+    color:#e7ebee ;
+}
+.js-sidebar a.nav-link:focus p {
+    color: #fff ;
 }
 .js-sidebar a.nav-link:active {
-    background-color:#007bff;
+    background-color:#1981f1;
     border-radius: 5px;
 }
+
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #ffffff;
-  background-color: #007bff;
+  color: #f8f6f6;
+  background-color: #1981f1;
 }
+
 .js-sidebar-text p {
-    color: rgb(255, 254, 254);
+    color: rgb(17, 17, 17);
 }
 
 .js-sidebar-heding {
-    color: rgb(255, 254, 254);
+    color: rgb(20, 19, 19);
 }
 /* ---------------dash board---------------------- */
 .js-box-text{
-    color: #ffffff;
+    color: #2f8adf;
     margin-left: 20px;
 }
 .js-box-text p{
-    color: #fdfdff;
+    color: #1a1b1d;
     margin-top: -10px;
 }
 .js-dash-h h5 {
@@ -114,12 +131,12 @@
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 15px;
-    border: #a4acb3 solid 1px !important;
+    border: #157cdd solid 1px !important;
     background-color: #ffffff;
 
 }
 .js-dash-link-btn:hover{
-border: #5694d6 solid 1px !important;
+border: #121313 solid 1px !important;
 
 }
 .js-dash-link-btn:hover span{
@@ -128,43 +145,43 @@ border: #5694d6 solid 1px !important;
     }
 .js-dash-link a span {
     font-family: 'Roboto', sans-serif;
-    color: #070707;
+    color: #1a1b1d;
     font-size: 13px;
     font-weight:600;
    
 }
 
-.js-box-bg-4 {
-    background-color: #0091d5;
-    border-radius: 30px;
+.js-box-bg-2 {
+    background-color: #fff;
+    border-radius: 20px;
     padding-bottom: 5px;
     padding-top: 5px;
 }
 
 .js-box-bg-1 {
-    background-color: #4cb5f5;
-    border-radius: 30px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-}
-
-.js-box-bg-2 {
-    background-color: #b3c100;
-    border-radius: 30px;
+    background-color: #fff;
+    border-radius: 20px;
     padding-bottom: 5px;
     padding-top: 5px;
 }
 
 .js-box-bg-3 {
-    background-color: #d32d41;
-    border-radius: 30px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-box-bg-4 {
+    background-color: #fff;
+    border-radius: 20px;
     padding-bottom: 5px;
     padding-top: 5px;
 }
 
 .js-box-bg-5 {
-    background-color: #dbae58;
-    border-radius: 30px;
+    background-color: #fff;
+    border-radius: 20px;
     padding-bottom: 5px;
     padding-top: 5px;
 }

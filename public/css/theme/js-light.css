@@ -1,16 +1,16 @@
 /* -----------navbar---------------------------------- */
 .js-nav-bg {
-    background: #fff;
-    background: linear-gradient(90deg, rgba(35, 35, 37, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(26, 18, 18, 0.639) 100%;
+    background: #2b2e31;
+    background: linear-gradient(90deg, rgba(28, 66, 235, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
 }
 .js-nav-text{
-    color: #050505 !important;
+    color: #ffffff !important;
     font-weight: 300 !important;
 }
 
 /* -------------------background------------------- */
 .bg-js {
-    background: #fff;
+    background: #ffffff;
 }
 
 .js-bg {
@@ -22,19 +22,20 @@
 }
 
 .js-img-box{
-    background: #e5eef8;
+    background: #C8E9F6;
     margin: 20px;
     padding: 30px;
     border-radius: 20px;
+}
+
+.js-img-box{
     text-align: center;
 
 }
 
 .js-dashboard-side {
     background-color: rgb(255, 255, 255);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    padding-left: 10px;
-    padding-right: 10px;
+    font-family: 'Roboto', sans-serif;
     margin-bottom: 10px;
     border-radius: 15px;
 
@@ -42,30 +43,30 @@
 
 .js-dashboard-side-text {
     color: rgb(14, 13, 13);
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 15px;
+    margin-left: -10px;
 
 }
 
 .js-box-img{
     display: block;
     position: absolute;
-    right: 60px;
+    right: 70px;
     top: -25px;
-    width: 13%;
+    width: 12%;
     z-index: 1;
 }
 
 .js-dashboard-side-text-heding {
-    color: #080808;
-    font-family: 'Playfair Display', serif;
+    color: #161616;
+    font-family: 'Archivo', sans-serif;
     font-size: 20px;
-    margin-top: -20px;
 
 }
 /* ---------------side bar--------------------------- */
 .js-sidebar {
-    background-color:#f1f2f3;
+    background-color:#ffffff
 }
 
 .js-sidebar-text {
@@ -74,7 +75,7 @@
    
 }
 .js-sidebar a.nav-link:hover {
-    background-color:#6c757d;
+    background-color:#2b2e31;
     border-radius: 5px;
     color: #fff ;
 }
@@ -85,8 +86,6 @@
     color: #fff;
 }
 
-
-
 .js-sidebar i.nav-icon::before {
     color:#343a40 ;
 }
@@ -94,17 +93,17 @@
     color:#e7ebee ;
 }
 .js-sidebar a.nav-link:focus p {
-    color: rgb(245, 243, 243) ;
+    color: #fff ;
 }
 .js-sidebar a.nav-link:active {
-    background-color:#6c757d;
+    background-color:#2b2e31;
     border-radius: 5px;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #f8f6f6;
-  background-color: #6c757d;
+  background-color: #2b2e31;
 }
 
 .js-sidebar-text p {
@@ -116,40 +115,75 @@
 }
 /* ---------------dash board---------------------- */
 .js-box-text{
-    color: #0a0a0a;
+    color: #2b2e31;
+    margin-left: 20px;
 }
-.js-dash-h {
-    font-family: 'Shippori Mincho', serif;
+.js-box-text p{
+    color: #1a1b1d;
+    margin-top: -10px;
 }
+.js-dash-h h5 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: bold;
+}
+.js-dash-link-btn{
+    border-radius: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    border: #2b2e31 solid 1px !important;
+    background-color: #ffffff;
 
+}
+.js-dash-link-btn:hover{
+border: #121313 solid 1px !important;
+
+}
+.js-dash-link-btn:hover span{
+    color: rgb(42, 44, 46);
+    transition: 0.25s;
+    }
 .js-dash-link a span {
-    font-family: 'Crimson Text', serif;
-    color: #3b3939;
+    font-family: 'Roboto', sans-serif;
+    color: #1a1b1d;
+    font-size: 13px;
+    font-weight:600;
+   
 }
 
 .js-box-bg-2 {
-    background-color: #fcfcfc;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-1 {
-    background-color: #fcfcfc;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-3 {
-    background-color: #fcfcfc;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-4 {
-    background-color: #fcfcfc;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-5 {
-    background-color: #fcfcfc;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 
@@ -160,7 +194,7 @@
     transform: translateX(0) translateY(0);
     color: #00030c;
     font-size: 25px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Archivo', sans-serif;
     letter-spacing: 2px;
     text-align: center;
     border-radius: 20px !important;
@@ -168,19 +202,19 @@
 }
 /* --------------calander-------------------------- */
 [data-theme] .header .text{
-    background-color: #8d8e92;
+    background-color: #2b2e31;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
 }
 
 [data-theme] .table .row .cell.active span {
-    background-color: #6c757d;
+    background-color: #2b2e31;
     border-radius: 20px;
 
 }
 
 .calendar .header .text {
-    background-color: #6c757d;
+    background-color: #2b2e31;
     padding: 0px;
     transform: rotateX(90deg);
     transform-origin: bottom;
@@ -191,7 +225,7 @@
 }
 
 .table .row.head {
-    color: #6c757d;
+    color: #2b2e31;
     text-transform: uppercase
 }
 
@@ -204,57 +238,58 @@
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
     text-align: center;
-    color: #0c0c0c;
-    border: #1f2122 solid 1px;
+    color: #1b1a19;
+    border: #2b2e31 solid 1px;
   }
   
   .btntype:hover{
-    background: #6c757d;
+    background: #2b2e31;
     color:#f2f5f7;
   }
   
   .btntype:focus{
-      background: #52585e;
-      color: rgb(10, 10, 10);
+      background: #2b2e31;
+      color: #fff;
   }
 /* --------------selectbox---------------------------------- */
 .js-select-box{
     border-radius: 5px;
     height: 70px;
-    color: #343a40;
-    border: #343a40 solid 1px;
+    color: #2b2e31;
+    border: #2b2e31 solid 1px;
   }
   .js-select-box:hover{
     border-radius: 5px;
     height: 70px;
-    color: #343a40;
-    border: #fffefe solid 1px;
+    color: #2b2e31;
+    border: #0f0f0f solid 1px;
     /* background: #039BE5; */
   }
   /* ---------------button--------------------------------- */
   .btn-js{
-    background: #6c757d;
+    background: #2b2e31;
     color: #fff;
   }
   .btn-js:hover{
     background: #fff;
-    color: #343a40;
-    border: #343a40 solid 1px;
+    color: #2b2e31;
+    border: #2b2e31 solid 1px;
   }
 
   a.btn-js{
-    background: #343a40;
+    background: #2b2e31;
     color: #fff;
   }
   a.btn-js:hover{
     background: #fff;
-    color: #343a40;
-    border: #343a40 solid 1px;
+    color: #2b2e31;
+    border: #2b2e31 solid 1px;
   }
   /* -------------table--------------------------------- */
   .js-tbl-header{
-    background: rgb(154,148,148);
-    background: linear-gradient(90deg, rgba(154,148,148,1) 0%, rgba(255,253,253,1) 47%, rgba(143,148,143,1) 100%);
+    background: rgb(184,221,246);
+    background: linear-gradient(90deg, rgba(184,221,246,1) 0%, rgba(242,242,242,1) 35%, rgba(184,222,242,1) 100%);
+
     
     }
   
@@ -263,4 +298,8 @@
     .js-tbl-header th:last-child { border-top-right-radius: 5px; }
     .js-tbl-header th:last-child { border-bottom-right-radius: 5px; }
 
-/* ------------------------------------------- */
+/* ----------------chart--------------------------- */
+.js-chart{
+    border-radius: 20px;
+   
+}

@@ -1,16 +1,16 @@
 /* -----------navbar---------------------------------- */
 .js-nav-bg {
-    background: #fff;
-    background: linear-gradient(90deg, rgba(60, 92, 231, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
+    background: #121313;
+    background: linear-gradient(90deg, rgba(28, 66, 235, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
 }
 .js-nav-text{
-    color: #0e0d0d !important;
+    color: #ffffff !important;
     font-weight: 300 !important;
 }
 
 /* -------------------background------------------- */
 .bg-js {
-    background: #039BE5;
+    background: #28a745;
 }
 
 .js-bg {
@@ -22,7 +22,7 @@
 }
 
 .js-img-box{
-    background: #1e5dd3;
+    background: #14aa37;
     margin: 20px;
     padding: 30px;
     border-radius: 20px;
@@ -35,9 +35,7 @@
 
 .js-dashboard-side {
     background-color: rgb(255, 255, 255);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    padding-left: 10px;
-    padding-right: 10px;
+    font-family: 'Roboto', sans-serif;
     margin-bottom: 10px;
     border-radius: 15px;
 
@@ -45,25 +43,25 @@
 
 .js-dashboard-side-text {
     color: rgb(255, 255, 255);
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 15px;
+    margin-left: -10px;
 
 }
 
 .js-box-img{
     display: block;
     position: absolute;
-    right: 60px;
+    right: 70px;
     top: -25px;
-    width: 13%;
+    width: 12%;
     z-index: 1;
 }
 
 .js-dashboard-side-text-heding {
     color: #ffffff;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 20px;
-    margin-top: -20px;
 
 }
 /* ---------------side bar--------------------------- */
@@ -76,20 +74,20 @@
     font-size: 13px;
 }
 .js-sidebar a.nav-link:hover {
-    background-color:#007bff;
+    background-color:#28a745;
     border-radius: 5px;
 }
 .js-sidebar i.nav-icon::before {
     color:#efeff2 ;
 }
 .js-sidebar a.nav-link:active {
-    background-color:#007bff;
+    background-color:#28a745;
     border-radius: 5px;
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #ffffff;
-  background-color: #007bff;
+  background-color: #28a745;
 }
 .js-sidebar-text p {
     color: rgb(255, 254, 254);
@@ -100,40 +98,75 @@
 }
 /* ---------------dash board---------------------- */
 .js-box-text{
-    color: #fafafc;
+    color: #1c1c1d;
+    margin-left: 20px;
 }
-.js-dash-h {
-    font-family: 'Shippori Mincho', serif;
+.js-box-text p{
+    color: #1a1b1d;
+    margin-top: -10px;
 }
+.js-dash-h h5 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: bold;
+}
+.js-dash-link-btn{
+    border-radius: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    border: #0ab618 solid 1px !important;
+    background-color: #ffffff;
 
+}
+.js-dash-link-btn:hover{
+border: #121313 solid 1px !important;
+
+}
+.js-dash-link-btn:hover span{
+    color: rgb(19, 158, 38);
+    transition: 0.25s;
+    }
 .js-dash-link a span {
-    font-family: 'Crimson Text', serif;
-    color: #3b3939;
+    font-family: 'Roboto', sans-serif;
+    color: #1a1b1d;
+    font-size: 13px;
+    font-weight:600;
+   
 }
 
 .js-box-bg-2 {
-    background-color: #48b0e4;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-1 {
-    background-color: #48b0e4;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-3 {
-    background-color: #48b0e4;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-4 {
-    background-color: #48b0e4;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .js-box-bg-5 {
-    background-color: #48b0e4;
+    background-color: #fff;
     border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 
@@ -144,7 +177,7 @@
     transform: translateX(0) translateY(0);
     color: #00030c;
     font-size: 25px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Archivo', sans-serif;
     letter-spacing: 2px;
     text-align: center;
     border-radius: 20px !important;
@@ -152,19 +185,19 @@
 }
 /* --------------calander-------------------------- */
 [data-theme] .header .text{
-    background-color: #268dfc;
+    background-color: #28a745;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
 }
 
 [data-theme] .table .row .cell.active span {
-    background-color: #4fa1f8;
+    background-color: #28a745;
     border-radius: 20px;
 
 }
 
 .calendar .header .text {
-    background-color: #268dfc;
+    background-color: #28a745;
     padding: 0px;
     transform: rotateX(90deg);
     transform-origin: bottom;
@@ -175,7 +208,7 @@
 }
 
 .table .row.head {
-    color: #268dfc;
+    color: #28a745;
     text-transform: uppercase
 }
 
@@ -189,51 +222,51 @@
     transition: all .1s linear;
     text-align: center;
     color: #1b1a19;
-    border: #039BE5 solid 1px;
+    border: #28a745 solid 1px;
   }
   
   .btntype:hover{
-    background: #039BE5;
+    background: #28a745;
     color:#f2f5f7;
   }
   
   .btntype:focus{
-      background: #039BE5;
+      background: #28a745;
       color: #fff;
   }
 /* --------------selectbox---------------------------------- */
 .js-select-box{
     border-radius: 5px;
     height: 70px;
-    color: #2c78e9;
-    border: #039BE5 solid 1px;
+    color: #28a745;
+    border: #28a745 solid 1px;
   }
   .js-select-box:hover{
     border-radius: 5px;
     height: 70px;
-    color: #2c78e9;
+    color: #28a745;
     border: #0f0f0f solid 1px;
     /* background: #039BE5; */
   }
   /* ---------------button--------------------------------- */
   .btn-js{
-    background: #007bff;
+    background: #28a745;
     color: #fff;
   }
   .btn-js:hover{
     background: #fff;
-    color: #007bff;
-    border: #007bff solid 1px;
+    color: #28a745;
+    border: #28a745 solid 1px;
   }
 
   a.btn-js{
-    background: #007bff;
+    background: #28a745;
     color: #fff;
   }
   a.btn-js:hover{
     background: #fff;
-    color: #007bff;
-    border: #007bff solid 1px;
+    color: #28a745;
+    border: #28a745 solid 1px;
   }
   /* -------------table--------------------------------- */
   .js-tbl-header{
@@ -248,4 +281,8 @@
     .js-tbl-header th:last-child { border-top-right-radius: 5px; }
     .js-tbl-header th:last-child { border-bottom-right-radius: 5px; }
 
-/* ------------------------------------------- */
+/* ----------------chart--------------------------- */
+.js-chart{
+    border-radius: 20px;
+   
+}

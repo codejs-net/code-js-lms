@@ -32,9 +32,12 @@
                   <a type="button" class="dropdown-toggle mr-3" data-toggle="dropdown">{{__('Theme')}}</a>
                   <div class="dropdown-menu dropdown-menu-right mt-2">
                     <a class="dropdown-item" href="{{ route('change_theme','js-default') }}">LMS Defalut</a>
-                    <a class="dropdown-item" href="{{ route('change_theme','js-blue') }}">LMS Blue</a>
-                    <a class="dropdown-item" href="{{ route('change_theme','js-orange') }}">LMS Orange</a>
-                    <a class="dropdown-item" href="{{ route('change_theme','js-green') }}">LMS Green</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-blue-dark') }}">LMS Blue dark</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-blue-light') }}">LMS Blue light</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-orange-dark') }}">LMS Orange dark</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-orange-light') }}">LMS Orange light</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-green-dark') }}">LMS Green dark</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-green-light') }}">LMS Green light</a>
                     <a class="dropdown-item" href="{{ route('change_theme','js-dark') }}">LMS Dark</a>
                     <a class="dropdown-item" href="{{ route('change_theme','js-light') }}">LMS Light</a>
                   </div>

@@ -14,23 +14,23 @@ $theme = session()->get('theme');
             <div class="row">
                
                 <div class="col-12 col-sm-6 col-md-9 js-bg">
-                    <div class="content-header p-3">
+                    <div class="content-header pl-3 pb-1 mt-2">
                         <div class="box box-info">
-                            <div class="box-header text-center">
-                                <div class=" header js-dash-h"> <h5>{{ __("Bulathkohupitiya Public Library")}}&nbsp;<i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div>
+                            <div class="box-header text-left ml-4 pl-3">
+                                <div class=" header js-dash-h"> <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Public Library")}}&nbsp;-&nbsp;{{ __("Library Management System")}}</h5></div>
                                 <!-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> -->
                             </div>
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------- -->
-                    <div class="row">
+                    <div class="row ml-1">
                     <div class="col-12 col-sm-12 col-md-12 ">
                             <div class="js-img-box text-left">
                                     <div class="js-box">
                                         <img src="{{ asset('img/js-box.png') }}" class="js-box-img">
                                     </div>
-                                    <h4 class="text-center js-dashboard-side-text-heding font-weight-bold">Code-JS LMS</h4>
-                                    <p class="js-dashboard-side-text col-md-10">
+                                    <h4 class="text-left js-dashboard-side-text-heding font-weight-bold mt-1">Code-JS LMS</h4>
+                                    <p class="js-dashboard-side-text col-md-10 mt-1">
                                         Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets and allows Members digital means of discovery and reading.
                                         an interactive solution that allows Code-JS LMS is an interactive solution that allows 
                                         librarians and staff to keep real-time track of inventory and media assets
@@ -40,7 +40,7 @@ $theme = session()->get('theme');
                         </div>
                     </div>
                     <!-- ------------------------------------------------------------------- -->
-                    <div class="row p-3">
+                    <div class="row p-3 mb-4 ml-2">
                         <div class="col">
                             <!-- small box -->
                             <div class="small-box js-box-bg-1 elevation-5">
@@ -60,7 +60,6 @@ $theme = session()->get('theme');
                             <div class="small-box js-box-bg-2 elevation-5">
                                 <div class="inner js-box-text">
                                     <h3>53<sup style="font-size: 20px">%</sup></h3>
-        
                                     <p>Total members</p>
                                 </div>
                                 <div class="icon">
@@ -116,63 +115,64 @@ $theme = session()->get('theme');
                     </div>
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-12">
-                            <div class="box-header text-center">
-                                <h6 class="info-box-icon"><i class="fas fa-cog"></i>Quick Links</h6>
+                            <div class="box-header text-left ml-5 pl-3">
+                                <h6 class="info-box-icon"><u>Quick Links</u></h6>
+                                <!-- <h6 class="info-box-icon"><i class="fas fa-cog"></i>&nbsp;Quick Links</h6> -->
                             </div>
-                            <hr>
+                            <!-- <hr> -->
                         </div>
                     </div>
                         
                     <div class="row pl-4 pr-2 js-dash-link">
                         
-                    <a href="" class="col-md-2 btn btn-block  bg-white mt-2 js-dash-link-btn elevation-2">
-                            <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block  mt-2 js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span> -->
                             <span class="info-box-text pt-2">Add Resources</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span>
+                        <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span> -->
                             <span class="info-box-text">Add Members</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span> -->
                             <span class="info-box-text">Catalog</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span> -->
                             <span class="info-box-text">Supports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span> -->
                             <span class="info-box-text">Issue</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span> -->
                             <span class="info-box-text">Return</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span> -->
                             <span class="info-box-text">Receipt</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block   js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span> -->
                             <span class="info-box-text">Reports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span>
+                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span> -->
                             <span class="info-box-text">Staff</span>
                         </a>
 
 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span>
+                        <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
+                            <!-- <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span> -->
                             <span class="info-box-text">Members</span>
                         </a>
                         <!-- 
@@ -207,22 +207,27 @@ $theme = session()->get('theme');
                         </a>  -->
                        
                     </div>
-                    <div class="row pt-4 pb-2">
+                    <div class="row mt-3 pt-4">
                         <div class="col-12 col-sm-6 col-md-12">
-                            <hr>
-                            <div class="box-header text-center bg-light">
-                                <h6 class="info-box-icon"><i class="fas fa-cog"></i>Transaction Summary</h6>
+                           
+                            <div class="box-header text-left ml-5 pl-3">
+                                <!-- <h6 class="info-box-icon"><i class="fas fa-cog"></i>&nbsp;Transaction Summary</h6> -->
+                                <h6 class="info-box-icon"><u>Transaction Summary</u></h6>
                             </div>
-                            <hr>
+                            <!-- <hr> -->
                         </div>
                     </div>
-                    <div class="row pl-3 pr-3">
-                        <div class="col-12 col-sm-12 col-md-6 pb-2">
-                            <div id="chart" class="elevation-3"></div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-6 pb-2">
-                            <div id="chart1" class="elevation-3"></div>
-                        </div>
+                    <div class="row pl-4 pr-4 mb-4">
+                       <div class="col-12 col-sm-12 col-md-6 p-3">
+                            <div class="js-chart elevation-3">
+                                <div id="chart" class="pt-4"></div>
+                            </div>
+                       </div>
+                       <div class="col-12 col-sm-12 col-md-6 p-3">
+                            <div class="js-chart elevation-3">
+                                <div id="chart1" class="pt-4"></div>
+                            </div>
+                       </div>
                     </div>
             </div>
         
@@ -286,13 +291,17 @@ $theme = session()->get('theme');
                     },
                 }
             },
-            @if($theme=="js-default")
-            colors: ['#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df'],
-            @elseif($theme=="js-orange")
+            @if($theme=="js-orange-light")
             colors: ['#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14'],
-            @elseif($theme=="js-blue")
-            colors: ['#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4'],
-            @elseif($theme=="js-green")
+            @elseif($theme=="js-orange-dark")
+            colors: ['#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14'],
+            @elseif($theme=="js-blue-light")
+            colors: ['#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df'],
+            @elseif($theme=="js-blue-dark")
+            colors: ['#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc'],
+            @elseif($theme=="js-green-light")
+            colors: ['#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745'],
+            @elseif($theme=="js-green-dark")
             colors: ['#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745'],
             @elseif($theme=="js-dark")
             colors: ['#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40'],
@@ -383,17 +392,21 @@ var options1 = {
                     endingShape: 'rounded'	
                 },
             },
-            @if($theme=="js-default")
-            colors: ['#33b2df'],
-            @elseif($theme=="js-orange")
-            colors: ['#f56403'],
-            @elseif($theme=="js-green")
+            @if($theme=="js-orange-light")
+            colors: ['#fd7e14'],
+            @elseif($theme=="js-orange-dark")
+            colors: ['#fd7e14'],
+            @elseif($theme=="js-green-light")
             colors: ['#069c2e'],
-            @elseif($theme=="js-dark")
-            colors: ['#343a40'],
-            @elseif($theme=="js-blue")
-            colors: ['#1e5dd3'],
+            @elseif($theme=="js-green-dark")
+            colors: ['#069c2e'],
+            @elseif($theme=="js-blue-light")
+            colors: ['#268dfc'],
+            @elseif($theme=="js-blue-dark")
+            colors: ['#268dfc'],
             @elseif($theme=="js-light")
+            colors: ['#6c757d'],
+            @elseif($theme=="js-dark")
             colors: ['#6c757d'],
             @endif
 

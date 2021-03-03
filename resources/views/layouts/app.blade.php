@@ -70,16 +70,22 @@
     }
     if(!empty($theme))
     {
-      if($theme=="js-default")
+      if($theme=="js-light")
       { 
       ?>
-      <link href="{{ asset('css/theme/js-default.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/theme/js-light.css') }}" rel="stylesheet">
       <?php
       }
-      else if($theme=="js-blue")
+      else if($theme=="js-blue-light")
       { 
       ?>
-      <link href="{{ asset('css/theme/js-blue.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/theme/js-blue-light.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-blue-dark")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-blue-dark.css') }}" rel="stylesheet">
       <?php
       }
       else if($theme=="js-dark")
@@ -88,22 +94,34 @@
       <link href="{{ asset('css/theme/js-dark.css') }}" rel="stylesheet">
       <?php
       }
-      else if($theme=="js-orange")
+      else if($theme=="js-orange-light")
       { 
       ?>
-      <link href="{{ asset('css/theme/js-orange.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/theme/js-orange-light.css') }}" rel="stylesheet">
       <?php
       }
-      else if($theme=="js-green")
+      else if($theme=="js-orange-dark")
       { 
       ?>
-      <link href="{{ asset('css/theme/js-green.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/theme/js-orange-dark.css') }}" rel="stylesheet">
       <?php
       }
-      else if($theme=="js-light")
+      else if($theme=="js-green-light")
       { 
       ?>
-      <link href="{{ asset('css/theme/js-light.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/theme/js-green-light.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-green-dark")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-green-dark.css') }}" rel="stylesheet">
+      <?php
+      }
+      else
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-default.css') }}" rel="stylesheet">
       <?php
       }
     }
