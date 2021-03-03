@@ -27,6 +27,19 @@
         <!-- ------------------- -->
      
       <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+            <div class="dropdown pull-right">
+                  <a type="button" class="dropdown-toggle mr-3" data-toggle="dropdown">{{__('Theme')}}</a>
+                  <div class="dropdown-menu dropdown-menu-right mt-2">
+                    <a class="dropdown-item" href="{{ route('change_theme','js-default') }}">LMS Defalut</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-blue') }}">LMS Blue</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-orange') }}">LMS Orange</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-green') }}">LMS Green</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-dark') }}">LMS Dark</a>
+                    <a class="dropdown-item" href="{{ route('change_theme','js-light') }}">LMS Light</a>
+                  </div>
+            </div>
+        </li>
        <li class="nav-item dropdown">
             <div class="dropdown pull-right">
                   <a type="button" class="dropdown-toggle mr-3" data-toggle="dropdown">
@@ -58,7 +71,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-md dropdown-menu-right mt-2">
                 <!-- User image -->
-                <li class="user-header">
+                <li class="user-header js-nav-text">
                     <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
 
                     <p>

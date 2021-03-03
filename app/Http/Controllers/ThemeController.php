@@ -33,4 +33,21 @@ class ThemeController extends Controller
         // return redirect()->route('home')->with('success','Theme Change successfully.');
         return redirect()->route('home');
     }
+    public function change_theme($select)
+    {
+        $theme_option = theme::where('user_id', Auth::user()->id)->first();
+        if ($theme_option){
+            $theme_option->theme=$select;
+            $theme_option->save();
+            Session::put('theme', $theme_option->theme);
+        } 
+        else {
+            $theme=new theme;
+            $theme->user_id=Auth::user()->id;
+            $theme->theme=$select;
+            $theme->save();
+            Session::put('theme', $theme->theme);
+        }
+        return redirect()->route('home');
+    }
 }

@@ -1,17 +1,16 @@
 /* -----------navbar---------------------------------- */
 .js-nav-bg {
-    background: #fdfdfd;
+    background: #19a120;
     background: linear-gradient(90deg, rgba(60, 92, 231, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
 }
 .js-nav-text{
-    color: #040404 !important;
+    color: #fcfafa !important;
     font-weight: 300 !important;
 }
 
-
 /* -------------------background------------------- */
 .bg-js {
-    background: #fd7e14;
+    background: #1bdd2b;
 }
 
 .js-bg {
@@ -23,15 +22,11 @@
 }
 
 .js-img-box{
-    background: #fd7e14;
+    background: #09bb26;
     margin: 20px;
     padding: 30px;
     border-radius: 20px;
-}
-
-.js-img-box{
     text-align: center;
-
 }
 
 .js-dashboard-side {
@@ -77,20 +72,20 @@
     font-size: 13px;
 }
 .js-sidebar a.nav-link:hover {
-    background-color:#cf6e2d;
+    background-color:#28a745;
     border-radius: 5px;
 }
 .js-sidebar i.nav-icon::before {
     color:#efeff2 ;
 }
 .js-sidebar a.nav-link:active {
-    background-color:#cf6e2d;
+    background-color:#28a745;
     border-radius: 5px;
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #ffffff;
-  background-color: #cf6e2d;
+  background-color: #28a745;
 }
 .js-sidebar-text p {
     color: rgb(255, 254, 254);
@@ -101,7 +96,7 @@
 }
 /* ---------------dash board---------------------- */
 .js-box-text{
-    color: #fd7e14;
+    color: #085f0f;
 }
 .js-dash-h {
     font-family: 'Shippori Mincho', serif;
@@ -152,21 +147,20 @@
 
 }
 /* --------------calander-------------------------- */
-
 [data-theme] .header .text{
-    background-color: #fd7e14;
+    background-color: #1fbb43;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
 }
 
 [data-theme] .table .row .cell.active span {
-    background-color: #fd7e14;
+    background-color: #22b946;
     border-radius: 20px;
 
 }
 
 .calendar .header .text {
-    background-color: #fd7e14;
+    background-color: #20ad41;
     padding: 0px;
     transform: rotateX(90deg);
     transform-origin: bottom;
@@ -177,7 +171,7 @@
 }
 
 .table .row.head {
-    color: #f07330;
+    color: #28a745;
     text-transform: uppercase
 }
 
@@ -191,56 +185,56 @@
     transition: all .1s linear;
     text-align: center;
     color: #1b1a19;
-    border: #fd7e14 solid 1px;
+    border: #28a745 solid 1px;
   }
   
   .btntype:hover{
-    background: #fd7e14;
+    background: #22c448;
     color:#f2f5f7;
   }
   
   .btntype:focus{
-      background: #fd7e14;
+      background: #28a745;
       color: #fff;
   }
 /* --------------selectbox---------------------------------- */
 .js-select-box{
     border-radius: 5px;
     height: 70px;
-    color: #fd7e14;
-    border: #fd7e14 solid 1px;
+    color: #28a745;
+    border: #28a745 solid 1px;
   }
   .js-select-box:hover{
     border-radius: 5px;
     height: 70px;
-    color: #fd7e14;
+    color: #28a745;
     border: #0f0f0f solid 1px;
     /* background: #039BE5; */
   }
   /* ---------------button--------------------------------- */
   .btn-js{
-    background: #fd7e14;
+    background: #28a745;
     color: #fff;
   }
   .btn-js:hover{
     background: #fff;
-    color: #fd7e14;
-    border: #fd7e14 solid 1px;
+    color: #28a745;
+    border: #28a745 solid 1px;
   }
 
   a.btn-js{
-    background: #fd7e14;
+    background: #28a745;
     color: #fff;
   }
   a.btn-js:hover{
     background: #fff;
-    color: #fd7e14;
-    border: #fd7e14 solid 1px;
+    color: #28a745;
+    border: #28a745 solid 1px;
   }
   /* -------------table--------------------------------- */
   .js-tbl-header{
-    background: rgb(252,228,206);
-    background: linear-gradient(90deg, rgba(252,228,206,1) 0%, rgba(252,252,252,1) 47%, rgba(238,218,195,1) 100%);
+    background: rgb(206,252,210);
+    background: linear-gradient(90deg, rgba(206,252,210,1) 0%, rgba(252,252,252,1) 47%, rgba(195,238,195,1) 100%);
 
     
     }

@@ -125,86 +125,86 @@ $theme = session()->get('theme');
                         
                     <div class="row pl-4 pr-2 js-dash-link">
                         
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white mt-2 ml-2 mb-2 elevation-2">
+                    <a href="" class="col-md-2 btn btn-block  bg-white mt-2 js-dash-link-btn elevation-2">
                             <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span>
                             <span class="info-box-text pt-2">Add Resources</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span>
                             <span class="info-box-text">Add Members</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span>
                             <span class="info-box-text">Catalog</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
                             <span class="info-box-text">Supports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span>
                             <span class="info-box-text">Issue</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span>
                             <span class="info-box-text">Return</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span>
                             <span class="info-box-text">Receipt</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span>
                             <span class="info-box-text">Reports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span>
                             <span class="info-box-text">Staff</span>
                         </a>
 
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-secondary bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span>
                             <span class="info-box-text">Members</span>
                         </a>
-
-                        {{-- <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <!-- 
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-user-circle fa-md"></i></span>
                             <span class="info-box-text">Member Account</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon"><i class="fas fa-cog fa-md  pt-2"></i></span>
                             <span class="info-box-text">Setting</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-barcode fa-md pt-2"></i></span>
                             <span class="info-box-text">Code Genarate</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-list fa-md pt-2"></i></span>
                             <span class="info-box-text">Board of Survey</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
                             <span class="info-box-text">Member Support</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block btn-outline-dark bg-white ml-2 mb-2 elevation-2">
+                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
                             <span class="info-box-icon  "><i class="fas fa-bars fa-md"></i></span>
                             <span class="info-box-text">Resource Support</span>
-                        </a> --}}
+                        </a>  -->
                        
                     </div>
                     <div class="row pt-4 pb-2">
@@ -291,7 +291,13 @@ $theme = session()->get('theme');
             @elseif($theme=="js-orange")
             colors: ['#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14', '#fd7e14'],
             @elseif($theme=="js-blue")
-            colors: ['#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df', '#33b2df'],
+            colors: ['#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4', '#2f69d4'],
+            @elseif($theme=="js-green")
+            colors: ['#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745'],
+            @elseif($theme=="js-dark")
+            colors: ['#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40'],
+            @elseif($theme=="js-light")
+            colors: ['#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d'],
             @endif
            
             dataLabels: {
@@ -381,8 +387,14 @@ var options1 = {
             colors: ['#33b2df'],
             @elseif($theme=="js-orange")
             colors: ['#f56403'],
+            @elseif($theme=="js-green")
+            colors: ['#069c2e'],
+            @elseif($theme=="js-dark")
+            colors: ['#343a40'],
             @elseif($theme=="js-blue")
-            colors: ['#33b2df'],
+            colors: ['#1e5dd3'],
+            @elseif($theme=="js-light")
+            colors: ['#6c757d'],
             @endif
 
             dataLabels: {

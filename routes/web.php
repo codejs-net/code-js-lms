@@ -167,6 +167,7 @@ Route::group(['middleware' => ['auth']], function() {
     // -------Setting- Theme--------------------------
     Route::resource('theme', ThemeController::class);
     Route::post('update_theme', [ThemeController::class, 'update_theme'])->name('update_theme');
+    Route::get('change_theme/{id}', [ThemeController::class, 'change_theme'])->name('change_theme');
 
 });
 
