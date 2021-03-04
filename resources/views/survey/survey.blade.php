@@ -1,21 +1,32 @@
 @extends('layouts.app')
-
 @section('content')
-<div>
-        <!-- Content Header (Page header) -->
-    <section class="content-fulid mt-1">
-        <h2> &nbsp Board Of Survey</h2> 
-            <ol class="breadcrumb">
-                <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-                <li><a ><i class="fa fa-briefcase"></i> Board Of Survey</a></li>
-                <li class="active"><i class="fa fa-book"></i>Survey</li>
-        </ol>
-    </section>
 
-        <!-- Main content -->
-    <section class="content">
+@php
+$locale = session()->get('locale');
+$lang="_".$locale;
+$category="category".$lang;
 
-        <div class="row">
+@endphp
+
+<nav aria-label="breadcrumb ">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item ml-4"><a href="{{ route('home') }}" class="js-text"><i class="fa fa-home"></i> Home&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('survey.index') }}" class="js-text"><i class="fa fa-book"></i> Survey&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a class="js-text"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Survey&nbsp;</a></li>
+</ol>
+</nav>
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-md-10 col-sm-6 text-center"> 
+            <h5> <i class="fa fa-check-circle-o">Survey</i></h5>
+        </div>  
+    </div>   
+</div>
+
+<!-- Main content -->
+<div class="container-fluid">
+    <div class="card card-body">
+    <div class="row">
                 <!-- --------------------------- section 1------------------------------------- -->
             <section class="col-lg-12 connectedSortable">
  
@@ -23,8 +34,6 @@
                         <div class="box-header ">
                            <div class="pull-left header"> <h4> <i class="fa fa-book"> Survey</i></h4></div>
                            <div class="pull-right header"> <h4> <a href="" data-toggle="modal" data-target="#start_new_survey" ><i class="fa fa-plus"></i>&nbsp;New</a></h4></div>
-                           
-                           
                         </div>
 
                             <div class="box-body">
@@ -82,7 +91,7 @@
                                                         
                                                     </div>
                                                     <div class="col-md-6 text-left">
-                                                        <h3 id="total_count" class="">{{ $Bcount }}</h3>
+                                                        <h3 id="total_count" class="">9652</h3>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -90,7 +99,7 @@
                                                     <h4  class=" text-black"> <label>Survey -</label></h4>
                                                     </div>
                                                     <div class="col-md-6 text-left">
-                                                        <span type="hidden" id="survey_count" class=""><h3>{{ $Scount }}</h3></span>
+                                                        <span type="hidden" id="survey_count" class=""><h3>424</h3></span>
                                                         <h3 id="survey_countb"></h3>
                                                     </div>
                                                     
@@ -112,9 +121,6 @@
                             </div> 
 
 
-                        
-                
-
                         <div class="box box-info">
                             <div class="box-header">
                                                
@@ -131,175 +137,9 @@
                                             
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                @push('scripts')
-                                <script>
-
-                                    $(document).ready(function() {
-                                    
-                                    // -----------------------------------
-                                    
-                                    $('#survey_datatable').DataTable({
-                                    processing: true,
-                                    serverSide: true,
-                                    dom: 'Bfrtip',
-                                    buttons: [
-                                        'copy', 'excel', 'pdf'
-                                    ],
-
-                                    ajax:{
-                                    url: "{{ route('survey.survey') }}",
-                                    },
-                                    columns:[
-                                        {data: "id",name: "id"},
-                                        {data: "accessionNo",name: "accessionNo"},
-                                        {data: "book_title",name: "book_title"},
-                                        {data: "authors",name: "authors"},
-                                        {data: "price",name: "price"},
-                                        {data: "survey",name: "survey",orderable: false},
-                                        {data: "Suggetion",name: "Suggetion"},
-                                        
-                                    ]
-                                    });
-                                    
-                                    document.getElementById("book_capture").focus();
-                                    // -----------------------------------------------------------------------
-                                    var input = document.getElementById("book_capture");
-                                    input.addEventListener("keyup", function(event) {
-                                    if (event.keyCode === 13) {
-                                    event.preventDefault();
-                                    document.getElementById("book_check").click();
-                                    $('#book_capture').val('');
-                                    $('#book_suggestion').prop('selectedIndex',0);
-                                    document.getElementById("book_capture").focus();
-                                    }
-                                    });
-
-                                    var input_s = document.getElementById("book_suggestion");
-                                    input_s.addEventListener("keyup", function(event) {
-                                    if (event.keyCode === 13) {
-                                    event.preventDefault();
-                                    document.getElementById("book_check").click();
-                                    $('#book_capture').val('');
-                                    $('#book_suggestion').prop('selectedIndex',0);
-                                    document.getElementById("book_capture").focus();
-                                    }
-                                    });
-
-                                    
-
-                                    });
-
-                                // ----------------------------------------------------------------------------
-
-                                    $('#book_check').on("click",function(){
-                                        var book_acc = $("#book_capture").val();
-                                        var sugge = $("#book_suggestion").val();
-                                        load=0;
-
-                                        $.ajaxSetup({
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            }
-                                        });
-
-                                        $.ajax({
-                                            method: 'POST',
-                                            url: '/ckeck_book',
-                                            data: { 
-                                                book_acc: book_acc,
-                                                sugge   : sugge
-                                            },
-                                            
-                                            
-                                            success: function(response){
-
-                                               
-                                                $('#survey_count').html('');
-                                                $('#book_capturename').html(response.book_name);
-                                                $('#survey_countb').html(response.survey_count);
-                                                $('#survey_datatable').DataTable().ajax.reload();
-                                               
-                                            },
-                                            error: function(response){
-                                                $('#book_capturename').html("Book Not Found..!");
-                                            }
-                                        });
-                                    });
-                                // ------------------------------------------------------------------------
-     
-
-                                 $('#book_uncheck').on("click",function(){
-                                        var book_acc = $("#book_capture").val();
-                                        var sugge = $("#book_suggestion").val();
-                                       
-
-                                        $.ajaxSetup({
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            }
-                                        });
-
-                                        $.ajax({
-                                            method: 'POST',
-                                            url: '/unckeck_book',
-                                            data: { 
-                                                book_acc: book_acc,
-                                                sugge   : sugge
-                                            },
-                                            
-                                            
-                                            success: function(response){
-
-                                               
-                                                $('#survey_count').html('');
-                                                $('#book_capturename').html(response.book_name);
-                                                $('#survey_countb').html(response.survey_count);
-                                                $('#survey_datatable').DataTable().ajax.reload();
-                                                $('#book_capture').val('');
-                                                $('#book_suggestion').prop('selectedIndex',0);
-                                                document.getElementById("book_capture").focus();
-                                               
-                                            },
-                                            error: function(response){
-                                                $('#book_capturename').html("Book Not Found..!");
-                                            }
-                                        });
-                                    });
-                                // ------------------------------------------------------------------------
-
-
-                                // $('#finalize').on("click",function(){
-
-                                //         $.ajaxSetup({
-                                //             headers: {
-                                //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                //             }
-                                //         });
-
-                                //         $.ajax({
-                                //             method: 'POST',
-                                //             url: '/finalize_suevey',
-                                //             data: { },
-                                            
-                                //             success: function(response){
-
-                                //                 $('#book_capturename').html("Survey Finalized Successfully");
-                                //                 location.reload();
-                                               
-                                //             },
-                                //             error: function(response){
-                                //                 $('#book_capturename').html("Error Survey Finalizing");
-                                //             }
-                                //         });
-                                //     });
-                                // ------------------------------------------------------------------------
-
-                                 </script>
-                                @endpush
-                                                                    
-                            </tbody>
-                        </table>
+                                    <tbody>                                    
+                                    </tbody>
+                                </table>
                 
                             <div class="pull-right">
                                 
@@ -316,16 +156,17 @@
             </section>
   
         </div>
-                   
-
-    </section>
-
-
+    </div>  
 </div>
+@endsection
+@section('script')
+<script>
 
-           
+$(document).ready(function()
+{
+  
 
+});
+</script>
 
-@include('boardOfSurvey.new_survey_modal')
-@include('boardOfSurvey.survey_finalize_modal')
 @endsection

@@ -25,11 +25,11 @@ $theme = session()->get('theme');
                     <!-- ------------------------------------------------------------------- -->
                     <div class="row ml-1">
                     <div class="col-12 col-sm-12 col-md-12 ">
-                            <div class="js-img-box text-left">
+                            <div class="js-img-box text-left elevation-2">
                                     <div class="js-box">
                                         <img src="{{ asset('img/js-box.png') }}" class="js-box-img">
                                     </div>
-                                    <h4 class="text-left js-dashboard-side-text-heding font-weight-bold mt-1">Code-JS LMS</h4>
+                                    <h4 class="text-left js-dashboard-side-text-heding font-weight-bold">Code-JS LMS</h4>
                                     <p class="js-dashboard-side-text col-md-10 mt-1">
                                         Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets and allows Members digital means of discovery and reading.
                                         an interactive solution that allows Code-JS LMS is an interactive solution that allows 
@@ -236,7 +236,7 @@ $theme = session()->get('theme');
                         <div id="MyClockDisplay" class="clock text-center" onload="showTime()"></div>
                     </div>
                    
-                    <div class="calendar">
+                    <div class="calendar mt-3">
                         <div class="header">
                             <a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
                             <div class="text" data-render="month-year"></div>

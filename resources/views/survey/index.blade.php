@@ -63,9 +63,9 @@ $category="category".$lang;
                         <td>{{$data->finalize_date}}</td>
                         <td>
 
-                        <a href="{{ route('survey.edit',$data->id) }}" class="btn btn-success btn-sm"><i class="fa fa-search" ></i></a>&nbsp; 
+                        <a href="{{ route('survey.edit',$data->id) }}" class="btn btn-success btn-sm"><i class="fa fa-pencil" ></i></a>&nbsp; 
 
-                        <a class="btn btn-danger btn-sm " data-toggle="modal" data-target="#Modal_delete_servey" data-servyid="{{$data->id}}" data-surveydte="{{$data->start_date}}"><i class="fa fa-trash" ></i></a>&nbsp;
+                        <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#Modal_delete_servey" data-servyid="{{$data->id}}" data-surveydte="{{$data->start_date}}"><i class="fa fa-trash" ></i></a>&nbsp;
                         
 
                         </td>

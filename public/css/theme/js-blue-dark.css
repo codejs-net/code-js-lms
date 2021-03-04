@@ -18,8 +18,11 @@
 }
 
 .js-img-box{
-    background: #268dfc;
-    margin: 20px;
+    background: #1f8afc;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom:30px;
+    margin-top: 5px;
     padding: 30px;
     border-radius: 20px;
 }
@@ -293,15 +296,20 @@ border: #121313 solid 1px !important;
 
 
 /* -----------------------js---------------------- */
-.js-text{
-    color: #105ef0;
-}
+
 .js-text-light{
-    color: #2d72f3;
+    color: #fbfcfd;
+}
+.js-text-dark{
+    color: #0c0c0c;
 }
 .js-colour:hover{
     color: #080808;
 }
+.js-bg {
+    background: #ffffff;
+}
+
 .js-bg {
     background: #ffffff;
 }

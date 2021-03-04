@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\survey;
+use App\Models\survey_suggestion;
 use App\Models\resource;
 use App\Models\setting;
 use App\Models\view_resource_data;
@@ -101,7 +102,38 @@ class SurveyController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        
+        // if(request()->ajax())
+        // {
+            // $surveydata=survey_temp::all();
+            // $surveydata = DB::table('survey_temps')
+        //     $surveydata = survey_temp::where('status',1)
+        //         ->join('survey_suggetions', 'survey_temps.suggestion_id', '=', 'survey_suggetions.id')
+        //         ->select('survey_temps.*', 'survey_suggetions.Suggetion')
+        //         ->get();
+        //     return datatables()->of($surveydata)
+        //             ->addColumn('survey', function($data){
+        //                 if($data->survey==1)
+        //                 {$button = '<label class="btn btn-success btn-sm"><i class="fa fa-check" ></i></label>';}
+        //                 else
+        //                 {$button = '<label class="btn btn-default btn-sm"><i class="fa fa-minus" ></i></label>';}
+                        
+        //                 return $button;  
+        //             })
+                    
+        //             ->rawColumns(['survey'])
+        //             ->make(true);
+        // }
+        // $bookcount = DB::table('survey_temps')->count();
+
+        // $survey_c = survey_temp::where('survey','1')->get();
+        // $survey_count = count($survey_c);
+
+        $survey_sug=survey_suggestion::all();
+
+        // return view('boardOfSurvey.survey')->with('Bcount',$bookcount)->with('Scount',$survey_count)->with('sdata',$survey_sug);
+        return view('survey.survey')->with('sdata',$survey_sug);
     }
 
     /**

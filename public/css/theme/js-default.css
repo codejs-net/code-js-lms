@@ -1,7 +1,7 @@
 /* -----------navbar---------------------------------- */
 .js-nav-bg {
-    background: #4c10f2;
-    background: linear-gradient(90deg, rgba(25, 63, 232, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
+    background: #2b2e31;
+    background: linear-gradient(90deg, rgba(30, 31, 36, 0.603))0%, rgb(29, 28, 31) 50%, rgba(7, 12, 19, 0.639) 100%;
 }
 .js-nav-text{
     color: #fcfafa !important;
@@ -15,7 +15,10 @@
 
 .js-img-box{
     background: #286caf;
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-top: 10px;
     padding: 30px;
     border-radius: 20px;
 }
@@ -58,35 +61,52 @@
 }
 /* ---------------side bar--------------------------- */
 .js-sidebar {
-    background-color:#2b2e31;
+    background-color:#ffffff
 }
 
 .js-sidebar-text {
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
+   
 }
 .js-sidebar a.nav-link:hover {
-    background-color:#007bff;
+    background-color:#1981f1;
     border-radius: 5px;
+    color: #fff ;
 }
+.js-sidebar a.nav-link:hover p {
+    color: #fff ;
+}
+.js-sidebar a.nav-link:hover i.nav-icon{
+    color: #fff;
+}
+
 .js-sidebar i.nav-icon::before {
-    color:#efeff2 ;
+    color:#343a40 ;
+}
+.js-sidebar i.nav-icon:after {
+    color:#e7ebee ;
+}
+.js-sidebar a.nav-link:focus p {
+    color: #fff ;
 }
 .js-sidebar a.nav-link:active {
-    background-color:#007bff;
+    background-color:#1981f1;
     border-radius: 5px;
 }
+
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #ffffff;
-  background-color: #007bff;
+  color: #f8f6f6;
+  background-color: #1981f1;
 }
+
 .js-sidebar-text p {
-    color: rgb(255, 254, 254);
+    color: rgb(17, 17, 17);
 }
 
 .js-sidebar-heding {
-    color: rgb(255, 254, 254);
+    color: rgb(20, 19, 19);
 }
 /* ---------------dash board---------------------- */
 .js-box-text{
@@ -231,20 +251,20 @@ border: #5694d6 solid 1px !important;
 .js-select-box{
     border-radius: 5px;
     height: 70px;
-    color: #2c78e9;
-    border: #039BE5 solid 1px;
+    color: #111111;
+    border: #1c1c1d solid 1px;
    
   }
   .js-select-box:hover{
     border-radius: 5px;
     height: 70px;
-    color: #2c78e9;
+    color: #36383b;
     border: #0f0f0f solid 1px;
     /* background: #039BE5; */
   }
   /* ---------------button--------------------------------- */
   .btn-js{
-    background: #007bff;
+    background: #1c1f22;
     color: #fff;
   }
   .btn-js:hover{
@@ -289,7 +309,7 @@ border: #5694d6 solid 1px !important;
 
 /* -----------------------js---------------------- */
 .js-text{
-    color: #4c10f2;
+    color: #3f8cf1;
 }
 .js-text-light{
     color: #fbfcfd;
@@ -305,7 +325,7 @@ border: #5694d6 solid 1px !important;
 }
 
 .bg-js {
-    background: #4c10f2;
+    background: #1f58f7;
 }
 
 .js-roboto{
@@ -316,22 +336,22 @@ border: #5694d6 solid 1px !important;
     font-family: 'Archivo', sans-serif;
 }
 .border{
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
 }
 .js.border-radius-1{
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 5px;
 }
 .js.border-radius-2{
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 10px;
 }
 .js.border-radius-3{
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 15px;
 }
 .js.border-radius-4{
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 20px;
 }
 .js-ml-10{
