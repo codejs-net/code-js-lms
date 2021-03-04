@@ -160,6 +160,7 @@ Route::group(['middleware' => ['auth']], function() {
     //--------Survey----------------------------------
     Route::resource('survey', SurveyController::class);
     Route::post('store_survey', [SurveyController::class, 'store'])->name('store_survey');
+    Route::post('create_survey', [SurveyController::class, 'create'])->name('create_survey');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);

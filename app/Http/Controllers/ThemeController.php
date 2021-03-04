@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\theme;
 use Auth;
 use Session;
+use Illuminate\Support\Facades\Route;
 
 class ThemeController extends Controller
 {
@@ -48,6 +49,9 @@ class ThemeController extends Controller
             $theme->save();
             Session::put('theme', $theme->theme);
         }
-        return redirect()->route('home');
+
+        // $routeName = $select->route()->getName();
+	    // dd($routeName);
+        return redirect()->back();
     }
 }

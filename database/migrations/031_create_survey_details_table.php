@@ -59,12 +59,15 @@ class CreateSurveyDetailsTable extends Migration
             $table->string('note_ta')->nullable();
             $table->string('note_en')->nullable();
 
-            $table->string('status')->default(1);
             $table->string('lend')->default(0);
             $table->string('survey')->default(0);
 
             $table->integer('suggestion_id')->nullable();
             $table->string('suggestion')->nullable();
+
+            $table->string('remark_si')->nullable();
+            $table->string('remark_ta')->nullable();
+            $table->string('remark_en')->nullable();
 
             $table->string('check_by')->nullable();
 
