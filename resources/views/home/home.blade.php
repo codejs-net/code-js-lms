@@ -123,56 +123,56 @@ $theme = session()->get('theme');
                         </div>
                     </div>
                         
-                    <div class="row pl-4 pr-2 js-dash-link">
+                    <div class="row pl-2 ml-3 pr-2 js-dash-link">
                         
                         <a href="" class="col-md-2 btn btn-block  mt-2 js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span> --}}
                             <span class="info-box-text pt-2">Add Resources</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span> --}}
                             <span class="info-box-text">Add Members</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span> --}}
                             <span class="info-box-text">Catalog</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span> --}}
                             <span class="info-box-text">Supports</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span> --}}
                             <span class="info-box-text">Issue</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span> --}}
                             <span class="info-box-text">Return</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span> --}}
                             <span class="info-box-text">Receipt</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block   js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span> --}}
                             <span class="info-box-text">Reports</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span> --}}
                             <span class="info-box-text">Staff</span>
                         </a>
 
 
                         <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
-                            <!-- <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span> -->
+                            {{-- <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span> --}}
                             <span class="info-box-text">Members</span>
                         </a>
                         <!-- 

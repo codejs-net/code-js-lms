@@ -28,16 +28,17 @@ $category="category".$lang;
     <div class="card card-body">
 
         <div class="row">
-            <div class="col-md-4 col-sm-12 text-left mt-1">
+            <div class="col-md-4 col-sm-12">
+               <div class="card p-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                     </div>
                         <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                        <button type="button" class="btn btn-sm btn-outline-primary" id="resource_check"><i class="fas fa-cart-plus"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="resource_check"><i class="fas fa-plus"></i></button>
                         <button type="button" class="btn btn-sm btn-outline-success" id="resource_unckeck"><i class="fa fa-minus"></i></button>
                 </div> 
-                <div class="input-group mt-4">
+                <div class="input-group mt-2 ">
                     <div class="input-group-prepend">
                         <span class="input-group-addon"id="basic-addon2"><i class="fa fa-list fa-lg mt-2"></i></span>
                     </div>
@@ -48,51 +49,40 @@ $category="category".$lang;
                                 @endforeach
                         </select>
                 </div> 
+               </div>
             </div>
 
             <!-- -------------------------------------------------------------------------- -->
-            <div class="col-md-3 col-sm-12 text-left mt-1">
-                <div class="col">           
-                    <div class="small-box js-box-bg-4 elevation-5">
-                        <div class="inner js-box-text">
-                            <h2>10265</h2>
-
-                            <p>Survey Count</p>
+            <div class="col-md-4 col-sm-12">
+                <div class="row">
+                    <div class="col">           
+                        <div class="card elevation-2 js-survey-box1" style="height:7rem;">
+                            <div class="text-center mt-3">
+                                <h1>1025</h1>
+                                <p>Survey Count</p>
+                            </div>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        
                     </div>
-                </div>
-                <div class="col">
-                    <div class="small-box js-box-bg-5 elevation-5">
-                        <div class="inner js-box-text">
-                            <h2>1563</h2>
-
-                            <p>Total Count</p>
+                    <div class="col">
+                        <div class="card elevation-2 js-survey-box2" style="height:7rem;">
+                            <div class="text-center mt-3">
+                                <h1>1563</h1>
+                                <p>Total Count</p>
+                            </div>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
             <!-- --------------------------------------------------------------------------- -->
-            <div class="col-md-5 col-sm-12 text-left mt-1">
-            <div class="small-box  col-lg-12 text-center " style="height:8rem;">
-                    <div class="row">
-                        <!-- <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div> -->
-                        <!-- <h4> <label>Book details</label></h4> -->
-                        <h4 class="text-black"> <label id="resource_capturename">Test Book</label></h4>
+            <div class="col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="" style="height:7rem;">
+                        <div class="row p-3 text-center">
+                            <h4 class="text-black"> <label id="resource_capturename" class="text-center">Test Book</label></h4>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     
     </div>  
