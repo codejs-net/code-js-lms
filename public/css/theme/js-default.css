@@ -313,17 +313,18 @@ a.btn-js:hover {
 /* -------------table--------------------------------- */
 
 .js-tbl-header {
-    background: rgb(184, 221, 246);
-    background: linear-gradient(90deg, rgba(184, 221, 246, 1) 0%, rgba(242, 242, 242, 1) 35%, rgba(184, 222, 242, 1) 100%);
+    background: rgb(238, 174, 202);
+    background: linear-gradient(90deg, rgba(238, 174, 202, 0.6026785714285714) 0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%);
+    color: #010101;
 }
 
-.js-tbl-header th:first-child {
+/* .js-tbl-header th:first-child {
     border: unset;
 }
 
 .js-tbl-header th:last-child {
     border: unset;
-}
+} */
 
 .js-tbl-header th:first-child {
     border-top-left-radius: 10px;

@@ -314,7 +314,7 @@ function load_datatable(route,catdata,centerdata,typedata)
     searching: true,
 
     ajax:{
-        type: "GET",
+        type: "POST",
         dataType : 'json',
         data: { 
             catdata: catdata,

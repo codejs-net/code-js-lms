@@ -5,18 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\survey;
 use App\Models\survey_suggestion;
+use App\Models\survey_detail_temp; 
+use App\Models\survey_detail; 
 use App\Models\resource;
 use App\Models\setting;
-use App\Models\view_resource_data;
 use App\Models\lending_detail;
-use App\Models\lending;
-use App\Models\view_lending_data;
+use App\Models\view_survey;
 use App\Http\Controllers\SoapController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Session;
 use Carbon\Carbon;
 use Auth;
+use Crypt;
 
 class SurveyController extends Controller
 {
@@ -27,6 +28,15 @@ class SurveyController extends Controller
      */
     public function index()
     {
+        $locale = session()->get('locale');
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        if ($db_setting->value == "0") {
+            $lang = "_" . $locale;
+        } else {
+            $lang = "_" . $db_setting->value;
+        }
+        Session::put('db_locale', $lang);
+
         $surveydate = Carbon::now()->isoFormat('YYYY-MM-DD');
         $survey=survey::all();
         return view('survey.index')->with('Sdata',$survey)->with('surveydate',$surveydate);
@@ -102,40 +112,161 @@ class SurveyController extends Controller
      */
     public function edit($id)
     {
+        $id = Crypt::decrypt($id);
 
-        
-        // if(request()->ajax())
-        // {
-            // $surveydata=survey_temp::all();
-            // $surveydata = DB::table('survey_temps')
-        //     $surveydata = survey_temp::where('status',1)
-        //         ->join('survey_suggetions', 'survey_temps.suggestion_id', '=', 'survey_suggetions.id')
-        //         ->select('survey_temps.*', 'survey_suggetions.Suggetion')
-        //         ->get();
-        //     return datatables()->of($surveydata)
-        //             ->addColumn('survey', function($data){
-        //                 if($data->survey==1)
-        //                 {$button = '<label class="btn btn-success btn-sm"><i class="fa fa-check" ></i></label>';}
-        //                 else
-        //                 {$button = '<label class="btn btn-default btn-sm"><i class="fa fa-minus" ></i></label>';}
+        $locale = session()->get('locale');
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        if ($db_setting->value == "0") {
+            $lang = "_" . $locale;
+        } else {
+            $lang = "_" . $db_setting->value;
+        }
+        Session::put('db_locale', $lang);
+
+        if(request()->ajax())
+        {
+            $surveydata = view_survey::select('*')
+                ->where('survey_id', $id)
+                ->orderBy('updated_at', 'DESC')
+                ->get();
+            return datatables()->of($surveydata)
+                    ->addColumn('survey', function($data){
+                        if($data->survey==1)
+                        {$button = '<label class="btn btn-success btn-sm"><i class="fa fa-check" ></i></label>';}
+                        else
+                        {$button = '<label class="btn btn-default btn-sm"><i class="fa fa-minus" ></i></label>';}
                         
-        //                 return $button;  
-        //             })
+                        return $button;  
+                    })
                     
-        //             ->rawColumns(['survey'])
-        //             ->make(true);
-        // }
-        // $bookcount = DB::table('survey_temps')->count();
+                    ->rawColumns(['survey'])
+                    ->make(true);
+        }
+        $resource_count = view_survey::select('id')
+        ->where('survey_id',$id)
+        ->count();
 
-        // $survey_c = survey_temp::where('survey','1')->get();
-        // $survey_count = count($survey_c);
+        $survey_count = view_survey::select('id')
+        ->where('survey_id',$id)
+        ->where('survey',1)
+        ->count();
 
         $survey_sug=survey_suggestion::all();
 
-        // return view('boardOfSurvey.survey')->with('Bcount',$bookcount)->with('Scount',$survey_count)->with('sdata',$survey_sug);
-        return view('survey.survey')->with('sdata',$survey_sug);
+        return view('survey.survey')->with('rcount',$resource_count)->with('scount',$survey_count)->with('sugdata',$survey_sug)->with('sdata',$id);
     }
 
+    public function check_survey(Request $request)
+    {
+        $lang = session()->get('db_locale');
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
+        $massage="";
+
+        $reso = view_survey::select('*')
+        ->where('survey_id', $request->surveyid)
+        ->where('accessionNo', $request->resourceinput)
+        ->orWhere('standard_number', $request->resourceinput)
+        ->first();
+        
+        if ($reso) 
+        {
+            $lend = lending_detail::select('*')
+            ->where('resource_id', $reso->resource_id)
+            ->Where('return', 0)
+            ->first();
+            if(!$lend) 
+            {
+                if($reso->survey==0)
+                {$massage="success";}
+                else
+                {$massage="check";}
+
+                $data_update=survey_detail_temp::find($reso->id);
+                    $data_update->survey=1;
+                    $data_update->suggestion_id=$request->suggetion;
+                    $data_update->check_by=Auth::user()->id;
+                    $data_update->save();
+
+                    $survey_count = view_survey::select('id')
+                    ->where('survey_id',$request->surveyid)
+                    ->where('survey',1)
+                    ->count();
+                    return response()->json([
+                            'title' => $reso->$title,
+                            'accno' => $reso->accessionNo,
+                            'snumber' => $reso->standard_number,
+                            'category' => $reso->$category,
+                            'type' => $reso->$type,
+                            'creator' => $reso->$creator,
+                            'scount'=>$survey_count,
+                            'massage' => $massage
+                            ]);
+            }
+            else
+            {
+                return response()->json(['massage' => "lend",'title' => $reso->$title]);
+            }
+        } 
+        else 
+        {
+            return response()->json(['massage' => "error"]);
+        }
+    }
+
+    public function uncheck_survey(Request $request)
+    {
+        $lang = session()->get('db_locale');
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
+
+        $reso = view_survey::select('*')
+        ->where('survey_id', $request->surveyid)
+        ->where('accessionNo', $request->resourceinput)
+        ->orWhere('standard_number', $request->resourceinput)
+        ->first();
+        
+        if ($reso) 
+        {
+            if($reso->survey==1)
+            {
+               
+                $data_update=survey_detail_temp::find($reso->id);
+                $data_update->survey=0;
+                $data_update->suggestion_id=null;
+                $data_update->check_by=null;
+                $data_update->save();
+
+                $survey_count = view_survey::select('id')
+                ->where('survey_id',$request->surveyid)
+                ->where('survey',1)
+                ->count();
+                return response()->json([
+                        'title' => $reso->$title,
+                        'accno' => $reso->accessionNo,
+                        'snumber' => $reso->standard_number,
+                        'category' => $reso->$category,
+                        'type' => $reso->$type,
+                        'creator' => $reso->$creator,
+                        'scount'=>$survey_count,
+                        'massage' => "success"
+                        ]);
+
+            }
+            else
+            {
+                return response()->json(['massage' => "check",'title' => $reso->$title]);
+            }
+        } 
+        else 
+        {
+            return response()->json(['massage' => "error"]);
+        }
+    }
     /**
      * Update the specified resource in storage.
      *

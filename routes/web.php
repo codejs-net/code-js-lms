@@ -161,7 +161,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('survey', SurveyController::class);
     Route::post('store_survey', [SurveyController::class, 'store'])->name('store_survey');
     Route::post('create_survey', [SurveyController::class, 'create'])->name('create_survey');
-    Route::get('do_survey/{id}', [SurveyController::class, 'do_survey'])->name('do_survey');
+    Route::post('check_survey', [SurveyController::class, 'check_survey'])->name('check_survey');
+    Route::post('uncheck_survey', [SurveyController::class, 'uncheck_survey'])->name('uncheck_survey');
+    // Route::get('do_survey/{id}', [SurveyController::class, 'do_survey'])->name('do_survey');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);
