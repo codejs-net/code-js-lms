@@ -11,6 +11,8 @@ use App\Models\resource;
 use App\Models\setting;
 use App\Models\lending_detail;
 use App\Models\view_survey;
+use App\Models\resource_category;
+use App\Models\center;
 use App\Http\Controllers\SoapController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -39,7 +41,9 @@ class SurveyController extends Controller
 
         $surveydate = Carbon::now()->isoFormat('YYYY-MM-DD');
         $survey=survey::all();
-        return view('survey.index')->with('Sdata',$survey)->with('surveydate',$surveydate);
+        $resource_category=resource_category::all();
+        $resource_center=center::all();
+        return view('survey.index')->with('Sdata',$survey)->with('surveydate',$surveydate)->with('catdata',$resource_category)->with('centdata',$resource_center);
     }
 
     /**
@@ -49,6 +53,7 @@ class SurveyController extends Controller
      */
     public function create(Request $request)
     {
+        dd($request);
 
         $resource_count = DB::table('resources')->count();
 

@@ -17,11 +17,33 @@
             <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('create_survey') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
+                    <label class="" for="purchase_date" >Click Start for New Survey. Click close to cancel  </label>
+                <div class="form-group">
+                    <label class="" for="purchase_date" >Survey Date:</label>
+                    <input class="form-control" type="date" name="survey_date" id="survey_date" value="{{$surveydate}}">              
+                </div>
 
                 <div class="form-group">
-                  <label class="" for="purchase_date" >Click Start for New Survey. Click close to cancel  </label>
-                        <input class="form-control" type="date" name="survey_date" id="survey_date" value="{{$surveydate}}">              
-                  </div>
+                    <strong>Category:</strong>
+                    <div class="form-check">
+                        @foreach($catdata as $value)
+                            <label>{{ Form::checkbox('category[]', $value->id, false, array('class' => 'form-check-input')) }}
+                            {{ $value->$category }}</label>
+                        <br/>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <strong>Center:</strong>
+                    <div class="form-check">
+                        @foreach($centdata as $value)
+                            <label>{{ Form::checkbox('center[]', $value->id, false, array('class' => 'form-check-input')) }}
+                            {{ $value->$center }}</label>
+                        <br/>
+                        @endforeach
+                    </div>
+                </div>
                     
                 </div>
 

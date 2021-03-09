@@ -5,6 +5,7 @@
 $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
+$center="name".$lang;
 
 @endphp
 
@@ -34,7 +35,7 @@ $category="category".$lang;
 <div class="container-fluid">
     <div class="card card-body">
         <div class="form-row">
-                                   
+            <div class="table-responsive"style="overflow-x: auto;">                        
             <table class="table table-hover" id="sdatatable">
                 <thead class="js-tbl-header">
                     <tr>
@@ -74,8 +75,8 @@ $category="category".$lang;
                
                 </tbody>
             </table>
-
             </div>
+        </div>
                      
     </div>
 </div>
