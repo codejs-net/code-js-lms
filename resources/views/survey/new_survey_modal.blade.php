@@ -14,7 +14,7 @@
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('create_survey') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('create_survey') }}"class="needs-validation" id="create_newsurvey" novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <label class="" for="purchase_date" >Click Start for New Survey. Click close to cancel  </label>
@@ -23,23 +23,21 @@
                     <input class="form-control" type="date" name="survey_date" id="survey_date" value="{{$surveydate}}">              
                 </div>
 
-                <div class="form-group">
+                <div class="checkbox-group">
                     <strong>Category:</strong>
                     <div class="form-check">
                         @foreach($catdata as $value)
-                            <label>{{ Form::checkbox('category[]', $value->id, false, array('class' => 'form-check-input')) }}
-                            {{ $value->$category }}</label>
+                            <label><input type="checkbox" name="category[]" class="form-check-input" value="{{ $value->id }}"> {{ $value->$category }}</label>
                         <br/>
                         @endforeach
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="checkbox-group">
                     <strong>Center:</strong>
                     <div class="form-check">
                         @foreach($centdata as $value)
-                            <label>{{ Form::checkbox('center[]', $value->id, false, array('class' => 'form-check-input')) }}
-                            {{ $value->$center }}</label>
+                            <label><input type="checkbox" name="center[]" class="form-check-input" value="{{ $value->id }}"> {{ $value->$center }}</label>
                         <br/>
                         @endforeach
                     </div>

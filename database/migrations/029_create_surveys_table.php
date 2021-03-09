@@ -17,9 +17,10 @@ class CreateSurveysTable extends Migration
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('id');
             $table->date('start_date')->default(Carbon::now());
-
+            $table->string('description_si')->nullable();
+            $table->string('description_ta')->nullable();
+            $table->string('description_en')->nullable();
             $table->integer('total_resources')->nullable();
-            $table->integer('removed_resources')->nullable();
             $table->integer('lending_resources')->nullable();
             $table->integer('survey_resources')->nullable();
             $table->integer('non_survey_resources')->nullable();

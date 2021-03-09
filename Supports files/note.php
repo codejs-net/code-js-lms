@@ -72,3 +72,7 @@ function printDiv1()
     //     }).parent('tr').remove();
     // });
 
+    //---------------------array implode-------------------------
+    $categoires=implode(',',$request->category);
+        $integercat = array_map('intval', explode(',', $categoires));
+

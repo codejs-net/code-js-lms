@@ -53,44 +53,60 @@ class SurveyController extends Controller
      */
     public function create(Request $request)
     {
-        dd($request);
+        
+        $json =DB::table('resources')
+        ->select('id')
+        ->where('status', '1')
+        ->whereIn('category_id', $request->category)
+        ->whereIn('center_id', $request->center)
+        ->get();
 
-        $resource_count = DB::table('resources')->count();
-
-        $remove_resources = resource::where('status','0')->get();
-        $removeReources_count = count($remove_resources);
-
-        $svr=new survey;
-        $svr->start_date=$request->survey_date;
-        $svr->total_resources=$resource_count;
-        $svr->removed_resources=$removeReources_count;
-        $svr->lending_resources=0;
-        $svr->survey_resources=0;
-        $svr->non_survey_resources=0;
-        $svr->create_by=Auth::user()->id;
-        $svr->save();
-        // -------------------------
-
-        $insert_data = [];
-        $json = resource::select('id')->where('status', '1')->get();
-        // $json= DB::table('resources')->select('id')->where('status', '1')->get();
-
-        foreach ($json as $value) {
-            $data = [
-                    'resource_id'   => $value->id,
-                    'survey_id'     => $svr->id,
-                    ];
-            $insert_data[] = $data;
-        }
-
-        $insert_data = collect($insert_data);
-        $chunks = $insert_data->chunk(500);
-
-        foreach ($chunks as $chunk)
+        $resource_count =  count($json);
+        if($resource_count>0)
         {
-            DB::table('survey_detail_temps')->insert($chunk->toArray());
+            $catid=implode(',',$request->category);
+            $centid=implode(',',$request->center);
+            $descrip="Center:".$centid." Category:".$catid;
+          
+            $svr=new survey;
+            $svr->start_date=$request->survey_date;
+            $svr->description_si=$descrip;
+            $svr->description_ta=$descrip;
+            $svr->description_en=$descrip;
+            $svr->total_resources=$resource_count;
+            $svr->lending_resources=0;
+            $svr->survey_resources=0;
+            $svr->non_survey_resources=0;
+            $svr->create_by=Auth::user()->id;
+            $svr->save();
+            // -------------------------
+    
+            $insert_data = [];
+            // $json = resource::select('id')->where('status', '1')->get();
+           
+            foreach ($json as $value) {
+                $data = [
+                        'resource_id'   => $value->id,
+                        'survey_id'     => $svr->id,
+                        ];
+                $insert_data[] = $data;
+            }
+    
+            $insert_data = collect($insert_data);
+            $chunks = $insert_data->chunk(500);
+    
+            foreach ($chunks as $chunk)
+            {
+                DB::table('survey_detail_temps')->insert($chunk->toArray());
+            }
+            return redirect()->back()->with('success','Survey created successfully.');
         }
-        return redirect()->back();
+        else
+        {
+            return redirect()->back()->with('error','Empty Resources in Selected Criteria, Survey created Failed');
+        }
+        
+       
     }
 
     public function store(Request $request)

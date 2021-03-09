@@ -6,6 +6,7 @@ $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
 $center="name".$lang;
+$description="description".$lang;
 
 @endphp
 
@@ -41,8 +42,8 @@ $center="name".$lang;
                     <tr>
                     <th scope="col">Survey ID</th>
                     <th scope="col">Start Date</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Total Count</th>
-                    <th scope="col">Removed Count</th>
                     <th scope="col">Survey  Count</th>
                     <th scope="col">Lending Count</th>
                     <th scope="col">finalize</th>
@@ -56,8 +57,8 @@ $center="name".$lang;
                    
                         <td>{{$data->id}}</td>
                         <td>{{$data->start_date}}</td>
+                        <td>{{$data->$description}}</td>
                         <td>{{$data->total_resources}}</td>
-                        <td>{{$data->removed_resources}}</td>
                         <td>{{$data->survey_resources}}</td>
                         <td>{{$data->lending_resources}}</td>
                         <td>{{$data->finalize ==0 ?'No':'Yes'}}</td>
@@ -89,6 +90,19 @@ $(document).ready(function()
 {
   
 
+});
+$("#create_newsurvey").submit( function() {
+    var catchecked = $('input:checkbox[name="category[]"]:checked').length;
+    var centchecked = $('input:checkbox[name="center[]"]:checked').length;
+    if(catchecked == 0 || centchecked==0)
+        {
+            if (catchecked == 0) 
+            {toastr.warning('Please select at least one Category')}
+            if (centchecked==0)
+            {toastr.warning('Please select at least one Center')}
+            return false;
+        }
+   
 });
 </script>
 
