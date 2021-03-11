@@ -134,6 +134,7 @@ class SurveyController extends Controller
     public function edit($id)
     {
         $id = Crypt::decrypt($id);
+        $survey_detail=survey::find($id);
 
         $locale = session()->get('locale');
         $db_setting = setting::where('setting', 'locale_db')->first();
@@ -174,7 +175,7 @@ class SurveyController extends Controller
 
         $survey_sug=survey_suggestion::all();
 
-        return view('survey.survey')->with('rcount',$resource_count)->with('scount',$survey_count)->with('sugdata',$survey_sug)->with('sdata',$id);
+        return view('survey.survey')->with('rcount',$resource_count)->with('scount',$survey_count)->with('sugdata',$survey_sug)->with('sdata',$survey_detail);
     }
 
     public function check_survey(Request $request)
@@ -287,6 +288,11 @@ class SurveyController extends Controller
         {
             return response()->json(['massage' => "error"]);
         }
+    }
+
+    public function finalize_survey(Request $request)
+    {
+        return redirect()->route('survey.index');
     }
     /**
      * Update the specified resource in storage.

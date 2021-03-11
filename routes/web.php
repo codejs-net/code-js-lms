@@ -163,6 +163,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('create_survey', [SurveyController::class, 'create'])->name('create_survey');
     Route::post('check_survey', [SurveyController::class, 'check_survey'])->name('check_survey');
     Route::post('uncheck_survey', [SurveyController::class, 'uncheck_survey'])->name('uncheck_survey');
+    Route::post('finalize_survey', [SurveyController::class, 'finalize_survey'])->name('finalize_survey');
     // Route::get('do_survey/{id}', [SurveyController::class, 'do_survey'])->name('do_survey');
 
     // -------configer--------------------------------

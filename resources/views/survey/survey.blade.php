@@ -6,6 +6,7 @@ $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
 $suggetion="suggestion".$lang;
+$description="description".$lang;
 
 @endphp
 
@@ -102,7 +103,7 @@ $suggetion="suggestion".$lang;
             </div>
         </div>
         <div class="table-responsive"style="overflow-x: auto;">   
-            <input type="hidden" name="surveyid" id="surveyid" value="{{$sdata}}">            
+            <input type="hidden" name="surveyid" id="surveyid" value="{{$sdata->id}}">            
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="survey_datatable">
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
@@ -120,9 +121,29 @@ $suggetion="suggestion".$lang;
                     </tbody>
             </table>
         </div>
-    
-    </div>  
+    </div> 
+   <div class="card p-3">
+   <div class="row">
+        <div class="col-md-10 col-sm-8 col-8 text-left">
+            <label class="ml-2" for="report" >Survey Reports:  </label><br>
+            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;All Resources</i></a>
+            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;Checked Resources</i></a>
+            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;Checked Resources with Suggetion</i></a>
+            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;UnChecked Resources</i></a>
+            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;lend Resources</i></a>
+        </div>
+        <div class="col-md-2 col-sm-4 col-4">
+           <div class="pull-right">
+           <label class="ml-2" for="report" >Survey Oppretion:  </label><br>
+            <a href="" class="btn btn-outline-secondary btn-sm mr-2 mb-2" id=""><i class="fa fa-arrow-left">&nbsp;&nbsp;Back</i></a>
+            <a href="" class="btn btn-primary btn-sm mr-2 mb-2" data-toggle="modal" data-target="#finalize_survey" ><i class="fa fa-save">&nbsp;<strong>Finalize Survey</strong></i></a>
+           </div>
+        </div>            
+    </div>
+   </div>
+    <hr>
 </div>
+@include('survey.survey_finalize_modal')
 @endsection
 @section('script')
 <script>
@@ -161,7 +182,7 @@ function load_datatable()
     
         ajax:{
         dataType : 'json',
-        url: "{{ route('survey.edit',Crypt::encrypt($sdata)) }}",
+        url: "{{ route('survey.edit',Crypt::encrypt($sdata->id)) }}",
         },
         columns:[
             {data: "id",name: "id"},

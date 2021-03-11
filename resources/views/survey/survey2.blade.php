@@ -100,7 +100,7 @@
                                         </div>
                                         <div class="form-group col-md-1 text-center" >
                                         <div class="row">
-                                                <a href="/export_surveytemp" class="btn btn-primary" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;All &nbsp;&nbsp;</i></a><br><br>
+                                                <a href="/export_surveytemp" class="btn btn-primary" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;All &nbsp;&nbsp;</i></a>
                                                 <a href="/export_surveytemp1" class="btn btn-warning" id=""><i class="fa fa-line-chart">&nbsp;UnCheck</i></a>
                                                 
                                             </div>    
