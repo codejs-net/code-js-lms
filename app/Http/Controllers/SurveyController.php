@@ -176,8 +176,9 @@ class SurveyController extends Controller
         ->count();
 
         $survey_sug=survey_suggestion::all();
+        $nowdate = Carbon::now()->isoFormat('YYYY-MM-DD');
 
-        return view('survey.survey')->with('rcount',$resource_count)->with('scount',$survey_count)->with('sugdata',$survey_sug)->with('sdata',$survey_detail);
+        return view('survey.survey')->with('rcount',$resource_count)->with('scount',$survey_count)->with('sugdata',$survey_sug)->with('sdata',$survey_detail)->with('nowdate',$nowdate);
     }
 
     public function check_survey(Request $request)
@@ -297,13 +298,23 @@ class SurveyController extends Controller
         try {
 
         $lang = session()->get('db_locale');
+        $lend_count=0;
 
         $json = view_survey::select('*')
         ->where('survey_id', $request->fsurveyid)
         ->get();
+        
+        $survey_count = view_survey::select('id')
+        ->where('survey_id',$request->fsurveyid)
+        ->where('survey',1)
+        ->count();
 
+        $nonsurvey_count = view_survey::select('id')
+        ->where('survey_id',$request->fsurveyid)
+        ->where('survey',0)
+        ->count();
+        
         $insert_data = [];
-       
         foreach ($json as $value) 
         {
             $slend=0;
@@ -317,6 +328,7 @@ class SurveyController extends Controller
                 if($lend) 
                 {
                     $slend=1;
+                    $lend_count++;
                 }
             }
             if($value->check_by!="")
@@ -374,7 +386,18 @@ class SurveyController extends Controller
         {
             DB::table('survey_details')->insert($chunk->toArray());
         }
-       
+
+       // --------------------Survey update----------------
+            $survey_update= survey::find($request->fsurveyid);
+            $survey_update->lending_resources=$lend_count;
+            $survey_update->survey_resources=$survey_count;
+            $survey_update->non_survey_resources=$nonsurvey_count;
+            $survey_update->finalize_date=$request->finalize_date;
+            $survey_update->finalize_by=Auth::user()->id;
+            $survey_update->finalize=1;
+            $survey_update->save();
+        // -------------------------------------------------
+
         return redirect()->route('survey.index')->with('success','Survey Finalized successfully.');
         } 
         catch (\Exception $e) {

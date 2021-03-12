@@ -18,7 +18,11 @@
                 <div class="modal-body">
                   <input type="hidden" name="fsurveyid" id="fsurveyid" value="{{$sdata->id}}">
                   <h5>Survey{{$sdata->id}}-{{$sdata->start_date}}({{$sdata->$description}}) </h5>
-                  <label class="" for="purchase_date" >Click finalize for Complete the Survey or Click close to stay with Survey </label>
+                  <span class="" for="" >Click finalize for Complete the Survey or Click close to stay with Survey </span>
+                  <div class="form-group">
+                    <label class="" for="survey_date" >Finalize Date:</label>
+                    <input class="form-control" type="date" name="finalize_date" id="finalize_date" value="{{$nowdate}}">              
+                </div>
                 </div>
 
                 <div class="modal-footer">

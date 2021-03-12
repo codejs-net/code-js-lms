@@ -64,10 +64,12 @@ $description="description".$lang;
                         <td>{{$data->finalize ==0 ?'No':'Yes'}}</td>
                         <td>{{$data->finalize_date}}</td>
                         <td>
-
-                        <a href="{{ route('survey.edit',Crypt::encrypt($data->id)) }}" class="btn btn-success btn-sm"><i class="fa fa-pencil" ></i></a>&nbsp; 
-
-                        <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#Modal_delete_servey" data-servyid="{{$data->id}}" data-surveydte="{{$data->start_date}}"><i class="fa fa-trash" ></i></a>&nbsp;
+                        @if($data->finalize ==0)
+                        <a href="{{ route('survey.edit',Crypt::encrypt($data->id)) }}" class="btn btn-success btn-sm"><i class="fa fa-pencil" ></i>&nbsp; Edit</a>&nbsp; 
+                        @else
+                        <a href="{{ route('survey.show',Crypt::encrypt($data->id)) }}" class="btn btn-success btn-sm"><i class="fa fa-eye" ></i>&nbsp; Show</a>&nbsp; 
+                        @endif
+                        <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#Modal_delete_servey" data-servyid="{{$data->id}}" data-surveydte="{{$data->start_date}}"><i class="fa fa-trash" ></i>&nbsp; Delete</a>&nbsp;
                         
 
                         </td>

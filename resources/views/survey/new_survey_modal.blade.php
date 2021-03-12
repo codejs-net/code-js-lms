@@ -19,7 +19,7 @@
                 <div class="modal-body">
                     <label class="" for="purchase_date" >Click Start for New Survey. Click close to cancel  </label>
                 <div class="form-group">
-                    <label class="" for="purchase_date" >Survey Date:</label>
+                    <label class="" for="survey_date" >Survey Date:</label>
                     <input class="form-control" type="date" name="survey_date" id="survey_date" value="{{$surveydate}}">              
                 </div>
 
