@@ -13,9 +13,11 @@ use App\Models\lending_detail;
 use App\Models\view_survey;
 use App\Models\resource_category;
 use App\Models\center;
+use App\Models\User;
 use App\Http\Controllers\SoapController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use App\Services\PayUService\Exception;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -292,7 +294,94 @@ class SurveyController extends Controller
 
     public function finalize_survey(Request $request)
     {
-        return redirect()->route('survey.index');
+        try {
+
+        $lang = session()->get('db_locale');
+
+        $json = view_survey::select('*')
+        ->where('survey_id', $request->fsurveyid)
+        ->get();
+
+        $insert_data = [];
+       
+        foreach ($json as $value) 
+        {
+            $slend=0;
+            $username="";
+            if($value->survey==0)
+            {
+                $lend = lending_detail::select('id')
+                ->where('resource_id', $value->resource_id)
+                ->Where('return', 0)
+                ->first();
+                if($lend) 
+                {
+                    $slend=1;
+                }
+            }
+            if($value->check_by!="")
+            {
+                $check_user = User::where('id', $value->check_by)->with(['staff'])->first();
+                $username= $check_user->username;
+            }
+            
+            $data = [
+                    'survey_id'   => $value->survey_id,
+                    'resource_id' => $value->resource_id,
+                    'accessionNo' => $value->accessionNo,
+                    'standard_number' => $value->standard_number,
+                    'title_si' => $value->title_si,
+                    'title_ta' => $value->title_ta,
+                    'title_en' => $value->title_en,
+                    'cretor_id' => $value->cretor_id,
+                    'cretor_name_si' => $value->cretor_name_si,
+                    'cretor_name_ta' => $value->cretor_name_ta,
+                    'cretor_name_en' => $value->cretor_name_en,
+                    'category_id' => $value->category_id,
+                    'category_si' => $value->category_si,
+                    'category_ta' => $value->category_ta,
+                    'category_en' => $value->category_en,
+                    'type_id' => $value->type_id,
+                    'type_si' => $value->type_si,
+                    'type_ta' => $value->type_ta,
+                    'type_en' => $value->type_en,
+                    'center_id' => $value->center_id,
+                    'center_name_si' => $value->center_si,
+                    'center_name_ta' => $value->center_ta,
+                    'center_name_en' => $value->center_en,
+                    'purchase_date' => $value->purchase_date,
+                    'edition' => $value->edition,
+                    'price' => $value->price,
+                    'phydetails' => $value->phydetails,
+
+                    'lend' => $slend,
+                    'survey' => $value->survey,
+                    'suggestion_id' => $value->suggestion_id,
+                    'suggestion_si' => $value->suggestion_si,
+                    'suggestion_ta' => $value->suggestion_ta,
+                    'suggestion_en' => $value->suggestion_en,
+
+                    'check_by_id' => $value->check_by,
+                    'check_by_name' => $username,
+                    ];
+            $insert_data[] = $data;
+        }
+
+        $insert_data = collect($insert_data);
+        $chunks = $insert_data->chunk(500);
+
+        foreach ($chunks as $chunk)
+        {
+            DB::table('survey_details')->insert($chunk->toArray());
+        }
+       
+        return redirect()->route('survey.index')->with('success','Survey Finalized successfully.');
+        } 
+        catch (\Exception $e) {
+            return $e->getMessage();
+            // return redirect()->back()->with('error','Survey Finalized Fail.');
+            // abort(404, 'Something not found');
+        }
     }
     /**
      * Update the specified resource in storage.

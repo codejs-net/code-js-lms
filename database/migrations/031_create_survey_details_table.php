@@ -44,32 +44,31 @@ class CreateSurveyDetailsTable extends Migration
             $table->string('type_ta')->nullable();
             $table->string('type_en')->nullable();
 
-            $table->integer('center_id')->default(1);
+            $table->integer('center_id')->nullable();
             $table->string('center_name_si')->nullable();
             $table->string('center_name_ta')->nullable();
             $table->string('center_name_en')->nullable();
 
-            $table->date('purchase_date')->default(Carbon::now());
+            $table->date('purchase_date')->nullable();
             $table->string('edition')->nullable();
-            $table->double('price', 4, 2);
+            $table->double('price', 8, 2)->nullable();;
 
             $table->string('phydetails')->nullable();
-
-            $table->string('note_si')->nullable();
-            $table->string('note_ta')->nullable();
-            $table->string('note_en')->nullable();
 
             $table->string('lend')->default(0);
             $table->string('survey')->default(0);
 
             $table->integer('suggestion_id')->nullable();
-            $table->string('suggestion')->nullable();
+            $table->string('suggestion_si')->nullable();
+            $table->string('suggestion_ta')->nullable();
+            $table->string('suggestion_en')->nullable();
 
             $table->string('remark_si')->nullable();
             $table->string('remark_ta')->nullable();
             $table->string('remark_en')->nullable();
 
-            $table->string('check_by')->nullable();
+            $table->string('check_by_id')->nullable();
+            $table->string('check_by_name')->nullable();
 
             $table->timestamps();
         });
