@@ -176,20 +176,20 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-briefcase"></i>
                             <p>
-                            Board Of Survay
+                            library Survay
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('survey.index') }}" class="nav-link">
+                            <a href="{{ route('view_survey',0) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Survey</p>
                                 </a>
                             </li>
                            
                             <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
+                                <a href="{{ route('view_survey',1) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>History</p>
                                 </a>

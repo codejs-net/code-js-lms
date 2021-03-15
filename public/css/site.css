@@ -13,6 +13,10 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        .progress { position:relative; width:100%; border: 1px solid #7F98B2; padding: 1px; border-radius: 3px; }
+        .bar { background-color: #58ff58; width:0%; height:25px; border-radius: 3px; }
+        .percent { position:absolute; display:inline-block; top:6px; left:48%; color: #7F98B2;}
         
         #loader1 {
             background: none repeat scroll 0 0 black;

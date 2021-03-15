@@ -48,6 +48,24 @@ class SurveyController extends Controller
         return view('survey.index')->with('Sdata',$survey)->with('surveydate',$surveydate)->with('catdata',$resource_category)->with('centdata',$resource_center);
     }
 
+    public function view_survey($id)
+    {
+        $locale = session()->get('locale');
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        if ($db_setting->value == "0") {
+            $lang = "_" . $locale;
+        } else {
+            $lang = "_" . $db_setting->value;
+        }
+        Session::put('db_locale', $lang);
+
+        $surveydate = Carbon::now()->isoFormat('YYYY-MM-DD');
+        $survey = survey::where('finalize', $id)->get();
+        $resource_category=resource_category::all();
+        $resource_center=center::all();
+        return view('survey.index')->with('Sdata',$survey)->with('surveydate',$surveydate)->with('catdata',$resource_category)->with('centdata',$resource_center);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -396,14 +414,18 @@ class SurveyController extends Controller
             $survey_update->finalize_by=Auth::user()->id;
             $survey_update->finalize=1;
             $survey_update->save();
+        // --------------------temp delete------------------
+            DB::table('survey_detail_temps')->where('survey_id', $request->fsurveyid)->delete();
         // -------------------------------------------------
 
-        return redirect()->route('survey.index')->with('success','Survey Finalized successfully.');
+
+        // return redirect()->route('survey.index')->with('success','Survey Finalized successfully.');
+        return response()->json(['massage' => "success"]);
         } 
         catch (\Exception $e) {
-            return $e->getMessage();
+            // return $e->getMessage();
             // return redirect()->back()->with('error','Survey Finalized Fail.');
-            // abort(404, 'Something not found');
+            return response()->json(['massage' => "error"]);
         }
     }
     /**

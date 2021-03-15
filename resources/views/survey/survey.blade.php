@@ -329,6 +329,52 @@ $('#resource_uncheck').on("click",function(){
 });
 // ------------------------------------------------------------------------
 
+// -------------------------finalize Survey----------------------------------
+$("#finalize").click(function () {
+    var bar = $('.bar');
+    var percent = $('.percent');
+
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+   $.ajax({
+           type: "POST",
+           dataType : 'json',
+           url: "{{ route('finalize_survey') }}", 
+           data: $('#finalize_survey_form').serialize(),
+
+           beforeSend: function(){
+            $("#loader").show();
+            var percentVal = '0%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+           },
+
+           success:function(data){
+               if(data.massage=="success"){
+                toastr.success('Survey Finalized Successfully');
+                document.location = "{{ route('view_survey',0) }}";
+               }
+               if(data.massage=="error"){
+                toastr.error('Survey Finalized faild');
+               }  
+           },
+           error:function(data){
+            //    toastr.error('Survey Finalized faild Plese try again')
+           },
+           complete:function(data){
+               var percentVal = '100%';
+                bar.width(percentVal)
+                percent.html(percentVal);
+                $("#loader").hide();
+           }
+       })
+       
+});
+//--------------------------end finalize-----------------------------
+
 </script>
 
 @endsection

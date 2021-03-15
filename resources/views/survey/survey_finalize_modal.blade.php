@@ -13,7 +13,7 @@
                     
             </div>
             
-            <form method="POST" action="{{route('finalize_survey')}}"class="needs-validation" id="finalize_survey" novalidate>
+            <form onSubmit="return false;" class="needs-validation" name="finalize_survey_form" id="finalize_survey_form" novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
                   <input type="hidden" name="fsurveyid" id="fsurveyid" value="{{$sdata->id}}">
@@ -26,7 +26,11 @@
                 </div>
 
                 <div class="modal-footer">
-                  <button class="btn btn-sm btn-success" id="finalize" type="submit">Finalize</button>
+                    <div class="progress">
+                        <div class="bar"></div >
+                        <div class="percent">0%</div >
+                    </div>
+                  <button class="btn btn-sm btn-success" id="finalize" type="submit"><span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span>&nbsp;Finalize</button>
                   <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Close &nbsp;<i class="fa fa-times"></i></button>
                 </div>
             </form>
