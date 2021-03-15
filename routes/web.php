@@ -165,6 +165,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('uncheck_survey', [SurveyController::class, 'uncheck_survey'])->name('uncheck_survey');
     Route::post('finalize_survey', [SurveyController::class, 'finalize_survey'])->name('finalize_survey');
     Route::get('view_survey/{id}', [SurveyController::class, 'view_survey'])->name('view_survey');
+    Route::get('survey_history/{id}', [SurveyController::class, 'survey_history'])->name('survey_history');
+    Route::post('delete_survey', [SurveyController::class, 'delete'])->name('delete_survey');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);

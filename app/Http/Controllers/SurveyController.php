@@ -119,7 +119,7 @@ class SurveyController extends Controller
             {
                 DB::table('survey_detail_temps')->insert($chunk->toArray());
             }
-            return redirect()->back()->with('success','Survey created successfully.');
+            return redirect()->route('view_survey',0)->with('success','Survey created successfully.');
         }
         else
         {
@@ -364,9 +364,9 @@ class SurveyController extends Controller
                     'title_ta' => $value->title_ta,
                     'title_en' => $value->title_en,
                     'cretor_id' => $value->cretor_id,
-                    'cretor_name_si' => $value->cretor_name_si,
-                    'cretor_name_ta' => $value->cretor_name_ta,
-                    'cretor_name_en' => $value->cretor_name_en,
+                    'cretor_name_si' => $value->name_si,
+                    'cretor_name_ta' => $value->name_ta,
+                    'cretor_name_en' => $value->name_en,
                     'category_id' => $value->category_id,
                     'category_si' => $value->category_si,
                     'category_ta' => $value->category_ta,
@@ -428,6 +428,41 @@ class SurveyController extends Controller
             return response()->json(['massage' => "error"]);
         }
     }
+
+    public function survey_history($id)
+    {
+        $id = Crypt::decrypt($id);
+        $survey=survey::find($id);
+
+        $locale = session()->get('locale');
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        if ($db_setting->value == "0") 
+        {$lang = "_" . $locale;}
+        else {$lang = "_" . $db_setting->value;}
+        Session::put('db_locale', $lang);
+
+        if(request()->ajax())
+        {
+            $surveyhistory = survey_detail::select('*')
+                ->where('survey_id', $id)
+                ->orderBy('updated_at', 'DESC')
+                ->get();
+            return datatables()->of($surveyhistory)
+                    ->addColumn('survey_', function($data){
+                        if($data->survey==1)
+                        {$button = '<label class="text-success"><i class="fa fa-check" ></i></label>';}
+                        else
+                        {$button = '<label class=""><i class="fa fa-times" ></i></label>';}
+                        
+                        return $button;  
+                    })
+                    
+                    ->rawColumns(['survey_'])
+                    ->make(true);
+        }
+
+        return view('survey.history')->with('sdata',$survey);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -446,8 +481,20 @@ class SurveyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        //
+        $survey=survey::find($request->id_delete);
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        if($survey->finalize==0)
+        {
+            DB::table('survey_detail_temps')->where('survey_id', $survey->id)->delete();
+        }
+        elseif($survey->finalize==1)
+        {
+            DB::table('survey_details')->where('survey_id', $survey->id)->delete();
+        }
+        $survey->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->back()->with('success','Survey Removed successfully.');
     }
 }

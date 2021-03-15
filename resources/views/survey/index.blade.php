@@ -65,11 +65,11 @@ $description="description".$lang;
                         <td>{{$data->finalize_date}}</td>
                         <td>
                         @if($data->finalize ==0)
-                        <a href="{{ route('survey.edit',Crypt::encrypt($data->id)) }}" class="btn btn-success btn-sm"><i class="fa fa-pencil" ></i>&nbsp; Edit</a>&nbsp; 
+                        <a href="{{ route('survey.edit',Crypt::encrypt($data->id)) }}" class="btn btn-outline-success btn-sm"><i class="fa fa-pencil" ></i>&nbsp; Edit</a>&nbsp; 
                         @else
-                        <a href="{{ route('survey.show',Crypt::encrypt($data->id)) }}" class="btn btn-success btn-sm"><i class="fa fa-eye" ></i>&nbsp; Show</a>&nbsp; 
+                        <a href="{{ route('survey_history',Crypt::encrypt($data->id)) }}" class="btn btn-outline-success btn-sm"><i class="fa fa-eye" ></i>&nbsp; History</a>&nbsp; 
                         @endif
-                        <a class="btn btn-warning btn-sm " data-toggle="modal" data-target="#Modal_delete_servey" data-servyid="{{$data->id}}" data-surveydte="{{$data->start_date}}"><i class="fa fa-trash" ></i>&nbsp; Delete</a>&nbsp;
+                        <a class="btn btn-outline-warning btn-sm " data-toggle="modal" data-target="#survey_delete" data-servyid="{{$data->id}}" data-surveydescript="{{$data->start_date}}:{{$data->$description}}"><i class="fa fa-trash" ></i>&nbsp; Delete</a>&nbsp;
                         
 
                         </td>
@@ -84,13 +84,21 @@ $description="description".$lang;
     </div>
 </div>
 @include('survey.new_survey_modal')
+@include('survey.delete_survey_modal')
 @endsection
 @section('script')
 <script>
 
 $(document).ready(function()
 {
-  
+    $('#survey_delete').on('show.bs.modal', function (event) {
+       
+       var button = $(event.relatedTarget) 
+       var d_id = button.data('servyid') 
+       var d_name = button.data('surveydescript')
+       $('#id_delete').val(d_id);
+       $('#name_delete').html(d_name);
+   });
 
 });
 $("#create_newsurvey").submit( function() {

@@ -482,6 +482,16 @@ tbody:before {
 
 /* -------------------survey------------ */
 
+.js-survey-box-text {
+    color: #ffffff;
+}
+
+.js-survey-box-text p {
+    color: #fdfdff;
+    margin-top: -10px;
+}
+
+
 .js-survey-box1 {
     background: #16b301;
     font-family: 'Roboto', sans-serif;
@@ -523,4 +533,39 @@ tbody:before {
     100% {
         color: rgb(252, 250, 250);
     }
+}
+
+.js-survey-box-6 {
+    background-color: #0091d5;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-7 {
+    background-color: #4cb5f5;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-3 {
+    background-color: #b3c100;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-4 {
+    background-color: #d32d41;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-5 {
+    background-color: #dbae58;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }

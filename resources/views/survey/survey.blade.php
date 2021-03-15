@@ -362,7 +362,7 @@ $("#finalize").click(function () {
                }  
            },
            error:function(data){
-            //    toastr.error('Survey Finalized faild Plese try again')
+               toastr.error('Survey Finalized faild Plese try again')
            },
            complete:function(data){
                var percentVal = '100%';
