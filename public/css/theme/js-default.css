@@ -18,19 +18,17 @@
 }
 
 .js-img-box {
-    background: rgb(62, 115, 246);
-    background: linear-gradient(90deg, rgba(62, 115, 246, 1) 7%, rgba(65, 97, 237, 1) 90%);
+    background: rgb(125, 177, 245);
+    background: linear-gradient(90deg, rgb(86, 171, 240) 7%, rgb(77, 107, 241) 90%);
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 20px;
     border-radius: 25px;
-}
-
-.js-img-box {
     text-align: center;
 }
+
 
 .js-dashboard-side {
     background-color: rgb(255, 255, 255);
