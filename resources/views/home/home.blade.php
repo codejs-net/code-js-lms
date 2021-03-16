@@ -45,11 +45,11 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-1 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>150</h3>
-                                    <p>Total Books</p>
+                                    <h3>10658</h3>
+                                    <p>Total Resources</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-bag"></i>
+                                    <i class="fa fa-star-o"></i>
                                 </div>
                                
                             </div>
@@ -59,11 +59,11 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-2 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                    <h3>825</h3>
                                     <p>Total members</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
+                                    <i class="fa fa-user-o"></i>
                                 </div>
                                
                             </div>
@@ -75,10 +75,10 @@ $theme = session()->get('theme');
                                 <div class="inner js-box-text">
                                     <h3>44</h3>
         
-                                    <p>Books Leading</p>
+                                    <p>Issue-Today</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="fa fa-cart-arrow-down"></i>
                                 </div>
                                
                             </div>
@@ -88,26 +88,25 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-4 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>65</h3>
+                                    <h3>38</h3>
         
-                                    <p>Unique Visitors</p>
+                                    <p>Retund-Today</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
+                                    <i class="fa fa-shopping-bag"></i>
                                 </div>
                                 
                             </div>
                         </div>
                         <div class="col">
-                          
                             <div class="small-box js-box-bg-5 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>150</h3>
+                                    <h3>Rs 150</h3>
         
-                                    <p>Total Books</p>
+                                    <p>Income-today</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-bag"></i>
+                                    <i class="fa fa-money"></i>
                                 </div>
                                
                             </div>
@@ -251,6 +250,14 @@ $theme = session()->get('theme');
                             </div>
                         </div>
                     </div>
+
+                    {{-- ---------------notificetion--------------------- --}}
+                    <div class="row dash-notify">
+                        <div class="col-md-12" id="notificetion">
+                            
+                        </div>
+                    </div>
+                        
                
             </div>
         </div>
@@ -465,5 +472,37 @@ var options1 = {
         );
 
         chart1.render();
+
+
+        $(document).ready(function()
+        {
+           var op="";
+           for(var i=0;i<3;i++)
+           {
+                op+= '<div class="card card-notify">';
+                op+= '<div class="card-header card-notify-header1">';
+                op+= '<h4 class="card-title">Latest Resource Issue</h4>';
+                op+= '<div class="card-tools">';
+                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '</i></button></div></div>';
+                op+= '<div class="card-body">';
+                op+= 'BKPS-1524 issued to Member-1';
+                op+= '</div></div>';                  
+           }
+           for(var j=0;j<3;j++)
+           {
+                op+= '<div class="card card-notify">';
+                op+= '<div class="card-header card-notify-header2">';
+                op+= '<h4 class="card-title">latest Resource Return</h4>';
+                op+= '<div class="card-tools">';
+                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '</i></button></div></div>';
+                op+= '<div class="card-body">';
+                op+= 'BKPS-1524 returnd by Member-2';
+                op+= '</div></div>';                  
+           }
+           $("#notificetion").append(op);
+
+        });
 </script>
 @endsection

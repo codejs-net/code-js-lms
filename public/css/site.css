@@ -197,3 +197,10 @@
  size: A4 landscape;
  margin: 10%;
 } */
+
+.dash-notify{
+    /* display:flex; */
+    position:relative;
+    margin-top: 200px;
+}
+
