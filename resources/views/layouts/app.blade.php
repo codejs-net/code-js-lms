@@ -51,6 +51,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Archivo&family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre&display=swap" rel="stylesheet">
 
     <!-- SmartWizard -->
     <link href="{{ asset('plugins/smart_wizard/css/smart_wizard.min.css') }}" rel="stylesheet">
@@ -74,6 +75,12 @@
       { 
       ?>
       <link href="{{ asset('css/theme/js-light.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-colour")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-colour.css') }}" rel="stylesheet">
       <?php
       }
       else if($theme=="js-blue-light")

@@ -151,6 +151,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('Barcoderange', [CodeController::class, 'barcoderange'])->name('Barcoderange');
     Route::post('generate-Codepdf', [CodeController::class, 'generateCodePDF'])->name('generateCodePDF');
     Route::post('CodeRangepdf', [CodeController::class, 'CodeRangepdf'])->name('CodeRangepdf');
+    Route::get('generate_pdf', [CodeController::class, 'generate_pdf'])->name('generate_pdf');
 
     //--------Member----------------------------------
     Route::resource('members', MemberController::class);

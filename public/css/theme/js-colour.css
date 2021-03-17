@@ -1,8 +1,8 @@
 /* -----------navbar---------------------------------- */
 
 .js-nav-bg {
-    background: #1d6af0;
-    background: linear-gradient(90deg, rgba(28, 66, 235, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
+    background: #2b2e31;
+    background: linear-gradient(90deg, rgba(30, 31, 36, 0.603))0%, rgb(29, 28, 31) 50%, rgba(7, 12, 19, 0.639) 100%;
 }
 
 .js-nav-text {
@@ -13,24 +13,22 @@
 
 /* -------------------background------------------- */
 
-.bg-js {
-    background: #039BE5;
-}
-
 .js-rightbar-bg {
     background: #e1ebf0;
 }
 
 .js-img-box {
-    background: #1f8afc;
+    background: rgb(125, 177, 245);
+    background: linear-gradient(90deg, rgb(86, 171, 240) 7%, rgb(77, 107, 241) 90%);
     margin-left: 20px;
     margin-right: 20px;
-    margin-bottom: 30px;
-    margin-top: 5px;
-    padding: 25px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 20px;
     border-radius: 25px;
     text-align: center;
 }
+
 
 .js-dashboard-side {
     background-color: rgb(255, 255, 255);
@@ -65,7 +63,7 @@
 /* ---------------side bar--------------------------- */
 
 .js-sidebar {
-    background-color: #2b2e31;
+    background-color: #ffffff
 }
 
 .js-sidebar-text {
@@ -74,43 +72,60 @@
 }
 
 .js-sidebar a.nav-link:hover {
-    background-color: #007bff;
+    background-color: #1981f1;
     border-radius: 5px;
+    color: #fff;
+}
+
+.js-sidebar a.nav-link:hover p {
+    color: #fff;
+}
+
+.js-sidebar a.nav-link:hover i.nav-icon {
+    color: #fff;
 }
 
 .js-sidebar i.nav-icon::before {
-    color: #efeff2;
+    color: #343a40;
+}
+
+.js-sidebar i.nav-icon:after {
+    color: #e7ebee;
+}
+
+.js-sidebar a.nav-link:focus p {
+    color: #fff;
 }
 
 .js-sidebar a.nav-link:active {
-    background-color: #007bff;
+    background-color: #1981f1;
     border-radius: 5px;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-    color: #ffffff;
-    background-color: #007bff;
+    color: #f8f6f6;
+    background-color: #1981f1;
 }
 
 .js-sidebar-text p {
-    color: rgb(255, 254, 254);
+    color: rgb(17, 17, 17);
 }
 
 .js-sidebar-heding {
-    color: rgb(255, 254, 254);
+    color: rgb(20, 19, 19);
 }
 
 
 /* ---------------dash board---------------------- */
 
 .js-box-text {
-    color: #1c1c1d;
+    color: #ffffff;
     margin-left: 20px;
 }
 
 .js-box-text p {
-    color: #1a1b1d;
+    color: #fdfdff;
     margin-top: -10px;
 }
 
@@ -124,12 +139,12 @@
     margin-left: 12px;
     margin-right: 12px;
     margin-bottom: 12px;
-    border: #157cdd solid 1px !important;
+    border: #a4acb3 solid 1px !important;
     background-color: #ffffff;
 }
 
 .js-dash-link-btn:hover {
-    border: #121313 solid 1px !important;
+    border: #5694d6 solid 1px !important;
 }
 
 .js-dash-link-btn:hover span {
@@ -139,41 +154,41 @@
 
 .js-dash-link a span {
     font-family: 'Roboto', sans-serif;
-    color: #1a1b1d;
+    color: #070707;
     font-size: 13px;
     font-weight: 600;
 }
 
-.js-box-bg-2 {
-    background-color: #fff;
+.js-box-bg-4 {
+    background-color: #0091d5;
     border-radius: 30px;
     padding-bottom: 5px;
     padding-top: 5px;
 }
 
 .js-box-bg-1 {
-    background-color: #fff;
+    background-color: #4cb5f5;
+    border-radius: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-box-bg-2 {
+    background-color: #b3c100;
     border-radius: 30px;
     padding-bottom: 5px;
     padding-top: 5px;
 }
 
 .js-box-bg-3 {
-    background-color: #fff;
-    border-radius: 30px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-}
-
-.js-box-bg-4 {
-    background-color: #fff;
+    background-color: #d32d41;
     border-radius: 30px;
     padding-bottom: 5px;
     padding-top: 5px;
 }
 
 .js-box-bg-5 {
-    background-color: #fff;
+    background-color: #dbae58;
     border-radius: 30px;
     padding-bottom: 5px;
     padding-top: 5px;
@@ -255,14 +270,14 @@
 .js-select-box {
     border-radius: 5px;
     height: 70px;
-    color: #2c78e9;
-    border: #039BE5 solid 1px;
+    color: #111111;
+    border: #1c1c1d solid 1px;
 }
 
 .js-select-box:hover {
     border-radius: 5px;
     height: 70px;
-    color: #2c78e9;
+    color: #36383b;
     border: #0f0f0f solid 1px;
     /* background: #039BE5; */
 }
@@ -271,7 +286,7 @@
 /* ---------------button--------------------------------- */
 
 .btn-js {
-    background: #007bff;
+    background: #1c1f22;
     color: #fff;
 }
 
@@ -296,8 +311,9 @@ a.btn-js:hover {
 /* -------------table--------------------------------- */
 
 .js-tbl-header {
-    background: rgb(184, 221, 246);
-    background: linear-gradient(90deg, rgba(184, 221, 246, 1) 0%, rgba(242, 242, 242, 1) 35%, rgba(184, 222, 242, 1) 100%);
+    background: rgb(238, 174, 202);
+    background: linear-gradient(90deg, rgba(238, 174, 202, 0.6026785714285714) 0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%);
+    color: #010101;
 }
 
 /* .js-tbl-header th:first-child {
@@ -341,6 +357,10 @@ tbody:before {
 
 /* -----------------------js---------------------- */
 
+.js-text {
+    color: #3f8cf1;
+}
+
 .js-text-light {
     color: #fbfcfd;
 }
@@ -357,8 +377,8 @@ tbody:before {
     background: #ffffff;
 }
 
-.js-bg {
-    background: #ffffff;
+.bg-js {
+    background: #1f58f7;
 }
 
 .js-roboto {
@@ -370,26 +390,26 @@ tbody:before {
 }
 
 .border {
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
 }
 
 .js.border-radius-1 {
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 5px;
 }
 
 .js.border-radius-2 {
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 10px;
 }
 
 .js.border-radius-3 {
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 15px;
 }
 
 .js.border-radius-4 {
-    border: #039BE5 solid 1px;
+    border: #2b2e31 solid 1px;
     border-radius: 20px;
 }
 
@@ -456,6 +476,7 @@ tbody:before {
 .js-pb-5 {
     padding-bottom: 5px;
 }
+
 
 /* -------------------survey------------ */
 
@@ -534,7 +555,7 @@ tbody:before {
 }
 
 .js-survey-box-4 {
-    background-color: #4cb5f5;
+    background-color: #d32d41;
     border-radius: 5px;
     padding-bottom: 5px;
     padding-top: 5px;
@@ -549,20 +570,20 @@ tbody:before {
 
 /* -------notificetion */
 .card-notify{
-    border-radius: 10px !important;
+    border-radius: 20px !important;
 }
 .card-notify-header1{
-    background-color: #ffffff;
+    background-color: #faf5fd;
     color: #070707;
-    border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
 }
 .card-notify-header2{
-    background-color: #ffffff;
+    background-color: #f2fdf4;
     color: #0f0f0f;
-    border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
 }
 .card-notify i{
-    color: #0f0f0f;
+    color: #fefefe;
 }

@@ -312,6 +312,8 @@ $theme = session()->get('theme');
             colors: ['#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745', '#28a745'],
             @elseif($theme=="js-dark")
             colors: ['#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40', '#343a40'],
+            @elseif($theme=="js-default")
+            colors: ['#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc', '#268dfc'],
             @elseif($theme=="js-light")
             colors: ['#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d', '#6c757d'],
             @endif
@@ -410,6 +412,8 @@ var options1 = {
             @elseif($theme=="js-blue-light")
             colors: ['#268dfc'],
             @elseif($theme=="js-blue-dark")
+            colors: ['#268dfc'],
+            @elseif($theme=="js-default")
             colors: ['#268dfc'],
             @elseif($theme=="js-light")
             colors: ['#6c757d'],

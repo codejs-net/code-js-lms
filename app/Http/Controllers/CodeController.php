@@ -118,11 +118,20 @@ class CodeController extends Controller
         $data[2]=$request->txt_prefix;
         // dd($data);
        
-
-        PDF::setOptions(['dpi' => 1200, 'defaultFont' => 'sans-serif']);
-        $pdf = PDF::loadView('supports.RangeCodePDF', compact('data'))->setPaper('a4', 'landscape')->setWarnings(false);
-        return $pdf->download('BarcodesRange.pdf');
+        $pdf = PDF::loadView('supports.RangeCodePDF', compact('data'));
+        return $pdf->stream('BarcodesRange.pdf');
 
         
+    }
+
+    function generate_pdf() {
+        $data = "test";
+        $pdf = PDF::loadView('supports.test',compact('data'),[],
+            [
+            'format'      => 'A6',
+            'orientation' => 'P',
+            ]);
+        return $pdf->stream('document.pdf');
+
     }
 }

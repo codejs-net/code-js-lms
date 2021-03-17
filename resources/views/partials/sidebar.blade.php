@@ -271,9 +271,9 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link">
+                                <a href="{{ route('generate_pdf') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Books Details Report</p>
+                                    <p>Test Report</p>
                                 </a>
                             </li>
                             <li class="nav-item">
