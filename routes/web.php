@@ -26,6 +26,7 @@ use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\BookController;
 
@@ -176,6 +177,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('theme', ThemeController::class);
     Route::post('update_theme', [ThemeController::class, 'update_theme'])->name('update_theme');
     Route::get('change_theme/{id}', [ThemeController::class, 'change_theme'])->name('change_theme');
+
+    // -------Reports---------------------------------
+    Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
 
 });
 

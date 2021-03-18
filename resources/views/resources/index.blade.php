@@ -27,12 +27,19 @@ $creator="name".$lang;
         </div>  
         <div class="col-md-6 col-sm-6 col-12 text-right">
             <h5>
-            <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
             @can('data-import')
                 <!-- <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a> -->
             @endcan
-            <a href="{{ route('create_resource') }}" class="btn btn-outline-warning btn-sm text-dark" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Report</a>
-            <a href="{{ route('create_resource') }}" class="btn btn-outline-warning btn-sm text-dark" name="rpt_pdf" id="rpt_pdf" ><i class="fa fa-file-pdf-o"></i>&nbsp; Report</a>
+            <form action="{{ route('report_recource') }}" method="POST">
+            {{ csrf_field() }}
+                <input type="hidden" name="select_catg" id="select_catg">
+                <input type="hidden" name="select_cent" id="select_cent">
+                <input type="hidden" name="select_type" id="select_type">
+                <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+                <button type="submit" class="btn btn-outline-warning btn-sm text-dark"><i class="fa fa-file-pdf-o"></i>&nbsp; Report</button>
+                <a href="{{ route('create_resource') }}" class="btn btn-outline-warning btn-sm text-dark" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Report</a>
+            </form>
+           
             </h5>  
         </div>
     </div>
@@ -254,6 +261,7 @@ function load_type(cdta)
 
 
 $("#category").change(function () {
+    $("#select_catg").val($(this).val());
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata="All";
@@ -263,6 +271,7 @@ $("#category").change(function () {
 });
 
 $("#center").change(function () {
+    $("#select_cent").val($(this).val());
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata="All";
@@ -272,7 +281,7 @@ $("#center").change(function () {
 
 
 $(document).on("click", ".btntype", function(){
-
+    $("#select_type").val($(this).val());
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata=$(this).val();

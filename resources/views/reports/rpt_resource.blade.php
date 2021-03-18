@@ -24,14 +24,32 @@
 </head>
 <body>
 <htmlpageheader name="page-header">
-	Header Content
 </htmlpageheader>
 
 <htmlpagefooter name="page-footer">
-	Footer Content
-      {PAGENO}
+      Page:{PAGENO}
 </htmlpagefooter>
 
-<p>පුස්ථකාල කළමණාකරන පද්ධතිය</p> 
+<p>පුස්ථකාල කළමණාකරන සම්පත් වාර්තාව</p>
+
+<table class="table table-bordered">
+        <tr>
+            <th>No</th>
+            <th>Asscesion No</th>
+            <th>Type</th>
+            <th width="300px">Title</th>
+        </tr>
+	    @foreach($resouredata as $item)
+            @foreach($item as $value)
+            <tr>
+                  <td>{{ $value->id}}</td>
+                  <td>{{ $value->accessionNo}}</td>
+                  <td>{{ $value->type_si}}</td>
+                  <td>{{ $value->title_si}}</td>
+            </tr>
+            @endforeach
+	    @endforeach
+    </table>
+   
 </body>
 </html>

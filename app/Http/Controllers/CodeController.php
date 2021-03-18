@@ -16,6 +16,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use file;
 
 class CodeController extends Controller
 {
@@ -132,6 +133,12 @@ class CodeController extends Controller
             'orientation' => 'P',
             ]);
         return $pdf->stream('document.pdf');
+
+        // $mpdf = new \Mpdf\Mpdf();
+        // $mpdf->WriteHTML('Hello World');
+
+        // // Saves file on the server as 'filename.pdf'
+        // $mpdf->Output('filename.pdf', \Mpdf\Output\Destination::FILE);
 
     }
 }
