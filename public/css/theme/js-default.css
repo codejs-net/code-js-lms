@@ -228,7 +228,7 @@
 
 .btntype {
     border-radius: 5px;
-    height: 70px;
+    height: 65px;
     position: relative;
     width: auto;
     -webkit-transition: all .1s linear;
@@ -236,6 +236,15 @@
     text-align: center;
     color: #1b1a19;
     border: #039BE5 solid 1px;
+    margin-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 12px;
 }
 
 .btntype:hover {
@@ -296,8 +305,8 @@ a.btn-js:hover {
 /* -------------table--------------------------------- */
 
 .js-tbl-header {
-    background: rgb(184, 221, 246);
-    background: linear-gradient(90deg, rgba(184, 221, 246, 1) 0%, rgba(242, 242, 242, 1) 35%, rgba(184, 222, 242, 1) 100%);
+    background: #38393a;
+    color: #ffffff;
 }
 
 /* .js-tbl-header th:first-child {
@@ -553,15 +562,21 @@ tbody:before {
 }
 .card-notify-header1{
     background-color: #ffffff;
-    color: #070707;
     border-top-left-radius: 10px !important;
     border-top-right-radius: 10px !important;
+    font-family: 'Roboto', sans-serif;
+    color: #1a1b1d;
+    font-size: 8px;
+   
 }
 .card-notify-header2{
     background-color: #ffffff;
-    color: #0f0f0f;
     border-top-left-radius: 10px !important;
     border-top-right-radius: 10px !important;
+    font-family: 'Roboto', sans-serif;
+    color: #1a1b1d;
+    font-size: 8px;
+
 }
 .card-notify i{
     color: #0f0f0f;

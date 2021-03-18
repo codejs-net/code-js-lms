@@ -22,26 +22,28 @@ $creator="name".$lang;
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
-        <div class="col-md-10 col-sm-6 text-center"> 
-            <h5> <i class="fa fa-search"> Search Resources</i></h5>
+        <div class="col-md-6 col-sm-6 col-12 text-left"> 
+            <h5> <i class="fa fa-search ml-4"> Search Resources</i></h5>
         </div>  
-        <div class="col-md-2 col-sm-6 text-right">
+        <div class="col-md-6 col-sm-6 col-12 text-right">
             <h5>
             <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
             @can('data-import')
-                <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+                <!-- <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a> -->
             @endcan
+            <a href="{{ route('create_resource') }}" class="btn btn-outline-warning btn-sm text-dark" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Report</a>
+            <a href="{{ route('create_resource') }}" class="btn btn-outline-warning btn-sm text-dark" name="rpt_pdf" id="rpt_pdf" ><i class="fa fa-file-pdf-o"></i>&nbsp; Report</a>
             </h5>  
         </div>
     </div>
     
 </div>
 <div class="container-fluid">
-<div class="card card-body">
-    <div class="row">
+<div class="card p-2">
+    <div class="row mt-3">
         <div class="col-md-2 col-sm-2 text-left">
             <div class="form-group js-select-box">
-                <div class="ml-2 mr-2 mb-4">
+                <div class="ml-2 mr-2">
                     <span for="category">Category :</span>
                     <select class="form-control form-control-sm mb-3"name="category" id="category" value="">
                         <option value="All" selected>All Categories</option>
@@ -61,7 +63,7 @@ $creator="name".$lang;
 
         <div class="col-md-2 col-sm-2 text-left">
                 <div class="form-group js-select-box">
-                <div class="ml-2 mr-2 mb-4">
+                <div class="ml-2 mr-2">
                 <span for="category">Center :</span>
                     <select class="form-control form-control-sm mb-3"name="center" id="center" value="">
                         <option value="All" selected>All Centers</option>
@@ -230,10 +232,10 @@ function load_type(cdta)
             url: "{{route('load_resource_type')}}", 
             data: { cdta: cdta, },
             success:function(data){
-                op+='<button type="button" value="All" class="btn btn-white  elevation-2 ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/all_type.png"><br>{{trans('All')}}&nbsp;</button>';
+                op+='<button type="button" value="All" class="btn btn-white  elevation-2 btntype"><img class="typ-icon" src="images/all_type.png"><br>{{trans('All')}}&nbsp;</button>';
                 for(var i=0;i<data.length;i++)
                 {
-                    op+='<button type="button" value="'+data[i].id+'" class="btn btn-white  elevation-2 ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/'+data[i].image+'"><br>'+
+                    op+='<button type="button" value="'+data[i].id+'" class="btn btn-white  elevation-2 btntype"><img class="typ-icon" src="images/'+data[i].image+'"><br>'+
                         @if($locale=="si") data[i].type_si 
                         @elseif($locale=="ta") data[i].type_ta 
                         @elseif($locale=="en") data[i].type_en

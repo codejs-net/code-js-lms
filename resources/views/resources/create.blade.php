@@ -34,7 +34,7 @@ $creator="name".$lang;
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
         @can('data-import')
-                <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+                <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
             @endcan
         </div>
     </div>
@@ -280,10 +280,49 @@ $creator="name".$lang;
     </div>
 </div>
 
+<!-- -------------------------import-------------------------------- -->
+<div class="modal fade" id="data_import" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-indigo">
+                <div class="text-center">
+                    <h5 class="modal-title" id="modaltitle">Import Resources</h5>
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                    
+            </div>
+            
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource') }}"class="needs-validation"  novalidate>
+                {{ csrf_field() }}
+                <div class="modal-body">
 
+                <div class="custom-file form-group text-center m-3">
+                    <div class="col-md-10">
+                        <input type="file" class="form-control-file custom-file-input" id="file" name="file" required>
+                        <label class="custom-file-label " for="customFile">Choose Excel file</label>
+                    </div>
+                    <div class="col-md-2">
+                    @can('code-import')
+                    @endcan
+                </div>
+            </div>
+                    
+                </div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
 
-
+<!-- -------------------------end import---------------------------------------------------- -->
 @endsection
 
 @section('script')
