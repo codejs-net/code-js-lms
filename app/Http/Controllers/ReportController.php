@@ -24,33 +24,32 @@ use Session;
 class ReportController extends Controller
 {
     function report_recource(Request $request) {
-
-        ini_set('max_execution_time', '600');
-        ini_set("pcre.backtrack_limit", "5000000");
+        ini_set('max_execution_time', '1200');
+        ini_set("pcre.backtrack_limit", "90000000");
 
         $catg="";$cent="";$type="";
 
         if($request->catdata=="All"){$catg="%";}
-        else{$catg= $request->catdata;}
+        else{$catg= $request->select_catg;}
 
         if($request->centerdata=="All"){$cent="%";}
-        else{$cent= $request->centerdata;}
+        else{$cent= $request->select_cent;}
 
         if($request->typedata=="All"){$type="%";}
-        else{$type= $request->typedata;}
+        else{$type= $request->select_type;}
 
         $resouredata = view_resource_data::select('*')
         ->where('category_id','LIKE',$catg)
         ->where('center_id','LIKE',$cent)
         ->where('type_id','LIKE',$type)
         ->get()
-        ->chunk(500);
+        ->chunk(600);
 
-        // dd($resouredata);
+        // dd($resouredata[0][0]);
         $pdf = PDF::loadView('reports.rpt_resource',compact('resouredata'),[],
             [
             'format'      => 'A4',
-            'orientation' => 'L',
+            'orientation' => 'P',
             ]);
         return $pdf->stream('resource.pdf');
 

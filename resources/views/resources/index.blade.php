@@ -261,30 +261,30 @@ function load_type(cdta)
 
 
 $("#category").change(function () {
-    $("#select_catg").val($(this).val());
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata="All";
     load_type(catdata);  
+    $("#select_catg").val(catdata);
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 });
 
 $("#center").change(function () {
-    $("#select_cent").val($(this).val());
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata="All";
+    $("#select_cent").val(centerdata);
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 });
 
 
 $(document).on("click", ".btntype", function(){
-    $("#select_type").val($(this).val());
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata=$(this).val();
+    $("#select_type").val($(this).val());
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 

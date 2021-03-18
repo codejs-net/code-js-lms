@@ -18,6 +18,8 @@ return [
 		'iskpota' => [
 			'R'  => 'iskpota.ttf',
 			'B'  => 'iskpotab.ttf',
+			'useOTL' => 0xFF,
+			'useKashida' => 75,
 		],
 		'nirmala' => [
 			'R'  => 'nirmala.ttf',

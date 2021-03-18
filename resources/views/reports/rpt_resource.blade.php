@@ -37,7 +37,10 @@
             <th>No</th>
             <th>Asscesion No</th>
             <th>Type</th>
-            <th width="300px">Title</th>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>Publisher</th>
+            <th>DDC</th>
         </tr>
 	    @foreach($resouredata as $item)
             @foreach($item as $value)
@@ -46,6 +49,9 @@
                   <td>{{ $value->accessionNo}}</td>
                   <td>{{ $value->type_si}}</td>
                   <td>{{ $value->title_si}}</td>
+                  <td>{{ $value->name_si}}</td>  
+                  <td>{{ $value->publisher_si}}</td>  
+                  <td>{{ $value->ddc}}</td>
             </tr>
             @endforeach
 	    @endforeach
