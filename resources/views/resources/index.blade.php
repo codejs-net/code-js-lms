@@ -208,26 +208,11 @@ $lang = session()->get('db_locale');
 $(document).ready(function()
 {
 load_type("All");
-$('#book_delete').on('show.bs.modal', function (event) 
-{
 
-var button = $(event.relatedTarget) 
-
-var b_id = button.data('bookid') 
-var b_title = button.data('book_title')
-document.getElementById("book_id").value= b_id; 
-document.getElementById("bookname").innerHTML = b_title;
-})
-// end book delete function
-
-
-
-
-var route="{{ route('resource.index') }}";
 var catdata=$("#category").val();
 var centerdata=$("#center").val();
 var typedata="All";
-load_datatable(route,catdata,centerdata,typedata);
+load_datatable(catdata,centerdata,typedata);
 
 });
 
@@ -272,8 +257,7 @@ $("#category").change(function () {
     var typedata="All";
     load_type(catdata);  
     $('#resource_datatable').DataTable().clear().destroy();
-    var route="{{ route('resource.index') }}";
-    load_datatable(route,catdata,centerdata,typedata);
+    load_datatable(catdata,centerdata,typedata);
 });
 
 $("#center").change(function () {
@@ -281,8 +265,7 @@ $("#center").change(function () {
     var centerdata=$("#center").val();
     var typedata="All";
     $('#resource_datatable').DataTable().clear().destroy();
-    var route="{{ route('resource.index') }}";
-    load_datatable(route,catdata,centerdata,typedata);
+    load_datatable(catdata,centerdata,typedata);
 });
 
 
@@ -292,38 +275,37 @@ $(document).on("click", ".btntype", function(){
     var centerdata=$("#center").val();
     var typedata=$(this).val();
     $('#resource_datatable').DataTable().clear().destroy();
-    var route="{{ route('resource.index') }}";
-    load_datatable(route,catdata,centerdata,typedata);
+    load_datatable(catdata,centerdata,typedata);
 
 
 });
 
-function load_datatable(route,catdata,centerdata,typedata)
+function load_datatable(catdata,centerdata,typedata)
 {
+
     $('#resource_datatable').DataTable({
-    columnDefs: [
+        columnDefs: [
         {"targets": [0],
         "visible": false,
         "searchable": false},
-        // { type: 'natural', targets: '_all' }
-    ],
-    responsive: true,
-    processing: true,
-    serverSide: true,
-    ordering: false,
-    searching: true,
+        ],
+        responsive: true,
+        processing: true,
+        serverSide: false,
+        ordering: false,
+        searching: true,
 
     ajax:{
-        type: "POST",
+        type: "GET",
         dataType : 'json',
         data: { 
             catdata: catdata,
             centerdata: centerdata,
             typedata: typedata,
         },
-        url: route,
+        url: "{{ route('resource.index') }}",
     },
-    pageLength: 15,
+    // pageLength: 15,
     
     columns:[
         {data: "id",name: "ResourceID",orderable: true},
@@ -333,12 +315,11 @@ function load_datatable(route,catdata,centerdata,typedata)
         {data: "title<?php echo $lang; ?>",name: "title"},
         {data: "name<?php echo $lang; ?>",name: "creator"},
         {data: "ddc",name: "ddc",orderable: true},
-        // {data: "publisher<?php echo $lang; ?>",name: "publisher",orderable: false},
+        // {data: "publisher",name: "publisher",orderable: false},
         // {data: "price",name: "price",orderable: true},
-        {data: "status",name: "status",orderable: true},
+        {data: "status",name: "status",orderable: false},
         {data: "action",name: "action",orderable: false}
     ],
-    // order:[[4,"asc"]],
     "createdRow": function( row, data, dataIndex ) {
         if ( data['status'] == "Removed" ) {        
             $('td', row).addClass('font-weight-bold');

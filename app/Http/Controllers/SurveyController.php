@@ -164,7 +164,6 @@ class SurveyController extends Controller
             $lang = "_" . $db_setting->value;
         }
         Session::put('db_locale', $lang);
-
         if(request()->ajax())
         {
             $surveydata = view_survey::select('*')

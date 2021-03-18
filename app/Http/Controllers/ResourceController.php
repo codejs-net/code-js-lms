@@ -36,6 +36,7 @@ class ResourceController extends Controller
     public function index(Request $request)
     {
         // dd($request->dta);
+        error_log($request->centerdata);
         $locale = session()->get('locale');
         $setting = setting::where('setting','locale_db')->first();
 
@@ -105,6 +106,7 @@ class ResourceController extends Controller
 
                         ->rawColumns(['action','status','images'])
                         ->make(true);
+                        
             }
         return view('resources.index')->with('cat_data',$resource_category)->with('center_data',$resource_center);
     }
