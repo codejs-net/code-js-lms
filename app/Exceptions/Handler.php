@@ -1,11 +1,24 @@
 <?php
 
 namespace App\Exceptions;
-
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 
 class Handler extends ExceptionHandler
 {
+
+    // protected function renderHttpException(HttpException $e) {
+    //     $status = $e->getStatusCode();
+    
+    //     if (view()->exists("errors.{$status}")) {
+    //       return response()->view("errors.{$status}", compact('e'), $status);
+    //     }
+    //     else {
+    //       return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
+    //     }
+    //   }
     /**
      * A list of the exception types that are not reported.
      *

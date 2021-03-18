@@ -21,7 +21,7 @@ class CreateSurveyDetailTempsTable extends Migration
             $table->integer('resource_id')->unsigned()->nullable();
             $table->foreign('resource_id')->references('id')->on('resources');
 
-            $table->string('survey')->default(0);
+            $table->integer('survey')->default(0);
 
             $table->integer('suggestion_id')->unsigned()->nullable();
             $table->foreign('suggestion_id')->references('id')->on('survey_suggestions');

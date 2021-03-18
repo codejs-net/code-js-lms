@@ -18,6 +18,9 @@
     <!-- ============================== Styles============================= -->
     <!-- Bootstrap -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- MDBootstrap -->
+    {{-- <link href="{{ asset('plugins/MDB5/css/mdb.min.css') }}" rel="stylesheet"> --}}
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/fa-fa/css/font-awesome.min.css') }}">
@@ -43,14 +46,93 @@
      <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Source+Sans+Condensed+Pro+Shippori:300,400,400i,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo&family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre&display=swap" rel="stylesheet">
+
     <!-- SmartWizard -->
     <link href="{{ asset('plugins/smart_wizard/css/smart_wizard.min.css') }}" rel="stylesheet">
-
 
      <!-- Site Custom -->
      <link href="{{ asset('css/site.css') }}" rel="stylesheet">
      
+    <?php
+    
+    session_start();
+    $user = session()->get('user'); 
+    $locale = session()->get('locale');
+    $theme = session()->get('theme');
+    if(empty($locale))
+    {
+        Session::put('locale', 'si');
+    }
+    if(!empty($theme))
+    {
+      if($theme=="js-light")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-light.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-colour")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-colour.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-blue-light")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-blue-light.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-blue-dark")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-blue-dark.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-dark")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-dark.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-orange-light")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-orange-light.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-orange-dark")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-orange-dark.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-green-light")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-green-light.css') }}" rel="stylesheet">
+      <?php
+      }
+      else if($theme=="js-green-dark")
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-green-dark.css') }}" rel="stylesheet">
+      <?php
+      }
+      else
+      { 
+      ?>
+      <link href="{{ asset('css/theme/js-default.css') }}" rel="stylesheet">
+      <?php
+      }
+    }
+    ?>
 
     <!-- ======================================================================== -->
 
@@ -61,32 +143,23 @@
 
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
-<!-- <body class="hold-transition sidebar-mini layout-fixed"> -->
+<body class="hold-transition sidebar-mini layout-fixed">
 
 <div class="wrapper">
-@php 
-    session_start();
-    $user = session()->get('user'); 
-    $locale = session()->get('locale');
-    if(empty($locale))
-    {
-        Session::put('locale', 'si');
-    }
-@endphp 
 
     @include('partials.header')
-    <aside class="main-sidebar sidebar-light-indigo elevation-4">
+    <aside class="main-sidebar js-sidebar elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="" class="brand-link">
             <img src="{{ asset('img/js2.png') }}" alt="lms" class="brand-image img-circle elevation-5"
                  style="opacity: 1">
-            <span class="brand-text font-weight-light">LMS</span>
+            <span class="brand-text font-weight-bold js-sidebar-heding">LMS</span>
         </a>
         @include('partials.sidebar')
     </aside>
 
     <div class="content-wrapper">
-        <main role="main" class="pb-4">
+        <main role="main">
         @yield('content')
         </main>
     </div>
@@ -97,10 +170,15 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!-- MDBootstrap-->
+    {{-- <script src="{{ asset('plugins/MDB5/js/mdb.min.js') }}" defer></script> --}}
+
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery-validation -->
     <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <!-- jQuery-moment -->
+    <script src="{{ asset('plugins/moment/moment-with-locales.min.js') }}"></script>
     
     <!-- SweetAlert2 -->
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -118,6 +196,7 @@
 
     <!-- smart_wizard -->
     <script src="{{ asset('plugins/smart_wizard/js/smart_wizard.min.js') }}"defer></script>
+
     
     <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)

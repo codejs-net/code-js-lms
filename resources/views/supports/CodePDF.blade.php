@@ -10,10 +10,14 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script> -->
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre&display=swap" rel="stylesheet">
     <style>
     @page { margin: 20px; }
-    body { margin: 20px; }
+    body { 
+        margin: 20px;
+        font-family: 'Abhaya Libre', serif; 
+    }
 
     table {
     width: 100%;
@@ -40,6 +44,7 @@
 
 <body>
     <div >
+    <h2>පුස්ථකාල කළමණාකරන පද්ධතිය</h2>
     <table>
         @php
         $x=0

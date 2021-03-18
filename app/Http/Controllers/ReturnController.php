@@ -11,6 +11,9 @@ use App\Models\lending_detail;
 use App\Models\lending;
 use App\Models\view_lending_data;
 use App\Models\fine_settle;
+use App\Models\receipt;
+use App\Models\receipt_detail;
+use App\Http\Controllers\SoapController;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -18,11 +21,7 @@ use Auth;
 
 class ReturnController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $locale = session()->get('locale');
@@ -89,6 +88,7 @@ class ReturnController extends Controller
                     $lenddata[$i]['member_name']      =$lend[$i][$member];
                     $lenddata[$i]['member_add1']      =$lend[$i][$address1];
                     $lenddata[$i]['member_add2']      =$lend[$i][$address2];
+                    $lenddata[$i]['mobile']           =$lend[$i]['mobile'];
                     $lenddata[$i]['lending_id']       =$lend[$i]['lendind_id'];
                     $lenddata[$i]['resource_id']      =$lend[$i]['resource_id'];
                     $lenddata[$i]['resource_title']   =$lend[$i][$title];
@@ -123,11 +123,21 @@ class ReturnController extends Controller
     public function settle_fine(Request $request)
     {
         $settle=new fine_settle;
+        $receiptid=$request->receipt_id;
+        if($request->settlement_type=="Payment" && $request->receipt_type=="system")
+        {
+            $receiptid= session()->get('receipt_id');
+        }
+      
         $settle->lending_detail_id  =$request->lend_id;
         $settle->settlement_type    =$request->settlement_type;
         $settle->settlement_date    =$request->date_settle;
         $settle->receipt_type       =$request->receipt_type;
-        // $settle->receipt_id      =$request->lend_id;
+
+        $settle->receipt_id         =$receiptid;
+        $settle->description_si     =$request->discrtpt_si;
+        $settle->description_ta     =$request->discrtpt_ta;
+        $settle->description_en     =$request->discrtpt_en;
         $settle->save();
 
         $detail=lending_detail::find($request->lend_id);
@@ -174,14 +184,10 @@ class ReturnController extends Controller
         return response()->json(['massage' => "success"]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store_return(Request $request)
     {
+        $lang = session()->get('db_locale');
+        $lib_name="name".$lang;
         $detail=lending_detail::find($request->cellVal_lend_id);
         if($detail)
         {
@@ -189,6 +195,30 @@ class ReturnController extends Controller
             $detail->return_date=$request->dtereturn;
             $detail->return_by=Auth::user()->id;
             $detail->save();
+
+             //-------------------SMS Alert-----------------------------
+            $SoapController =new SoapController;
+            $mobile_no=$request->membermobile;
+           
+            $library = session()->get('library');
+            if(!empty($library))
+            {
+                $library_name=$library->$lib_name;
+            }
+          
+            if($lang=="_si"){
+                $message_text= $library_name."-ආපසු භාර දීම්\r\n \r\n"."සාමාජික විස්තර -".$request->membername."(".$request->mem_id.")"."\r\n"."ආපසු භාර දීම් විස්තර - ".$request->description."\r\n"."ආපසු භාරදුන් දිනය - ".$request->dtereturn."\r\n"."ස්තූතියි!";
+            }
+            elseif($lang=="_en"){
+              
+            }
+            else{
+               
+            }
+         
+            $SoapController->multilang_msg_Send($mobile_no,$message_text);
+            //-----------------------End SMS Alert----------------------
+
             return response()->json(['massage' => "success",'lendid' =>$request->cellVal_lend_id]);
         }
         else
@@ -198,6 +228,27 @@ class ReturnController extends Controller
        
     }
 
+    public function fine_receipt(Request $request)
+    {
+        $receipt=new receipt;
+        $receipt->receipt_date  =$request->date_settle;
+        $receipt->member_id     =$request->mem_id;
+        $receipt->receipts      =$request->receipt;
+        $receipt->payment      =$request->receipt_tot_fine;
+        $receipt->user_id       =Auth::user()->id;
+        $receipt->save();
+        Session::put('receipt_id', $receipt->id);
+
+        if($receipt)
+        {
+            return response()->json(['massage' => "success"]);
+        }
+        else
+        {
+            return response()->json(['massage' => "error"]);
+        }
+       
+    }
     public function extend_lending(Request $request)
     {
         $detail=lending_detail::find($request->lend_id);
@@ -233,46 +284,21 @@ class ReturnController extends Controller
        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

@@ -254,26 +254,46 @@ public function getMessagesFromLongNumber($session,$longNumber)
 	else return NULL;
 	
 }
-	public function Singal_msg_Send($mobile,$msgText)
+public function Singal_msg_Send($mobile,$msgText)
+{
+	$SMS = session()->get('SMS');
+	if(!empty($SMS))
 	{
-		$SMS = session()->get('SMS');
-		if(!empty($SMS))
+		if(!$this->isSession($SMS))
 		{
-			if(!$this->isSession($SMS))
-			{
-				$this->renewSession($SMS);
-			}
-        	}
-		else
-		{
-			$SMS=$this->createSession("",env("SMS_USER"),env("SMS_PASSWORD"),"");
-            	Session::put('SMS', $SMS);
+			$this->renewSession($SMS);
 		}
-			
-			$msgsend = $this->sendMessages($SMS,env("SMS_ALIAS"),$msgText,array($mobile), 0);
-			return $msgsend;
-
+		}
+	else
+	{
+		$SMS=$this->createSession("",env("SMS_USER"),env("SMS_PASSWORD"),"");
+			Session::put('SMS', $SMS);
 	}
+		
+		$msgsend = $this->sendMessages($SMS,env("SMS_ALIAS"),$msgText,array($mobile), 0);
+		return $msgsend;
+
+}
+public function multilang_msg_Send($mobile,$msgText)
+{
+	$SMS = session()->get('SMS');
+	if(!empty($SMS))
+	{
+		if(!$this->isSession($SMS))
+		{
+			$this->renewSession($SMS);
+		}
+		}
+	else
+	{
+		$SMS=$this->createSession("",env("SMS_USER"),env("SMS_PASSWORD"),"");
+			Session::put('SMS', $SMS);
+	}
+		
+		$msgsend = $this->sendMessagesMultiLang($SMS,env("SMS_ALIAS"),$msgText,array($mobile), 0);
+		return $msgsend;
+
+}
 	public function msg_test()
 	{
 		

@@ -27,9 +27,9 @@ $creator="name".$lang;
         </div>  
         <div class="col-md-2 col-sm-6 text-right">
             <h5>
-            <a href="{{ route('create_resource') }}" class="btn btn-primary btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
             @can('data-import')
-                <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+                <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
             @endcan
             </h5>  
         </div>
@@ -40,8 +40,8 @@ $creator="name".$lang;
 <div class="card card-body">
     <div class="row">
         <div class="col-md-2 col-sm-2 text-left">
-                <div class="form-group border border-secondary bg-light">
-                    <div class="m-2">
+            <div class="form-group js-select-box">
+                <div class="ml-2 mr-2 mb-4">
                     <span for="category">Category :</span>
                     <select class="form-control form-control-sm mb-3"name="category" id="category" value="">
                         <option value="All" selected>All Categories</option>
@@ -60,8 +60,8 @@ $creator="name".$lang;
         </div>
 
         <div class="col-md-2 col-sm-2 text-left">
-                <div class="form-group border border-secondary bg-light">
-                <div class="m-2">
+                <div class="form-group js-select-box">
+                <div class="ml-2 mr-2 mb-4">
                 <span for="category">Center :</span>
                     <select class="form-control form-control-sm mb-3"name="center" id="center" value="">
                         <option value="All" selected>All Centers</option>
@@ -83,8 +83,8 @@ $creator="name".$lang;
             <div class="form-row">   
             <div class="table-responsive"style="overflow-x: auto;">               
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
-                    <thead class="card-name-1">
-                        <tr>
+                    <thead class="js-tbl-header">
+                        <tr class="js-tr">
                             <th scope="col">Resource ID</th>
                             <th scope="col">Resource</th>
                             <th scope="col">Accession No</th>
@@ -245,10 +245,10 @@ function load_type(cdta)
             url: "{{route('load_resource_type')}}", 
             data: { cdta: cdta, },
             success:function(data){
-                op+='<button type="button" value="All" class="btn btn-white btn-outline-secondary bg-light ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/all_type.png"><br>{{trans('All')}}&nbsp;</button>';
+                op+='<button type="button" value="All" class="btn btn-white  elevation-2 ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/all_type.png"><br>{{trans('All')}}&nbsp;</button>';
                 for(var i=0;i<data.length;i++)
                 {
-                    op+='<button type="button" value="'+data[i].id+'" class="btn btn-white btn-outline-secondary bg-light ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/'+data[i].image+'"><br>'+
+                    op+='<button type="button" value="'+data[i].id+'" class="btn btn-white  elevation-2 ml-2 mb-2 pb-3 btntype"><img class="typ-icon" src="images/'+data[i].image+'"><br>'+
                         @if($locale=="si") data[i].type_si 
                         @elseif($locale=="ta") data[i].type_ta 
                         @elseif($locale=="en") data[i].type_en
@@ -314,7 +314,7 @@ function load_datatable(route,catdata,centerdata,typedata)
     searching: true,
 
     ajax:{
-        type: "GET",
+        type: "POST",
         dataType : 'json',
         data: { 
             catdata: catdata,

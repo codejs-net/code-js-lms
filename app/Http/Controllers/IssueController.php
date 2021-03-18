@@ -10,6 +10,7 @@ use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
 use App\Models\view_lending_data;
+use App\Http\Controllers\SoapController;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -25,70 +26,79 @@ class IssueController extends Controller
     public function index()
     {
         $locale = session()->get('locale');
-        $db_setting = setting::where('setting','locale_db')->first();
-        if($db_setting->value=="0"){$lang="_".$locale;}
-        else{$lang="_".$db_setting->value;}
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        if ($db_setting->value == "0") {
+            $lang = "_" . $locale;
+        } else {
+            $lang = "_" . $db_setting->value;
+        }
         Session::put('db_locale', $lang);
 
-        $issuedate=Carbon::now()->isoFormat('YYYY-MM-DD');
+        $lending_period = setting::where('setting', 'lending_period')->first();
+        Session::put('lending_period', $lending_period->value);
+
+        $issuedate = Carbon::now()->isoFormat('YYYY-MM-DD');
         // error_log($issuedate);
 
-        $lending_setting = setting::where('setting','lending_count')->first();
+        $lending_setting = setting::where('setting', 'lending_count')->first();
         Session::put('lending_limit', $lending_setting->value);
-        return view('lending.issue.index')->with('lending_setting',$lending_setting)->with('issuedate',$issuedate);
+        return view('lending.issue.index')->with('lending_setting', $lending_setting)->with('issuedate', $issuedate);
     }
-    
+
     public function memberview(Request $request)
     {
         $lang = session()->get('db_locale');
 
-        $name="name".$lang;  $address1="address1".$lang;  $address2="address2".$lang;
+        $name = "name" . $lang;
+        $address1 = "address1" . $lang;
+        $address2 = "address2" . $lang;
 
-        $mbr=member::find($request->memberid);
+        $mbr = member::find($request->memberid);
         $lendm = view_lending_data::select('*')
-        ->where('member_id', $request->memberid)
-        ->Where('return',0)
-        ->get();
-        error_log("----count-------". $lendm->count());
+            ->where('member_id', $request->memberid)
+            ->Where('return', 0)
+            ->get();
+        // error_log("----count-------". $lendm->count());
         // return response()->json($data);
-        return response()->json(['member_nme' => $mbr->$name,'member_id'=>$mbr->id,'member_adds1'=>$mbr->$address1,'member_adds2'=>$mbr->$address2,'db_count'=>$lendm->count()]);   
+        return response()->json(['member_nme' => $mbr->$name, 'member_id' => $mbr->id, 'member_adds1' => $mbr->$address1, 'member_adds2' => $mbr->$address2, 'mobile' => $mbr->mobile, 'db_count' => $lendm->count()]);
     }
 
     public function resourceview(Request $request)
     {
         $lang = session()->get('db_locale');
         $lending_limit = session()->get('lending_limit');
-        $title="title".$lang;  $category="category".$lang;  $type="type".$lang; $creator="name".$lang;
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
 
         $reso = view_resource_data::select('*')
-                ->where('status','1')
-                ->where('accessionNo', $request->resourceinput)
-                ->orWhere('standard_number',$request->resourceinput)
-                ->first();
-        if($reso)
-        {
-            $lend = lending_detail::select('*')
-            ->where('resource_id', $reso->id)
-            ->Where('return',0)
+            ->where('status', '1')
+            ->where('accessionNo', $request->resourceinput)
+            ->orWhere('standard_number', $request->resourceinput)
             ->first();
-            if(!$lend)
-            {
-                return response()->json(['id' => $reso->id,
-                'title' => $reso->$title,
-                'accno'=>$reso->accessionNo,
-                'snumber'=>$reso->standard_number,
-                'category'=>$reso->$category,
-                'type'=>$reso->$type,
-                'creator'=>$reso->$creator,
-                'massage' => "success"]);   
+        if ($reso) {
+            $lend = lending_detail::select('*')
+                ->where('resource_id', $reso->id)
+                ->Where('return', 0)
+                ->first();
+            if (!$lend) {
+                return response()->json([
+                    'id' => $reso->id,
+                    'title' => $reso->$title,
+                    'accno' => $reso->accessionNo,
+                    'snumber' => $reso->standard_number,
+                    'category' => $reso->$category,
+                    'type' => $reso->$type,
+                    'creator' => $reso->$creator,
+                    'massage' => "success"
+                ]);
+            } else {
+                return response()->json(['massage' => "lend"]);
             }
-            else
-            {return response()->json(['massage' => "lend"]);}
+        } else {
+            return response()->json(['massage' => "error"]);
         }
-        else 
-        {return response()->json(['massage' => "error"]);}
-
-        
     }
 
     /**
@@ -110,19 +120,43 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        $lend=new lending;
+        $lang = session()->get('db_locale');
+        $lending_period = session()->get('lending_period');
+        $lib_name = "name" . $lang;
 
+        $lend = new lending;
         $lend->member_id     =  $request->mem_id;
         $lend->description   =  $request->description;
         $lend->issue_date    =  $request->dteissue;
 
         $lend->save();
+        //-------------------SMS Alert-----------------------------
+        $SoapController = new SoapController;
+        $mobile_no = $request->membermobile;
+        $issudate = Carbon::parse($lend->issue_date);
+        $returndate = $issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
+
+        $library = session()->get('library');
+        if (!empty($library)) {
+            $library_name = $library->$lib_name;
+        }
+
+        if ($lang == "_si") {
+            $message_text = $library_name . "-බැහැර දීම්\r\n \r\n" . "සාමාජික විස්තර -" . $request->membername . "(" . $lend->member_id . ")" . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->issue_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
+        } elseif ($lang == "_en") {
+            $message_text = $library_name . "\r\n" . "සාමාජික විස්තර - (" . $lend->member_id . ")" . $request->membername . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->issue_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
+        } else {
+            $message_text = $library_name . "\r\n" . "සාමාජික විස්තර - (" . $lend->member_id . ")" . $request->membername . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->issue_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
+        }
+        $SoapController->multilang_msg_Send($mobile_no, $message_text);
+        //-----------------------End SMS Alert----------------------
+
         return response()->json(['lend_id' => $lend->id]);
     }
 
     public function store_issue(Request $request)
     {
-        $lend=new lending_detail;
+        $lend = new lending_detail;
         // $issudate = Carbon::parse($request->dteissue);
         // $returndate=$issudate->addDays(14);
 
@@ -135,6 +169,7 @@ class IssueController extends Controller
         $lend->issue_by       =  Auth::user()->id;
 
         $lend->save();
+
         return response()->json(['massage' => "success"]);
     }
 
@@ -185,7 +220,7 @@ class IssueController extends Controller
     public function issue_receipt($id)
     {
         // $lending = lending::where('lending_id',$id )->first();
-        $lendingdata = view_lending_data::where('lending_id',$id )->get();
-        return view('receipts.issue_receipt')->with('lendingdata',$lendingdata); 
+        $lendingdata = view_lending_data::where('lending_id', $id)->get();
+        return view('receipts.issue_receipt')->with('lendingdata', $lendingdata);
     }
 }

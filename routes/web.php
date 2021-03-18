@@ -24,6 +24,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\ThemeController;
 
 use App\Http\Controllers\BookController;
 
@@ -131,6 +133,7 @@ Route::group(['middleware' => ['auth']], function() {
    Route::post('extend_lending', [ReturnController::class, 'extend_lending'])->name('extend_lending');
    Route::post('store_return', [ReturnController::class, 'store_return'])->name('store_return');
    Route::post('settle_fine', [ReturnController::class, 'settle_fine'])->name('settle_fine');
+   Route::post('fine_receipt', [ReturnController::class, 'fine_receipt'])->name('fine_receipt');
    Route::get('/return_riceipt/{id}', [ReturnController::class, 'return_riceipt'])->name('return_riceipt');
 
 
@@ -148,22 +151,31 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('Barcoderange', [CodeController::class, 'barcoderange'])->name('Barcoderange');
     Route::post('generate-Codepdf', [CodeController::class, 'generateCodePDF'])->name('generateCodePDF');
     Route::post('CodeRangepdf', [CodeController::class, 'CodeRangepdf'])->name('CodeRangepdf');
-
-    // --------Book_details--------------------------------
-    // Route::resource('books_category', Book_CatController::class);
-    // Route::resource('books_dd', Book_DDController::class);
-    // Route::resource('books_language', Book_langController::class);
-    // Route::resource('books_medium', Book_MediumController::class);
-    // Route::resource('books_publisher', Book_PublisherController::class);
-
+    Route::get('generate_pdf', [CodeController::class, 'generate_pdf'])->name('generate_pdf');
 
     //--------Member----------------------------------
     Route::resource('members', MemberController::class);
     Route::post('store_member', [MemberController::class, 'store'])->name('store_member');
     Route::get('create_member', [MemberController::class, 'create'])->name('create_member');
 
+    //--------Survey----------------------------------
+    Route::resource('survey', SurveyController::class);
+    Route::post('store_survey', [SurveyController::class, 'store'])->name('store_survey');
+    Route::post('create_survey', [SurveyController::class, 'create'])->name('create_survey');
+    Route::post('check_survey', [SurveyController::class, 'check_survey'])->name('check_survey');
+    Route::post('uncheck_survey', [SurveyController::class, 'uncheck_survey'])->name('uncheck_survey');
+    Route::post('finalize_survey', [SurveyController::class, 'finalize_survey'])->name('finalize_survey');
+    Route::get('view_survey/{id}', [SurveyController::class, 'view_survey'])->name('view_survey');
+    Route::get('survey_history/{id}', [SurveyController::class, 'survey_history'])->name('survey_history');
+    Route::post('delete_survey', [SurveyController::class, 'delete'])->name('delete_survey');
+
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);
+
+    // -------Setting- Theme--------------------------
+    Route::resource('theme', ThemeController::class);
+    Route::post('update_theme', [ThemeController::class, 'update_theme'])->name('update_theme');
+    Route::get('change_theme/{id}', [ThemeController::class, 'change_theme'])->name('change_theme');
 
 });
 

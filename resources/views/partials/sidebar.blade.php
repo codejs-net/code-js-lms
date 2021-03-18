@@ -5,19 +5,10 @@
 
         <!-- Sidebar -->
     <div class="sidebar">
-        <!-- <div class="user-panel">
-            <div class=" image">
-                <img src="img/user.png" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-                <p>Code-js</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div> -->
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
+
+            <nav class="mt-2 js-sidebar-text">
             
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
                 <!-- dashboard -->
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link">
@@ -29,7 +20,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ url('/home') }}" class="nav-link active">
+                                <a href="{{ url('/home') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Library</p>
                                 </a>
@@ -185,22 +176,54 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-briefcase"></i>
                             <p>
-                            Board Of Survay
+                            library Survay
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('Barcoderange') }}" class="nav-link">
+                            <a href="{{ route('view_survey',0) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Survey</p>
                                 </a>
                             </li>
                            
                             <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
+                                <a href="{{ route('view_survey',1) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>History</p>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-briefcase"></i>
+                            <p>
+                            Settings
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                            <a href="{{ route('theme.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Theme Settings</p>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a href="{{ route('codes.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Lending Settings</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('codes.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>DataBase Settings</p>
                                 </a>
                             </li>
                             
@@ -248,9 +271,9 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link">
+                                <a href="{{ route('generate_pdf') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Books Details Report</p>
+                                    <p>Test Report</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -301,13 +324,13 @@
                     </li>
 
 
-                    <li class="nav-header">CODE-JS</li>
-                    <li class="nav-item">
+                    <li class="nav-header"></li>
+                    <!-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>Calculater</p>
                         </a>
-                    </li>
+                    </li> -->
 
                 </ul>
 

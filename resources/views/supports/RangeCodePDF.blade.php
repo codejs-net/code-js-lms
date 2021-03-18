@@ -6,14 +6,25 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script> -->
-
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre&display=swap" rel="stylesheet"> -->
     <style>
     @page { margin: 20px; }
-    body { margin: 20px; }
+    @font-face {
+    font-family: 'kaputaunicode';
+    font-style: normal;
+    font-weight: normal;
+    src: url(fonts/kaputaunicode.ttf) format('truetype');
+    }
+    body { 
+        margin: 20px;
+        font-family: 'kaputaunicode'; 
+    }
 
     table {
     width: 100%;
@@ -40,6 +51,7 @@
 
 <body>
     <div >
+    <p>පුස්ථකාල කළමණාකරන පද්ධතිය</p>
     <table>
         @php
         $x=0

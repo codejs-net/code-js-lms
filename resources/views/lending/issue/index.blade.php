@@ -42,6 +42,8 @@ $creator="name".$lang;
     <div class="card card-body">
         <div class="row">
         <input type="hidden" name="member_Name_id"id="member_Name_id">
+        <input type="hidden" name="member_Name_sms"id="member_Name_sms">
+        <input type="hidden" name="member_mobile"id="member_mobile">
         <input type="hidden" name="db_count"id="db_count">
         <input type="hidden" name="lending_limit" id="lending_limit" value="{{$lending_setting->value}}">
 
@@ -125,19 +127,29 @@ $creator="name".$lang;
 
     </div>
     <hr>
-        <div class="input-group box-footer clearfix pull-right">
+    <div class="input-group box-footer clearfix pull-right">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="check_print">
             <label class="form-check-label" for="check_print">Print Recipt</label>
         </div>
             <button type="button" class="btn btn-sm btn-primary btn-md ml-2" id="issue_resource">
-            <i class="fa fa-floppy-o"></i> Save</button>
+            <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
             &nbsp; &nbsp;
             <button type="button" class="btn btn-sm btn-warning btn-md ml-2" id="reset_issue">
             <i class="fa fa-times"></i> Reset</button>
         </div> 
-</div>
+    </div>
+    
 </form>
+ <!-- Image loader -->
+ <!-- <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+        <div id='loader' class="center text-center" style="display: none;">
+        <img src='img/loader1.gif' width='140px' height='18px'>
+        </div>
+    </div>
+</div> -->
+<!-- Image loader -->
 
 <div id="printdiv" style="display: none;">
     <div class="col-md-4">
@@ -224,6 +236,8 @@ $creator="name".$lang;
     
                 var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
                 $('#member_Name').html(mem_detail);
+                $('#member_Name_sms').val(data.member_nme);
+                $('#member_mobile').val(data.mobile);
                 $('#member_Name_id').val(data.member_id);
                 $('#db_count').val(data.db_count);
                 $('#member_id').val('');
@@ -243,7 +257,7 @@ $creator="name".$lang;
         var resourceinput = $("#resource_details").val();
         var limit = parseInt($("#lending_limit").val());
         var db_count = parseInt($("#db_count").val());
-        var memberid=$('#member_Name_id').val();
+        var memberid= $('#member_Name_id').val();
         var op ="";
         var bexsist=false;
         if($('#member_Name_id').val())
@@ -319,108 +333,125 @@ $creator="name".$lang;
     });
     // -----------------------------------------------------
     $('#issue_resource').on("click",function(){
-
+        // $("#loader").show();
         var oTable = document.getElementById('resourceTable');
         var rowLength = oTable.rows.length;
         var mem_id = $("#member_Name_id").val();
         var dteissue = $("#issuedte").val();
+        var membername=$('#member_Name_sms').val();
+        var membermobile=$('#member_mobile').val();
         var descript=[];
-        if(rowLength>1)
+        if($('#member_Name_id').val())
         {
-            for (i = 1; i < rowLength; i++)
+            if(rowLength>1)
             {
-                var oCells = oTable.rows.item(i).cells;
-                var resourcename = oCells.item(1).innerHTML;
-                descript[i]=resourcename;
-            }
-            var description = descript.toString();
+                for (i = 1; i < rowLength; i++)
+                {
+                    var oCells = oTable.rows.item(i).cells;
+                    var resourceaccno = oCells.item(1).innerHTML;
+                    var resourcetitles = oCells.item(3).innerHTML;
+                    descript[i]=resourcetitles+"("+resourceaccno+")";
+                }
+                var description = descript.toString();
 
-            // ------------------------lending save--------------------------------
-                $.ajaxSetup({
-                    headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    type: 'POST',
-                    dataType : 'json',
-                    url: "{{route('issue.store')}}",
-                    data:{
-                        description: description,
-                        mem_id: mem_id,
-                        dteissue: dteissue
-                        },
-                    success: function(data){
-                        var lendid=data.lend_id;
-                        // ---------------------lending Details save--------------
-                        for (j = 1; j < rowLength; j++)
-                        {
-                            var op="";
-                            var oCells = oTable.rows.item(j).cells;
-                            var resourceid = oCells.item(0).innerHTML;
-
-                            $.ajaxSetup({
-                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-                            $.ajax({
-                                type: 'POST',
-                                dataType : 'json',
-                                data:{
-                                    resourceid: resourceid,
-                                    mem_id: mem_id,
-                                    dteissue: dteissue,
-                                    lendid: lendid
-                                    },
-                                url: "{{route('store_issue')}}",
-                                success: function(data){  
-                                   
-                                },
-                                error: function(data){
-                                   
-                                }
-                            });
+                // ------------------------lending save--------------------------------
+                    $.ajaxSetup({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
-                        //------------------------end-----------------------------
-                        toastr.success('lending Processe Successfuly Completed');
-                        if($("#check_print").prop("checked") == true)
-                        {
-                            // --------------print--------------------------
-                            $('#print_member').html($('#member_Name').html());
-                            $('#print_issuedate').html(dteissue);
-                            
-                            for (k = 1; k < rowLength; k++)
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType : 'json',
+                        url: "{{route('issue.store')}}",
+                        data:{
+                            description: description,
+                            mem_id: mem_id,
+                            dteissue: dteissue,
+                            membername:membername,
+                            membermobile:membermobile
+                            },
+                        beforeSend: function(){
+                            $("#loader").show();
+                        },
+                        success: function(data){
+                            var lendid=data.lend_id;
+                            // ---------------------lending Details save--------------
+                            for (j = 1; j < rowLength; j++)
                             {
                                 var op="";
-                                var oCells = oTable.rows.item(k).cells;
-                                var resourceacceno = oCells.item(1).innerHTML;
-                                var resourcetitle = oCells.item(3).innerHTML;
-                                var resourcetype = oCells.item(5).innerHTML;
-                            
-                                op+='<tr>';
-                                op+='<td>'+resourceacceno+'</td><td>&nbsp;-&nbsp;'+resourcetitle+'</td><td>&nbsp;('+resourcetype+')</td>';
-                                op+='</tr>';
-                                $("#print_table tbody").append(op);
+                                var oCells = oTable.rows.item(j).cells;
+                                var resourceid = oCells.item(0).innerHTML;
+
+                                $.ajaxSetup({
+                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                                $.ajax({
+                                    type: 'POST',
+                                    dataType : 'json',
+                                    data:{
+                                        resourceid: resourceid,
+                                        mem_id: mem_id,
+                                        dteissue: dteissue,
+                                        lendid: lendid
+                                        },
+                                    url: "{{route('store_issue')}}",
+                                    success: function(data){  
+                                    
+                                    },
+                                    error: function(data){
+                                    
+                                    },
+                                    complete:function(data){
+                                    $("#loader").hide();
+                                    }
+                                });
                             }
-                            printDiv();
-                            //---------------end print----------------------  
+                            //------------------------end-----------------------------
+                            toastr.success('lending Processe Successfuly Completed');
+                            if($("#check_print").prop("checked") == true)
+                            {
+                                // --------------print--------------------------
+                                $('#print_member').html($('#member_Name').html());
+                                $('#print_issuedate').html(dteissue);
+                                
+                                for (k = 1; k < rowLength; k++)
+                                {
+                                    var op="";
+                                    var oCells = oTable.rows.item(k).cells;
+                                    var resourceacceno = oCells.item(1).innerHTML;
+                                    var resourcetitle = oCells.item(3).innerHTML;
+                                    var resourcetype = oCells.item(5).innerHTML;
+                                
+                                    op+='<tr>';
+                                    op+='<td>'+resourceacceno+'</td><td>&nbsp;-&nbsp;'+resourcetitle+'</td><td>&nbsp;('+resourcetype+')</td>';
+                                    op+='</tr>';
+                                    $("#print_table tbody").append(op);
+                                }
+                                printDiv();
+                                //---------------end print----------------------  
+                            }
+                            
+                            $('#resource_details').val('');
+                            $('#member_Name_id').val('');
+                            $('#member_Name').html('');
+                            $("#resourceTable tbody").empty();
+                            $("#print_table tbody").empty();
+                            document.getElementById("member_id").focus();
+                        },
+                        error: function(data){
+                            toastr.error('lending Processe faild');
                         }
-                        
-                        $('#resource_details').val('');
-                        $('#member_Name_id').val('');
-                        $('#member_Name').html('');
-                        $("#resourceTable tbody").empty();
-                        $("#print_table tbody").empty();
-                        document.getElementById("member_id").focus();
-                    },
-                    error: function(data){
-                        toastr.error('lending Processe faild');
-                    }
-            });
-            // ----------------------end lending save-------------------------------
+                });
+                // ----------------------end lending save-------------------------------
+            }
+            else
+            {toastr.warning('Lending Cart is empty');}
         }
         else
         {
-            toastr.warning('Lending Cart is empty');
+            toastr.error('Plese Select Member first');
+            document.getElementById("member_id").focus();
         }
          
     });
