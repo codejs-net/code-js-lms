@@ -178,8 +178,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_theme', [ThemeController::class, 'update_theme'])->name('update_theme');
     Route::get('change_theme/{id}', [ThemeController::class, 'change_theme'])->name('change_theme');
 
-    // -------Reports---------------------------------
+    // -------Reports-PDF------------------------------
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
+
+     // -------Reports-Excel------------------------------
+     Route::POST('export_recource', [ReportController::class, 'export_recource'])->name('export_recource');
 
 });
 

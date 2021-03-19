@@ -30,15 +30,24 @@ $creator="name".$lang;
             @can('data-import')
                 <!-- <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a> -->
             @endcan
-            <form action="{{ route('report_recource') }}" method="POST">
+            <form action="{{ route('report_recource') }}" id="report_form" method="POST">
             {{ csrf_field() }}
-                <input type="hidden" name="select_catg" id="select_catg">
-                <input type="hidden" name="select_cent" id="select_cent">
-                <input type="hidden" name="select_type" id="select_type">
+                <input type="hidden" name="select_catg" class="select_catg">
+                <input type="hidden" name="select_cent" class="select_cent">
+                <input type="hidden" name="select_type" class="select_type">
                 <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
-                <button type="submit" class="btn btn-outline-warning btn-sm text-dark"><i class="fa fa-file-pdf-o"></i>&nbsp; Report</button>
-                <a href="{{ route('create_resource') }}" class="btn btn-outline-warning btn-sm text-dark" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Report</a>
+                <button type="submit" class="btn btn-outline-warning btn-sm text-dark"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
             </form>
+
+            <form action="{{ route('export_recource') }}" id="export_form" method="POST">
+            {{ csrf_field() }}
+                <input type="hidden" name="export_catg" class="select_catg">
+                <input type="hidden" name="export_cent" class="select_cent">
+                <input type="hidden" name="export_type" class="select_type">
+                <button type="submit" class="btn btn-outline-warning btn-sm text-dark" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Excel</button>
+            </form>
+
+            
            
             </h5>  
         </div>
@@ -265,7 +274,7 @@ $("#category").change(function () {
     var centerdata=$("#center").val();
     var typedata="All";
     load_type(catdata);  
-    $("#select_catg").val(catdata);
+    $(".select_catg").val(catdata);
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 });
@@ -274,7 +283,7 @@ $("#center").change(function () {
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata="All";
-    $("#select_cent").val(centerdata);
+    $(".select_cent").val(centerdata);
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 });
@@ -284,7 +293,7 @@ $(document).on("click", ".btntype", function(){
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata=$(this).val();
-    $("#select_type").val($(this).val());
+    $(".select_type").val($(this).val());
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 
@@ -344,6 +353,47 @@ $(".custom-file-input").on("change", function() {
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
 
+
+// $("#rpt_excel").click(function () {
+//     var catdata=$("#select_catg").val();
+//     var centerdata=$("#select_cent").val();
+//     var typedata=$("#select_type").val();
+
+//     $.ajaxSetup({
+//         headers: {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+//    $.ajax({
+//            type: "POST",
+//            dataType : 'json',
+//            url: "{{ route('export_recource') }}", 
+//            data: { 
+//             catdata: catdata,
+//             centerdata: centerdata,
+//             typedata: typedata,
+//             },
+
+//            beforeSend: function(){
+//            },
+
+//            success:function(data){
+//                if(data.massage=="success"){
+//                 toastr.success('Data Export Successfully');
+//                }
+//                if(data.massage=="error"){
+//                 toastr.error('Data Export faild');
+//                }  
+//            },
+//            error:function(data){
+//                toastr.error('Survey Finalized faild Plese try again')
+//            },
+//            complete:function(data){
+
+//            }
+//        })
+
+// });
 
 </script>
 

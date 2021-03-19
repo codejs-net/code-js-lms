@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\resource_category;
 use App\Models\resource_type;
 use App\Models\resource_creator;
@@ -20,10 +21,13 @@ use App\Models\setting;
 use App\Models\view_resource_data;
 use Session;
 
+use App\Exports\ResourceExport;
+
 
 class ReportController extends Controller
 {
     function report_recource(Request $request) {
+        try {
         ini_set('max_execution_time', '1200');
         ini_set("pcre.backtrack_limit", "90000000");
 
@@ -52,6 +56,17 @@ class ReportController extends Controller
             'orientation' => 'P',
             ]);
         return $pdf->stream('resource.pdf');
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('error','Report genarate Fail.');
+        }
 
+
+    }
+    public function export_recource(Request $request) 
+    {
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', '1200');
+        return Excel::download(new ResourceExport($request), 'resource.xlsx');
     }
 }
