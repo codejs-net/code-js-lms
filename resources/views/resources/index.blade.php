@@ -25,31 +25,25 @@ $creator="name".$lang;
         <div class="col-md-6 col-sm-6 col-12 text-left"> 
             <h5> <i class="fa fa-search ml-4"> Search Resources</i></h5>
         </div>  
-        <div class="col-md-6 col-sm-6 col-12 text-right">
-            <h5>
-            @can('data-import')
-                <!-- <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a> -->
-            @endcan
-            <form action="{{ route('report_recource') }}" id="report_form" method="POST">
+        <div class="col-md-6 col-sm-6 col-12 text-right pb-2">
+            <form class="form-inline pull-right" action="{{ route('report_recource') }}" id="report_form" method="POST">
             {{ csrf_field() }}
                 <input type="hidden" name="select_catg" class="select_catg">
                 <input type="hidden" name="select_cent" class="select_cent">
                 <input type="hidden" name="select_type" class="select_type">
-                <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
-                <button type="submit" class="btn btn-outline-warning btn-sm text-dark"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
+                <!-- <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a> -->
+                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
             </form>
-
-            <form action="{{ route('export_recource') }}" id="export_form" method="POST">
+            <form class="form-inline pull-right" action="{{ route('export_recource') }}" id="export_form" method="POST">
             {{ csrf_field() }}
                 <input type="hidden" name="export_catg" class="select_catg">
                 <input type="hidden" name="export_cent" class="select_cent">
                 <input type="hidden" name="export_type" class="select_type">
-                <button type="submit" class="btn btn-outline-warning btn-sm text-dark" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Excel</button>
+                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Excel</button>
             </form>
-
-            
-           
-            </h5>  
+            @can('data-import')
+                <!-- <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a> -->
+            @endcan
         </div>
     </div>
     
