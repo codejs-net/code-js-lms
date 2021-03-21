@@ -40,6 +40,12 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('resource_catelog') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Resources Catelog</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('resource.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Search Resources</p>

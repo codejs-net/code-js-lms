@@ -37,7 +37,7 @@ class ResourceController extends Controller
     public function index(Request $request)
     {
         // dd($request->dta);
-        error_log($request->centerdata);
+        // error_log($request->centerdata);
         $locale = session()->get('locale');
         $setting = setting::where('setting','locale_db')->first();
 
@@ -270,13 +270,17 @@ class ResourceController extends Controller
         $imageName =$res->image;
         if($request->hasFile('image_update')){
             
-            $imageName = time().'.'.$request->image_update->extension();   
+            $imageName = $request->resoure_accession.'-'.time().'.'.$request->image_update->extension();   
             $request->image_update->move(public_path('images/resources'), $imageName);
 
-            $old_image = "images/resources/".$res->image;
-            if(File::exists($old_image)) {
+            if($res->image!="default_book.jpg")
+            {
+                $old_image = "images/resources/".$res->image;
+                if(File::exists($old_image)) {
                 File::delete($old_image);
             }
+            }
+            
         }
 
         $res->accessionNo       =  $request->resoure_accession;
@@ -332,6 +336,14 @@ class ResourceController extends Controller
         {
             return back()->with('warning','Plese Select the Excel File');
         }
+    }
+
+    public function resource_catelog() 
+    {
+        $resource_category=resource_category::all();
+        $resource_center=center::all();
+        return view('resources.catelog')->with('cat_data',$resource_category)->with('center_data',$resource_center);
+
     }
 
 }
