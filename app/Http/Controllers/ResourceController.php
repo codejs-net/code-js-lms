@@ -17,6 +17,7 @@ use App\Models\resource;
 use App\Models\center;
 use App\Models\setting;
 use App\Models\view_resource_data;
+use App\Models\view_resource_data_all;
 use Session;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -84,7 +85,7 @@ class ResourceController extends Controller
                         ->addColumn('action', function($data){
                             $button = '<a href="show_resource/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
-                            $button .= '<a href="update_resource/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
+                            $button .= '<a href="edit_resource/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
                             $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#book_delete" data-bookid="'.$data->id.'" data-title="'.$data->title_si.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
@@ -221,7 +222,29 @@ class ResourceController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $resouredata = view_resource_data_all::find($id);
+        $categorydata=resource_category::all();
+        $languagedata=resource_language::all();
+        $publisherdata=resource_publisher::all();
+        $creatordata=resource_creator::all();
+        $dd_classdata=resource_dd_class::all();
+        $dd_devisiondata=resource_dd_division::all();
+        $dd_sectiondata=resource_dd_section::all();
+        $typedata=resource_type::all();
+        $centerdata=center::all();
+
+        return view('resources.edit')
+        ->with('resouredata',$resouredata)
+        ->with('cat_data',$categorydata)
+        ->with('lang_data',$languagedata)
+        ->with('pub_data',$publisherdata)
+        ->with('type_data',$typedata)
+        ->with('dd_class_data',$dd_classdata)
+        ->with('dd_devision_data',$dd_devisiondata)
+        ->with('dd_section_data',$dd_sectiondata)
+        ->with('creator_data',$creatordata)
+        ->with('center_data',$centerdata);
     }
 
     /**
@@ -231,18 +254,48 @@ class ResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_resource(Request $request)
     {
-        //
+        $res= resource::find($request->resource_id);
+        $this->validate($request,[
+        'resoure_accession'     =>'required|max:100|min:5',
+        'resource_title'.$lang  =>'required',
+        'resoure_category'      =>'required',
+        'resource_price'        =>'required',
+        ]);
+
+        $res->accessionNo       =  $request->resoure_accession;
+        $res->standard_number   =  $request->resoure_isn;
+        $res->title_si          =  $request->resource_title_si;
+        $res->title_ta          =  $request->resource_title_ta;
+        $res->title_en          =  $request->resource_title_en;
+        $res->cretor_id         =  $request->resource_creator;
+        $res->category_id       =  $request->resoure_category;
+        $res->type_id           =  $request->resoure_type;
+        $res->dd_class_id       =  $request->resource_dd_class;
+        $res->dd_devision_id    =  $request->resource_dd_devision;
+        $res->dd_section_id     =  $request->resource_dd_section;
+        $res->ddc               =  $request->resource_ddc;
+        $res->center_id         =  $request->resource_center;
+        $res->language_id       =  $request->resource_language;
+        $res->publisher_id      =  $request->resource_publisher;
+        $res->purchase_date     =  $request->resource_purchase_date;
+        $res->edition           =  $request->resource_edition;
+        $res->price             =  $request->resource_price;
+        $res->publishyear       =  $request->resource_publishyear;
+        $res->phydetails        =  $request->resource_phydetails;
+        $res->note_si           =  $request->resource_note;
+        $res->note_ta           =  $request->resource_note;
+        $res->note_en           =  $request->resource_note;
+        $res->status            = $request->status;
+        $res->br_qr_code        =  "";
+        $res->image             =  "";
+
+        $res->save();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function delete(Request $request)
     {
         //
     }

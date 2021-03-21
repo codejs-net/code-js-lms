@@ -58,7 +58,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('filter_by_category', [ResourceController::class, 'filter_by_category'])->name('filter_by_category');
     Route::post('import_resource', [ResourceController::class, 'import'])->name('import_resource');
     Route::get('create_resource', [ResourceController::class, 'create'])->name('create_resource');
-    Route::get('update_resource/{id}', [ResourceController::class, 'edit'])->name('update_resource');
+    Route::get('edit_resource/{id}', [ResourceController::class, 'edit'])->name('edit_resource');
+    Route::POST('update_resource', [ResourceController::class, 'update_resource'])->name('update_resource');
+    Route::get('delete_resource', [ResourceController::class, 'delete'])->name('delete_resource');
     Route::get('show_resource/{id}', [ResourceController::class, 'show'])->name('show_resource');
 
     // --------Resource support/category--------------------------------

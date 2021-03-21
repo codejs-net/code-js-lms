@@ -34,11 +34,11 @@ class HomeController extends Controller
             Session::put('library', $lib);
         }
 
-        // $locale = session()->get('locale');
-        // if(empty($locale))
-        // {
-        //     Session::put('locale', 'si');
-        // }
+        $locale = session()->get('locale');
+        if(empty($locale))
+        {
+            Session::put('locale', 'si');
+        }
 
        
         return view('home.home');
