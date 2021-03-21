@@ -305,8 +305,7 @@ a.btn-js:hover {
 /* -------------table--------------------------------- */
 
 .js-tbl-header {
-    background: #38393a;
-    color: #ffffff;
+    background: #f0f2fa;
 }
 
 /* .js-tbl-header th:first-child {
@@ -319,19 +318,22 @@ a.btn-js:hover {
 
 .js-tbl-header th:first-child {
     border-top-left-radius: 10px;
-}
-
-.js-tbl-header th:first-child {
     border-bottom-left-radius: 10px;
+    border-left: #007bff solid 1px !important;
 }
 
 .js-tbl-header th:last-child {
     border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-right: #007bff solid 1px !important;
+
+}
+.js-tbl-header th{
+    border-top: #007bff solid 1px !important;
+    border-bottom: #007bff solid 1px !important;
+   
 }
 
-.js-tbl-header th:last-child {
-    border-bottom-right-radius: 10px;
-}
 
 tbody:before {
     content: "~";

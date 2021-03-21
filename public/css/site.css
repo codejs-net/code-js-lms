@@ -118,6 +118,11 @@
         width: 50px;
         height: auto;
     }
+
+    .img-resource1 {
+        width: 100px;
+        height: auto;
+    }
     
     @media (max-width: 768px) {
         /* use the max to specify at each container level */

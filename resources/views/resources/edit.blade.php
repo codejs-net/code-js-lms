@@ -24,14 +24,14 @@ $center="name".$lang;
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
     <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Resources&nbsp;</a></li>
-    <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> Update Resources&nbsp;</a></li>
+    <li class="breadcrumb-item active" ><a><i class="fa fa-pencil"></i> Update Resources&nbsp;</a></li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
         <div class="col-md-11 col-sm-6 text-center"> 
-            <h5> <i class="fa fa-plus-circle"> {{__("Update Resources")}}</i></h5>
+            <h5> <i class="fa fa-pencil"> {{__("Update Resources")}}</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
         </div>
@@ -46,42 +46,55 @@ $center="name".$lang;
          <div class="col-md-12">
                 <!-- --------------------------- section 1------------------------------------- -->
     
-                <form action="{{route('update_resource')}}" method="POST" name="resource_save" id="resource_save" class="needs-validation"  novalidate>
+                <form action="{{route('update_resource')}}" enctype="multipart/form-data" method="POST" name="resource_save" id="resource_save" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
-                    <input type="hidden" name="resource_id" id="resource_id">
+                <input type="hidden" name="resource_id" id="resource_id">
+                
                 <div class="form-row border border-secondary bg-light">
-
-                    <div class="form-group col-md-5">
-                        <label for="book_category">Category</label>
-                        <select class="form-control" id="resoure_category" name="resoure_category" value="{{old('resoure_category')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
-                        @foreach($cat_data as $item)
-                                <option value="{{ $item->id }}">{{ $item->$category}}</option>
-                        @endforeach
-                        </select>
-                        <span class="text-danger">{{ $errors->first('category') }}</span>
+                    <div class="col-md-2 col-12 mt-2 pl-2">
+                        <img src="" class="img-resource1 elevation-3" id="avater_update">
                     </div>
-                    <div class="form-group col-md-1">
-                        <label for="new_category">&nbsp;</label></br>
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal"  data-backdrop="static" data-opp_name="Book Category" onclick="add_by_modal('/save_Book_category')"><i class="fa fa-plus"></i></button>
-
+                    <div class="col-md-10 col-12">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="image">Resource Image</label>
+                                <div class="col-md-11 col-12"><input type="file" id="image_update" name="image_update" class="form-control-file bg-white p-1 elevation-1"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label for="book_category" class="">Category</label>
+                                <select class="form-control elevation-1" id="resoure_category" name="resoure_category" value="{{old('resoure_category')}}"required>
+                                <option value="" selected disabled hidden>Choose here</option>
+                                @foreach($cat_data as $item)
+                                        <option value="{{ $item->id }}">{{ $item->$category}}</option>
+                                @endforeach
+                                </select>
+                                <span class="text-danger">{{ $errors->first('category') }}</span>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="new_category">&nbsp;</label></br>
+                                <button type="button" class="btn btn-outline-success btn-sm elevation-1" data-toggle="modal" data-target="#addModal"  data-backdrop="static" data-opp_name="Book Category" onclick="add_by_modal('/save_Book_category')"><i class="fa fa-plus"></i></button>
+        
+                            </div>
+        
+                            <div class="form-group col-md-5">
+                                <label for="language">Type</label>
+                                <select class="form-control elevation-1" id="resoure_type" name="resoure_type" value="{{old('resoure_type')}}"required>
+                                <option value="" selected disabled hidden>Choose here</option>
+                                @foreach($type_data as $item)
+                                        <option value="{{ $item->id }}">{{ $item->$type }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger">{{ $errors->first('language') }}</span>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="new_language">&nbsp;</label></br>
+                                <button type="button" class="btn btn-outline-success btn-sm elevation-1" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Language" onclick="add_by_modal('/save_Book_language')"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group col-md-5">
-                        <label for="language">Type</label>
-                        <select class="form-control" id="resoure_type" name="resoure_type" value="{{old('resoure_type')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
-                        @foreach($type_data as $item)
-                                <option value="{{ $item->id }}">{{ $item->$type }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger">{{ $errors->first('language') }}</span>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="new_language">&nbsp;</label></br>
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Language" onclick="add_by_modal('/save_Book_language')"><i class="fa fa-plus"></i></button>
-                    </div>
-
+                    
                 </div>
 
                 <hr>
@@ -326,7 +339,9 @@ $("#book_aNo").change(function(){
         @elseif($locale=="en")
         $("#resource_title_en").prop('required',true);
         @endif
-
+        // alert("{{$resouredata->image}}");
+        $("#avater_update").attr('src','/images/resources/{{$resouredata->image}}');
+        $('#resource_id').val("{{$resouredata->id}}");
         $('#resoure_category').val("{{$resouredata->category_id}}");
         $('#resoure_type').val("{{$resouredata->type_id}}");
         $('#resoure_isn').val("{{$resouredata->standard_number}}");

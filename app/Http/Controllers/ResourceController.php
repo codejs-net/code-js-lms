@@ -256,6 +256,9 @@ class ResourceController extends Controller
      */
     public function update_resource(Request $request)
     {
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+
         $res= resource::find($request->resource_id);
         $this->validate($request,[
         'resoure_accession'     =>'required|max:100|min:5',
@@ -263,6 +266,18 @@ class ResourceController extends Controller
         'resoure_category'      =>'required',
         'resource_price'        =>'required',
         ]);
+
+        $imageName =$res->image;
+        if($request->hasFile('image_update')){
+            
+            $imageName = time().'.'.$request->image_update->extension();   
+            $request->image_update->move(public_path('images/resources'), $imageName);
+
+            $old_image = "images/resources/".$res->image;
+            if(File::exists($old_image)) {
+                File::delete($old_image);
+            }
+        }
 
         $res->accessionNo       =  $request->resoure_accession;
         $res->standard_number   =  $request->resoure_isn;
@@ -287,11 +302,15 @@ class ResourceController extends Controller
         $res->note_si           =  $request->resource_note;
         $res->note_ta           =  $request->resource_note;
         $res->note_en           =  $request->resource_note;
-        $res->status            = $request->status;
-        $res->br_qr_code        =  "";
-        $res->image             =  "";
-
+        $res->status            =  $request->status;
+        $res->image             =  $imageName;
+        
         $res->save();
+        if($res)
+        { return redirect()->route('resource.index')->with("success","Resource Update Successfully");}
+        else
+        { return redirect()->back('resource.index')->with("error","Resource Update Faild");}
+       
     }
 
 
