@@ -9,6 +9,10 @@ $center="name".$lang;
 $publisher="publisher".$lang;
 $title="title".$lang;
 $creator="name".$lang;
+$language="language".$lang;
+$dd_class="class".$lang;
+$dd_devision="devision".$lang;
+$dd_section="section".$lang;
 
 @endphp
 

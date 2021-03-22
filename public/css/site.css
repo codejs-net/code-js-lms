@@ -1,5 +1,8 @@
     h5{
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Archivo', sans-serif  !important;
+        font-weight: 400;
+        opacity: 75%;
+        font-size: 18px;
     }
     a{
         font-family: 'Roboto', sans-serif;
