@@ -338,7 +338,7 @@ class ResourceController extends Controller
         }
     }
 
-    public function resource_catelog() 
+    public function resource_catelog(Request $request) 
     {
         $resource_center=center::all();
         $categorydata=resource_category::all();
@@ -349,6 +349,72 @@ class ResourceController extends Controller
         $dd_devisiondata=resource_dd_division::all();
         $dd_sectiondata=resource_dd_section::all();
         // $typedata=resource_type::all();
+
+        if(request()->ajax())
+            {
+        $catg="";$cent="";$type="";
+
+        if($request->catdata=="All"){$catg="%";}
+        else{$catg= $request->catdata;}
+
+        if($request->centerdata=="All"){$cent="%";}
+        else{$cent= $request->centerdata;}
+
+        if($request->typedata=="All"){$type="%";}
+        else{$type= $request->typedata;}
+
+
+        // $resouredata =view_resource_data::all();
+        $resouredata = view_resource_data_all::select('*')
+        ->where('category_id','LIKE',$catg)
+        ->where('center_id','LIKE',$cent)
+        ->where('type_id','LIKE',$type)
+        ->get();
+        
+        return datatables()->of($resouredata)
+                ->addIndexColumn()
+                ->addColumn('details', function($data){
+                    $card  ='<div class="card card-body">';
+                    $card .= '<label>Title: '.$data->title_si.','.$data->title_ta.','.$data->title_en.'</label><br>';
+                    $card .='<label>Creator: '.$data->name_si.','.$data->name_ta.','.$data->name_en.'</label><br>';
+                    $card .='<span>Publisher: '.$data->publisher_si.','.$data->publisher_ta.','.$data->publisher_en.'</span><br>';
+                    $card .='<span>Language: '.$data->language_si.','.$data->language_ta.','.$data->language_en.'</span><br>';
+                    $card .='<span>DDC Class: '.$data->class_si.','.$data->class_si.','.$data->class_si.'</span><br>';
+                    $card .='<span>DDC Devision: '.$data->devision_si.','.$data->devision_si.','.$data->devision_si.'</span><br>';
+                    $card .='<span>DDC Section: '.$data->section_si.'-'.$data->section_si.','.$data->section_ta.','.$data->section_en.'</span><br>';
+                    $card .='<span>DDC: '.$data->ddc.'</span><br>';
+                    $card .='<span>Price: '.$data->price.'</span><br>';
+                    $card .='<span>Publish Year: '.$data->publishyear.'</span><br>';
+                    $card .='<span>Edition: '.$data->edition.'</span><br>';
+                    $card .='<label>Physical Detail: '.$data->phydetails.'</label><br>';
+                    $card .='<span>Purchase Date: '.$data->purchase_date.'</span><br>';
+                    $card .='<span>Rack No: </span><br>';
+                    $card .='<span>Floor No: </span><br>';
+                    $card .='</div>';
+                   
+                    return $card;   
+                })
+
+                ->addColumn('action', function($data){
+                    $button = '<a href="show_resource/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
+                    return $button;   
+                })
+
+                ->addColumn('images', function ($data) {
+                    $images  ='<img class="img-resource2" src="images/resources/'. $data->image.'"><br>';
+                    $images .='<label>Category: '.$data->category_si.'</label><br>';
+                    $images .='<label>Type: '.$data->type_si.'</label><br>';
+                    $images .='<label>Accession No: '.$data->accessionNo.'</label><br>';
+                    $images .='<label>Standard No: '.$data->standard_number.'</label><br>';
+                    return  $images;
+                    
+                })
+
+                ->rawColumns(['details','action','images'])
+                ->make(true);
+                        
+            }
+
         return view('resources.catelog')
         ->with('cat_data',$categorydata)
         ->with('center_data',$resource_center)

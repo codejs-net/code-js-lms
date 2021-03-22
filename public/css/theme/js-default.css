@@ -11,9 +11,9 @@
 }
 
 .js-catalog-box {
-    background: #f0f2fa;
+    background: #ffffff;
     margin-top: 30px;
-    padding-top: 15px;
+    padding-top: 30px;
     padding-left: 10px;
     padding-right: 10px;
 
@@ -271,14 +271,16 @@
 
 .js-select-box {
     border-radius: 5px;
-    height: 70px;
+    height: auto;
     color: #2c78e9;
     border: #039BE5 solid 1px;
+    /* padding-right: 5px; */
+
 }
 
 .js-select-box:hover {
     border-radius: 5px;
-    height: 70px;
+    height: auto;
     color: #2c78e9;
     border: #0f0f0f solid 1px;
     /* background: #039BE5; */
@@ -286,7 +288,13 @@
 
 
 /* ---------------button--------------------------------- */
-
+.search-feild-btn{
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+    color: #060913;
+    /* padding:0; */
+}
 .btn-js {
     background: #007bff;
     color: #fff;
@@ -388,16 +396,16 @@ tbody:before {
     font-family: 'Archivo', sans-serif;
 }
 
-.border {
+.js-border {
     border: #039BE5 solid 1px;
 }
 
-.js.border-radius-1 {
+.js-border-radius-1 {
     border: #039BE5 solid 1px;
     border-radius: 5px;
 }
 
-.js.border-radius-2 {
+.js-border-radius-2 {
     border: #039BE5 solid 1px;
     border-radius: 10px;
 }
