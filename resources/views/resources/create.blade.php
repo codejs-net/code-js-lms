@@ -28,9 +28,9 @@ $creator="name".$lang;
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
-    <div class="row text-center">
+    <div class="row text-center mb-2">
         <div class="col-md-11 col-sm-6 text-center"> 
-            <h4> <i class="fa fa-plus-circle"> {{__("Add Resources")}}</i></h4>
+            <h5> <i class="fa fa-plus-circle"> {{__("Add Resources")}}</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
         @can('data-import')

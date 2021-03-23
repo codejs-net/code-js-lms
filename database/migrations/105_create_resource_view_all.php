@@ -57,6 +57,7 @@ class CreateResourceViewAll extends Migration
                         resources.note_ta,
                         resources.note_en,
                         resources.status,
+                        resources.received_type,
                         resource_categories.category_si,
                         resource_categories.category_ta,
                         resource_categories.category_en,
@@ -86,7 +87,10 @@ class CreateResourceViewAll extends Migration
                         resource_dd_sections.section_si,
                         resource_dd_sections.section_ta,
                         resource_dd_sections.section_en,
-                        resource_dd_sections.section_code
+                        resource_dd_sections.section_code,
+                        resource_places.rack,
+                        resource_places.floor,
+                        resource_places.index
                 FROM    resources 
             LEFT JOIN   resource_categories     ON resources.category_id = resource_categories.id
             LEFT JOIN   resource_types          ON resources.type_id = resource_types.id
@@ -97,6 +101,7 @@ class CreateResourceViewAll extends Migration
             LEFT JOIN   resource_dd_classes     ON resources.dd_class_id = resource_dd_classes.id
             LEFT JOIN   resource_dd_divisions   ON resources.dd_devision_id = resource_dd_divisions.id
             LEFT JOIN   resource_dd_sections    ON resources.dd_section_id = resource_dd_sections.id
+            LEFT JOIN   resource_places         ON resources.id = resource_places.resource_id
         SQL;
     }
 

@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('create_resource', [ResourceController::class, 'create'])->name('create_resource');
     Route::get('edit_resource/{id}', [ResourceController::class, 'edit'])->name('edit_resource');
     Route::POST('update_resource', [ResourceController::class, 'update_resource'])->name('update_resource');
-    Route::get('delete_resource', [ResourceController::class, 'delete'])->name('delete_resource');
+    Route::POST('delete_resource', [ResourceController::class, 'delete'])->name('delete_resource');
     Route::get('resource_catelog', [ResourceController::class, 'resource_catelog'])->name('resource_catelog');
     Route::get('catelog_quick_search', [ResourceController::class, 'catelog_quick_search'])->name('catelog_quick_search');
     Route::get('show_resource/{id}', [ResourceController::class, 'show'])->name('show_resource');

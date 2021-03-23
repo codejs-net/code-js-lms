@@ -128,12 +128,12 @@ $dd_section="section".$lang;
 
 <!-- --------------------------start  modal delete------------------------------- -->
    
-<div class="modal fade" id="book_delete" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="resource_delete" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Remove Book</h5>
+                    <h5 class="modal-title" id="modaltitle">Remove Library Resources</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -142,17 +142,17 @@ $dd_section="section".$lang;
                     
             </div>
             
-            <form method="post" action="{{ route('delete_book')}}">
+            <form method="post" action="{{ route('delete_resource')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
-                    <input type="hidden" id="book_id" name="book_id">
+                    <input type="hidden" id="delete_resource_id" name="delete_resource_id">
                     <div class="row form-group">
                         <div class="col-md-6">
-                            <h5 id="modallabel">Are you sure Remove Book </h5>
+                            <h5 id="modallabel">Are you sure Remove Resources </h5>
                         </div>
                         <div class="col-md-8">
-                            <h5><label type="text"  id="bookname"></label></h5>
+                            <h5><label type="text"  id="delete_resource_name"></label></h5>
                         </div>
                     </div> 
                 </div>
@@ -229,6 +229,16 @@ var catdata=$("#category").val();
 var centerdata=$("#center").val();
 var typedata="All";
 load_datatable(catdata,centerdata,typedata);
+
+// start resource delete function
+$('#resource_delete').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var b_id = button.data('resoid') 
+    var b_title = button.data('resotitle')
+    document.getElementById("delete_resource_id").value= b_id; 
+    document.getElementById("delete_resource_name").innerHTML = b_title;
+    })
+// end book delete function
 
 });
 
@@ -392,6 +402,9 @@ $(".custom-file-input").on("change", function() {
 //        })
 
 // });
+
+
+
 
 </script>
 

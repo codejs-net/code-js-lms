@@ -87,7 +87,7 @@ class ResourceController extends Controller
                             $button .= '&nbsp;&nbsp;';
                             $button .= '<a href="edit_resource/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
-                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#book_delete" data-bookid="'.$data->id.'" data-title="'.$data->title_si.'"><i class="fa fa-trash" ></i></a>';
+                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#resource_delete" data-resoid="'.$data->id.'" data-resotitle="'.$data->accessionNo.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
                         })
 
@@ -320,7 +320,12 @@ class ResourceController extends Controller
 
     public function delete(Request $request)
     {
-        //
+        $resource=resource::find($request->delete_resource_id);
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        $resource->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->back()->with('success','Resource Removed successfully.');
     }
 
     public function import(Request $request) 

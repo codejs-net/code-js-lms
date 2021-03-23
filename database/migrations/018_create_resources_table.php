@@ -64,6 +64,7 @@ class CreateResourcesTable extends Migration
             $table->string('status')->default(1);
             $table->string('br_qr_code')->nullable();
             $table->string('image')->nullable();
+            $table->string('received_type')->nullable();
             $table->timestamps();
         });
     }
