@@ -598,3 +598,17 @@ tbody:before {
 .card-notify i{
     color: #0f0f0f;
 }
+
+.category-card{
+    background-color: #fefefe;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    border-radius: 5px;
+    line-height: 25px;
+
+}
+.category-card-left{
+    background-color: #eff8fc;
+    color: #552306;
+    text-align: center;
+}

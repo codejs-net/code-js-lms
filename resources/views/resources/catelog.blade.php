@@ -59,16 +59,19 @@ $dd_section="section".$lang;
          <div class="js-catalog-box elevation-1">
             <div class="form-row">   
             <div class="col-md-12">
-                <div class="form-group js-select-box">
-                    <span class="ml-3 " for="">Keywords</span>
-                    <div class="input-group ml-2 mr-2">
-                        
-                       <input type="text" class="form-control mb-3 mt-2" id="txt_quick" name="txt_quick"  value=""  placeholder="Title/Creator/ISBN/ISSN/ISMN/Category/Type/Publisher/DDC/Edition/........">
-                        <span>
-                            <button type="button" class="btn btn-sm btn-outline-success search-feild-btn elevation-2" id="btn_quck_search"><i class="fas fa-search"></i>&nbsp; Search</button>
-                        </span>
-                    </div>
-                </div>   
+                <form onSubmit="return false;"name="form_quick_search" id="form_quick_search" class="needs-validation"  novalidate>
+                    {{ csrf_field() }}
+                    <div class="form-group js-select-box">
+                        <span class="ml-3 " for="">Keywords</span>
+                        <div class="input-group ml-2 mr-2">
+                            
+                           <input type="text" class="form-control mb-3 mt-2" id="txt_quick" name="txt_quick"  value=""  placeholder="Title/Creator/ISBN/ISSN/ISMN/Category/Type/Publisher/DDC/Edition/........"required>
+                            <span>
+                                <button type="submit" class="btn btn-sm btn-outline-success search-feild-btn elevation-2" id="btn_quck_search"><i class="fas fa-search"></i>&nbsp; Search</button>
+                            </span>
+                        </div>
+                    </div>   
+                </form>
             </div>
             </div>  
         </div>
@@ -342,14 +345,13 @@ $dd_section="section".$lang;
 
 <div class="container-fluid">
     <div class="card card-body">
-            <div class="form-row m-auto">   
+            <div class="form-row m-auto">
             <div class="table-responsive"style="overflow-x: auto;">               
             <table  class="table m-auto" width="100%" cellspacing="0" id="resource_datatable">
                 <thead style="display: none;">
                     <tr class="">
                         <th style="width:5%"></th>
-                        <th style="width:25%"></th>
-                        <th style="width:65%"></th>
+                        <th style="width:90%"></th>
                         <th style="width:5%"></th>
                        
                     </tr>
@@ -377,7 +379,7 @@ $dd_section="section".$lang;
 $(document).ready(function()
 {
 load_type("All");
-load_datatable("All","All","All");
+// load_datatable("All","All","All");
 
 });
 
@@ -416,6 +418,41 @@ function load_type(cdta)
             }
         })
         // --------------------------------------------------------
+}
+
+function qucki_search(keyword)
+{
+    $('#resource_datatable').DataTable({
+        columnDefs: [
+        {"targets": [0],
+        "visible": false,
+        "searchable": false},
+        ],
+        responsive: true,
+        processing: true,
+        serverSide: false,
+        ordering: false,
+        searching: false,
+        
+
+    ajax:{
+        type: "GET",
+        dataType : 'json',
+        data: { 
+            keyword: keyword,
+        },
+        url: "{{ route('catelog_quick_search') }}",
+    },
+    // pageLength: 15,
+    
+    columns:[
+        {data: "id",name: "ResourceID",orderable: true},
+        {data: "details",name: "details",orderable: false},
+        {data: "action",name: "action",orderable: false}
+    ],
+    "createdRow": function( row, data, dataIndex ) {
+        }
+    });
 }
 
 
@@ -460,6 +497,21 @@ $("#search_felid_select").on('click', '.remove_feild', function () {
 });
 
 
+$("#btn_quck_search").click(function () {
+
+    // $('#resource_datatable').dataTable().fnDestroy();
+    $('#resource_datatable').DataTable().clear().destroy();
+
+    var keyword=$("#txt_quick").val();
+    qucki_search(keyword);
+
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#resource_datatable").offset().top
+    }, 1000);
+
+});
+
+
 function load_datatable(catdata,centerdata,typedata)
 {
 
@@ -489,8 +541,7 @@ function load_datatable(catdata,centerdata,typedata)
     
     columns:[
         {data: "id",name: "ResourceID",orderable: true},
-        {data: "images",name: "images",orderable: false},
-        {data: "details",name: "status",orderable: false},
+        {data: "details",name: "details",orderable: false},
         {data: "action",name: "action",orderable: false}
     ],
     "createdRow": function( row, data, dataIndex ) {

@@ -374,22 +374,33 @@ class ResourceController extends Controller
         return datatables()->of($resouredata)
                 ->addIndexColumn()
                 ->addColumn('details', function($data){
-                    $card  ='<div class="card card-body">';
-                    $card .= '<label>Title: '.$data->title_si.','.$data->title_ta.','.$data->title_en.'</label><br>';
-                    $card .='<label>Creator: '.$data->name_si.','.$data->name_ta.','.$data->name_en.'</label><br>';
-                    $card .='<span>Publisher: '.$data->publisher_si.','.$data->publisher_ta.','.$data->publisher_en.'</span><br>';
-                    $card .='<span>Language: '.$data->language_si.','.$data->language_ta.','.$data->language_en.'</span><br>';
-                    $card .='<span>DDC Class: '.$data->class_si.','.$data->class_si.','.$data->class_si.'</span><br>';
-                    $card .='<span>DDC Devision: '.$data->devision_si.','.$data->devision_si.','.$data->devision_si.'</span><br>';
-                    $card .='<span>DDC Section: '.$data->section_si.'-'.$data->section_si.','.$data->section_ta.','.$data->section_en.'</span><br>';
-                    $card .='<span>DDC: '.$data->ddc.'</span><br>';
-                    $card .='<span>Price: '.$data->price.'</span><br>';
-                    $card .='<span>Publish Year: '.$data->publishyear.'</span><br>';
-                    $card .='<span>Edition: '.$data->edition.'</span><br>';
-                    $card .='<label>Physical Detail: '.$data->phydetails.'</label><br>';
-                    $card .='<span>Purchase Date: '.$data->purchase_date.'</span><br>';
-                    $card .='<span>Rack No: </span><br>';
-                    $card .='<span>Floor No: </span><br>';
+                    $card  ='<div class="elevation-4 category-card">';
+                        $card  .='<div class="row p-4">';
+                            $card  .='<div class="col-md-3 col-12 category-card-left">';
+                                $card .='<img class="img-resource2 p-2" src="images/resources/'. $data->image.'"><br>';
+                                $card .='<span><b>Category:</b> '.$data->category_si.'</span><br>';
+                                $card .='<span><b>Type:</b> '.$data->type_si.'</span><br>';
+                                $card .='<span><b>Accession No:</b> '.$data->accessionNo.'</span><br>';
+                                $card .='<span><b>Standard No:</b> '.$data->standard_number.'</span><br>';
+                            $card .='</div>';
+                            $card .='<div class="col-md-9 col-12">';
+                                $card .= '<span><b>Title:</b> '.$data->title_si.','.$data->title_ta.','.$data->title_en.'</span><br>';
+                                $card .='<span><b>Creator:</b> '.$data->name_si.','.$data->name_ta.','.$data->name_en.'</span><br>';
+                                $card .='<span><b>Publisher:</b> '.$data->publisher_si.','.$data->publisher_ta.','.$data->publisher_en.'</span><br>';
+                                $card .='<span><b>Language:</b> '.$data->language_si.','.$data->language_ta.','.$data->language_en.'</span><br>';
+                                $card .='<span><b>DDC Class:</b> '.$data->class_si.','.$data->class_si.','.$data->class_si.'</span><br>';
+                                $card .='<span><b>DDC Devision:</b> '.$data->devision_si.','.$data->devision_si.','.$data->devision_si.'</span><br>';
+                                $card .='<span><b>DDC Section:</b> '.$data->section_si.'-'.$data->section_si.','.$data->section_ta.','.$data->section_en.'</span><br>';
+                                $card .='<span><b>DDC: </b>'.$data->ddc.'</span><br>';
+                                $card .='<span><b>Price:</b> '.$data->price.'</span><br>';
+                                $card .='<span><b>Publish Year:</b> '.$data->publishyear.'</span><br>';
+                                $card .='<span><b>Edition:</b> '.$data->edition.'</span><br>';
+                                $card .='<span><b>Physical Detail:</b> '.$data->phydetails.'</span><br>';
+                                $card .='<span><b>Purchase Date:</b> '.$data->purchase_date.'</span><br>';
+                                $card .='<span><b>Rack No:</b> </span><br>';
+                                $card .='<span><b>Floor No:</b> </span><br>';
+                            $card .='</div>';
+                        $card .='</div>';
                     $card .='</div>';
                    
                     return $card;   
@@ -399,18 +410,7 @@ class ResourceController extends Controller
                     $button = '<a href="show_resource/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
                     return $button;   
                 })
-
-                ->addColumn('images', function ($data) {
-                    $images  ='<img class="img-resource2" src="images/resources/'. $data->image.'"><br>';
-                    $images .='<label>Category: '.$data->category_si.'</label><br>';
-                    $images .='<label>Type: '.$data->type_si.'</label><br>';
-                    $images .='<label>Accession No: '.$data->accessionNo.'</label><br>';
-                    $images .='<label>Standard No: '.$data->standard_number.'</label><br>';
-                    return  $images;
-                    
-                })
-
-                ->rawColumns(['details','action','images'])
+                ->rawColumns(['details','action'])
                 ->make(true);
                         
             }
@@ -425,6 +425,93 @@ class ResourceController extends Controller
         ->with('dddevision_data',$dd_devisiondata)
         ->with('ddsection_data',$dd_sectiondata);
 
+
+    }
+
+    public function catelog_quick_search(Request $request)
+    {
+        if(request()->ajax())
+        {
+            $text="%".$request->keyword."%";
+            $resouredata = view_resource_data_all::select('*')
+            ->where('accessionNo','LIKE',$text)
+            ->orwhere('standard_number','LIKE',$text)
+            ->orwhere('title_si','LIKE',$text)
+            ->orwhere('title_ta','LIKE',$text)
+            ->orwhere('title_en','LIKE',$text)
+            ->orwhere('category_si','LIKE',$text)
+            ->orwhere('category_ta','LIKE',$text)
+            ->orwhere('category_en','LIKE',$text)
+            ->orwhere('type_si','LIKE',$text)
+            ->orwhere('type_ta','LIKE',$text)
+            ->orwhere('type_en','LIKE',$text)
+            ->orwhere('name_si','LIKE',$text)
+            ->orwhere('name_ta','LIKE',$text)
+            ->orwhere('name_en','LIKE',$text)
+            ->orwhere('publisher_si','LIKE',$text)
+            ->orwhere('publisher_ta','LIKE',$text)
+            ->orwhere('publisher_en','LIKE',$text)
+            ->orwhere('language_si','LIKE',$text)
+            ->orwhere('language_ta','LIKE',$text)
+            ->orwhere('language_en','LIKE',$text)
+            ->orwhere('center_si','LIKE',$text)
+            ->orwhere('center_en','LIKE',$text)
+            ->orwhere('ddc','LIKE',$text)
+            ->orwhere('price','LIKE',$text)
+            ->orwhere('purchase_date','LIKE',$text)
+            ->orwhere('edition','LIKE',$text)
+            ->orwhere('publishyear','LIKE',$text)
+            ->orwhere('phydetails','LIKE',$text)
+            ->orwhere('note_si','LIKE',$text)
+            ->orwhere('note_ta','LIKE',$text)
+            ->orwhere('note_en','LIKE',$text)
+            ->get();
+        
+        return datatables()->of($resouredata)
+                ->addIndexColumn()
+                ->addColumn('details', function($data){
+                    $card  ='<div class="elevation-4 category-card">';
+                        $card  .='<div class="row p-4">';
+                            $card  .='<div class="col-md-3 col-12 category-card-left">';
+                                $card .='<img class="img-resource2 p-2" src="images/resources/'. $data->image.'"><br>';
+                                $card .='<span><b>Category:</b> '.$data->category_si.'</span><br>';
+                                $card .='<span><b>Type:</b> '.$data->type_si.'</span><br>';
+                                $card .='<span><b>Accession No:</b> '.$data->accessionNo.'</span><br>';
+                                $card .='<span><b>Standard No:</b> '.$data->standard_number.'</span><br>';
+                            $card .='</div>';
+                            $card .='<div class="col-md-9 col-12">';
+                                $card .= '<span><b>Title:</b> '.$data->title_si.','.$data->title_ta.','.$data->title_en.'</span><br>';
+                                $card .='<span><b>Creator:</b> '.$data->name_si.','.$data->name_ta.','.$data->name_en.'</span><br>';
+                                $card .='<span><b>Publisher:</b> '.$data->publisher_si.','.$data->publisher_ta.','.$data->publisher_en.'</span><br>';
+                                $card .='<span><b>Language:</b> '.$data->language_si.','.$data->language_ta.','.$data->language_en.'</span><br>';
+                                $card .='<span><b>DDC Class:</b> '.$data->class_si.','.$data->class_si.','.$data->class_si.'</span><br>';
+                                $card .='<span><b>DDC Devision:</b> '.$data->devision_si.','.$data->devision_si.','.$data->devision_si.'</span><br>';
+                                $card .='<span><b>DDC Section:</b> '.$data->section_si.'-'.$data->section_si.','.$data->section_ta.','.$data->section_en.'</span><br>';
+                                $card .='<span><b>DDC: </b>'.$data->ddc.'</span><br>';
+                                $card .='<span><b>Price:</b> '.$data->price.'</span><br>';
+                                $card .='<span><b>Publish Year:</b> '.$data->publishyear.'</span><br>';
+                                $card .='<span><b>Edition:</b> '.$data->edition.'</span><br>';
+                                $card .='<span><b>Physical Detail:</b> '.$data->phydetails.'</span><br>';
+                                $card .='<span><b>Purchase Date:</b> '.$data->purchase_date.'</span><br>';
+                                $card .='<span><b>Rack No:</b> </span><br>';
+                                $card .='<span><b>Floor No:</b> </span><br>';
+                            $card .='</div>';
+                        $card .='</div>';
+                    $card .='</div>';
+                   
+                    return $card;   
+                })
+
+                ->addColumn('action', function($data){
+                    $button = '<a href="show_resource/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
+                    return $button;   
+                })
+                ->rawColumns(['details','action'])
+                ->make(true);
+                        
+            }
+
+        return view('resources.catelog');
 
     }
 
