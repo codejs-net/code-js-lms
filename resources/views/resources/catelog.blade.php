@@ -344,7 +344,7 @@ $dd_section="section".$lang;
     <div class="card card-body">
             <div class="form-row m-auto">   
             <div class="table-responsive"style="overflow-x: auto;">               
-            <table  class="table m-auto" width="80%" cellspacing="0" id="resource_datatable">
+            <table  class="table m-auto" width="100%" cellspacing="0" id="resource_datatable">
                 <thead style="display: none;">
                     <tr class="">
                         <th style="width:5%"></th>
