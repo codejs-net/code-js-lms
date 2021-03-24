@@ -253,10 +253,10 @@ $dd_section="section".$lang;
 
                 <div class="col-md-6">
                     <div class="form-group js-select-box ">
-                        <div class="ml-2 mr-2">
+                        <div class="ml-2 mr-2 pb-3">
                             <span for="authors">Creator</span>
-                            <select class="form-control mb-3" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}"required>
-                                <option value="" selected>All Creators</option>
+                            <select class="form-control" id="resource_creator" name="resource_creator" value=""required>
+                                <option value="" class="" selected>All Creators</option>
                                 @foreach($creator_data as $item)
                                         <option value="{{ $item->id }}">{{ $item->$creator}}</option>
                                 @endforeach
@@ -380,6 +380,11 @@ $(document).ready(function()
 {
 load_type("All");
 // load_datatable("All","All","All");
+// $("#resource_creator").select2();
+
+$('#resource_creator').select2({
+    theme: 'bootstrap4',
+});
 
 });
 

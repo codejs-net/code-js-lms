@@ -45,6 +45,10 @@
      <!-- Fonts -->
      <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- select2 -->
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2-bootstrap4.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Open+Source+Sans+Condensed+Pro+Shippori:300,400,400i,700" rel="stylesheet">
@@ -197,6 +201,8 @@
     <!-- smart_wizard -->
     <script src="{{ asset('plugins/smart_wizard/js/smart_wizard.min.js') }}"defer></script>
 
+    <!-- select2 -->
+    <script src="{{ asset('plugins/select2/js/select2.min.js') }}"defer></script>
     
     <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -257,6 +263,8 @@ $('.nav-link').on('click',function(){
 toastr.options = {
     positionClass: 'toast-top-center'
 };
+
+$.fn.select2.defaults.set( "theme", "bootstrap" );
 
 </script>
 
