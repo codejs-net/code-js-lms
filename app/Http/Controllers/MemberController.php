@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\member_cat;
 use App\Models\member;
 use App\Http\Controllers\SoapController;
+use App\Imports\MemberImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use File;
+
 
 class MemberController extends Controller
 {
@@ -17,7 +24,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        return view('members.index');
     }
 
     /**
@@ -131,5 +138,20 @@ class MemberController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function import(Request $request) 
+    {
+        // member::query()->truncate();
+
+        if($request->hasFile('file'))
+        {
+            $data=Excel::import(new MemberImport,request()->file('file'));
+            return redirect()->route('members.index')->with('success','Details imported successfully.');
+        }
+        else
+        {
+            return back()->with('warning','Plese Select the Excel File');
+        }
     }
 }

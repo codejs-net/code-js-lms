@@ -18,12 +18,14 @@ $category="category".$lang;
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container">
-    <div class="row text-center">
+    <div class="row text-center mb-2">
         <div class="col-md-11 col-sm-6 text-center"> 
-            <h4> <i class="fa fa-plus"> Add Member</i></h4>
+            <h5> <i class="fa fa-plus"> Add Member</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
-            <!-- <h4><a href="{{ route('books.create') }}" class="btn btn-info btn-md" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a></h4> -->  
+            @can('data-import')
+            <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+            @endcan
         </div>
     </div>
     
@@ -75,7 +77,7 @@ $category="category".$lang;
                 <div class="form-group col-md-6 text-left">
                     <label for="categry">&nbsp;</label><br>
                     
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
+                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
                     <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New Category</label>
                 </div>
             </div>
@@ -129,7 +131,7 @@ $category="category".$lang;
             </div>
             <div class="form-group">
                 <label for="descrip">Description :</label>
-                <textarea class="form-control" rows="5" id="comment" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
+                <textarea class="form-control" rows="3" id="comment" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
             <div class=" row form-group">
@@ -144,9 +146,9 @@ $category="category".$lang;
             
         <div class="box-footer clearfix pull-right">
             
-            <button type="submit" class="btn btn-success btn-md toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
+            <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
             &nbsp; &nbsp;
-            <button type="button" class="btn btn-primary btn-md" id="cler">Reset
+            <button type="button" class="btn btn-secondary btn-sm" id="cler">Reset
             <i class="fa fa-times"></i></button>
             <!-- Image loader -->
             <div id='loader' style='display: none;' >
@@ -163,7 +165,50 @@ $category="category".$lang;
     </div>
 </div>
 
+<!---------------------------import Modal --------------------------------------->
+<div class="modal fade" id="data_import" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-indigo">
+                <div class="text-center">
+                    <h5 class="modal-title" id="modaltitle">Import Members</h5>
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                    
+            </div>
+            
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_member') }}"class="needs-validation"  novalidate>
+                {{ csrf_field() }}
+                <div class="modal-body">
 
+                <div class="custom-file form-group text-center m-3">
+                    <div class="col-md-10">
+                        <input type="file" class="form-control-file custom-file-input" id="file" name="file" required>
+                        <label class="custom-file-label " for="customFile">Choose Excel file</label>
+                    </div>
+                    <div class="col-md-2">
+                   
+                   
+                </div>
+            </div>
+                    
+                </div>
+
+                <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    @can('data-import')
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
+                    @endcan
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
 
 
 @endsection
@@ -204,6 +249,12 @@ $("#save_member").click(function () {
         
 });
 //--------------------------end Member Save-----------------------------
+
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
 
 
 </script>

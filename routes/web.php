@@ -162,6 +162,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('members', MemberController::class);
     Route::post('store_member', [MemberController::class, 'store'])->name('store_member');
     Route::get('create_member', [MemberController::class, 'create'])->name('create_member');
+    Route::post('import_member', [MemberController::class, 'import'])->name('import_member');
 
     //--------Survey----------------------------------
     Route::resource('survey', SurveyController::class);

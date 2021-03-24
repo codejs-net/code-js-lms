@@ -17,7 +17,9 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->nullable();
+
+            $table->integer('titleid')->unsigned()->default(1);
+            $table->foreign('titleid')->references('id')->on('titles');
 
             $table->integer('categoryid')->unsigned()->default(1);
             $table->foreign('categoryid')->references('id')->on('member_cats');
@@ -38,6 +40,7 @@ class CreateMembersTable extends Migration
             $table->string('description')->nullable();
             $table->date('regdate')->default(Carbon::now());
             $table->string('image')->nullable();
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

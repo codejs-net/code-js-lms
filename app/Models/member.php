@@ -9,4 +9,27 @@ class member extends Model
 {
     use HasFactory;
     protected $table="members";
+    protected $fillable = 
+                    [
+                    'titleid',
+                    'categoryid',
+                    'name_si',
+                    'name_ta',
+                    'name_en',
+                    'address1_si',
+                    'address1_ta',
+                    'address1_en',
+                    'address2_si',
+                    'address2_ta',
+                    'address2_en',
+                    'nic',
+                    'mobile',
+                    'birthday',
+                    'gender',
+                    'description',
+                    'regdate',
+                    'image',
+                    'status'
+                    ];
+
 }

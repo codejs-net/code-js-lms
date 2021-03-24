@@ -332,15 +332,17 @@ a.btn-js:hover {
 } */
 
 .js-tbl-header th:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
     border-left: #007bff solid 1px !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    
 }
 
 .js-tbl-header th:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
     border-right: #007bff solid 1px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+   
 
 }
 .js-tbl-header th{
