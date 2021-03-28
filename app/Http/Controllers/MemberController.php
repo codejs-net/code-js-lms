@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\member_cat;
 use App\Models\member;
+use App\Models\title;
 use App\Http\Controllers\SoapController;
 use App\Imports\MemberImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use File;
+use App\Models\setting;
+use App\Models\view_member_data;
+use Session;
+use DataTables;
 
 
 class MemberController extends Controller
@@ -24,6 +29,50 @@ class MemberController extends Controller
      */
     public function index()
     {
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
+
+        if($setting->value=="0")
+        {$lang="_".$locale;}
+        else
+        {$lang="_".$setting->value;}
+
+        Session::put('db_locale', $lang);
+        
+        $resource_title="title".$lang;
+
+            if(request()->ajax())
+            {
+                $memberdata = view_member_data::select('*')->get();
+                return datatables()->of($memberdata)
+                        ->addIndexColumn()
+                        ->addColumn('action', function($data){
+                            $button = '<a href="show_member/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
+                            $button .= '&nbsp;&nbsp;';
+                            $button .= '<a href="edit_member/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
+                            $button .= '&nbsp;&nbsp;';
+                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#resource_delete" data-resoid="'.$data->id.'" data-resotitle="'.$data->id.'"><i class="fa fa-trash" ></i></a>';
+                            return $button;   
+                        })
+
+                        ->addColumn('status', function ($data) {
+                            if($data->status==0)
+                            {$sts = 'Removed';}
+                            else
+                            {$sts = 'Active';}
+                            return  $sts;  
+                        })
+
+                        ->addColumn('images', function ($data) {
+                            $images='<img class="img-member elevation-2" src="images/members/'. $data->image.'">';
+                            return  $images;
+                            
+                        })
+
+                        ->rawColumns(['action','status','images'])
+                        ->make(true);
+                        
+            }
         return view('members.index');
     }
 
@@ -35,8 +84,9 @@ class MemberController extends Controller
     public function create()
     {
         $Memberdata=member_cat::all();
+        $titledata=title::all();
 
-        return view('members.create')->with('Mdata',$Memberdata);
+        return view('members.create')->with('Mdata',$Memberdata)->with('tdata',$titledata);
        
     }
 
@@ -64,17 +114,17 @@ class MemberController extends Controller
             'registeredDate'=>'required',
             ]);
 
-        $mbr->title=$request->title;
+        $mbr->titleid=$request->title;
         $mbr->Categoryid=$request->category;
         $mbr->name_si=$request->name_si;
-        $mbr->name_ta=$request->name_si;
-        $mbr->name_en=$request->name_si;
+        $mbr->name_ta=$request->name_ta;
+        $mbr->name_en=$request->name_en;
         $mbr->address1_si=$request->Address1_si;
-        $mbr->address1_ta=$request->Address1_si;
-        $mbr->address1_en=$request->Address1_si;
+        $mbr->address1_ta=$request->Address1_ta;
+        $mbr->address1_en=$request->Address1_en;
         $mbr->address2_si=$request->Address2_si;
-        $mbr->address2_ta=$request->Address2_si;
-        $mbr->address2_en=$request->Address2_si;
+        $mbr->address2_ta=$request->Address2_ta;
+        $mbr->address2_en=$request->Address2_en;
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;

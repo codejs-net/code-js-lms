@@ -1,7 +1,16 @@
 @extends('layouts.app')
-
-
 @section('content')
+@php
+$locale = session()->get('locale');
+$lang="_".$locale;
+$category="category".$lang;
+$name="name".$lang;
+$address1="address1".$lang;
+$address2="address2".$lang;
+
+
+@endphp
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
@@ -66,9 +75,52 @@
 
 $(document).ready(function()
 {
-    
+    load_datatable();
 
 });
+
+function load_datatable()
+{
+
+    $('#member_datatable').DataTable({
+        columnDefs: [
+        {"targets": [0],
+        "visible": false,
+        "searchable": false},
+        ],
+        responsive: true,
+        processing: true,
+        serverSide: false,
+        ordering: false,
+        searching: true,
+
+    ajax:{
+        type: "GET",
+        dataType : 'json',
+        url: "{{ route('members.index') }}",
+    },
+    // pageLength: 15,
+    
+    columns:[
+        {data: "id",name: "ResourceID",orderable: true},
+        {data: "images",name: "images",orderable: false},
+        {data: "title<?php echo $lang; ?>",name: "title"},
+        {data: "<?php echo $name; ?>",name: "name"},
+        {data: "<?php echo $address1; ?>",name: "address1"},
+        {data: "<?php echo $address2; ?>",name: "address2"},
+        {data: "nic",name: "nic",orderable: true},
+        {data: "mobile",name: "mobile",orderable: false},
+        {data: "gender",name: "gender",orderable: false},
+        {data: "status",name: "status",orderable: false},
+        {data: "action",name: "action",orderable: false}
+    ],
+    "createdRow": function( row, data, dataIndex ) {
+        if ( data['status'] == "Removed" ) {        
+            $('td', row).addClass('font-weight-bold');
+            }
+        }
+    });
+}
 
 </script>
 

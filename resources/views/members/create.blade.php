@@ -6,6 +6,7 @@
 $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
+$title="title".$lang;
 
 @endphp
 
@@ -42,20 +43,17 @@ $category="category".$lang;
                 <div class="form-check form-check-inline" >
                     <label for="name">Title:</label> &nbsp;
                 </div>
+                @foreach($tdata as $item)
                 <div class="form-check form-check-inline" >
-                    <input type="radio" class="form-check-input" name="title" value="Mr" required>
-                    <label class="form-check-label">Mr</label>
+                    <input type="radio" class="form-check-input" name="title" value="{{$item->id}}" required>
+                    <label class="form-check-label">{{$item->$title}}</label>
                 </div>
-                <div class="form-check form-check-inline" >
-                    <input type="radio" class="form-check-input" name="title" value="Mrs" required>
-                    <label class="form-check-label">Mis</label>
-                </div>
-                <div class="form-check form-check-inline" >
+                @endforeach
+                {{-- <div class="form-check form-check-inline" >
                     <input type="radio" class="form-check-input" name="title" value="Mrss" required>
                     <label class="form-check-label">Miss</label>
                     <div class="invalid-feedback" style="margin-left: 1em" >Please choose Title</div>
-                </div>
-                    
+                </div>    --}}
             </div>
 
     
@@ -83,16 +81,23 @@ $category="category".$lang;
             </div>
             <div class="form-group">
                 <label for="name">Name :</label>
-                <input type="text" class="form-control" name="name_si" value="{{old('name_si')}}" placeholder="Name"required>
+                <input type="text" class="form-control mb-1" name="name_si" id="name_si" value="{{old('name_si')}}" placeholder="Name in Sinahala">
+                <input type="text" class="form-control mb-1" name="name_ta" id="name_ta" value="{{old('name_ta')}}" placeholder="Name in Tamil">
+                <input type="text" class="form-control mb-1" name="name_en" id="name_en" value="{{old('name_en')}}" placeholder="Name in English">
                 <span class="text-danger">{{ $errors->first('name') }}</span>
             </div>
             <div class="form-group">
-                <label for="Address">Address :</label>
-                <input type="text" class="form-control" name="Address1_si" placeholder="Address Line 1" value="{{old('Address1')}}"required>
+                <label for="Address">Address Line1 :</label>
+                <input type="text" class="form-control mb-1" name="Address1_si" id="Address1_si" placeholder="Address Line 1 Sinhala" value="{{old('Address1_si')}}">
+                <input type="text" class="form-control mb-1" name="Address1_ta" id="Address1_ta" placeholder="Address Line 1 Tamil" value="{{old('Address1_ta')}}">
+                <input type="text" class="form-control mb-1" name="Address1_en" id="Address1_en" placeholder="Address Line 1 English" value="{{old('Address1_en')}}">
                 <span class="text-danger">{{ $errors->first('Address1') }}</span>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="Address2_si" placeholder="Address Line 2" value="{{old('Address2')}}"required> 
+                <label for="Address">Address Line2 :</label>
+                <input type="text" class="form-control mb-1" name="Address2_si" placeholder="Address Line 2 Sinhala" value="{{old('Address2_si')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_ta" placeholder="Address Line 2 Tamil" value="{{old('Address2_ta')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_en" placeholder="Address Line 2 English" value="{{old('Address2_en')}}"> 
                 <span class="text-danger">{{ $errors->first('Address2') }}</span>
             </div>
 
@@ -218,7 +223,16 @@ $category="category".$lang;
 
 $(document).ready(function()
 {
-    
+    @if($locale=="si")
+        $("#name_si").prop('required',true);
+        $("#Address1_si").prop('required',true);
+        @elseif($locale=="ta")
+        $("#name_ta").prop('required',true);
+        $("#Address1_ta").prop('required',true);
+        @elseif($locale=="en")
+        $("#name_en").prop('required',true);
+        $("#Address1_en").prop('required',true);
+    @endif
 });
 
 // -------------------------save Member----------------------------------

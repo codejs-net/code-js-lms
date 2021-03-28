@@ -71,7 +71,7 @@
             
             <a href="#" class="dropdown-toggle js-nav-text" data-toggle="dropdown">
                 <img src="{{ asset('img/user.png') }}" class="user-image" alt="User Image">
-                <span class="hidden-xs">Code-JS</span>
+                {{-- <span class="hidden-xs">Code-JS</span> --}}
             </a>
             <ul class="dropdown-menu dropdown-menu-md dropdown-menu-right mt-2">
                 <!-- User image -->
