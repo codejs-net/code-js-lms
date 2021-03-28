@@ -148,7 +148,6 @@
         height: 50px;
         border-radius: 25px;
         /* border: #dce8f5 solid 1px !important; */
-        height: auto;
     }
 
     @media (max-width: 768px) {

@@ -114,6 +114,14 @@ class MemberController extends Controller
             'registeredDate'=>'required',
             ]);
 
+        $imageName ="default_avatar.png";
+        $image = $request->file('image_member');
+        if ($image){
+            $imageName = $request->nic.'-'.time().'.'.$image->extension(); 
+            $image->move(public_path('images/members'), $imageName);
+        }
+
+
         $mbr->titleid=$request->title;
         $mbr->Categoryid=$request->category;
         $mbr->name_si=$request->name_si;
@@ -131,7 +139,7 @@ class MemberController extends Controller
         $mbr->gender=$request->gender;
         $mbr->description=$request->Description;
         $mbr->regdate=$request->registeredDate;
-        $mbr->image="";
+        $mbr->image=$imageName;
 
         $mbr->save();
        

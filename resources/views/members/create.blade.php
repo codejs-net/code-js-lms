@@ -35,29 +35,41 @@ $title="title".$lang;
         <!-- Main content -->
 <div class="container">
     <div class="card card-body">
-        <div class="">   
-
-        <form onSubmit="return false;"  id="member_save" class="needs-validation"  novalidate>
+        <form  enctype="multipart/form-data"  id="member_save" class="needs-validation"  novalidate>
         {{ csrf_field() }}
-            <div class="form-group">
-                <div class="form-check form-check-inline" >
-                    <label for="name">Title:</label> &nbsp;
-                </div>
-                @foreach($tdata as $item)
-                <div class="form-check form-check-inline" >
-                    <input type="radio" class="form-check-input" name="title" value="{{$item->id}}" required>
-                    <label class="form-check-label">{{$item->$title}}</label>
-                </div>
-                @endforeach
-                {{-- <div class="form-check form-check-inline" >
-                    <input type="radio" class="form-check-input" name="title" value="Mrss" required>
-                    <label class="form-check-label">Miss</label>
-                    <div class="invalid-feedback" style="margin-left: 1em" >Please choose Title</div>
-                </div>    --}}
+
+        <div class="form-row border border-secondary bg-light">
+            <div class="col-md-2 col-12 m-auto pl-2 text-center">
+                <img src="images/members/default_avatar.png" class="img-resource1 elevation-3" id="avater_update">
             </div>
+            <div class="col-md-10 col-12">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="image">Member Image</label>
+                        <input type="file" id="image_member" name="image_member" class="form-control-file bg-white p-1 elevation-1">
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="form-group col-md-6">
+                        <div class="form-check form-check-inline" >
+                            <label for="name">Title:</label> &nbsp;
+                        </div>
+                        @foreach($tdata as $item)
+                        <div class="form-check form-check-inline" >
+                            <input type="radio" class="form-check-input" name="title" value="{{$item->id}}" required>
+                            <label class="form-check-label">{{$item->$title}}</label>
+                        </div>
+                        @endforeach
+                    </div>
 
-    
+                   
+                </div>
+            </div>
+            
+        </div>
 
+        <hr>
 
             <div class="row form-group">
                 <div class="form-group col-md-6">
@@ -163,9 +175,7 @@ $title="title".$lang;
             <!-- Image loader -->
         </div>
             
-        </form>
-           
-        </div>               
+        </form>            
 
     </div>
 </div>
@@ -233,36 +243,40 @@ $(document).ready(function()
         $("#name_en").prop('required',true);
         $("#Address1_en").prop('required',true);
     @endif
+
+    $('#member_save').on('submit', function(event){
+        event.preventDefault();
+        var formData = new FormData(this);
+        $.ajax
+            ({
+                type: "POST",
+                dataType : 'json',
+                url: "{{route('members.store')}}", 
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+
+                beforeSend: function(){
+                    $("#loader").show();
+                },
+
+                success:function(data){
+                    toastr.success('Member Added Successfully')
+                    $("#member_save").trigger("reset");
+                },
+                error:function(data){
+                    toastr.error('Member Add faild Plese try again')
+                },
+                complete:function(data){
+                    $("#loader").hide();
+                }
+            })
+
+    });
 });
 
-// -------------------------save Member----------------------------------
-$("#save_member").click(function () {
-   
-    $.ajax
-        ({
-            type: "POST",
-            dataType : 'json',
-            url: "{{route('members.store')}}", 
-            data: $('#member_save').serialize(),
 
-            beforeSend: function(){
-                $("#loader").show();
-            },
-
-            success:function(data){
-                toastr.success('Member Added Successfully')
-                $("#member_save").trigger("reset");
-            },
-            error:function(data){
-                toastr.error('Member Add faild Plese try again')
-            },
-            complete:function(data){
-                $("#loader").hide();
-            }
-        })
-        
-});
-//--------------------------end Member Save-----------------------------
 
 $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
