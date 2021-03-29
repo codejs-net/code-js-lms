@@ -165,7 +165,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('import_member', [MemberController::class, 'import'])->name('import_member');
     Route::post('update_member', [MemberController::class, 'update_member'])->name('update_member');
     Route::get('edit_member/{id}', [MemberController::class, 'edit'])->name('edit_member');
-    Route::get('show_member/{id}', [MemberController::class, 'show'])->name('show_member');
+    Route::POST('show_member', [MemberController::class, 'show'])->name('show_member');
     Route::POST('delete_member', [MemberController::class, 'delete'])->name('delete_member');
 
     //--------Survey----------------------------------
@@ -189,6 +189,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     // -------Reports-PDF------------------------------
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
+    Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');
 
      // -------Reports-Excel------------------------------
      Route::POST('export_recource', [ReportController::class, 'export_recource'])->name('export_recource');

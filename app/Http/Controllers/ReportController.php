@@ -19,6 +19,8 @@ use App\Models\resource;
 use App\Models\center;
 use App\Models\setting;
 use App\Models\view_resource_data;
+use App\Models\member;
+use App\Models\view_member_data;
 use Session;
 
 use App\Exports\ResourceExport;
@@ -52,8 +54,8 @@ class ReportController extends Controller
         // dd($resouredata[0][0]);
         $pdf = PDF::loadView('reports.rpt_resource',compact('resouredata'),[],
             [
-            'format'      => 'A4',
-            'orientation' => 'P',
+            'format' => 'A4',
+            'orientation' => 'L',
             ]);
         return $pdf->stream('resource.pdf');
         }
@@ -68,5 +70,16 @@ class ReportController extends Controller
         ini_set('memory_limit', '-1');
         ini_set('max_execution_time', '1200');
         return Excel::download(new ResourceExport($request), 'resource.xlsx');
+    }
+
+    public function member_card(Request $request)
+    {
+        $library="Code-js";
+        $data = view_member_data::find($request->show_member_id);
+        $pdf = PDF::loadView('reports.rpt_member_card',compact('data','library'),[],
+            [
+            'format' => [85,54],
+            ]);
+        return $pdf->stream($data->id.'-Member Card.pdf');
     }
 }

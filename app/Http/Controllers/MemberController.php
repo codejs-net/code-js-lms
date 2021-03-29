@@ -47,7 +47,8 @@ class MemberController extends Controller
                 return datatables()->of($memberdata)
                         ->addIndexColumn()
                         ->addColumn('action', function($data){
-                            $button = '<a href="show_member/'.$data->id.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye" ></i></a>';
+                           
+                            $button  = '<a class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#member_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
                             $button .= '<a href="edit_member/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
@@ -161,10 +162,13 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $data = view_member_data::find($request->m_id);
+        return response()->json($data);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -264,7 +268,7 @@ class MemberController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $member->delete();
-        
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         return redirect()->back()->with('success','Member Removed successfully.');
     }

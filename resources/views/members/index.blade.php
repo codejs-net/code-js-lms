@@ -97,8 +97,8 @@ $address2="address2".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> &nbsp; Delete</button>
                 </div>
             </form>
            
@@ -107,7 +107,7 @@ $address2="address2".$lang;
 </div>
 <!-- ---------------------end delete Model------------------------------------- -->
 
-
+@include('members.show_modal')
 @endsection
 
 @section('script')
@@ -126,6 +126,68 @@ $(document).ready(function()
         document.getElementById("delete_member_name").innerHTML = m_name;
         })
     // end member delete function
+
+    $('#member_show').on('show.bs.modal', function (event) {
+       
+       var button = $(event.relatedTarget) ;
+       var m_id = button.data('mid');
+       
+       $("#show_member_id").val(m_id);
+       $("#show_table_tbody").empty();
+       var op='';
+       // -------------------------------------------
+       $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('show_member')}}", 
+            data: { m_id: m_id, },
+            success:function(data){
+              
+                op+= '<tr>';
+                op+= '<td colspan="2" class="text-center"><b>Library Management System</b></td>';
+                op+= '</tr>';
+                op+= '<tr>';
+                    op+='<td rowspan="4"><img class="img-member1" src="images/members/'+data.image+'"></td>';
+                    op+='<td><b>Category : </b>'+data.category_si+'/'+data.category_ta+'/'+data.category_en+'</td>';
+                op+= '</tr>';
+                op+= '<tr>';
+                    op+='<td><b>Name : </b>'+data.name_si+'/'+data.name_ta+'/'+data.name_en+'</td>';
+                op+= '</tr>';
+                op+= '<tr>';
+                    op+='<td><b>Address1 : </b>'+data.address1_si+'/'+data.address1_ta+'/'+data.address1_en+'</td>';
+                op+= '</tr>';
+                op+= '<tr>';
+                    op+='<td><b>Address2 : </b>'+data.address2_si+'/'+data.address2_ta+'/'+data.address2_en+'</td>';
+                op+= '</tr>';
+                op+= '<tr>';
+                    op+='<td class="text-center" rowspan="4"><img src="data:image/png;base64,{{DNS1D::getBarcodePNG("Code-js", "C128",1,60,array(0,0,0), true)}}" alt="barcode" /></td>';
+                op+= '</tr>';
+                op+= '<tr>';
+                    op+='<td><b>NIC : </b>'+data.nic+'</td>';
+                op+= '</tr>';
+                op+= '<tr>';
+                    op+='<td><b>Mobile: </b>'+data.mobile+'</td>';
+                op+= '</tr>';
+               
+                op+= '<tr>';
+                    op+='<td><b>Register Date: '+data.birthday+'</b></td>';
+                op+= '</tr>';
+
+                $('#show_table tbody').append(op);
+
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // -------------------------------------------
+
+       
+   });
 
 });
 

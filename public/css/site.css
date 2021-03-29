@@ -149,6 +149,16 @@
         border-radius: 25px;
         /* border: #dce8f5 solid 1px !important; */
     }
+    .img-member1 {
+        width: 170px;
+        height: auto;
+        border-radius: 5px;
+    }
+    .show-table td{
+        font-size: 14px;
+        height: 15px !important;
+        overflow:hidden !important;
+    }
 
     @media (max-width: 768px) {
         /* use the max to specify at each container level */
@@ -244,5 +254,10 @@ margin-top: 200px;
     padding: 5px;
     border-radius: 10px;
     padding-right: 15px;
+}
+
+.show-table tbody:before {
+    content:none !important;
+    line-height: 0px !important;
 }
 
