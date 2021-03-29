@@ -58,6 +58,8 @@ class MemberController extends Controller
                         ->addColumn('status', function ($data) {
                             if($data->status==0)
                             {$sts = 'Removed';}
+                            else if($data->status==2)
+                            {$sts = 'Backlist';}
                             else
                             {$sts = 'Active';}
                             return  $sts;  
@@ -172,7 +174,13 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        //
+        $editdata = member::find($id);
+        $Memberdata=member_cat::all();
+        $titledata=title::all();
+        return view('members.edit')
+        ->with('edata',$editdata)
+        ->with('Mdata',$Memberdata)
+        ->with('tdata',$titledata);
     }
 
     /**
@@ -182,9 +190,66 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_member(Request $request)
     {
-        //
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+
+        $mbr= member::find($request->member_id);
+        $this->validate($request,[
+            'title'=>'required',
+            'category'=>'required',
+            'name'.$lang=>'required|max:100|min:5',
+            'Address1'.$lang=>'required|max:100|min:5',
+            'nic'=>'required|max:12|min:10',
+            'Mobile'=>'required|max:12|min:10',
+            'gender'=>'required',
+            'Description'=>'max:150',
+            'registeredDate'=>'required',
+            ]);
+
+        $imageName =$mbr->image;
+        if($request->hasFile('image_member')){
+            
+            $imageName = $request->nic.'-'.time().'.'.$request->image_member->extension();   
+            $request->image_member->move(public_path('images/members'), $imageName);
+
+            if($mbr->image!="default_avatar.png")
+            {
+                $old_image = "images/members/".$mbr->image;
+                if(File::exists($old_image)) {
+                File::delete($old_image);
+                }
+            }
+            
+        }
+
+        $mbr->titleid=$request->title;
+        $mbr->Categoryid=$request->category;
+        $mbr->name_si=$request->name_si;
+        $mbr->name_ta=$request->name_ta;
+        $mbr->name_en=$request->name_en;
+        $mbr->address1_si=$request->Address1_si;
+        $mbr->address1_ta=$request->Address1_ta;
+        $mbr->address1_en=$request->Address1_en;
+        $mbr->address2_si=$request->Address2_si;
+        $mbr->address2_ta=$request->Address2_ta;
+        $mbr->address2_en=$request->Address2_en;
+        $mbr->nic=$request->nic;
+        $mbr->mobile=$request->Mobile;
+        $mbr->birthday=$request->birthday;
+        $mbr->gender=$request->gender;
+        $mbr->description=$request->Description;
+        $mbr->regdate=$request->registeredDate;
+        $mbr->image=$imageName;
+        $mbr->status=$request->status;
+
+        $mbr->save();
+        if($mbr)
+        { return redirect()->route('members.index')->with("success","Member Update Successfully");}
+        else
+        { return redirect()->back('members.index')->with("error","Member Update Faild");}
+       
     }
 
     /**

@@ -118,6 +118,9 @@ function load_datatable()
         if ( data['status'] == "Removed" ) {        
             $('td', row).addClass('font-weight-bold');
             }
+        else if ( data['status'] == "Backlist" ) {        
+            $('td', row).addClass('font-weight-bold text-red');
+            }
         }
     });
 }

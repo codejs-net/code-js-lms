@@ -163,6 +163,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('store_member', [MemberController::class, 'store'])->name('store_member');
     Route::get('create_member', [MemberController::class, 'create'])->name('create_member');
     Route::post('import_member', [MemberController::class, 'import'])->name('import_member');
+    Route::post('update_member', [MemberController::class, 'update_member'])->name('update_member');
     Route::get('edit_member/{id}', [MemberController::class, 'edit'])->name('edit_member');
     Route::get('show_member/{id}', [MemberController::class, 'show'])->name('show_member');
 
