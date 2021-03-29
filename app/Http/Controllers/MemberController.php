@@ -51,7 +51,7 @@ class MemberController extends Controller
                             $button .= '&nbsp;&nbsp;';
                             $button .= '<a href="edit_member/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
-                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#resource_delete" data-resoid="'.$data->id.'" data-resotitle="'.$data->id.'"><i class="fa fa-trash" ></i></a>';
+                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#member_delete" data-mid="'.$data->id.'" data-mname="'.$data->name_en.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
                         })
 
@@ -258,9 +258,15 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        //
+        $member=member::find($request->delete_member_id);
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        $member->delete();
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->back()->with('success','Member Removed successfully.');
     }
 
     public function import(Request $request) 

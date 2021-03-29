@@ -65,7 +65,47 @@ $address2="address2".$lang;
 </div>
 {{-- end main --}}
 
+<!-- --------------------------start  modal delete------------------------------- -->
+   
+<div class="modal fade" id="member_delete" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <div class="text-center">
+                    <h5 class="modal-title" id="modaltitle">Remove Library Members</h5>
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                    
+            </div>
+            
+            <form method="post" action="{{ route('delete_member')}}">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    
+                    <input type="hidden" id="delete_member_id" name="delete_member_id">
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <h5 id="modallabel">Are you sure Remove Member </h5>
+                        </div>
+                        <div class="col-md-8">
+                            <h5><label type="text"  id="delete_member_name"></label></h5>
+                        </div>
+                    </div> 
+                </div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
+<!-- ---------------------end delete Model------------------------------------- -->
 
 
 @endsection
@@ -76,6 +116,16 @@ $address2="address2".$lang;
 $(document).ready(function()
 {
     load_datatable();
+
+    // start member delete function
+    $('#member_delete').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        var m_id = button.data('mid') 
+        var m_name = button.data('mname')
+        document.getElementById("delete_member_id").value= m_id; 
+        document.getElementById("delete_member_name").innerHTML = m_name;
+        })
+    // end member delete function
 
 });
 

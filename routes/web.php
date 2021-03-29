@@ -166,6 +166,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_member', [MemberController::class, 'update_member'])->name('update_member');
     Route::get('edit_member/{id}', [MemberController::class, 'edit'])->name('edit_member');
     Route::get('show_member/{id}', [MemberController::class, 'show'])->name('show_member');
+    Route::POST('delete_member', [MemberController::class, 'delete'])->name('delete_member');
 
     //--------Survey----------------------------------
     Route::resource('survey', SurveyController::class);
