@@ -27,6 +27,7 @@ use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Member_categoryController;
 
 use App\Http\Controllers\BookController;
 
@@ -172,6 +173,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('view_survey/{id}', [SurveyController::class, 'view_survey'])->name('view_survey');
     Route::get('survey_history/{id}', [SurveyController::class, 'survey_history'])->name('survey_history');
     Route::post('delete_survey', [SurveyController::class, 'delete'])->name('delete_survey');
+
+    // --------Member support/category--------------------------------
+    Route::resource('member_catagory', Member_categoryController::class);
+    Route::post('update_member_cat', [Member_categoryController::class, 'update_detail'])->name('update_member_cat');
+    Route::post('delete_member_cat', [Member_categoryController::class, 'delete'])->name('delete_member_cat');
+    Route::post('import_member_cat', [Member_categoryController::class, 'import'])->name('import_member_cat');
+
+    // --------Library support/titles--------------------------------
+    Route::resource('titles', Library_titleController::class);
+    Route::post('update_titles', [Library_titleController::class, 'update_detail'])->name('update_titles');
+    Route::post('delete_titles', [Library_titleController::class, 'delete'])->name('delete_titles');
+    Route::post('import_titles', [Library_titleController::class, 'import'])->name('import_titles');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);

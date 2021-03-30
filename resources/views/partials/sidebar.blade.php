@@ -84,6 +84,12 @@
                                     <p>Return Resources</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('return.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Lending History</p>
+                                </a>
+                            </li>
                             
                         </ul>
                     </li>
@@ -112,7 +118,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('codes.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Member Details</p>
+                                    <p>Member Account</p>
                                 </a>
                             </li>
                             
@@ -136,17 +142,23 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{!! url('/createOT') !!}">
+                                <a class="nav-link" href="{{ route('member_catagory.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Members Support</p>
                                 </a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('resource_catagory.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Impots</p>
+                                    <p>Staff Support</p>
                                 </a>
-                            </li> -->
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('resource_catagory.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Library Support</p>
+                                </a>
+                            </li>
                             
                         </ul>
                     </li>
