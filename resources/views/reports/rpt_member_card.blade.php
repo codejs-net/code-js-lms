@@ -22,8 +22,8 @@
             margin-bottom:20px; 
       }
       .img-member1 {
-        width: 60px;
-        max-height: 60px;
+        width: 65px;
+        max-height: 65px;
         border-radius: 5px;
         border: 1px solid #010101;
       }
@@ -34,15 +34,19 @@
       .text-center{
             text-align: center;
       }
+      .text-left{
+            text-align: left;
+      }
 
       .column-1 {
       float: left;
       width: 25%;
-      background-color:#fefdfe;
+      /* background: #e1ebf0; */
       }
       .column-2 {
       float: left;
-      width: 75%;
+      width: 70%;
+      padding-left:10px;
       }
 
       /* Clear floats after the columns */
@@ -54,13 +58,22 @@
       .qrcode{
             padding-left:2px;
             padding-right:5px;
-            margin-top:10px;
+            margin-top:15px;
+      }
+      .image{
+            padding-left:2px;
+            padding-right:5px;
+            padding-top:10px;
       }
       td{
-            font-size:12px;
+            font-size:11px;
+            height:10px;
       }
       h5{
-            font-size:13px;
+            font-size:14px;
+      }
+      .card-heading td{
+            padding-bottom: 10px;
       }
       </style>
 </head>
@@ -72,6 +85,8 @@
       $name="name".$lang;
       $address1="address1".$lang;
       $address2="address2".$lang;
+      $lib_name="name".$lang;
+
       @endphp
 
 
@@ -89,8 +104,8 @@
             </div>
             <div class="column-2">
             <table>
-                  <tr>
-                        <td colspan="3" class="text-center"><h5>{{ $library}}&nbsp; {{ __("Library Management System")}}</h5></td>
+                  <tr class="card-heading">
+                        <td colspan="3" class="text-left"><h5>{{ $library->$lib_name}}</h5></td>
                   </tr>
                   <tr>
                         <td><b>{{__("Category")}}</b></td>

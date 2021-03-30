@@ -21,11 +21,12 @@ $address2="address2".$lang;
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
-        <div class="col-md-11 col-sm-6 text-center"> 
-            <h5> <i class="fa fa-search"> Search Members</i></h5>
+        <div class="col-md-10 col-sm-6 text-left p-2"> 
+            <h5> <i class="fa fa-search ml-4 pl-2"> Search Members</i></h5>
         </div>  
-        <div class="col-md-1 col-sm-6 text-right">
-            <h4><a href="{{ route('create_member') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a></h4>  
+        <div class="col-md-2 col-sm-6 text-right p-2">
+            <a href="{{ route('create_member') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#member_card_range" ><i class="fa fa-file-pdf-o" ></i>&nbsp;Member Card</a>
         </div>
     </div>
     
@@ -108,6 +109,7 @@ $address2="address2".$lang;
 <!-- ---------------------end delete Model------------------------------------- -->
 
 @include('members.show_modal')
+@include('members.member_card_modal')
 @endsection
 
 @section('script')
@@ -164,7 +166,7 @@ $(document).ready(function()
                     op+='<td><b>Address2 : </b>'+data.address2_si+'/'+data.address2_ta+'/'+data.address2_en+'</td>';
                 op+= '</tr>';
                 op+= '<tr>';
-                    op+='<td class="text-center" rowspan="4"><img src="data:image/png;base64,{{DNS1D::getBarcodePNG("Code-js", "C128",1,60,array(0,0,0), true)}}" alt="barcode" /></td>';
+                    op+='<td class="text-center" rowspan="4"><img src="data:image/png;base64,{{DNS2D::getBarcodePNG('+m_id+', 'QRCODE',5,5)}}" alt="barcode"/></td>';
                 op+= '</tr>';
                 op+= '<tr>';
                     op+='<td><b>NIC : </b>'+data.nic+'</td>';
@@ -237,6 +239,10 @@ function load_datatable()
     });
 }
 
+
+$("#genarate_card").click(function () {
+    $("#loader").show();
+});
 </script>
 
 @endsection

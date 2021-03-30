@@ -141,12 +141,6 @@ Route::group(['middleware' => ['auth']], function() {
    Route::post('fine_receipt', [ReturnController::class, 'fine_receipt'])->name('fine_receipt');
    Route::get('/return_riceipt/{id}', [ReturnController::class, 'return_riceipt'])->name('return_riceipt');
 
-
-
-    // --------Book--------------------------------
-    Route::resource('books', BookController::class);
-    Route::get('update_book_view/{id}', [BookController::class, 'edit'])->name('update_book_view');
-    Route::post('delete_book', [BookController::class, 'delete'])->name('delete_book');
     // --------Code--------------------------------
     Route::resource('codes', CodeController::class);
     Route::get('importExportView', [CodeController::class, 'importExportView']);
@@ -190,6 +184,7 @@ Route::group(['middleware' => ['auth']], function() {
     // -------Reports-PDF------------------------------
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
     Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');
+    Route::POST('member_card_range', [ReportController::class, 'member_card_range'])->name('member_card_range');
 
      // -------Reports-Excel------------------------------
      Route::POST('export_recource', [ReportController::class, 'export_recource'])->name('export_recource');

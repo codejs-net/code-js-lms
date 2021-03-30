@@ -17,6 +17,7 @@ use App\Models\resource_donate;
 use App\Models\resource_publisher;
 use App\Models\resource;
 use App\Models\center;
+use App\Models\library;
 use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\member;
@@ -74,12 +75,29 @@ class ReportController extends Controller
 
     public function member_card(Request $request)
     {
-        $library="Code-js";
+        $library = library::first();
         $data = view_member_data::find($request->show_member_id);
         $pdf = PDF::loadView('reports.rpt_member_card',compact('data','library'),[],
             [
             'format' => [85,54],
             ]);
         return $pdf->stream($data->id.'-Member Card.pdf');
+    }
+
+    public function member_card_range(Request $request)
+    {
+        ini_set('max_execution_time', '1200');
+        ini_set("pcre.backtrack_limit", "90000000");
+        ini_set('memory_limit', '-1');
+        $library = library::first();
+
+        $mdata = view_member_data::select('*')
+        ->whereBetween('id', [$request->txt_start, $request->txt_end])
+        ->get();
+        $pdf = PDF::loadView('reports.rpt_member_card_range',compact('mdata','library'),[],
+            [
+            'format' => [85,54],
+            ]);
+        return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Member Card.pdf');
     }
 }

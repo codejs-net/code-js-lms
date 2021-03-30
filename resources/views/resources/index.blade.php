@@ -27,7 +27,7 @@ $dd_section="section".$lang;
 <div class="container-fluid">
     <div class="row text-center">
         <div class="col-md-6 col-sm-6 col-12 text-left"> 
-            <h5> <i class="fa fa-search ml-4"> Search Resources</i></h5>
+            <h5> <i class="fa fa-search ml-4 pl-2"> Search Resources</i></h5>
         </div>  
         <div class="col-md-6 col-sm-6 col-12 text-right pb-2">
             <form class="form-inline pull-right" action="{{ route('report_recource') }}" id="report_form" method="POST">
