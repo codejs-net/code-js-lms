@@ -61,7 +61,7 @@
       .image{
             padding-left:2px;
             padding-right:5px;
-            padding-top:10px;
+            padding-top:5px;
       }
       .tbl_card{
             width:100%;
