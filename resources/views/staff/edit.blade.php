@@ -14,20 +14,15 @@ $title="title".$lang;
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
     <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Members&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> Add Member&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> Edit Member&nbsp;</a></li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container">
     <div class="row text-center mb-2">
-        <div class="col-md-11 col-sm-6 text-center"> 
-            <h5> <i class="fa fa-plus"> Add Member</i></h5>
+        <div class="col-md-12 col-sm-6 text-center"> 
+            <h5> <i class="fa fa-plus"> Edit Member</i></h5>
         </div>  
-        <div class="col-md-1 col-sm-6 text-right">
-            @can('data-import')
-            <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
-            @endcan
-        </div>
     </div>
     
 </div>
@@ -35,12 +30,12 @@ $title="title".$lang;
         <!-- Main content -->
 <div class="container">
     <div class="card card-body">
-        <form  enctype="multipart/form-data"  id="member_save" class="needs-validation"  novalidate>
+        <form action="{{route('update_member')}}" method="POST" enctype="multipart/form-data"  id="member_update" class="needs-validation"  novalidate>
         {{ csrf_field() }}
-
+        <input type="hidden" name="member_id" id="member_id">
         <div class="form-row border border-secondary bg-light">
             <div class="col-md-2 col-12 m-auto pl-2 text-center">
-                <img src="{{ asset('images/members/default_avatar.png') }}" class="img-resource1 elevation-3" id="avater_update">
+                <img src="" class="img-resource1 elevation-3" id="avater_update">
             </div>
             <div class="col-md-10 col-12">
                 <div class="row">
@@ -74,7 +69,7 @@ $title="title".$lang;
             <div class="row form-group">
                 <div class="form-group col-md-6">
                     <label for="categry">Category : </label>
-                    <select class="form-control"name="category" value="{{old('category')}}"required>
+                    <select class="form-control"name="category" id="category" value="{{old('category')}}"required>
                     <option value="" disabled selected>Select Member's Category</option>
                     @foreach($Mdata as $item)
                         <option value="{{ $item->id }}">{{ $item->$category }}</option>
@@ -107,28 +102,28 @@ $title="title".$lang;
             </div>
             <div class="form-group">
                 <label for="Address">Address Line2 :</label>
-                <input type="text" class="form-control mb-1" name="Address2_si" placeholder="Address Line 2 Sinhala" value="{{old('Address2_si')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_ta" placeholder="Address Line 2 Tamil" value="{{old('Address2_ta')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_en" placeholder="Address Line 2 English" value="{{old('Address2_en')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_si" id="Address2_si" placeholder="Address Line 2 Sinhala" value="{{old('Address2_si')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_ta" id="Address2_si" placeholder="Address Line 2 Tamil" value="{{old('Address2_ta')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_en" id="Address2_si" placeholder="Address Line 2 English" value="{{old('Address2_en')}}"> 
                 <span class="text-danger">{{ $errors->first('Address2') }}</span>
             </div>
 
             <div class=" row form-group">
                 <div class="form-group col-md-6">
                     <label for="NIC">NIC :</label>
-                    <input type="text" class="form-control" name="nic" placeholder="NIC" value="{{old('nic')}}"required>
+                    <input type="text" class="form-control" name="nic" id="nic" placeholder="NIC" value="{{old('nic')}}"required>
                     <span class="text-danger">{{ $errors->first('nic') }}</span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="Mobile">Mobile No :</label>
-                    <input type="text" class="form-control" name="Mobile" placeholder="Mobile No" value="{{old('Mobile')}}"required>
+                    <input type="text" class="form-control" name="Mobile" id="Mobile" placeholder="Mobile No" value="{{old('Mobile')}}"required>
                     <span class="text-danger">{{ $errors->first('Mobile') }}</span>
                 </div>
             </div>
             <div class=" row form-group">
                 <div class="form-group col-md-6">
                     <label for="NIC">Birth Day :</label>
-                    <input type="date" class="form-control" name="birthday" placeholder="Birth Day" value="{{old('birthday')}}"required>
+                    <input type="date" class="form-control" name="birthday" id="birthday" placeholder="Birth Day" value="{{old('birthday')}}"required>
                     <span class="text-danger">{{ $errors->first('birthday') }}</span>
                 </div>
                 <div class="form-group col-md-6">
@@ -143,26 +138,48 @@ $title="title".$lang;
                             <label class="form-check-label">Female</label>
                         </div>
                    </div>
+
                 </div>
             </div>
             <div class="form-group">
                 <label for="descrip">Description :</label>
-                <textarea class="form-control" rows="3" id="comment" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
+                <textarea class="form-control" rows="3" id="Description" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
             <div class=" row form-group">
                 <div class="form-group col-md-6">
                     <label for="regdate">Registerd Date :</label>
-                    <input type="date" class="form-control" name="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
+                    <input type="date" class="form-control" name="registeredDate" id="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
                     <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
                 <div class="form-group col-md-6">
                 </div>
             </div>
+
+            <div class="form-row border border-secondary bg-light">
+                <div class="form-group col-md-3 col-3 p-2 mt-2">
+                    <label for="status">Change Status</label><br>
+                   <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="status" id="status" value="1">Active
+                        </label> &nbsp;
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="status" id="status" value="0">Remove
+                        </label> &nbsp;
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="status" id="status" value="2">Backlist
+                        </label> &nbsp;
+                   </div>
+                   <span class="text-danger">{{ $errors->first('status') }}</span>
+               </div>
+               <div class="form-group col-md-9 col-9 p-2 mt-2">
+               
+                </div>
+           </div>
             
-        <div class="box-footer clearfix pull-right">
+        <div class="box-footer mt-2 clearfix pull-right">
             
-            <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
+            <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Update")}}</button>
             &nbsp; &nbsp;
             <button type="button" class="btn btn-secondary btn-sm" id="cler">Reset
             <i class="fa fa-times"></i></button>
@@ -179,51 +196,6 @@ $title="title".$lang;
     </div>
 </div>
 
-<!---------------------------import Modal --------------------------------------->
-<div class="modal fade" id="data_import" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-indigo">
-                <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Import Members</h5>
-                </div>
-                
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-                    
-            </div>
-            
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_member') }}"class="needs-validation"  novalidate>
-                {{ csrf_field() }}
-                <div class="modal-body">
-
-                <div class="custom-file form-group text-center m-3">
-                    <div class="col-md-10">
-                        <input type="file" class="form-control-file custom-file-input" id="file" name="file" required>
-                        <label class="custom-file-label " for="customFile">Choose Excel file</label>
-                    </div>
-                    <div class="col-md-2">
-                   
-                   
-                </div>
-            </div>
-                    
-                </div>
-
-                <div class="modal-footer">
-                    
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    @can('data-import')
-                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
-                    @endcan
-                </div>
-            </form>
-           
-        </div>
-    </div>
-</div>
-
 
 @endsection
 
@@ -232,6 +204,29 @@ $title="title".$lang;
 
 $(document).ready(function()
 {
+        $("#avater_update").attr('src','/images/members/{{$edata->image}}');
+        $('#member_id').val("{{$edata->id}}");
+        $('input:radio[name="title"]').filter('[value="{{$edata->titleid}}"]').attr('checked', true);
+        $('#category').val("{{$edata->categoryid}}");
+        $('#name_si').val("{{$edata->name_si}}");
+        $('#name_ta').val("{{$edata->name_ta}}");
+        $('#name_en').val("{{$edata->name_en}}");
+        $('#Address1_si').val("{{$edata->address1_si}}");
+        $('#Address1_ta').val("{{$edata->address1_ta}}");
+        $('#Address1_en').val("{{$edata->address1_en}}");
+        $('#Address2_si').val("{{$edata->address2_si}}");
+        $('#Address2_ta').val("{{$edata->address2_ta}}");
+        $('#Address2_en').val("{{$edata->address2_en}}");
+        $('#nic').val("{{$edata->nic}}");
+        $('#Mobile').val("{{$edata->mobile}}");
+        $('#birthday').val("{{$edata->birthday}}");
+        $('input:radio[name="gender"]').filter('[value="{{$edata->gender}}"]').attr('checked', true);
+        $('#Description').val("{{$edata->description}}");
+        $('#registeredDate').val("{{$edata->regdate}}");
+        $('input:radio[name="status"]').filter('[value="{{$edata->status}}"]').attr('checked', true);
+       
+
+
     @if($locale=="si")
         $("#name_si").prop('required',true);
         $("#Address1_si").prop('required',true);
@@ -243,45 +238,37 @@ $(document).ready(function()
         $("#Address1_en").prop('required',true);
     @endif
 
-    $('#member_save').on('submit', function(event){
-        event.preventDefault();
-        var formData = new FormData(this);
-        $.ajax
-            ({
-                type: "POST",
-                dataType : 'json',
-                url: "{{route('members.store')}}", 
-                data: formData,
-                contentType: false,
-                cache: false,
-                processData: false,
+    // $('#member_update').on('submit', function(event){
+    //     event.preventDefault();
+    //     var formData = new FormData(this);
+    //     $.ajax
+    //         ({
+    //             type: "POST",
+    //             dataType : 'json',
+    //             url: "{{route('update_member')}}", 
+    //             data: formData,
+    //             contentType: false,
+    //             cache: false,
+    //             processData: false,
 
-                beforeSend: function(){
-                    $("#loader").show();
-                },
+    //             beforeSend: function(){
+    //                 $("#loader").show();
+    //             },
 
-                success:function(data){
-                    toastr.success('Member Added Successfully')
-                    $("#member_save").trigger("reset");
-                },
-                error:function(data){
-                    toastr.error('Member Add faild Plese try again')
-                },
-                complete:function(data){
-                    $("#loader").hide();
-                }
-            })
+    //             success:function(data){
+    //                 toastr.success('Member Added Successfully')
+                    
+    //             },
+    //             error:function(data){
+    //                 toastr.error('Member Add faild Plese try again')
+    //             },
+    //             complete:function(data){
+    //                 $("#loader").hide();
+    //             }
+    //         })
 
-    });
+    // });
 });
-
-
-$(".custom-file-input").on("change", function() {
-  var fileName = $(this).val().split("\\").pop();
-  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-});
-
-
 
 </script>
 

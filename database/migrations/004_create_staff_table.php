@@ -19,7 +19,9 @@ class CreateStaffTable extends Migration
             $table->integer('center_id')->unsigned()->nullable();
             $table->foreign('center_id')->references('id')->on('centers');
 
-            $table->string('title')->nullable();
+            $table->integer('titleid')->unsigned()->nullable();
+            $table->foreign('titleid')->references('id')->on('titles');
+
             $table->string('name_si')->nullable();
             $table->string('name_ta')->nullable();
             $table->string('name_en')->nullable();
@@ -38,6 +40,7 @@ class CreateStaffTable extends Migration
             $table->string('description')->nullable();
             $table->date('regdate')->default(Carbon::now());
             $table->string('image')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

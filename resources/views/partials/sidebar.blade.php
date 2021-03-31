@@ -248,6 +248,32 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-briefcase"></i>
+                            <p>
+                            Staff
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                            <a href="{{ route('staff.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add Staff</p>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a href="{{ route('staff.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Search Staff</p>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+
                     @can('role-list')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">

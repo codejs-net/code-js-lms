@@ -29,6 +29,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Member_categoryController;
 use App\Http\Controllers\Library_titleController;
 use App\Http\Controllers\Staff_designetionController;
+use App\Http\Controllers\StaffController;
 
 
 
@@ -162,6 +163,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('edit_member/{id}', [MemberController::class, 'edit'])->name('edit_member');
     Route::POST('show_member', [MemberController::class, 'show'])->name('show_member');
     Route::POST('delete_member', [MemberController::class, 'delete'])->name('delete_member');
+
+    //--------Staff----------------------------------
+    Route::resource('staff', StaffController::class);
+    Route::post('store_staff', [StaffController::class, 'store'])->name('store_staff');
+    Route::get('create_staff', [StaffController::class, 'create'])->name('create_staff');
+    Route::post('import_staff', [StaffController::class, 'import'])->name('import_staff');
+    Route::post('update_staff', [StaffController::class, 'update_staff'])->name('update_staff');
+    Route::get('edit_staff/{id}', [StaffController::class, 'edit'])->name('edit_staff');
+    Route::POST('show_staff', [StaffController::class, 'show'])->name('show_staff');
+    Route::POST('delete_staff', [StaffController::class, 'delete'])->name('delete_staff');
 
     //--------Survey----------------------------------
     Route::resource('survey', SurveyController::class);
