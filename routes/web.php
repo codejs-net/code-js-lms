@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -20,7 +20,6 @@ use App\Http\Controllers\Resource_PublisherController;
 use App\Http\Controllers\SoapController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\LocalizationController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReturnController;
@@ -28,8 +27,8 @@ use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Member_categoryController;
+use App\Http\Controllers\Library_titleController;
 
-use App\Http\Controllers\BookController;
 
 
 
@@ -185,6 +184,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_titles', [Library_titleController::class, 'update_detail'])->name('update_titles');
     Route::post('delete_titles', [Library_titleController::class, 'delete'])->name('delete_titles');
     Route::post('import_titles', [Library_titleController::class, 'import'])->name('import_titles');
+
+     // --------Staff support/designation--------------------------------
+     Route::resource('titles', Library_titleController::class);
+     Route::post('update_titles', [Library_titleController::class, 'update_detail'])->name('update_titles');
+     Route::post('delete_titles', [Library_titleController::class, 'delete'])->name('delete_titles');
+     Route::post('import_titles', [Library_titleController::class, 'import'])->name('import_titles');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);

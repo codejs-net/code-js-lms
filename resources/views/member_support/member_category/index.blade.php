@@ -16,7 +16,7 @@ $category="category".$lang;
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
-<div class="container-fluid">
+<div class="container">
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
@@ -30,7 +30,7 @@ $category="category".$lang;
 </div>
 
         <!-- Main content -->
-<div class="container-fluid">
+<div class="container">
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 

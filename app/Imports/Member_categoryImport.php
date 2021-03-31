@@ -2,16 +2,24 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use App\Models\member_cat;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class Member_categoryImport implements ToCollection
+class Member_categoryImport implements ToModel, WithHeadingRow
 {
     /**
-    * @param Collection $collection
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function collection(Collection $collection)
+    public function model(array $row)
     {
-        //
+        return new member_cat([
+            'id'            => $row['id'],
+            'category_si'   => $row['si'],
+            'category_ta'   => $row['ta'],
+            'category_en'   => $row['en'],
+        ]);
     }
 }
