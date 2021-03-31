@@ -10,5 +10,18 @@
     "Books Lending":"පොත් බැහැර දීම",
     "Issue Books":"පොත් නිකුත් කිරීම",
     "Return Books":"පොත් නැවත භාරදීම",
-    "Members":"සාමාජිකයින්"
+
+    "StaffID":"අංකය",
+    "Avatar":"ජායාරූපය",
+    "Title":"උපසර්ගය",
+    "Designation":"තනතුර",
+    "Name":"නම",
+    "Address1":"ලිපිනය1",
+    "Addresss2":"ලිපිනය2",
+    "NIC":"ජ.හැ.අ",
+    "Mobile":"දුරකතන අං",
+    "Gender":"ස්ත්‍රී පුරුෂ භාවය",
+    "Status":"තත්වය",
+    "Action":"ක්‍රියාවන්"
+
   }

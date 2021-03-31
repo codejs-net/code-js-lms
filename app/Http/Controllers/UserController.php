@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\view_user_data;
+use App\Models\setting;
+use App\Models\staff;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
 use DataTables;
+use Session;
     
 class UserController extends Controller
 {
@@ -20,9 +24,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::all('*');
-        // $data = DB::table('users')->get();
-        // dd($data);
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
+
+        if($setting->value=="0"){$lang="_".$locale;}
+        else{$lang="_".$setting->value;}
+        Session::put('db_locale', $lang);
+
+        $data = User::select('*')->with(['staff'])->get();
+        // $data = User::all()->with(['staff']);
         return view('users.index',compact('data'));
     
     }
@@ -53,8 +63,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        // $roles = Role::pluck('name','name')->all();
+        $roles=Role::all();
+        $staffdata=staff::all();
+        return view('users.create',compact('roles','staffdata'));
     }
     
     /**
@@ -66,17 +78,27 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'username' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
+
+        $user = User::create([
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' =>  Hash::make($request->password),
+            'staff_id' => $request->staff,
+        ]);
+
+        $user->assignRole([$request->roles]);
+
     
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        // $input = $request->all();
+        // $input['password'] = Hash::make($input['password']);
     
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        // $user = User::create($input);
+        // $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
@@ -103,10 +125,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $userRole = $user->roles->pluck('id')->first();
+        $roles=Role::all();
+        $staffdata=staff::all();
     
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit',compact('user','roles','userRole','staffdata'));
     }
     
     /**
@@ -120,7 +143,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            // 'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);

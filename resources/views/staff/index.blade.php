@@ -8,7 +8,6 @@ $name="name".$lang;
 $address1="address1".$lang;
 $address2="address2".$lang;
 
-
 @endphp
 
 <nav aria-label="breadcrumb">
@@ -39,18 +38,18 @@ $address2="address2".$lang;
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="staff_datatable">
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
-                            <th scope="col">Staff ID</th>
-                            <th scope="col">Avatar</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col" style="width: 15%">Name</th>
-                            <th scope="col" style="width: 15%">Address1</th>
-                            <th scope="col" style="width: 15%">Addresss2</th>
-                            <th scope="col">NIC</th>
-                            <th scope="col">Mobile</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Status</th>
-                            <th scope="col"style="width: 10%">Action</th>
+                            <th scope="col">{{__('StaffID')}}</th>
+                            <th scope="col">{{__('Avatar')}}</th>
+                            <th scope="col">{{__('Title')}}</th>
+                            <th scope="col">{{__('Designation')}}</th>
+                            <th scope="col" style="width: 15%">{{__('Name')}}</th>
+                            <th scope="col" style="width: 10%">{{__('Address1')}}</th>
+                            <th scope="col" style="width: 10%">{{__('Addresss2')}}</th>
+                            <th scope="col">{{__('NIC')}}</th>
+                            <th scope="col">{{__('Mobile')}}</th>
+                            <th scope="col">{{__('Gender')}}</th>
+                            <th scope="col">{{__('Status')}}</th>
+                            <th scope="col"style="width: 10%">{{__('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>  
