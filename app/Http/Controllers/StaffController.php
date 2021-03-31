@@ -153,7 +153,7 @@ class StaffController extends Controller
      */
     public function show(Request $request)
     {
-        $data = view_member_data::find($request->m_id);
+        $data = view_staff_data::find($request->m_id);
         return response()->json($data);
     }
 
@@ -167,13 +167,15 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        $editdata = member::find($id);
-        $Memberdata=member_cat::all();
+        $editdata = staff::find($id);
+        $staffdata=designetion::all();
         $titledata=title::all();
-        return view('members.edit')
+        $centerdata=center::all();
+        return view('staff.edit')
         ->with('edata',$editdata)
-        ->with('Mdata',$Memberdata)
-        ->with('tdata',$titledata);
+        ->with('Mdata',$staffdata)
+        ->with('tdata',$titledata)
+        ->with('cdata',$centerdata);
     }
 
     /**
@@ -183,15 +185,15 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_member(Request $request)
+    public function update_staff(Request $request)
     {
         $locale = session()->get('locale');
         $lang="_".$locale;
 
-        $mbr= member::find($request->member_id);
+        $mbr= staff::find($request->staff_id);
         $this->validate($request,[
             'title'=>'required',
-            'category'=>'required',
+            'designation'=>'required',
             'name'.$lang=>'required|max:100|min:5',
             'Address1'.$lang=>'required|max:100|min:5',
             'nic'=>'required|max:12|min:10',
@@ -205,11 +207,11 @@ class StaffController extends Controller
         if($request->hasFile('image_member')){
             
             $imageName = $request->nic.'-'.time().'.'.$request->image_member->extension();   
-            $request->image_member->move(public_path('images/members'), $imageName);
+            $request->image_member->move(public_path('images/staffs'), $imageName);
 
             if($mbr->image!="default_avatar.png")
             {
-                $old_image = "images/members/".$mbr->image;
+                $old_image = "images/staffs/".$mbr->image;
                 if(File::exists($old_image)) {
                 File::delete($old_image);
                 }
@@ -218,7 +220,8 @@ class StaffController extends Controller
         }
 
         $mbr->titleid=$request->title;
-        $mbr->Categoryid=$request->category;
+        $mbr->designetion_id=$request->designation;
+        $mbr->center_id=$request->center;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
@@ -239,9 +242,9 @@ class StaffController extends Controller
 
         $mbr->save();
         if($mbr)
-        { return redirect()->route('members.index')->with("success","Member Update Successfully");}
+        { return redirect()->route('staff.index')->with("success","Staff Update Successfully");}
         else
-        { return redirect()->back('members.index')->with("error","Member Update Faild");}
+        { return redirect()->back('staff.index')->with("error","Staff Update Faild");}
        
     }
 
@@ -253,13 +256,13 @@ class StaffController extends Controller
      */
     public function delete(Request $request)
     {
-        $member=member::find($request->delete_member_id);
+        $member=staff::find($request->delete_staff_id);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $member->delete();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        return redirect()->back()->with('success','Member Removed successfully.');
+        return redirect()->back()->with('success','Staff data Removed successfully.');
     }
 
     public function import(Request $request) 

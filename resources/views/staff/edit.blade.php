@@ -5,23 +5,25 @@
 @php
 $locale = session()->get('locale');
 $lang="_".$locale;
-$category="category".$lang;
+$designetion="designetion".$lang;
 $title="title".$lang;
+$center="name".$lang;
+
 
 @endphp
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Members&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> Edit Member&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Staff&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> Edit Staff&nbsp;</a></li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container">
     <div class="row text-center mb-2">
         <div class="col-md-12 col-sm-6 text-center"> 
-            <h5> <i class="fa fa-plus"> Edit Member</i></h5>
+            <h5> <i class="fa fa-plus"> Edit Staff</i></h5>
         </div>  
     </div>
     
@@ -30,9 +32,9 @@ $title="title".$lang;
         <!-- Main content -->
 <div class="container">
     <div class="card card-body">
-        <form action="{{route('update_member')}}" method="POST" enctype="multipart/form-data"  id="member_update" class="needs-validation"  novalidate>
+        <form action="{{route('update_staff')}}" method="POST" enctype="multipart/form-data"  id="staff_update" class="needs-validation"  novalidate>
         {{ csrf_field() }}
-        <input type="hidden" name="member_id" id="member_id">
+        <input type="hidden" name="staff_id" id="staff_id">
         <div class="form-row border border-secondary bg-light">
             <div class="col-md-2 col-12 m-auto pl-2 text-center">
                 <img src="" class="img-resource1 elevation-3" id="avater_update">
@@ -40,7 +42,7 @@ $title="title".$lang;
             <div class="col-md-10 col-12">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="image">Member Image</label>
+                        <label for="image">Staff Image</label>
                         <input type="file" id="image_member" name="image_member" class="form-control-file bg-white p-1 elevation-1">
                     </div>
                 </div>
@@ -66,24 +68,42 @@ $title="title".$lang;
 
         <hr>
 
-            <div class="row form-group">
-                <div class="form-group col-md-6">
-                    <label for="categry">Category : </label>
-                    <select class="form-control"name="category" id="category" value="{{old('category')}}"required>
-                    <option value="" disabled selected>Select Member's Category</option>
+        <div class="row form-group">
+                <div class="form-group col-md-5">
+                    <label for="designation">Designation : </label>
+                    <select class="form-control"name="designation" id="designation" value="{{old('designation')}}"required>
+                    <option value="" disabled selected>Select Staff's Designation</option>
                     @foreach($Mdata as $item)
-                        <option value="{{ $item->id }}">{{ $item->$category }}</option>
+                        <option value="{{ $item->id }}">{{ $item->$designetion }}</option>
                     @endforeach
             
                     </select>
-                    <div class="invalid-feedback">{{ __("Please Select the Category")}}</div>
-                    <span class="text-danger">{{ $errors->first('category') }}</span>
+                    <div class="invalid-feedback">{{ __("Please Select the Designation")}}</div>
+                    <span class="text-danger">{{ $errors->first('designation') }}</span>
                 </div>
-                <div class="form-group col-md-6 text-left">
+                <div class="form-group col-md-1 text-left">
                     <label for="categry">&nbsp;</label><br>
                     
                     <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
-                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New Category</label>
+                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp;</label>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="center">Center : </label>
+                    <select class="form-control"name="center" id="center" value="{{old('center')}}"required>
+                    <option value="" disabled selected>Select Staff's Center</option>
+                    @foreach($cdata as $item)
+                        <option value="{{ $item->id }}">{{ $item->$center }}</option>
+                    @endforeach
+            
+                    </select>
+                    <div class="invalid-feedback">{{ __("Please Select the Center")}}</div>
+                    <span class="text-danger">{{ $errors->first('center') }}</span>
+                </div>
+                <div class="form-group col-md-1 text-left">
+                    <label for="categry">&nbsp;</label><br>
+                    
+                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
+                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp;</label>
                 </div>
             </div>
             <div class="form-group">
@@ -166,9 +186,6 @@ $title="title".$lang;
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="status" id="status" value="0">Remove
                         </label> &nbsp;
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="status" id="status" value="2">Backlist
-                        </label> &nbsp;
                    </div>
                    <span class="text-danger">{{ $errors->first('status') }}</span>
                </div>
@@ -179,7 +196,7 @@ $title="title".$lang;
             
         <div class="box-footer mt-2 clearfix pull-right">
             
-            <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Update")}}</button>
+            <button type="submit" class="btn btn-success btn-sm" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Update")}}</button>
             &nbsp; &nbsp;
             <button type="button" class="btn btn-secondary btn-sm" id="cler">Reset
             <i class="fa fa-times"></i></button>
@@ -204,10 +221,11 @@ $title="title".$lang;
 
 $(document).ready(function()
 {
-        $("#avater_update").attr('src','/images/members/{{$edata->image}}');
-        $('#member_id').val("{{$edata->id}}");
+        $("#avater_update").attr('src','/images/staffs/{{$edata->image}}');
+        $('#staff_id').val("{{$edata->id}}");
         $('input:radio[name="title"]').filter('[value="{{$edata->titleid}}"]').attr('checked', true);
-        $('#category').val("{{$edata->categoryid}}");
+        $('#designation').val("{{$edata->designetion_id}}");
+        $('#center').val("{{$edata->center_id}}");
         $('#name_si').val("{{$edata->name_si}}");
         $('#name_ta').val("{{$edata->name_ta}}");
         $('#name_en').val("{{$edata->name_en}}");
@@ -238,36 +256,7 @@ $(document).ready(function()
         $("#Address1_en").prop('required',true);
     @endif
 
-    // $('#member_update').on('submit', function(event){
-    //     event.preventDefault();
-    //     var formData = new FormData(this);
-    //     $.ajax
-    //         ({
-    //             type: "POST",
-    //             dataType : 'json',
-    //             url: "{{route('update_member')}}", 
-    //             data: formData,
-    //             contentType: false,
-    //             cache: false,
-    //             processData: false,
-
-    //             beforeSend: function(){
-    //                 $("#loader").show();
-    //             },
-
-    //             success:function(data){
-    //                 toastr.success('Member Added Successfully')
-                    
-    //             },
-    //             error:function(data){
-    //                 toastr.error('Member Add faild Plese try again')
-    //             },
-    //             complete:function(data){
-    //                 $("#loader").hide();
-    //             }
-    //         })
-
-    // });
+    
 });
 
 </script>
