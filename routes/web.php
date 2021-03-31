@@ -28,6 +28,7 @@ use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Member_categoryController;
 use App\Http\Controllers\Library_titleController;
+use App\Http\Controllers\Staff_designetionController;
 
 
 
@@ -184,12 +185,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_titles', [Library_titleController::class, 'update_detail'])->name('update_titles');
     Route::post('delete_titles', [Library_titleController::class, 'delete'])->name('delete_titles');
     Route::post('import_titles', [Library_titleController::class, 'import'])->name('import_titles');
+    Route::get('title_index1', [Library_titleController::class, 'index1'])->name('title_index1');
+    Route::get('title_index2', [Library_titleController::class, 'index2'])->name('title_index2');
 
      // --------Staff support/designation--------------------------------
-     Route::resource('titles', Library_titleController::class);
-     Route::post('update_titles', [Library_titleController::class, 'update_detail'])->name('update_titles');
-     Route::post('delete_titles', [Library_titleController::class, 'delete'])->name('delete_titles');
-     Route::post('import_titles', [Library_titleController::class, 'import'])->name('import_titles');
+     Route::resource('designation', Staff_designetionController::class);
+     Route::post('update_designation', [Staff_designetionController::class, 'update_detail'])->name('update_designation');
+     Route::post('delete_designation', [Staff_designetionController::class, 'delete'])->name('delete_designation');
+     Route::post('import_designation', [Staff_designetionController::class, 'import'])->name('import_designation');
 
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);

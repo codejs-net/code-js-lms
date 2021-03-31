@@ -148,7 +148,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('resource_catagory.index') }}">
+                                <a class="nav-link" href="{{ route('designation.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Staff Support</p>
                                 </a>

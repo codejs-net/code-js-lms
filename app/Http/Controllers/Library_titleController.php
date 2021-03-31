@@ -27,6 +27,16 @@ class Library_titleController extends Controller
         $details = title::orderBy('id','ASC')->paginate(5);
         return view('library_support.titles.index',compact('details')); 
     }
+    public function index1()
+    {
+        $details = title::orderBy('id','ASC')->paginate(5);
+        return view('library_support.titles.index1',compact('details')); 
+    }
+    public function index2()
+    {
+        $details = title::orderBy('id','ASC')->paginate(5);
+        return view('library_support.titles.index2',compact('details')); 
+    }
 
     public function store(Request $request)
     {

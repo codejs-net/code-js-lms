@@ -261,8 +261,15 @@ $('.nav-link').on('click',function(){
 });
 
 toastr.options = {
-    positionClass: 'toast-top-center'
-};
+  "debug": false,
+  "positionClass": "toast-top-center",
+  "onclick": null,
+  "fadeIn": 300,
+  "fadeOut": 500,
+  "timeOut": 3000,
+  // "extendedTimeOut": 1000
+ 
+}
 
 $.fn.select2.defaults.set( "theme", "bootstrap" );
 

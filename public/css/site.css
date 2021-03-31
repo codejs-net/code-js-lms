@@ -122,6 +122,9 @@
         
     }
     
+    .toast-top-center {
+        top: 20px;
+    }
     
     /* .type_bar{
         display: flex;
