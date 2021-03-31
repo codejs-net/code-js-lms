@@ -68,7 +68,7 @@ $address2="address2".$lang;
 
 <!-- --------------------------start  modal delete------------------------------- -->
    
-<div class="modal fade" id="member_delete" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="staff_delete" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info">
@@ -86,13 +86,13 @@ $address2="address2".$lang;
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
-                    <input type="hidden" id="delete_member_id" name="delete_member_id">
+                    <input type="hidden" id="delete_staff_id" name="delete_staff_id">
                     <div class="row form-group">
                         <div class="col-md-6">
                             <h5 id="modallabel">Are you sure Remove Staff </h5>
                         </div>
                         <div class="col-md-8">
-                            <h5><label type="text"  id="delete_member_name"></label></h5>
+                            <h5><label type="text"  id="delete_staff_name"></label></h5>
                         </div>
                     </div> 
                 </div>
@@ -119,12 +119,12 @@ $(document).ready(function()
     load_datatable();
 
     // start member delete function
-    $('#member_delete').on('show.bs.modal', function (event) {
+    $('#staff_delete').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) 
-        var m_id = button.data('mid') 
-        var m_name = button.data('mname')
-        document.getElementById("delete_member_id").value= m_id; 
-        document.getElementById("delete_member_name").innerHTML = m_name;
+        var m_id = button.data('sid') 
+        var m_name = button.data('sname')
+        document.getElementById("delete_staff_id").value= m_id; 
+        document.getElementById("delete_staff_name").innerHTML = m_name;
         })
     // end member delete function
 

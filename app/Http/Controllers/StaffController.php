@@ -45,7 +45,7 @@ class StaffController extends Controller
                             $button .= '&nbsp;&nbsp;';
                             $button .= '<a href="edit_staff/'.$data->id.'" class="btn btn-sm btn-outline-info "><i class="fa fa-pencil" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
-                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#staff_delete" data-mid="'.$data->id.'" data-sname="'.$data->name_en.'"><i class="fa fa-trash" ></i></a>';
+                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#staff_delete" data-sid="'.$data->id.'" data-sname="'.$data->name_en.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
                         })
 
