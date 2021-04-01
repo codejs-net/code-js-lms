@@ -48,7 +48,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
+     // --------User--------------------------------
     Route::resource('users', UserController::class);
+    Route::post('update_users', [UserController::class, 'update_users'])->name('update_users');
+    
     Route::resource('products', ProductController::class);
     
     // --------Resource--------------------------------

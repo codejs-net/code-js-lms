@@ -85,14 +85,23 @@ $staff="name".$lang;
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
-       
+        <div class="form-group">
+            <label for="staff">Password : </label>
+            <input type="text" name="password" id="password" class="form-control" placeholder="Password" required>
+            <span class="text-danger">{{ $errors->first('password') }}</span>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+           <label for="staff">Confirm Password : </label>
+            <input type="text" name="confirm-password" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
+        </div>
     </div>
    
 </div>
 <hr>
     <div class="box-footer clearfix pull-right">    
         <button type="submit" class="btn btn-success btn-sm ml-2" id="save_staff"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Update")}}</button>
-        <button type="button" class="btn btn-danger btn-sm ml-2" id="sreset_password"><i class="fa fa-chek" aria-hidden="true"></i> {{ __("Reset Password")}}</button>
         <button type="button" class="btn btn-secondary btn-sm ml-2" id="cler">&nbsp;Reset<i class="fa fa-times"></i></button>
     </div>
 </form>
