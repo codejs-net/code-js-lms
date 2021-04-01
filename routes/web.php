@@ -51,7 +51,8 @@ Route::group(['middleware' => ['auth']], function() {
      // --------User--------------------------------
     Route::resource('users', UserController::class);
     Route::post('update_users', [UserController::class, 'update_users'])->name('update_users');
-    
+    Route::post('pw_reset', [UserController::class, 'pw_reset'])->name('pw_reset');
+
     Route::resource('products', ProductController::class);
     
     // --------Resource--------------------------------

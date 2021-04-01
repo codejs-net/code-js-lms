@@ -17,6 +17,13 @@ use Session;
     
 class UserController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:user-create', ['only' => ['create','store']]);
+         $this->middleware('permission:user-edit', ['only' => ['edit','update','update_users','pw_reset']]);
+         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -77,28 +84,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $_password="";
         $this->validate($request, [
-            'username' => 'required',
+            'username' => 'required|unique:users,username,',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
+
+        if($request->preset=="default")
+        {
+            $setting = setting::where('setting','default_password')->first();
+            $_password=Hash::make($setting->value);
+        }
+        else if($request->preset=="mannual")
+        {
+            $this->validate($request, [
+                'password' => 'required|same:confirm-password',
+            ]);
+            $_password=Hash::make($request->password);
+        }
+
 
         $user = User::create([
             'email' => $request->email,
             'username' => $request->username,
-            'password' =>  Hash::make($request->password),
+            'password' =>  $_password,
             'staff_id' => $request->staff,
         ]);
 
         $user->assignRole([$request->roles]);
-
-    
-        // $input = $request->all();
-        // $input['password'] = Hash::make($input['password']);
-    
-        // $user = User::create($input);
-        // $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
@@ -145,14 +159,14 @@ class UserController extends Controller
         $this->validate($request, [
             'username' => 'required|unique:users,username,'.$id,
             'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
+            // 'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
     
         $user = User::find($id);
         $user->username=$request->username;
         $user->email=$request->email;
-        $user->password=Hash::make($request->password);
+        // $user->password=Hash::make($request->password);
         $user->staff_id=$request->staff;
         $user->save();
 
@@ -162,13 +176,29 @@ class UserController extends Controller
         return redirect()->route('users.index')
                         ->with('success','User updated successfully');
     }
-    
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function pw_reset(Request $request)
+    {
+        $id=$request->user_id;
+        $user = User::find($id);
+
+        if($request->preset=="default")
+        {
+            $setting = setting::where('setting','default_password')->first();
+            $user->password=Hash::make($setting->value);
+
+        }
+        else if($request->preset=="mannual")
+        {
+            $this->validate($request, [
+                'password' => 'same:confirm-password',
+            ]);
+            $user->password=Hash::make($request->password);
+        }
+        $user->save();
+
+        return redirect()->route('users.index')->with('success','Password Reset successfully');
+    }
+
     public function destroy($id)
     {
         User::find($id)->delete();

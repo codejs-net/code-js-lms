@@ -39,6 +39,12 @@ class SettingSeeder extends Seeder
         'category'=>'2',
         'value'=>'2',
         'detail'=>'Limit of tha Resources lending in one Job'
+        ],
+        [  
+        'setting'=>'default_password',
+        'category'=>'3',
+        'value'=>'code-js',
+        'detail'=>'Default Password For user Account'
         ]
     ];
     $insert= DB::table('settings')->insert($mul_rows_settings);

@@ -86,7 +86,15 @@ class PermissionSeeder extends Seeder
             ['name'=>'setting-create','category'=>'10'],
             ['name'=>'setting-edit','category'=>'10'],
             ['name'=>'setting-delete','category'=>'10'],
-            ['name'=>'date-change','category'=>'10']
+            ['name'=>'date-change','category'=>'10'],
+            ['name'=>'user-list','category'=>'11'],
+            ['name'=>'user-create','category'=>'11'],
+            ['name'=>'user-edit','category'=>'11'],
+            ['name'=>'user-delete','category'=>'11'],
+            ['name'=>'staff-list','category'=>'12'],
+            ['name'=>'staff-create','category'=>'12'],
+            ['name'=>'staff-edit','category'=>'12'],
+            ['name'=>'staff-delete','category'=>'12'],
             
         ];
         // Permission::create([$rows_Permission]);

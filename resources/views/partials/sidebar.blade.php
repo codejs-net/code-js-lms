@@ -274,7 +274,7 @@
                         </ul>
                     </li>
 
-                    @can('role-list')
+                   
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-user-circle"></i>
@@ -284,24 +284,35 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @cannot('user-list')
+                            <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>My Account</p>
+                                </a>
+                            </li>
+                            @endcannot
+                            @can('user-list')
                             <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Users Account</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('role-list')
                             <li class="nav-item">
                                 <a href="{{ route('roles.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Roles & Permisions</p>
                                 </a>
                             </li>
-                           
+                            @endcan
                             
                         </ul>
                     </li>
                     
-                    @endcan
+                   
 
                    
                    

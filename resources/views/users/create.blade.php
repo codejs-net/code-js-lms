@@ -36,7 +36,7 @@ $staff="name".$lang;
 <div class="row">
         <div class="form-group col-md-5">
             <label for="staff">Staff : </label>
-            <select class="form-control"name="staff" value="{{old('staff_id')}}"required>
+            <select class="form-control" name="staff" id="staff" value="{{old('staff')}}"required>
             <option value="" disabled selected>Select Staff's </option>
             @foreach($staffdata as $item)
                 <option value="{{ $item->id }}">{{ $item->$staff }}</option>
@@ -54,7 +54,7 @@ $staff="name".$lang;
         </div>
         <div class="form-group col-md-5">
             <label for="role">Role : </label>
-            <select class="form-control"name="roles" value="{{old('role')}}"required>
+            <select class="form-control"name="roles" value="{{old('roles')}}"required>
             <option value="" disabled selected>Select Role </option>
             @foreach($roles as $item)
                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -74,33 +74,51 @@ $staff="name".$lang;
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
            <label for="staff">UserName : </label>
-            <input type="text" name="username" id="username" class="form-control" placeholder="UserName" required>
+            <input type="text" name="username" id="username" class="form-control" placeholder="UserName" value="{{old('username')}}" required>
+            <span class="text-danger">{{ $errors->first('username') }}</span>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
            <label for="staff">Email : </label>
-            <input type="text" name="email" id="email" class="form-control" placeholder="Email" required>
+            <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="{{old('email')}}" required>
+            <span class="text-danger">{{ $errors->first('email') }}</span>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <label for="staff">Password : </label>
-            <input type="text" name="password" id="password" class="form-control" placeholder="Password" required>
+    <div class="col-md-12 col-sm-12 text-left">
+        <div class="form-group js-select-box">
+            <div class="ml-2 mr-2">
+                <span for="category">Password</span>
+                <div class="bg-light p-2 mb-2">
+                    <div class="form-check form-check-inline" >
+                        <input type="radio" class="form-check-input" name="preset" value="default"required>
+                        <label class="form-check-label">Default Password</label>
+                    </div>
+                    <div class="form-check form-check-inline" >
+                        <input type="radio" class="form-check-input" name="preset" value="mannual"required>
+                        <label class="form-check-label">Mannual Password</label>
+                    </div> 
+                </div>
+                <div class="row" style="display:none;" id="mannual_pw">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="staff">Password : </label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                            
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                        <label for="staff">Confirm Password : </label>
+                            <input type="password" name="confirm-password" id="confirm-password" class="form-control" placeholder="Confirm Password">
+                        </div>
+                    </div>
+
+                </div>
+                <span class="text-danger">{{ $errors->first('password') }}</span>  
+            </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-           <label for="staff">Confirm Password : </label>
-            <input type="text" name="confirm-password" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
-        </div>
-    </div>
-    <!-- <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-           <label for="staff">Role : </label>
-            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
-        </div>
-    </div> -->
    
 </div>
 <hr>
@@ -113,5 +131,32 @@ $staff="name".$lang;
 </div>
 </div>
 
+
+@endsection
+
+
+@section('script')
+<script>
+
+$(document).ready(function()
+{
+   
+});
+
+$('input[type=radio][name=preset]').change(function() {
+    $('#reset_password').prop("disabled",false);
+    if (this.value == 'default') {
+       $('#mannual_pw').slideUp(500);
+       $("#password").prop('required',false);
+       $("#confirm-password").prop('required',false);
+    }
+    else if (this.value == 'mannual') {
+        $('#mannual_pw').slideDown(500);
+        $("#password").prop('required',true);
+       $("#confirm-password").prop('required',true);
+    }
+});
+
+</script>
 
 @endsection
