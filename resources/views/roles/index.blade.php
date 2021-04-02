@@ -44,9 +44,7 @@
                         <a class="btn btn-outline-primary btn-sm" href="{{ route('roles.edit',$role->id) }}">Edit</a>
                     @endcan
                     @can('role-delete')
-                        {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-outline-danger btn-sm']) !!}
-                        {!! Form::close() !!}
+                    <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $role->id }}" data-dataname="{{ $role->name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                     @endcan
                 </td>
             </tr>
@@ -56,12 +54,70 @@
     </div>
 
 
-{!! $roles->render() !!}
+{{-- {!! $roles->render() !!} --}}
                 
 </div>
 </div>
 
+<!--Delete Modal -->
+<div class="modal fade" id="data_delete" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-indigo">
+                <div class="text-center">
+                    <h5 class="modal-title" id="modaltitle">Delete Roles</h5>
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                    
+            </div>
+            
+            <form method="POST" action="{{ route('delete_roles')}}">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    
+                    <input type="hidden" id="id_delete" name="id_delete">
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <h5><label type="text"  id="name_delete"></label></h5>
+                        </div>
+                        <div class="col-md-8">
+                            <h6 id="modallabel">Are you sure Remove Role ? </h6>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
+<!-- end Delete model -->
 
 
 
 @endsection
+@section('script')
+<script>
+
+$(document).ready(function()
+{
+    $('#data_delete').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var id = button.data('dataid') 
+    var name = button.data('dataname')
+    document.getElementById("id_delete").value= id; 
+    document.getElementById("name_delete").innerHTML = name;
+    })
+});
+
+</script>
+
+@endsection
+

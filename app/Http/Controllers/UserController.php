@@ -199,9 +199,9 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success','Password Reset successfully');
     }
 
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        User::find($id)->delete();
+        User::find($request->id_delete)->delete();
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }

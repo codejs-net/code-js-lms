@@ -27,7 +27,6 @@
 
 @if (count($errors) > 0)
     <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
         <ul>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -70,7 +69,7 @@
                         <td></td>
                         <td>
                             <label class="ml-3 pl-1">
-                                <input type="checkbox" name="permission[]" value="{{$item->id}}" class="form-check-input"id="">{{ $item->name }}
+                                <input type="checkbox" name="permission[]" value="{{$item->id}}" class="form-check-input"id="" >{{ $item->name }}
                             </label>
                         </td>
                     @else
@@ -78,7 +77,7 @@
                         <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
                         <td>
                             <label class="ml-3 pl-1">
-                                <input type="checkbox" name="permission[]" value="{{$item->id}}" class="form-check-input"id="">{{ $item->name }}
+                                <input type="checkbox" name="permission[]" value="{{$item->id}}" class="form-check-input"id="" >{{ $item->name }}
                             </label>
                         </td>
                     @endif

@@ -60,9 +60,7 @@ $name="name".$lang;
     <td>
        <a class="btn btn-outline-info btn-sm" href="{{ route('users.show',$user->id) }}">Show</a>
        <a class="btn btn-outline-primary btn-sm" href="{{ route('users.edit',$user->id) }}">Edit</a>
-        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-            {!! Form::submit('Delete', ['class' => 'btn btn-outline-danger btn-sm']) !!}
-        {!! Form::close() !!}
+       <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->staff->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
     </td>
   </tr>
  @endforeach
@@ -74,7 +72,46 @@ $name="name".$lang;
 </div>
 </div>
 
+<!--Delete Modal -->
+<div class="modal fade" id="data_delete" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header bg-indigo">
+              <div class="text-center">
+                  <h5 class="modal-title" id="modaltitle">Delete User</h5>
+              </div>
+              
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+                  
+          </div>
+          
+          <form method="POST" action="{{ route('delete_users')}}">
+              {{ csrf_field() }}
+              <div class="modal-body">
+                  
+                  <input type="hidden" id="id_delete" name="id_delete">
+                  <div class="row form-group">
+                      <div class="col-md-6">
+                          <h5><label type="text"  id="name_delete"></label></h5>
+                      </div>
+                      <div class="col-md-8">
+                          <h6 id="modallabel">Are you sure Remove User ? </h6>
+                      </div>
+                  </div> 
+              </div>
 
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+              </div>
+          </form>
+         
+      </div>
+  </div>
+</div>
+<!-- end Delete model -->
 
 @endsection
 
@@ -83,11 +120,16 @@ $name="name".$lang;
    $(document).ready(function() {
      
     $('#tbl_user').DataTable();
+
+    $('#data_delete').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var id = button.data('dataid') 
+    var name = button.data('dataname')
+    document.getElementById("id_delete").value= id; 
+    document.getElementById("name_delete").innerHTML = name;
+    })
 });
 </script>
-<!-- jQuery-Datatable -->
-<!-- <script src="{{ asset('plugins/datatables-jquery/js/jquery.dataTables.min.js') }}" defer></script>
-<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" defer></script> -->
 
 @endsection
 

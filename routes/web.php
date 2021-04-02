@@ -47,13 +47,15 @@ Route::get('test_dt', [UserController::class, 'index1'])->name('users.index1');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
+      // --------Roles--------------------------------
     Route::resource('roles', RoleController::class);
+    Route::post('delete_roles', [RoleController::class, 'delete'])->name('delete_roles');
+    
      // --------User--------------------------------
     Route::resource('users', UserController::class);
     Route::post('update_users', [UserController::class, 'update_users'])->name('update_users');
     Route::post('pw_reset', [UserController::class, 'pw_reset'])->name('pw_reset');
-
-    Route::resource('products', ProductController::class);
+    Route::post('delete_users', [UserController::class, 'delete'])->name('delete_users');
     
     // --------Resource--------------------------------
     Route::resource('resource', ResourceController::class);
