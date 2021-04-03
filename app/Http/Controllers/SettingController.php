@@ -39,10 +39,11 @@ class SettingController extends Controller
 
         $delault_limit = setting::where('setting','lending_count')->first();
         $delault_period = setting::where('setting','lending_period')->first();
+        $fine_rate = setting::where('setting','fine_rate')->first();
 
         $details = lending_config::orderBy('id','ASC')->with('member_cat')->paginate(10);
         // dd($details[0]->member_cat);
-        return view('settings.lending.index',compact('details','delault_period','delault_limit'));
+        return view('settings.lending.index',compact('details','delault_period','delault_limit','fine_rate'));
     }
 
     public function notification_setting()
@@ -147,5 +148,28 @@ class SettingController extends Controller
         $details->lending_period=$request->period;
         $details->save();
         return redirect()->route('lending_setting')->with('success','Lending Option Apply successfully.');
+    }
+    public function update_fine(Request $request)
+    {
+        $fine_rate = setting::where('setting','fine_rate')->first();
+        $fine_rate->value=$request->fine_rate;
+        $fine_rate->save();
+        return redirect()->route('lending_setting')->with('success','Fine rate Apply successfully.');
+    }
+
+    public function update_period(Request $request)
+    {
+        $delault_period = setting::where('setting','lending_period')->first();
+        $delault_period->value=$request->default_period;
+        $delault_period->save();
+        return redirect()->route('lending_setting')->with('success','Default Lending Period Apply successfully.');
+    }
+
+    public function update_limit(Request $request)
+    {
+        $delault_limit = setting::where('setting','lending_count')->first();
+        $delault_limit->value=$request->default_limit;
+        $delault_limit->save();
+        return redirect()->route('lending_setting')->with('success','Default Lending Limit Apply successfully.');
     }
 }

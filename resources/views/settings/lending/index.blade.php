@@ -18,10 +18,54 @@ $category="category".$db_locale;
 
         <!-- Main content -->
 <div class="container">
+
+    <div class="card card-body">
+        <div><h6><i class="fa fa-sliders"></i>&nbsp;Default Lending Limit</h6></div>
+       <form method="POST" action="{{ route('update_limit') }}">
+        {{ csrf_field() }}
+         <div class="form-group">
+           <label for="theme">Limit:</label>
+           <input type="text" class="form-control mb-1" id="default_limit" name="default_limit" value="{{$delault_limit->value}}" required>
+         </div>
+         <div class="box-footer clearfix pull-right">   
+          <button type="submit" class="btn btn-outline-success btn-sm" id=""><i class="fa fa-check" aria-hidden="true"></i> {{ __("Apply")}}</button>
+        </div>
+       </form>              
+      </div>
+      {{-- ----------------------------------------------------- --}}
+      <div class="card card-body">
+        <div><h6><i class="fa fa-sliders"></i>&nbsp;Default Lending Period</h6></div>
+       <form method="POST" action="{{ route('update_period') }}">
+        {{ csrf_field() }}
+         <div class="form-group">
+           <label for="theme">Period (days):</label>
+           <input type="text" class="form-control mb-1" id="default_period" name="default_period" value="{{$delault_period->value}}" required>
+         </div>
+         <div class="box-footer clearfix pull-right">   
+          <button type="submit" class="btn btn-outline-success btn-sm" id=""><i class="fa fa-check" aria-hidden="true"></i> {{ __("Apply")}}</button>
+        </div>
+       </form>              
+      </div>
+      {{-- ---------------------------------------------------- --}}
+      <div class="card card-body ">
+        <div><h6><i class="fa fa-sliders"></i>&nbsp;Fine Rate</h6></div>
+       <form method="POST" action="{{ route('update_fine') }}">
+        {{ csrf_field() }}
+         <div class="form-group">
+           <label for="theme">Fine (per day):</label>
+           <input type="text" class="form-control mb-1" id="fine_rate" name="fine_rate" value="{{$fine_rate->value}}" required>
+         </div>
+         <div class="box-footer clearfix pull-right">   
+          <button type="submit" class="btn btn-outline-success btn-sm" id=""><i class="fa fa-check" aria-hidden="true"></i> {{ __("Apply")}}</button>
+        </div>
+       </form>              
+      </div>
+      {{-- ---------------------------------------------------- --}}
+
     <div class="card card-body">
         <div class="row text-center">
-            <div class="col-md-12 col-sm-6 text-center"> 
-                <h5> <i class="fa fa-object-group"></i>&nbsp;Lending Settings</h5>
+            <div class="col-md-12 col-sm-6 text-left"> 
+                <h6> <i class="fa fa-sliders"></i>&nbsp;Catagory wise Lending Settings</h6>
             </div>  
         </div>
         <div class="form-row">

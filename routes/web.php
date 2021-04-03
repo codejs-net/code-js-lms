@@ -226,6 +226,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_sms_option', [SettingController::class, 'update_sms_option'])->name('update_sms_option');
     Route::post('update_email_option', [SettingController::class, 'update_email_option'])->name('update_email_option');
     Route::post('update_lending_config', [SettingController::class, 'update_lending_config'])->name('update_lending_config');
+    Route::post('update_fine', [SettingController::class, 'update_fine'])->name('update_fine');
+    Route::post('update_period', [SettingController::class, 'update_period'])->name('update_period');
+    Route::post('update_limit', [SettingController::class, 'update_limit'])->name('update_limit');
 
     // -------Reports-PDF------------------------------
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
