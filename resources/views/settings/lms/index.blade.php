@@ -25,7 +25,6 @@ $category="category".$lang;
        <div class="form-group">
          <label for="theme">Select Theme:</label>
          <select class="form-control" name="theme" id="theme">
-           <option value="js-default">LMS Defalut</option>
            <option value="js-colour">LMS Colour</option>
            <option value="js-blue-dark">LMS Blue Dark</option>
            <option value="js-blue-light">LMS Blue Light</option>

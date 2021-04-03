@@ -223,6 +223,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('change_theme/{id}', [SettingController::class, 'change_theme'])->name('change_theme');
     Route::post('update_db_locale', [SettingController::class, 'update_db_locale'])->name('update_db_locale');
     Route::post('update_locale', [SettingController::class, 'update_locale'])->name('update_locale');
+    Route::post('update_sms_option', [SettingController::class, 'update_sms_option'])->name('update_sms_option');
+    Route::post('update_email_option', [SettingController::class, 'update_email_option'])->name('update_email_option');
+    Route::post('update_lending_config', [SettingController::class, 'update_lending_config'])->name('update_lending_config');
 
     // -------Reports-PDF------------------------------
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');

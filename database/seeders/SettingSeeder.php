@@ -89,9 +89,21 @@ class SettingSeeder extends Seeder
         'detail'=>'Send email on Member Add'
         ],
         [  
+        'setting'=>'email_issue',
+        'category'=>'5',
+        'value'=>'1',
+        'detail'=>'Send email on Resuorce Issue'
+        ],
+        [  
+        'setting'=>'email_return',
+        'category'=>'5',
+        'value'=>'1',
+        'detail'=>'Send email on Resource Return'
+        ],
+        [  
         'setting'=>'default_theme',
         'category'=>'6',
-        'value'=>'js-default',
+        'value'=>'js-blue-dark',
         'detail'=>'Defalut Active Theme'
         ]
        

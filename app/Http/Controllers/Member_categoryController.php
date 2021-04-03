@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\member_cat;
+use App\Models\setting;
+use App\Models\lending_config;
 use App\Imports\Member_categoryImport;
+use App\Imports\Lending_configImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -36,7 +39,18 @@ class Member_categoryController extends Controller
             'category_ta' =>  $request->name_ta,
             'category_en' =>  $request->name_en, 
         );
-        member_cat::create($form_data);
+        $membercat= member_cat::create($form_data);
+
+        $default_limit = setting::where('setting','lending_count')->first();
+        $default_period = setting::where('setting','lending_period')->first();
+
+        $form_data_lending = array(
+            'categoryid' =>  $membercat->id,
+            'lending_limit' =>  $default_limit->value,
+            'lending_period' =>  $default_period->value, 
+        );
+        $lending= lending_config::create($form_data_lending);
+
         return redirect()->route('member_catagory.index')->with('success','Details created successfully.');
     }
     
@@ -55,9 +69,11 @@ class Member_categoryController extends Controller
     public function delete(Request $request)
     {
         $detail=member_cat::find($request->id_delete);
+        $lending_config = lending_config::where('categoryid',$request->id_delete)->first();
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $detail->delete();
+        $lending_config->delete();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
        
@@ -67,6 +83,7 @@ class Member_categoryController extends Controller
     {
         // resource_category::query()->truncate();
         $data=Excel::import(new Member_categoryImport,request()->file('file'));
+        $lending=Excel::import(new Lending_configImport,request()->file('file'));
         return redirect()->route('member_catagory.index')->with('success','Details imported successfully.');
     }
 }

@@ -19,7 +19,7 @@ class CreateLendingConfigsTable extends Migration
             $table->integer('categoryid')->unsigned()->default(1);
             $table->foreign('categoryid')->references('id')->on('member_cats');
 
-            $table->string('lending_count')->nullable();
+            $table->string('lending_limit')->nullable();
             $table->string('lending_period')->nullable();
             $table->timestamps();
         });

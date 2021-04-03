@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\setting;
 use App\Models\staff;
 use Session;
 use App\Models\library;
@@ -85,13 +86,13 @@ class LoginController extends Controller
             // dd($loguser);
             Session::put('user', $loguser->staff);
             //-----------theme--------------------------------
-           
+            $default_theme = setting::where('setting','default_theme')->first();
             $theme_option = theme::where('user_id', Auth::user()->id)->first();
             if (!empty($theme_option)){
                 Session::put('theme', $theme_option->theme);
             } 
             else {
-                Session::put('theme', 'js-default');
+                Session::put('theme', $default_theme->value);
             }
             
             //----------end theme-----------------------------
