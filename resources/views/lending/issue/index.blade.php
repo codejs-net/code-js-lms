@@ -45,7 +45,7 @@ $creator="name".$lang;
         <input type="hidden" name="member_Name_sms"id="member_Name_sms">
         <input type="hidden" name="member_mobile"id="member_mobile">
         <input type="hidden" name="db_count"id="db_count">
-        <input type="hidden" name="lending_limit" id="lending_limit" value="{{$lending_setting->value}}">
+        <input type="hidden" name="lending_limit" id="lending_limit">
 
             <div class="col-md-3 col-sm-12 text-left mt-1">
               <div class="input-group">
@@ -240,6 +240,7 @@ $creator="name".$lang;
                 $('#member_mobile').val(data.mobile);
                 $('#member_Name_id').val(data.member_id);
                 $('#db_count').val(data.db_count);
+                $('#lending_limit').val(data.lending_limit);
                 $('#member_id').val('');
                 document.getElementById("resource_details").focus();
             

@@ -178,9 +178,9 @@ $type="type".$lang;
             <div class="text-center"><u><h3>Fine Receipt</h3></u></div>
             </br>
             
-                <h5 >Member : <span id="print_member"></span></h5>
-                <h5 >Issue Date : <span id="print_issuedate"></span></h5>
-                <h5>Return Date :<span id="print_returndate"></span></h5>
+                <h5 >Member : <span id="receipt_member"></span></h5>
+                <h5 >Receipt Date : <span id="receipt_date"></span></h5>
+                <h5 >Total Amount : <span id="receipt_tot_fine"></span></h5>
                 
                 <table id="fine_receiptTable">
                     <!-- <thead>
@@ -349,6 +349,7 @@ $type="type".$lang;
             });
             $("#fineTable tbody").append(op);
             $("#tot_fine").html(tot_fine);
+            
 
            
         
@@ -565,6 +566,7 @@ $type="type".$lang;
             var opp_status=0;
             var payment_check=0; 
             var mem_id = $("#member_Name_id").val();
+            var membername=$('#member_Name_sms').val();
             var settlement_type = $("#settle_type").val();
             var receipt_type= "system";
             if($("#receipt_type").prop("checked") == true)
@@ -577,6 +579,7 @@ $type="type".$lang;
             var receipt="fine";
             var receipt_id="";
             var methord= $("input[name='methord']:checked").val();
+            $("#fine_receiptTable tbody").empty();
             // ==============receipt=============================
             if(settlement_type=="Payment" && receipt_type=="system")
             {
@@ -630,7 +633,10 @@ $type="type".$lang;
 
                 });
                 $("#fine_receiptTable tbody").append(op);
-                $("#receipt_tot_fine").html(tot_fine);
+                $("#receipt_tot_fine").html(receipt_tot_fine);
+                $("#receipt_member").html(membername);
+                $("#receipt_date").html(date_settle);
+                
             }
             receipt_id= $("#receipt_no").val();
             //================end================================

@@ -9,6 +9,7 @@ use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
+use App\Models\lending_config;
 use App\Models\view_lending_data;
 use App\Http\Controllers\SoapController;
 use Session;
@@ -33,16 +34,14 @@ class IssueController extends Controller
             $lang = "_" . $db_setting->value;
         }
         Session::put('db_locale', $lang);
-
-        $lending_period = setting::where('setting', 'lending_period')->first();
-        Session::put('lending_period', $lending_period->value);
-
         $issuedate = Carbon::now()->isoFormat('YYYY-MM-DD');
-        // error_log($issuedate);
 
-        $lending_setting = setting::where('setting', 'lending_count')->first();
-        Session::put('lending_limit', $lending_setting->value);
-        return view('lending.issue.index')->with('lending_setting', $lending_setting)->with('issuedate', $issuedate);
+        // $lending_period = setting::where('setting', 'lending_period')->first();
+        // Session::put('lending_period', $lending_period->value);
+        // error_log($issuedate);
+        // $lending_setting = setting::where('setting', 'lending_count')->first();
+        // Session::put('lending_limit', $lending_setting->value);
+        return view('lending.issue.index')->with('issuedate', $issuedate);
     }
 
     public function memberview(Request $request)
@@ -58,9 +57,12 @@ class IssueController extends Controller
             ->where('member_id', $request->memberid)
             ->Where('return', 0)
             ->get();
-        // error_log("----count-------". $lendm->count());
-        // return response()->json($data);
-        return response()->json(['member_nme' => $mbr->$name, 'member_id' => $mbr->id, 'member_adds1' => $mbr->$address1, 'member_adds2' => $mbr->$address2, 'mobile' => $mbr->mobile, 'db_count' => $lendm->count()]);
+
+        $lending_config = lending_config::where('categoryid',$mbr->categoryid)->first();
+        Session::put('lending_period', $lending_config->lending_period);
+        Session::put('lending_limit', $lending_config->lending_limit);
+
+        return response()->json(['member_nme' => $mbr->$name, 'member_id' => $mbr->id, 'member_adds1' => $mbr->$address1, 'member_adds2' => $mbr->$address2, 'mobile' => $mbr->mobile, 'db_count' => $lendm->count(), 'lending_limit' => $lending_config->lending_limit]);
     }
 
     public function resourceview(Request $request)

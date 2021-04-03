@@ -9,6 +9,7 @@ use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
+use App\Models\lending_config;
 use App\Models\view_lending_data;
 use App\Models\fine_settle;
 use App\Models\receipt;
@@ -30,8 +31,9 @@ class ReturnController extends Controller
         else{$lang="_".$db_setting->value;}
         Session::put('db_locale', $lang);
 
-        $lending_period = setting::where('setting','lending_period')->first();
-        Session::put('lending_period', $lending_period->value);
+       
+        // $lending_period = setting::where('setting','lending_period')->first();
+        // Session::put('lending_period', $lending_period->value);
 
         $fine_rate = setting::where('setting','fine_rate')->first();
         Session::put('fine_rate', $fine_rate->value);
@@ -44,12 +46,16 @@ class ReturnController extends Controller
     public function get_lending(Request $request)
     {
         $lang = session()->get('db_locale');
-        $lending_period = session()->get('lending_period');
         $fine_rate = session()->get('fine_rate');
 
         $title="title".$lang;  $category="category".$lang;  $type="type".$lang; $member="member".$lang;$address1="address1".$lang; $address2="address2".$lang; $member_="name".$lang;
         $lenddata=array();
         $mbr=member::find($request->memberid);
+
+        $lending_config = lending_config::where('categoryid',$mbr->categoryid)->first();
+        Session::put('lending_period', $lending_config->lending_period);
+        $lending_period = $lending_config->lending_period;
+        
         if($mbr)
         {
             $lend = view_lending_data::select('*')
