@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @php
-$locale = session()->get('locale');
-$lang="_".$locale;
+$lang = session()->get('db_locale');
 $category="category".$lang;
 $name="name".$lang;
 $address1="address1".$lang;

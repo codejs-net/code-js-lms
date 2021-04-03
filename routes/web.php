@@ -24,7 +24,7 @@ use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\SurveyController;
-use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Member_categoryController;
 use App\Http\Controllers\Library_titleController;
@@ -214,10 +214,15 @@ Route::group(['middleware' => ['auth']], function() {
     // -------configer--------------------------------
     Route::resource('config', ConfigController::class);
 
-    // -------Setting- Theme--------------------------
-    Route::resource('theme', ThemeController::class);
-    Route::post('update_theme', [ThemeController::class, 'update_theme'])->name('update_theme');
-    Route::get('change_theme/{id}', [ThemeController::class, 'change_theme'])->name('change_theme');
+    // -------Settings--------------------------
+    Route::get('lms_setting', [SettingController::class, 'lms_setting'])->name('lms_setting');
+    Route::get('basic_setting', [SettingController::class, 'basic_setting'])->name('basic_setting');
+    Route::get('lending_setting', [SettingController::class, 'lending_setting'])->name('lending_setting');
+    Route::get('notification_setting', [SettingController::class, 'notification_setting'])->name('notification_setting');
+    Route::post('update_theme', [SettingController::class, 'update_theme'])->name('update_theme');
+    Route::get('change_theme/{id}', [SettingController::class, 'change_theme'])->name('change_theme');
+    Route::post('update_db_locale', [SettingController::class, 'update_db_locale'])->name('update_db_locale');
+    Route::post('update_locale', [SettingController::class, 'update_locale'])->name('update_locale');
 
     // -------Reports-PDF------------------------------
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');

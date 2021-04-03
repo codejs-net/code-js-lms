@@ -218,7 +218,7 @@
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-briefcase"></i>
+                            <i class="nav-icon fa fa-cog"></i>
                             <p>
                             Settings
                                 <i class="right fas fa-angle-left"></i>
@@ -226,22 +226,28 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('theme.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Theme Settings</p>
+                                <a href="{{ route('basic_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
+                                    <p>Basic Settings</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                            <a href="{{ route('lms_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
+                                    <p>LMS Settings</p>
                                 </a>
                             </li>
                            
                             <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                <a href="{{ route('lending_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
                                     <p>Lending Settings</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>DataBase Settings</p>
+                                <a href="{{ route('notification_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
+                                    <p>Notification Settings</p>
                                 </a>
                             </li>
                             

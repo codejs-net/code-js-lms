@@ -23,6 +23,12 @@ class SettingSeeder extends Seeder
         'detail'=>'db details show according to locale'
         ],
         [  
+        'setting'=>'locale',
+        'category'=>'1',
+        'value'=>'si',
+        'detail'=>'display Language'
+        ],
+        [  
         'setting'=>'lending_period',
         'category'=>'2',
         'value'=>'14',
@@ -45,7 +51,50 @@ class SettingSeeder extends Seeder
         'category'=>'3',
         'value'=>'code-js',
         'detail'=>'Default Password For user Account'
+        ],
+        [  
+        'setting'=>'sms_member_create',
+        'category'=>'4',
+        'value'=>'1',
+        'detail'=>'Send SMS on Member Add'
+        ],
+        [  
+        'setting'=>'sms_user_create',
+        'category'=>'4',
+        'value'=>'1',
+        'detail'=>'Send SMS on User Add'
+        ],
+        [  
+        'setting'=>'sms_issue',
+        'category'=>'4',
+        'value'=>'1',
+        'detail'=>'Send SMS on Resuorce Issue'
+        ],
+        [  
+        'setting'=>'sms_return',
+        'category'=>'4',
+        'value'=>'1',
+        'detail'=>'Send SMS on Resource Return'
+        ],
+        [  
+        'setting'=>'email_user_create',
+        'category'=>'5',
+        'value'=>'1',
+        'detail'=>'Send email on User Add'
+        ],
+        [  
+        'setting'=>'email_member_create',
+        'category'=>'5',
+        'value'=>'1',
+        'detail'=>'Send email on Member Add'
+        ],
+        [  
+        'setting'=>'default_theme',
+        'category'=>'6',
+        'value'=>'js-default',
+        'detail'=>'Defalut Active Theme'
         ]
+       
     ];
     $insert= DB::table('settings')->insert($mul_rows_settings);
 
