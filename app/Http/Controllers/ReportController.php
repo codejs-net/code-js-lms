@@ -29,6 +29,35 @@ use App\Exports\ResourceExport;
 
 class ReportController extends Controller
 {
+
+    public function resource_index()
+    {
+        $resource_center=center::all();
+        $categorydata=resource_category::all();
+        $languagedata=resource_language::all();
+        $publisherdata=resource_publisher::all();
+        $creatordata=resource_creator::all();
+        $dd_classdata=resource_dd_class::all();
+        $dd_devisiondata=resource_dd_division::all();
+        $dd_sectiondata=resource_dd_section::all();
+        
+        return view('reports.resources.index')
+        ->with('cat_data',$categorydata)
+        ->with('center_data',$resource_center)
+        ->with('language_data',$languagedata)
+        ->with('publisher_data',$publisherdata)
+        ->with('creator_data',$creatordata)
+        ->with('ddclass_data',$dd_classdata)
+        ->with('dddevision_data',$dd_devisiondata)
+        ->with('ddsection_data',$dd_sectiondata);
+       
+    }
+    public function support_index()
+    {
+        // $details = resource_dd_class::orderBy('id','ASC')->paginate(5);
+        return view('reports.support_data.index');
+       
+    }
     function report_recource(Request $request) {
         try {
         ini_set('max_execution_time', '1200');

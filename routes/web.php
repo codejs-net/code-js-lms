@@ -230,12 +230,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_period', [SettingController::class, 'update_period'])->name('update_period');
     Route::post('update_limit', [SettingController::class, 'update_limit'])->name('update_limit');
 
-    // -------Reports-PDF------------------------------
+     // -------Reports---------------------------------
+    Route::get('rpt_resource_index', [ReportController::class, 'resource_index'])->name('rpt_resource_index');
+    Route::get('rpt_member_index', [ReportController::class, 'member_index'])->name('rpt_member_index');
+    Route::get('rpt_lending_index', [ReportController::class, 'lending_index'])->name('rpt_lending_index');
+    Route::get('rpt_survey_index', [ReportController::class, 'survey_index'])->name('rpt_survey_index');
+    Route::get('rpt_support_index', [ReportController::class, 'support_index'])->name('rpt_support_index');
+    // -------Reports-PDF
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
     Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');
     Route::POST('member_card_range', [ReportController::class, 'member_card_range'])->name('member_card_range');
 
-     // -------Reports-Excel------------------------------
+     // -------Reports-Excel
      Route::POST('export_recource', [ReportController::class, 'export_recource'])->name('export_recource');
 
 });

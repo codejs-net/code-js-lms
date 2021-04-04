@@ -215,6 +215,25 @@
                             
                         </ul>
                     </li>
+                    <!-- receipts -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-briefcase"></i>
+                            <p>
+                            Receipts
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                            <a href="{{ route('view_survey',0) }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Receipts</p>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
@@ -332,54 +351,48 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('generate_pdf') }}" class="nav-link">
+                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Test Report</p>
+                                    <p>Resource Reports</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Member Reports</p>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Lending Reports</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_support_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Support Data Reports</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Survey Reports</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Books Summary Report</p>
+                                    <p>User Reports</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Members Details Report</p>
+                                    <p>Other Reports</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Members Summary Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Book Lending Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Fine Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Bord Of Survey Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>User Details Report</p>
-                                </a>
-                            </li>
-
 
                         </ul>
                     </li>
