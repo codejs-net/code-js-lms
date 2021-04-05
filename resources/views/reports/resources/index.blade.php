@@ -58,24 +58,28 @@ $dd_section="section".$lang;
             </div>
         </div>
         <div class="col-md-3 col-3 p-2">
-            <div class="elevation-2 card1 ">
-                 <h5>Range Resources</h5>
+            <div class="elevation-2 card1">
+              
+                <h5>Range Resources</h5>
                  <p class="small">Range Resources Report in LMS. Provide Number Range and Download PDF or Excel</p>
                  <form class="form-inline pull-left" action="{{ route('report_recource') }}" id="report_form" method="POST">
                     {{ csrf_field() }}
                         <input type="hidden" name="resource_from" class="resource_from">
                         <input type="hidden" name="resource_to" class="resource_to">
-                        <button type="submit" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
+                        <button type="submit" class="btn-pdf btn btn-secondary btn-sm elevation-2 mr-2">
+                            <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
+                            <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
+                        </button>
                 </form>
                 <form class="form-inline" action="{{ route('export_recource') }}" id="report_form" method="POST">
                     {{ csrf_field() }}
                         <input type="hidden" name="resource_from" class="resource_from">
                         <input type="hidden" name="resource_to" class="resource_to">
-                        <button type="submit" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</button>
+                        <button type="submit" class="btn-excel btn btn-primary btn-sm elevation-2 mr-2">
+                            <span class="excel-icon"><i class="fa fa-file-excel-o"></i></span>
+                            <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; Excel
+                        </button>
                 </form>
-                 <div class="go-corner" href="#">
-                 <div class="go-arrow"></div>
-                 </div>
             </div>
          </div>
     </div>
@@ -248,11 +252,8 @@ $dd_section="section".$lang;
         <div class="elevation-2 card1">
              <h5>Filterd Resources</h5>
              <p class="small">Filterd Resources Report in LMS. You can filter resource Center wise, Type wise, creator wise, Publisher wise or Dewy Decimal wise. click Download PDF or Excel to genarate report</p>
-             <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-             <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
-             <div class="go-corner" href="#">
-             <div class="go-arrow"></div>
-             </div>
+             <a href="" class="btn btn-secondary btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
+             <a href="" class="btn btn-primary btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
         </div>
      </div>
     </div> 
@@ -269,11 +270,9 @@ $dd_section="section".$lang;
        <div class="elevation-2 card1 ">
             <h5>Removed Resources</h5>
             <p class="small">Removed Resources Report in Library management system. Download PDF or Excel</p>
-            <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-            <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
-            <div class="go-corner" href="#">
-            <div class="go-arrow"></div>
-            </div>
+            <a href="" class="btn btn-secondary btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
+            <a href="" class="btn btn-primary btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
+           
        </div>
     </div>
 
@@ -281,11 +280,8 @@ $dd_section="section".$lang;
         <div class="elevation-2 card1 ">
              <h5>Doneted Resources</h5>
              <p class="small">Doneted Resources Report in Library management system. Download PDF or Excel</p>
-             <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-             <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
-             <div class="go-corner" href="#">
-             <div class="go-arrow"></div>
-             </div>
+             <a href="" class="btn btn-secondary btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
+            <a href="" class="btn btn-primary btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
         </div>
      </div>
 
@@ -293,11 +289,8 @@ $dd_section="section".$lang;
         <div class="elevation-2 card1 ">
              <h5>ReadOnly Resources</h5>
              <p class="small">ReadOnly Resources Report in Library management system. Download PDF or Excel</p>
-             <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-             <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
-             <div class="go-corner" href="#">
-             <div class="go-arrow"></div>
-             </div>
+             <a href="" class="btn btn-secondary btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
+            <a href="" class="btn btn-primary btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
         </div>
      </div>
  
@@ -305,11 +298,8 @@ $dd_section="section".$lang;
          <div class="elevation-2 card1 ">
               <h5>Stock Resources</h5>
               <p class="small">Stock Resources Report in Library management system. Download PDF or Excel</p>
-              <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-              <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
-              <div class="go-corner" href="#">
-              <div class="go-arrow"></div>
-              </div>
+              <a href="" class="btn btn-secondary btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
+            <a href="" class="btn btn-primary btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
          </div>
       </div>
    
@@ -380,6 +370,14 @@ function load_type(cdta)
         })
         // --------------------------------------------------------
 }
+$('.btn-pdf').click(function() { 
+    $(this).find('.pdf-icon').hide();
+    $(this).find('.loader').show();
+}); 
+$('.btn-excel').click(function() { 
+    $(this).find('.excel-icon').hide();
+    $(this).find('.loader').show();
+}); 
 
 </script>
 
