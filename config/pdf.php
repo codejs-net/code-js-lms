@@ -30,6 +30,12 @@ return [
 			'R'  => 'nirmala.ttf',
 			'B'  => 'nirmala.ttf',
 		],
+		'latha' => [
+			'R'  => 'latha.ttf',
+			'B'  => 'lathab.ttf',
+			'useOTL' 	=> 0xFF,
+			'useKashida' => 75,
+		],
 		// ...add as many as you want.
 	]
 ];

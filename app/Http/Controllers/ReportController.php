@@ -59,6 +59,32 @@ class ReportController extends Controller
        
     }
     function report_recource(Request $request) {
+       
+        try {
+            ini_set('max_execution_time', '1200');
+            ini_set("pcre.backtrack_limit", "90000000");
+            ini_set('memory_limit', '-1');
+
+            $resouredata = view_resource_data::select('*')
+            ->whereBetween('id', [$request->resource_from, $request->resource_to])
+            ->get();
+            
+            $pdf = PDF::loadView('reports.rpt_resource',compact('resouredata'),[],
+                [
+                'format' => 'A4',
+                'orientation' => 'L',
+                ]);
+           
+
+            return $pdf->stream('resource.pdf');
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('error','Report genarate Fail.');
+        }
+
+
+    }
+    function report_recource1(Request $request) {
         try {
         ini_set('max_execution_time', '1200');
         ini_set("pcre.backtrack_limit", "90000000");

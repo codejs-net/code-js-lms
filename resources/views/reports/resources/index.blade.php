@@ -44,7 +44,7 @@ $dd_section="section".$lang;
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">From</span>
                         </div>
-                        <input type="text" name="txt_start" class="form-control" placeholder="Start ID" aria-label="Start Number" aria-describedby="basic-addon1"required>
+                        <input type="text" name="txt_start" id="txt_start" class="form-control" placeholder="Start ID" aria-label="Start Number" aria-describedby="basic-addon1"required>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 text-center">
@@ -52,7 +52,7 @@ $dd_section="section".$lang;
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">To</span>
                         </div>
-                        <input type="text" name="txt_end" class="form-control" placeholder="End ID" aria-label="End Number" aria-describedby="basic-addon1"required>
+                        <input type="text" name="txt_end" id="txt_end" class="form-control" placeholder="End ID" aria-label="End Number" aria-describedby="basic-addon1"required>
                     </div>
                 </div>
             </div>
@@ -61,8 +61,18 @@ $dd_section="section".$lang;
             <div class="elevation-2 card1 ">
                  <h5>Range Resources</h5>
                  <p class="small">Range Resources Report in LMS. Provide Number Range and Download PDF or Excel</p>
-                 <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-                 <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
+                 <form class="form-inline pull-left" action="{{ route('report_recource') }}" id="report_form" method="POST">
+                    {{ csrf_field() }}
+                        <input type="hidden" name="resource_from" class="resource_from">
+                        <input type="hidden" name="resource_to" class="resource_to">
+                        <button type="submit" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
+                </form>
+                <form class="form-inline" action="{{ route('export_recource') }}" id="report_form" method="POST">
+                    {{ csrf_field() }}
+                        <input type="hidden" name="resource_from" class="resource_from">
+                        <input type="hidden" name="resource_to" class="resource_to">
+                        <button type="submit" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</button>
+                </form>
                  <div class="go-corner" href="#">
                  <div class="go-arrow"></div>
                  </div>
@@ -281,8 +291,8 @@ $dd_section="section".$lang;
 
      <div class="col-md-3 col-3 p-2">
         <div class="elevation-2 card1 ">
-             <h5>Removed Resources</h5>
-             <p class="small">Removed Resources Report in Library management system. Download PDF or Excel</p>
+             <h5>ReadOnly Resources</h5>
+             <p class="small">ReadOnly Resources Report in Library management system. Download PDF or Excel</p>
              <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
              <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
              <div class="go-corner" href="#">
@@ -293,8 +303,8 @@ $dd_section="section".$lang;
  
      <div class="col-md-3 col-3 p-2">
          <div class="elevation-2 card1 ">
-              <h5>Doneted Resources</h5>
-              <p class="small">Doneted Resources Report in Library management system. Download PDF or Excel</p>
+              <h5>Stock Resources</h5>
+              <p class="small">Stock Resources Report in Library management system. Download PDF or Excel</p>
               <a href="" class="btn btn-warning btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
               <a href="" class="btn btn-success btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
               <div class="go-corner" href="#">
@@ -317,11 +327,21 @@ $dd_section="section".$lang;
 
 $(document).ready(function()
 {
-load_type("All");
+    load_type("All");
 
-$('#resource_creator').select2({
-    theme: 'bootstrap4',
-});
+    $('#resource_creator').select2({
+        theme: 'bootstrap4',
+    });
+
+    var inputfrom = document.getElementById("txt_start");
+    inputfrom.addEventListener("keyup", function(event) {
+        $('.resource_from').val($('#txt_start').val());  
+    });
+
+    var inputto = document.getElementById("txt_end");
+    inputto.addEventListener("keyup", function(event) {
+        $('.resource_to').val($('#txt_end').val()); 
+    });
 
 });
 
