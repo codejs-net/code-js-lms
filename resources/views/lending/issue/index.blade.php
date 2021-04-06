@@ -260,6 +260,7 @@ $creator="name".$lang;
         var db_count = parseInt($("#db_count").val());
         var memberid= $('#member_Name_id').val();
         var op ="";
+        var op1 ="";
         var bexsist=false;
         if($('#member_Name_id').val())
         {
@@ -309,7 +310,24 @@ $creator="name".$lang;
                                 {
                                     toastr.error('Resource Alredy Lend');
                                 }
-                                else{toastr.error('Resource Not Found!');}
+                                else if(data.massage=="error")
+                                {
+                                    toastr.error('Resource not found');
+                                }
+                                else if(data.massage=="duplicate")
+                                {
+                                    
+                                    for (j = 0; j < data.resos.length; j++)
+                                    {
+                                        op1+='<tr>';
+                                        op1+='<td class="td_id">'+data.resos[j].id+'</td><td>'+data.resos[j].accno+'</td><td>'+data.resos[j].snumber+'</td><td>'+data.resos[j].title+'</td><td>'+data.resos[j].creator+'</td><td>'+data.resos[j].category+"-"+data.resos[j].type+'</td><td><button type="button" value="'+data.resos[j].id+'" class="btn btn-sm btn-outline-success select_resos"><i class="fa fa-plus"></i></button></td>';
+                                        op1+='</tr>';
+                                        
+                                    }
+                                    $("#same_resource_Table tbody").append(op);
+                                    toastr.error('Same ISBN');
+                                    console.log(data);
+                                }
                         
                             },
                             error: function(data){

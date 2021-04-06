@@ -78,27 +78,36 @@ class IssueController extends Controller
             ->where('status', '1')
             ->where('accessionNo', $request->resourceinput)
             ->orWhere('standard_number', $request->resourceinput)
-            ->first();
-        if ($reso) {
-            $lend = lending_detail::select('*')
-                ->where('resource_id', $reso->id)
+            ->get();
+        if ($reso->count()>0) {
+            if ($reso->count()==1) {
+                $lend = lending_detail::select('*')
+                ->where('resource_id', $reso[0]->id)
                 ->Where('return', 0)
                 ->first();
-            if (!$lend) {
-                return response()->json([
-                    'id' => $reso->id,
-                    'title' => $reso->$title,
-                    'accno' => $reso->accessionNo,
-                    'snumber' => $reso->standard_number,
-                    'category' => $reso->$category,
-                    'type' => $reso->$type,
-                    'creator' => $reso->$creator,
-                    'massage' => "success"
-                ]);
-            } else {
-                return response()->json(['massage' => "lend"]);
+                if (!$lend) {
+                    return response()->json([
+                        'id' => $reso[0]->id,
+                        'title' => $reso[0]->$title,
+                        'accno' => $reso[0]->accessionNo,
+                        'snumber' => $reso[0]->standard_number,
+                        'category' => $reso[0]->$category,
+                        'type' => $reso[0]->$type,
+                        'creator' => $reso[0]->$creator,
+                        'massage' => "success"
+                    ]);
+                } 
+                else {
+                    return response()->json(['massage' => "lend"]);
+                }
             }
-        } else {
+            else{
+                // ---------same isbn------------
+                return response()->json(['resos'=>$reso,'massage' => "duplicate"]);
+            }
+
+        } 
+        else {
             return response()->json(['massage' => "error"]);
         }
     }
