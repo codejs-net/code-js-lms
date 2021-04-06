@@ -137,6 +137,7 @@ Route::group(['middleware' => ['auth']], function() {
    Route::resource('issue', IssueController::class);
    Route::post('member_view', [IssueController::class, 'memberview'])->name('member_view');
    Route::post('resource_view', [IssueController::class, 'resourceview'])->name('resource_view');
+   Route::post('select_resource_view', [IssueController::class, 'select_resource_view'])->name('select_resource_view');
    Route::post('store_issue', [IssueController::class, 'store_issue'])->name('store_issue');
    Route::get('/issue_riceipt/{id}', [IssueController::class, 'issue_receipt'])->name('issue_riceipt');
 

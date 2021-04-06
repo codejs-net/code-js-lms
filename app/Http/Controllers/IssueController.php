@@ -112,6 +112,45 @@ class IssueController extends Controller
         }
     }
 
+    public function select_resource_view(Request $request)
+    {
+        $lang = session()->get('db_locale');
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
+
+        $reso = view_resource_data::select('*')
+            ->where('id', $request->select_resoid)
+            ->Where('status', '1')
+            ->first();
+        if ($reso) {
+            $lend = lending_detail::select('*')
+            ->where('resource_id', $reso->id)
+            ->Where('return', 0)
+            ->first();
+            if (!$lend) {
+                return response()->json([
+                    'id' => $reso->id,
+                    'title' => $reso->$title,
+                    'accno' => $reso->accessionNo,
+                    'snumber' => $reso->standard_number,
+                    'category' => $reso->$category,
+                    'type' => $reso->$type,
+                    'creator' => $reso->$creator,
+                    'massage' => "success"
+                ]);
+            } 
+            else {
+                return response()->json(['massage' => "lend"]);
+            }
+        } 
+        else {
+            return response()->json(['massage' => "error"]);
+        }
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *

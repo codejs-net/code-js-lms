@@ -6,6 +6,7 @@
 @php
 $locale = session()->get('locale');
 $lang="_".$locale;
+$title="title".$lang;
 $category="category".$lang;
 $type="type".$lang;
 $publisher="publisher".$lang;
@@ -116,7 +117,7 @@ $creator="name".$lang;
                     <th scope="col">Type</th>
                     <th scope="col">&nbsp;</th>
                     </tr>    
-                    </thead>
+                </thead>
 
                     <tbody class="tbody_data" id="resourcedata">
                            
@@ -182,9 +183,9 @@ $creator="name".$lang;
               
 <!------------------------------------------------------------------------------------------->
                             
-                        
+@include('lending.issue.same_resource_modal')                       
 @endsection
-@push('scripts')
+@section('script')
 
     <script>
     $(document).ready(function() {
@@ -262,6 +263,7 @@ $creator="name".$lang;
         var op ="";
         var op1 ="";
         var bexsist=false;
+        $("#same_resource_table tbody").empty();
         if($('#member_Name_id').val())
         {
             var rowCount = $('#resourceTable tr').length;
@@ -301,10 +303,25 @@ $creator="name".$lang;
                             success: function(data){
                             if(data.massage=="success")
                                 {
-                                    op+='<tr>';
-                                    op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
-                                    op+='</tr>';
-                                    $("#resourceTable tbody").append(op);
+                                    for (j = 1; j < rowCount; j++)
+                                    {
+                                        var oCells = oTable.rows.item(j).cells;
+                                        var cellVal_accno = oCells.item(1).innerHTML;
+                                        var cellVal_snumber = oCells.item(2).innerHTML;
+                                        if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase())
+                                        { 
+                                            bexsist=true;   
+                                        }
+                                    }
+                                    if(bexsist==false)
+                                    { 
+                                        op+='<tr>';
+                                        op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
+                                        op+='</tr>';
+                                        $("#resourceTable tbody").append(op);
+                                    }
+                                    else{toastr.error('Resource Alrady in Cart')} 
+                                   
                                 }
                                 else if(data.massage=="lend")
                                 {
@@ -316,17 +333,19 @@ $creator="name".$lang;
                                 }
                                 else if(data.massage=="duplicate")
                                 {
-                                    
+                                   
                                     for (j = 0; j < data.resos.length; j++)
                                     {
+                                        console.log(data.resos[j].accessionNo);
                                         op1+='<tr>';
-                                        op1+='<td class="td_id">'+data.resos[j].id+'</td><td>'+data.resos[j].accno+'</td><td>'+data.resos[j].snumber+'</td><td>'+data.resos[j].title+'</td><td>'+data.resos[j].creator+'</td><td>'+data.resos[j].category+"-"+data.resos[j].type+'</td><td><button type="button" value="'+data.resos[j].id+'" class="btn btn-sm btn-outline-success select_resos"><i class="fa fa-plus"></i></button></td>';
+                                        op1+='<td class="td_id">'+data.resos[j].id+'</td><td>'+data.resos[j].accessionNo+'</td><td>'+data.resos[j].standard_number+'</td><td>'+data.resos[j].{{$title}}+'</td><td>'+data.resos[j].{{$creator}}+'</td><td>'+data.resos[j].{{$category}}+"-"+data.resos[j].{{$type}}+'</td><td><button type="button" value="'+data.resos[j].id+'" class="btn btn-sm btn-outline-success select_resos"><i class="fa fa-plus"></i></button></td>';
                                         op1+='</tr>';
                                         
                                     }
-                                    $("#same_resource_Table tbody").append(op);
-                                    toastr.error('Same ISBN');
-                                    console.log(data);
+                                    $("#same_resource_table tbody").append(op1);
+                                    $('#same_resource_modal').modal('show');
+                                    toastr.warning('Same ISBN');
+                                   
                                 }
                         
                             },
@@ -480,6 +499,53 @@ $creator="name".$lang;
         document.getElementById("resource_details").focus();
 
     });
+
+    $("#same_resource_table").on('click', '.select_resos', function () {
+       var select_resoid= $(this).val();
+       var memberid= $('#member_Name_id').val();
+       var op="";
+         // -------------------------------------------------------
+         $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            dataType : 'json',
+            url: "{{route('select_resource_view')}}",
+            data:{
+                    select_resoid: select_resoid,
+                    memberid:memberid
+                },
+            success: function(data){
+            if(data.massage=="success")
+                {
+                    op+='<tr>';
+                    op+='<td class="td_id">'+data.id+'</td><td>'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
+                    op+='</tr>';
+                    $("#resourceTable tbody").append(op);
+                    $('#same_resource_modal').modal('hide');
+                }
+                else if(data.massage=="lend")
+                {
+                    toastr.error('Resource Alredy Lend');
+                }
+                else if(data.massage=="error")
+                {
+                    toastr.error('Resource not found');
+                }
+                
+        
+            },
+            error: function(data){
+            toastr.error('Something Went Wrong!')
+            }
+        });
+        // -------------------------------------------------------------
+        
+    });
    
     function printDiv(){
         var contents = $("#print_lendding").html();
@@ -510,4 +576,4 @@ $creator="name".$lang;
     
 
 </script>
-@endpush
+@endsection
