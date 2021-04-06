@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use App\Imports\ResourceImport;
 use File;
+use Auth;
+use App\Models\User;
+use App\Models\staff;
 
 class ResourceController extends Controller
 {
@@ -54,7 +57,10 @@ class ResourceController extends Controller
         $resource_title="title".$lang;
 
         $resource_category=resource_category::all();
-        $resource_center=center::all();
+       
+        $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
+        $centerid= $loguser->staff->center_id !=null ? $loguser->staff->center_id :"%";
+        $resource_center=center::where('id','LIKE',$centerid)->get();
 
             if(request()->ajax())
             {

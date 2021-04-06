@@ -301,7 +301,7 @@ $creator="name".$lang;
                                     var oCells = oTable.rows.item(j).cells;
                                     var cellVal_accno = oCells.item(1).innerHTML;
                                     var cellVal_snumber = oCells.item(2).innerHTML;
-                                    if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase())
+                                    if(data.accno.toUpperCase()==cellVal_accno.toUpperCase())
                                     { 
                                         bexsist=true;   
                                     }

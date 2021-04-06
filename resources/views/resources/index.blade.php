@@ -80,7 +80,7 @@ $dd_section="section".$lang;
                 <div class="ml-2 mr-2">
                 <span for="category">Center :</span>
                     <select class="form-control form-control-sm mb-3"name="center" id="center" value="">
-                        <option value="All" selected>All Centers</option>
+                        <!-- <option value="All" selected>All Centers</option> -->
                             @foreach($center_data as $item)
                                 <option value="{{ $item->id }}">&nbsp;{{ $item->$center}}</option>
                             @endforeach

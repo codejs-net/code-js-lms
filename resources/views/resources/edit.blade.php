@@ -294,7 +294,6 @@ $center="name".$lang;
                    <div class="form-group col-md-9 col-9 p-2 mt-2">
                     <label for="note">Center:</label>
                         <select class="form-control form-control-sm mb-3"name="resource_center" id="resource_center" value="">
-                            <option value="All" selected>All Centers</option>
                                 @foreach($center_data as $item)
                                     <option value="{{ $item->id }}">{{ $item->$center}}</option>
                                 @endforeach

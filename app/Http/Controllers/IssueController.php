@@ -15,6 +15,8 @@ use App\Http\Controllers\SoapController;
 use Session;
 use Carbon\Carbon;
 use Auth;
+use App\Models\User;
+use App\Models\staff;
 
 
 class IssueController extends Controller
@@ -73,11 +75,15 @@ class IssueController extends Controller
         $category = "category" . $lang;
         $type = "type" . $lang;
         $creator = "name" . $lang;
-
+        $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
+        $centerid= $loguser->staff->center_id !=null ? $loguser->staff->center_id :"%";
         $reso = view_resource_data::select('*')
             ->where('status', '1')
+            ->where('center_id','LIKE',$centerid)
             ->where('accessionNo', $request->resourceinput)
             ->orWhere('standard_number', $request->resourceinput)
+            ->where('status', '1')
+            ->where('center_id','LIKE',$centerid)
             ->get();
         if ($reso->count()>0) {
             if ($reso->count()==1) {
@@ -120,9 +126,13 @@ class IssueController extends Controller
         $type = "type" . $lang;
         $creator = "name" . $lang;
 
+        $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
+        $centerid= $loguser->staff->center_id !=null ? $loguser->staff->center_id :"%";
+
         $reso = view_resource_data::select('*')
             ->where('id', $request->select_resoid)
             ->Where('status', '1')
+            ->where('center_id','LIKE',$centerid)
             ->first();
         if ($reso) {
             $lend = lending_detail::select('*')

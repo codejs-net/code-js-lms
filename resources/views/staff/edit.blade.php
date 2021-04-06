@@ -90,7 +90,7 @@ $center="name".$lang;
                 <div class="form-group col-md-5">
                     <label for="center">Center : </label>
                     <select class="form-control"name="center" id="center" value="{{old('center')}}"required>
-                    <option value="" disabled selected>Select Staff's Center</option>
+                    <option value="all">All Centers</option>
                     @foreach($cdata as $item)
                         <option value="{{ $item->id }}">{{ $item->$center }}</option>
                     @endforeach

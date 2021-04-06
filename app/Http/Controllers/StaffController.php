@@ -218,10 +218,9 @@ class StaffController extends Controller
             }
             
         }
-
         $mbr->titleid=$request->title;
         $mbr->designetion_id=$request->designation;
-        $mbr->center_id=$request->center;
+        $mbr->center_id=$request->center!="all" ? $request->center : null;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
