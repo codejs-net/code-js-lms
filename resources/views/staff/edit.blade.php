@@ -87,24 +87,12 @@ $center="name".$lang;
                     <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
                     <i class="fa fa-plus"></i></button><label for="categry">&nbsp;</label>
                 </div>
-                <div class="form-group col-md-5">
-                    <label for="center">Center : </label>
-                    <select class="form-control"name="center" id="center" value="{{old('center')}}"required>
-                    <option value="all">All Centers</option>
-                    @foreach($cdata as $item)
-                        <option value="{{ $item->id }}">{{ $item->$center }}</option>
-                    @endforeach
-            
-                    </select>
-                    <div class="invalid-feedback">{{ __("Please Select the Center")}}</div>
-                    <span class="text-danger">{{ $errors->first('center') }}</span>
+                <div class="form-group col-md-6">
+                    <label for="regdate">Registerd Date :</label>
+                    <input type="date" class="form-control" name="registeredDate" id="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
+                    <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
-                <div class="form-group col-md-1 text-left">
-                    <label for="categry">&nbsp;</label><br>
-                    
-                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
-                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp;</label>
-                </div>
+               
             </div>
             <div class="form-group">
                 <label for="name">Name :</label>
@@ -166,15 +154,7 @@ $center="name".$lang;
                 <textarea class="form-control" rows="3" id="Description" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
-            <div class=" row form-group">
-                <div class="form-group col-md-6">
-                    <label for="regdate">Registerd Date :</label>
-                    <input type="date" class="form-control" name="registeredDate" id="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
-                    <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
-                </div>
-                <div class="form-group col-md-6">
-                </div>
-            </div>
+           
 
             <div class="form-row border border-secondary bg-light">
                 <div class="form-group col-md-3 col-3 p-2 mt-2">
@@ -193,7 +173,18 @@ $center="name".$lang;
                
                 </div>
            </div>
-            
+           <div class="form-row border border-secondary bg-light">
+            <div class="col-md-12 form-check">
+                <label for="center">Centers Allocation: </label><br>
+                @foreach($cdata as $item)
+                <label class="px-4">
+                    {{ Form::checkbox('center[]', $item->id, in_array($item->id, $allocatedata) ? true : false, array('class' => 'form-check-input name')) }}&nbsp;{{ $item->$center }}
+                </label><br>
+                @endforeach
+                <div class="invalid-feedback">{{ __("Please Select the Center")}}</div>
+                <span class="text-danger">{{ $errors->first('center') }}</span>
+            </div>
+        </div>  
         <div class="box-footer mt-2 clearfix pull-right">
             
             <button type="submit" class="btn btn-success btn-sm" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Update")}}</button>

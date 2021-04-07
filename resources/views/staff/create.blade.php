@@ -91,24 +91,12 @@ $center="name".$lang;
                     <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
                     <i class="fa fa-plus"></i></button><label for="categry">&nbsp;</label>
                 </div>
-                <div class="form-group col-md-5">
-                    <label for="center">Center : </label>
-                    <select class="form-control"name="center" value="{{old('center')}}"required>
-                    <option value="" disabled selected>Select Staff's Center</option>
-                    @foreach($cdata as $item)
-                        <option value="{{ $item->id }}">{{ $item->$center }}</option>
-                    @endforeach
-            
-                    </select>
-                    <div class="invalid-feedback">{{ __("Please Select the Center")}}</div>
-                    <span class="text-danger">{{ $errors->first('center') }}</span>
+                <div class="form-group col-md-6">
+                    <label for="regdate">Registerd Date :</label>
+                    <input type="date" class="form-control" name="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
+                    <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
-                <div class="form-group col-md-1 text-left">
-                    <label for="categry">&nbsp;</label><br>
-                    
-                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
-                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp;</label>
-                </div>
+                
             </div>
             <div class="form-group">
                 <label for="name">Name :</label>
@@ -165,22 +153,26 @@ $center="name".$lang;
 
                 </div>
             </div>
-            <div class="form-group">
+            <div class="row form-group">
                 <label for="descrip">Description :</label>
                 <textarea class="form-control" rows="3" id="comment" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
-            <div class=" row form-group">
-                <div class="form-group col-md-6">
-                    <label for="regdate">Registerd Date :</label>
-                    <input type="date" class="form-control" name="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
-                    <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
-                </div>
-                <div class="form-group col-md-6">
+           
+            <div class="row border border-secondary bg-light">
+                <div class="form-group col-md-12">
+                    <label for="center">Centers Allocation: </label><br>
+                    @foreach($cdata as $item)
+                    <label class="ml-3 pl-1">
+                        <input type="checkbox" name="center[]" value="{{$item->id}}" class="form-check-input"id="" >{{ $item->$center }}
+                    </label><br>
+                    @endforeach
+                    <div class="invalid-feedback">{{ __("Please Select the Center")}}</div>
+                    <span class="text-danger">{{ $errors->first('center') }}</span>
                 </div>
             </div>
             
-        <div class="box-footer clearfix pull-right">
+        <div class="box-footer clearfix pull-right mt-3">
             
             <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_staff"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
             &nbsp; &nbsp;

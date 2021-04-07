@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use File;
 use App\Models\setting;
 use App\Models\view_staff_data;
+use App\Models\center_allocation;
 use Session;
 use DataTables;
 
@@ -79,6 +80,7 @@ class StaffController extends Controller
     {
         $staffdata=designetion::all();
         $titledata=title::all();
+
         $centerdata=center::all();
 
         return view('staff.create')->with('Mdata',$staffdata)->with('tdata',$titledata)->with('cdata',$centerdata);
@@ -119,7 +121,6 @@ class StaffController extends Controller
 
         $mbr->titleid=$request->title;
         $mbr->designetion_id=$request->designation;
-        $mbr->center_id=$request->center;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
@@ -140,6 +141,14 @@ class StaffController extends Controller
 
         $mbr->save();
        
+        $check_centr = $request->input('center');
+        foreach ($check_centr as $check_centr_id)
+        {
+            $allocate = new center_allocation;
+            $allocate->staff_id=$mbr->id;
+            $allocate->center_id=$check_centr_id;
+            $allocate->save();
+        }
 
         return response()->json(['data' => "Success"]);
         
@@ -171,11 +180,17 @@ class StaffController extends Controller
         $staffdata=designetion::all();
         $titledata=title::all();
         $centerdata=center::all();
+
+        $center_allocate = DB::table("center_allocations")->where("staff_id",$id)
+        ->pluck('center_id','center_id')
+        ->all();
+
         return view('staff.edit')
         ->with('edata',$editdata)
         ->with('Mdata',$staffdata)
         ->with('tdata',$titledata)
-        ->with('cdata',$centerdata);
+        ->with('cdata',$centerdata)
+        ->with('allocatedata',$center_allocate);
     }
 
     /**
@@ -220,7 +235,7 @@ class StaffController extends Controller
         }
         $mbr->titleid=$request->title;
         $mbr->designetion_id=$request->designation;
-        $mbr->center_id=$request->center!="all" ? $request->center : null;
+        // $mbr->center_id=$request->center!="all" ? $request->center : null;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
@@ -240,6 +255,22 @@ class StaffController extends Controller
         $mbr->status=$request->status;
 
         $mbr->save();
+
+       
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $allocate_old = center_allocation::where('staff_id',$mbr->id)->delete();
+        // $allocate_old->center_allocation()->whereIn('id', $$mbr->id)->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $check_centr =  $request->input('center');
+        foreach ($check_centr as $check_centr_id)
+        {
+            $allocate = new center_allocation;
+            $allocate->staff_id=$mbr->id;
+            $allocate->center_id=$check_centr_id;
+            $allocate->save();
+        }
+
         if($mbr)
         { return redirect()->route('staff.index')->with("success","Staff Update Successfully");}
         else
