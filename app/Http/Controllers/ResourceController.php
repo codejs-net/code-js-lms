@@ -18,6 +18,7 @@ use App\Models\center;
 use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\view_resource_data_all;
+use App\Models\center_allocation;
 use Session;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -59,8 +60,20 @@ class ResourceController extends Controller
         $resource_category=resource_category::all();
        
         $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
-        $centerid= $loguser->staff->center_id !=null ? $loguser->staff->center_id :"%";
-        $resource_center=center::where('id','LIKE',$centerid)->get();
+
+        $resource_center = center_allocation::where('staff_id', $loguser->staff_id)
+        ->with(['staff','center'])
+        ->pluck('center_id','center_id')
+        ->all();
+        dd($resource_center->center);
+        // $resource_center = DB::table("center_allocations")
+        // ->where("staff_id",$loguser->staff_id)
+        // ->with('staff','center')
+        // ->pluck('center_id','center_id')
+        // ->all();
+
+        // $centerid= $loguser->staff->center_id !=null ? $loguser->staff->center_id :"%";
+        // $resource_center=center::where('id','LIKE',$centerid)->get();
 
             if(request()->ajax())
             {
