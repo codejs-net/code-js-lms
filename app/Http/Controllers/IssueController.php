@@ -11,6 +11,7 @@ use App\Models\lending_detail;
 use App\Models\lending;
 use App\Models\lending_config;
 use App\Models\view_lending_data;
+use App\Models\center_allocation;
 use App\Http\Controllers\SoapController;
 use Session;
 use Carbon\Carbon;
@@ -75,15 +76,26 @@ class IssueController extends Controller
         $category = "category" . $lang;
         $type = "type" . $lang;
         $creator = "name" . $lang;
+        $center_array= array();
+
+
+
         $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
-        $centerid= $loguser->staff->center_id !=null ? $loguser->staff->center_id :"%";
+        $resource_center = center_allocation::where('staff_id', $loguser->staff_id)
+        ->with(['center'])
+        ->get();
+        foreach($resource_center as $value)
+        {
+            array_push($center_array,$value->center->id);
+        }
+
         $reso = view_resource_data::select('*')
             ->where('status', '1')
-            ->where('center_id','LIKE',$centerid)
+            ->whereIn('center_id', $center_array)
             ->where('accessionNo', $request->resourceinput)
             ->orWhere('standard_number', $request->resourceinput)
             ->where('status', '1')
-            ->where('center_id','LIKE',$centerid)
+            ->whereIn('center_id', $center_array)
             ->get();
         if ($reso->count()>0) {
             if ($reso->count()==1) {
@@ -125,14 +137,22 @@ class IssueController extends Controller
         $category = "category" . $lang;
         $type = "type" . $lang;
         $creator = "name" . $lang;
+        $center_array= array();
 
+       
         $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
-        $centerid= $loguser->staff->center_id !=null ? $loguser->staff->center_id :"%";
+        $resource_center = center_allocation::where('staff_id', $loguser->staff_id)
+        ->with(['center'])
+        ->get();
+        foreach($resource_center as $value)
+        {
+            array_push($center_array,$value->center->id);
+        }
 
         $reso = view_resource_data::select('*')
             ->where('id', $request->select_resoid)
             ->Where('status', '1')
-            ->where('center_id','LIKE',$centerid)
+            ->whereIn('center_id', $center_array)
             ->first();
         if ($reso) {
             $lend = lending_detail::select('*')
