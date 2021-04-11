@@ -211,49 +211,52 @@ class SurveyController extends Controller
         ->where('survey_id', $request->surveyid)
         ->where('accessionNo', $request->resourceinput)
         ->orWhere('standard_number', $request->resourceinput)
-        ->first();
-        
-        if ($reso) 
-        {
-            $lend = lending_detail::select('*')
-            ->where('resource_id', $reso->resource_id)
-            ->Where('return', 0)
-            ->first();
-            if(!$lend) 
-            {
-                if($reso->survey==0)
-                {$massage="success";}
-                else
-                {$massage="check";}
+        ->get();
 
-                $data_update=survey_detail_temp::find($reso->id);
-                    $data_update->survey=1;
-                    $data_update->suggestion_id=$request->suggetion;
-                    $data_update->check_by=Auth::user()->id;
-                    $data_update->save();
-
-                    $survey_count = view_survey::select('id')
-                    ->where('survey_id',$request->surveyid)
-                    ->where('survey',1)
-                    ->count();
-                    return response()->json([
-                            'title' => $reso->$title,
-                            'accno' => $reso->accessionNo,
-                            'snumber' => $reso->standard_number,
-                            'category' => $reso->$category,
-                            'type' => $reso->$type,
-                            'creator' => $reso->$creator,
-                            'scount'=>$survey_count,
-                            'massage' => $massage
-                            ]);
+        if ($reso->count()>0) {
+            if ($reso->count()==1) {
+                $lend = lending_detail::select('*')
+                ->where('resource_id', $reso[0]->resource_id)
+                ->Where('return', 0)
+                ->first();
+                if(!$lend) 
+                {
+                    if($reso[0]->survey==0)
+                    {$massage="success";}
+                    else
+                    {$massage="check";}
+    
+                    $data_update=survey_detail_temp::find($reso[0]->id);
+                        $data_update->survey=1;
+                        $data_update->suggestion_id=$request->suggetion;
+                        $data_update->check_by=Auth::user()->id;
+                        $data_update->save();
+    
+                        $survey_count = view_survey::select('id')
+                        ->where('survey_id',$request->surveyid)
+                        ->where('survey',1)
+                        ->count();
+                        return response()->json([
+                                'title' => $reso[0]->$title,
+                                'accno' => $reso[0]->accessionNo,
+                                'snumber' => $reso[0]->standard_number,
+                                'category' => $reso[0]->$category,
+                                'type' => $reso[0]->$type,
+                                'creator' => $reso[0]->$creator,
+                                'scount'=>$survey_count,
+                                'massage' => $massage
+                                ]);
+                }
+                else{
+                    return response()->json(['massage' => "lend",'title' => $reso[0]->$title]);
+                }
             }
-            else
-            {
-                return response()->json(['massage' => "lend",'title' => $reso->$title]);
+            else{
+                // ---------same isbn------------
+                return response()->json(['resos'=>$reso,'massage' => "duplicate"]);
             }
         } 
-        else 
-        {
+        else {
             return response()->json(['massage' => "error"]);
         }
     }
