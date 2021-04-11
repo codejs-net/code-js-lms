@@ -261,6 +261,113 @@ class SurveyController extends Controller
         }
     }
 
+    public function same_reso_check(Request $request)
+    {
+        $lang = session()->get('db_locale');
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
+        $massage="";
+
+        $reso = view_survey::select('*')
+        ->where('survey_id', $request->surveyid)
+        ->where('id', $request->select_resoid)
+        ->first();
+
+        if ($reso) {
+                $lend = lending_detail::select('*')
+                ->where('resource_id', $reso->resource_id)
+                ->Where('return', 0)
+                ->first();
+                if(!$lend) 
+                {
+                    if($reso->survey==0)
+                    {$massage="success";}
+                    else
+                    {$massage="check";}
+    
+                    $data_update=survey_detail_temp::find($reso->id);
+                    $data_update->survey=1;
+                    $data_update->suggestion_id=$request->suggetion;
+                    $data_update->check_by=Auth::user()->id;
+                    $data_update->save();
+    
+                    $survey_count = view_survey::select('id')
+                    ->where('survey_id',$request->surveyid)
+                    ->where('survey',1)
+                    ->count();
+                    return response()->json([
+                        'title' => $reso->$title,
+                        'accno' => $reso->accessionNo,
+                        'snumber' => $reso->standard_number,
+                        'category' => $reso->$category,
+                        'type' => $reso->$type,
+                        'creator' => $reso->$creator,
+                        'scount'=>$survey_count,
+                        'massage' => $massage
+                        ]);
+                }
+                else{
+                    return response()->json(['massage' => "lend",'title' => $reso->$title]);
+                }
+        } 
+        else {
+            return response()->json(['massage' => "error"]);
+        }
+    }
+
+    public function same_reso_uncheck(Request $request)
+    {
+        $lang = session()->get('db_locale');
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
+        $massage="";
+
+        $reso = view_survey::select('*')
+        ->where('survey_id', $request->surveyid)
+        ->where('id', $request->select_resoid)
+        ->first();
+
+        if ($reso) 
+        {
+            if($reso->survey==1)
+            {
+               
+                $data_update=survey_detail_temp::find($reso->id);
+                $data_update->survey=0;
+                $data_update->suggestion_id=null;
+                $data_update->check_by=null;
+                $data_update->save();
+
+                $survey_count = view_survey::select('id')
+                ->where('survey_id',$request->surveyid)
+                ->where('survey',1)
+                ->count();
+                return response()->json([
+                        'title' => $reso->$title,
+                        'accno' => $reso->accessionNo,
+                        'snumber' => $reso->standard_number,
+                        'category' => $reso->$category,
+                        'type' => $reso->$type,
+                        'creator' => $reso->$creator,
+                        'scount'=>$survey_count,
+                        'massage' => "success"
+                        ]);
+
+            }
+            else
+            {
+                return response()->json(['massage' => "check",'title' => $reso->$title]);
+            }
+        } 
+        else {
+            return response()->json(['massage' => "error"]);
+        }
+    }
+
     public function uncheck_survey(Request $request)
     {
         $lang = session()->get('db_locale');

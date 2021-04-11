@@ -407,15 +407,15 @@ $("#finalize").click(function () {
        })
        
 });
-//--------------------------end finalize-----------------------------
+//--------------------------same_reso_check-----------------------------
 
-$("#same_resource_table").on('click', '.select_resos', function () {
-       var select_resoid= $(this).val();
-       var memberid= $('#member_Name_id').val();
-       var oTable = document.getElementById('resourceTable');
-       var rowCount = $('#resourceTable tr').length;
-       var op="";
-       var bexsist=false;
+$("#same_resource_table").on('click', '.check_resos', function () {
+    var select_resoid= $(this).val();
+    var suggetion = $("#survey_suggestion").val();
+    var surveyid = $("#surveyid").val();
+    $('#resource_title').html("");
+    $('#resource_creator').html("");
+    $('#resource_category').html("");
          // -------------------------------------------------------
          $.ajaxSetup({
             headers: {
@@ -426,45 +426,98 @@ $("#same_resource_table").on('click', '.select_resos', function () {
         $.ajax({
             type: 'POST',
             dataType : 'json',
-            url: "{{route('select_resource_view')}}",
+            url: "{{route('same_reso_check')}}",
             data:{
                     select_resoid: select_resoid,
-                    memberid:memberid
+                    suggetion:suggetion,
+                    surveyid:surveyid
                 },
             success: function(data){
             if(data.massage=="success")
                 {
-                    for (j = 1; j < rowCount; j++)
-                    {
-                        var oCells = oTable.rows.item(j).cells;
-                        var cellVal_accno = oCells.item(1).innerHTML;
-                        var cellVal_snumber = oCells.item(2).innerHTML;
-                        if(data.accno.toUpperCase()==cellVal_accno.toUpperCase())
-                        { 
-                            bexsist=true;   
-                        }
-                    }
-                    if(bexsist==false)
-                    { 
-                        op+='<tr>';
-                        op+='<td class="td_id">'+data.id+'</td><td class="td_acceno">'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
-                        op+='</tr>';
-                        $("#resourceTable tbody").append(op);
-                        $('#same_resource_modal').modal('hide');
-                    }
-                    else{toastr.error('Resource Alrady in Issue Cart')} 
-                    
+                    toastr.success(data.title+' - Resource Checked Successfuly');
+                    $('#survey_count').html(data.scount);
+                    $('#resource_title').html(data.title);
+                    $('#resource_creator').html(data.creator);
+                    $('#resource_category').html(data.category+"-"+data.type);
+                    $('#same_resource_modal').modal('hide');
+                }
+                else if(data.massage=="check")
+                {
+                    toastr.info(data.title+' - Resource Alredy Checked, Details Updated Successfuly');
+                    $('#survey_count').html(data.scount);
+                    $('#resource_title').html(data.title);
+                    $('#resource_creator').html(data.creator);
+                    $('#resource_category').html(data.category+"-"+data.type);
+                    $('#same_resource_modal').modal('hide');
+                
                 }
                 else if(data.massage=="lend")
                 {
-                    toastr.error('Resource Alredy Lend! Plese Return and try again');
-                }
-                else if(data.massage=="error")
-                {
-                    toastr.error('Resource not found');
+                    toastr.warning(data.title+' - Resource lend, Plese Return first');
                 }
                 
+                else
+                {toastr.error('Resource Not Found!');}
+
+                $('#resource_details').val('');
+                $("#survey_suggestion").val($("#survey_suggestion option:first").val());
+                document.getElementById("resource_details").focus();
+                $('#survey_datatable').DataTable().ajax.reload()
         
+            },
+            error: function(data){
+            toastr.error('Something Went Wrong!')
+            }
+        });
+        // -------------------------------------------------------------
+        
+    });
+
+//--------------------------same_reso_uncheck-----------------------------
+
+$("#same_resource_table").on('click', '.uncheck_resos', function () {
+    var select_resoid= $(this).val();
+    var surveyid = $("#surveyid").val();
+    $('#resource_title').html("");
+    $('#resource_creator').html("");
+    $('#resource_category').html("");
+         // -------------------------------------------------------
+         $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            dataType : 'json',
+            url: "{{route('same_reso_uncheck')}}",
+            data:{
+                    select_resoid: select_resoid,
+                    surveyid:surveyid
+                },
+            success: function(data){
+            if(data.massage=="success")
+                {
+                    toastr.success(data.title+' - Resource UnChecked');
+                    $('#survey_count').html(data.scount);
+                    $('#resource_title').html(data.title);
+                    $('#resource_creator').html(data.creator);
+                    $('#resource_category').html(data.category+"-"+data.type);
+                    $('#same_resource_modal').modal('hide');
+                }
+                else if(data.massage=="check")
+                {
+                    toastr.info(data.title+' - Resource Not Checked');
+                }
+                else
+                {toastr.error('Resource Not Found!');}
+
+                $('#resource_details').val('');
+                $("#survey_suggestion").val($("#survey_suggestion option:first").val());
+                document.getElementById("resource_details").focus();
+                $('#survey_datatable').DataTable().ajax.reload()
             },
             error: function(data){
             toastr.error('Something Went Wrong!')

@@ -202,6 +202,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('view_survey/{id}', [SurveyController::class, 'view_survey'])->name('view_survey');
     Route::get('survey_history/{id}', [SurveyController::class, 'survey_history'])->name('survey_history');
     Route::post('delete_survey', [SurveyController::class, 'delete'])->name('delete_survey');
+    Route::post('same_reso_check', [SurveyController::class, 'same_reso_check'])->name('same_reso_check');
+    Route::post('same_reso_uncheck', [SurveyController::class, 'same_reso_uncheck'])->name('same_reso_uncheck');
 
     // --------Member support/category--------------------------------
     Route::resource('member_catagory', Member_categoryController::class);

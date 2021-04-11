@@ -508,6 +508,7 @@ $creator="name".$lang;
         document.getElementById("resource_details").focus();
 
     });
+//----------------------same reso issue----------------------------------
 
     $("#same_resource_table").on('click', '.select_resos', function () {
        var select_resoid= $(this).val();
