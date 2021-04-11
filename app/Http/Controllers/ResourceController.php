@@ -66,13 +66,15 @@ class ResourceController extends Controller
 
             if(request()->ajax())
             {
-                $catg="";$cent="";$type="";
+                $catg="";
+                $type="";
+                $cent= $request->centerdata;
 
                 if($request->catdata=="All"){$catg="%";}
                 else{$catg= $request->catdata;}
 
-                if($request->centerdata=="All"){$cent="%";}
-                else{$cent= $request->centerdata;}
+                // if($request->centerdata=="All"){$cent="%";}
+                // else{$cent= $request->centerdata;}
 
                 if($request->typedata=="All"){$type="%";}
                 else{$type= $request->typedata;}
@@ -81,7 +83,7 @@ class ResourceController extends Controller
                 // $resouredata =view_resource_data::all();
                 $resouredata = view_resource_data::select('*')
                 ->where('category_id','LIKE',$catg)
-                ->where('center_id','LIKE',$cent)
+                ->where('center_id',$cent)
                 ->where('type_id','LIKE',$type)
                 ->get();
 

@@ -30,6 +30,7 @@ use App\Http\Controllers\Member_categoryController;
 use App\Http\Controllers\Library_titleController;
 use App\Http\Controllers\Staff_designetionController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\CenterController;
 
 
 
@@ -180,6 +181,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('edit_staff/{id}', [StaffController::class, 'edit'])->name('edit_staff');
     Route::POST('show_staff', [StaffController::class, 'show'])->name('show_staff');
     Route::POST('delete_staff', [StaffController::class, 'delete'])->name('delete_staff');
+
+    //--------Center----------------------------------
+    Route::resource('center', CenterController::class);
+    Route::post('store_center', [CenterController::class, 'store'])->name('store_center');
+    Route::get('create_center', [CenterController::class, 'create'])->name('create_center');
+    Route::post('import_center', [CenterController::class, 'import'])->name('import_center');
+    Route::post('update_center', [CenterController::class, 'update_center'])->name('update_center');
+    Route::get('edit_center/{id}', [CenterController::class, 'edit'])->name('edit_center');
+    Route::POST('show_center', [CenterController::class, 'show'])->name('show_center');
+    Route::POST('delete_center', [CenterController::class, 'delete'])->name('delete_center');
 
     //--------Survey----------------------------------
     Route::resource('survey', SurveyController::class);

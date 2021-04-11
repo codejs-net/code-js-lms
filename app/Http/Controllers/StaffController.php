@@ -263,13 +263,17 @@ class StaffController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $check_centr =  $request->input('center');
-        foreach ($check_centr as $check_centr_id)
+        if(!empty($check_centr))
         {
-            $allocate = new center_allocation;
-            $allocate->staff_id=$mbr->id;
-            $allocate->center_id=$check_centr_id;
-            $allocate->save();
+            foreach ($check_centr as $check_centr_id)
+            {
+                $allocate = new center_allocation;
+                $allocate->staff_id=$mbr->id;
+                $allocate->center_id=$check_centr_id;
+                $allocate->save();
+            }
         }
+        
 
         if($mbr)
         { return redirect()->route('staff.index')->with("success","Staff Update Successfully");}

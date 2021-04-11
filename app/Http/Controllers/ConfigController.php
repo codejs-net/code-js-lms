@@ -93,7 +93,7 @@ class ConfigController extends Controller
 
         $mbr=new staff;
         // $mbr->center_id=0;
-        $mbr->title=$request->title;
+        // $mbr->title=$request->title;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
