@@ -31,35 +31,22 @@ class CreateMemberView extends Migration
     {
         return <<<SQL
             CREATE VIEW view_member_data AS
-                SELECT  members.id,
-                        members.titleid,
-                        members.categoryid,
-                        members.name_si,
-                        members.name_ta,
-                        members.name_en,
-                        members.address1_si,
-                        members.address1_ta,
-                        members.address1_en,
-                        members.address2_si,
-                        members.address2_ta,
-                        members.address2_en,
-                        members.nic,
-                        members.mobile,
-                        members.birthday,
-                        members.gender,
-                        members.description,
-                        members.regdate,
-                        members.image,
-                        members.status,
+                SELECT  members.*,
                         member_cats.category_si,
                         member_cats.category_ta,
                         member_cats.category_en,
                         titles.title_si,
                         titles.title_ta,
-                        titles.title_en
+                        titles.title_en,
+                        member_guarantors.name_si AS guarantor_si,
+                        member_guarantors.name_ta AS guarantor_ta,
+                        member_guarantors.name_en AS guarantor_en,
+                        member_guarantors.nic     AS guarantor_nic,
+                        member_guarantors.mobile  AS guarantor_mobile
                 FROM    members 
-            LEFT JOIN   member_cats ON members.categoryid = member_cats.id
-            LEFT JOIN   titles      ON members.titleid = titles.id
+            LEFT JOIN   member_cats         ON members.categoryid = member_cats.id
+            LEFT JOIN   titles              ON members.titleid = titles.id
+            LEFT JOIN   member_guarantors   ON members.guarantor_id = member_guarantors.id
         SQL;
     }
 

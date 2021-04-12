@@ -110,7 +110,7 @@ class ConfigController extends Controller
         $mbr->gender=$request->gender;
         $mbr->description=$request->Description_staff;
         $mbr->regdate=$request->registeredDate;
-        $mbr->image="";
+        // $mbr->image="";
 
         Session::put('mob', $request->Mobile);
         $mbr->save();

@@ -14,7 +14,7 @@ $category="category".$lang;
 <div class="container-fluid">
     <div class="row text-center mt-1 mb-3">
         <div class="col-md-12 col-sm-12 text-center"> 
-            <h4> <i class="fa fa-cog"> {{__("LMS Configuration")}}</i></h4>
+            <h5> <i class="fa fa-cog"> {{__("LMS Configuration")}}</i></h5>
         </div>  
     </div>
     
@@ -51,7 +51,7 @@ $category="category".$lang;
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
           <div class="card card-body">
              <div class="col-md-12">
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-plus-circle">&nbsp;Create Library</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-plus-circle">&nbsp;Create Library</i></h5> </div>
              <form method="post"  name="form_library" id="form_library" class="form_library"  novalidate>
              {{ csrf_field() }}
                  <div class="form-row">
@@ -122,7 +122,7 @@ $category="category".$lang;
     <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
         <div class="card card-body">
              <div class="col-md-12">
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-plus-circle">&nbsp;Administrator Details</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-plus-circle">&nbsp;Administrator Details</i></h5> </div>
              <form method="POST" name="form_admin_staff" id="form_admin_staff" class="form_admin_staff"  novalidate>
              {{ method_field('POST') }}
              {{ csrf_field() }}
@@ -229,7 +229,7 @@ $category="category".$lang;
      <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
         <div class="card card-body">
 
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-plus-circle">&nbsp;Administrator Details- login</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-plus-circle">&nbsp;Administrator Details- login</i></h5> </div>
              <form method="post" name="form_admin_login" id="form_admin_login" class="form_admin_login"  novalidate>
              {{ method_field('POST') }}
              {{ csrf_field() }}
@@ -283,7 +283,7 @@ $category="category".$lang;
      <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
          <div class="card card-body">
 
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-check-circle">&nbsp;Finish</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-check-circle">&nbsp;Finish</i></h5> </div>
              <form name="form_finish" id="form_finish" class="form_finish"  novalidate>
              {{ csrf_field() }}
              
