@@ -31,6 +31,7 @@ use App\Http\Controllers\Library_titleController;
 use App\Http\Controllers\Staff_designetionController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\CenterController;
+use App\Http\Controllers\Member_guarantorController;
 
 
 
@@ -210,6 +211,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_member_cat', [Member_categoryController::class, 'update_detail'])->name('update_member_cat');
     Route::post('delete_member_cat', [Member_categoryController::class, 'delete'])->name('delete_member_cat');
     Route::post('import_member_cat', [Member_categoryController::class, 'import'])->name('import_member_cat');
+
+    // --------Member support/guarantor--------------------------------
+    Route::resource('member_guarantor', Member_guarantorController::class);
+    Route::post('update_member_guarantor', [Member_guarantorController::class, 'update_detail'])->name('update_member_guarantor');
+    Route::post('delete_member_guarantor', [Member_guarantorController::class, 'delete'])->name('delete_member_guarantor');
+    Route::post('import_member_guarantor', [Member_guarantorController::class, 'import'])->name('import_member_guarantor');
 
     // --------Library support/titles--------------------------------
     Route::resource('titles', Library_titleController::class);

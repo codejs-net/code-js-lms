@@ -4,7 +4,9 @@
 @php
 $locale = session()->get('locale');
 $lang="_".$locale;
-$title="title".$lang;
+$name="name".$lang;
+$address1="address1".$lang;
+$address2="address2".$lang;
 
 @endphp
 
@@ -22,19 +24,18 @@ $title="title".$lang;
         <form class="form-inline">
             <a href="{{ route('member_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Member Category</a>
             <a href="{{ route('titles.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Titles</a>
+            <a href="{{ route('member_guarantor.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Guarantors</a>
         </form>
     </nav>
-    </div>
-    
-    
+    </div> 
 </div>
 
         <!-- Main content -->
-<div class="container">
+<div class="container-fluid">
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 
-                <h5> <i class="fa fa-object-group"></i>&nbsp;Titles</h5>
+                <h5> <i class="fa fa-object-group"></i>&nbsp;Member Guarantor</h5>
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h5>
@@ -47,38 +48,23 @@ $title="title".$lang;
         </div>
         <div class="form-row">
         <div class="table-responsive">               
-            <table class="table table-hover table-bordered" id="book_datatable">
+            <table class="table table-hover table-bordered" id="guarantor_datatable">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col" style="width: 30%">Title</th>
+                            <th scope="col" style="width: 20%">Name</th>
+                            <th scope="col" style="width: 20%">Address1</th>
+                            <th scope="col" style="width: 20%">Address2</th>
+                            <th scope="col">NIC</th>
+                            <th scope="col">Mobile</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>  
-                    @foreach ($details as $data)
-                        <tr>
-                            <td>{{ $data->id }}</td>
-                            <td>{{ $data->$title }}</td>
-                           
-                            <td>
-                               
-                            <a class="btn btn-sm btn-outline-success " data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$title }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
-                            @can('support_data-edit')
-                            <a class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->title_si }}" data-detail_name_ta="{{ $data->title_ta }}" data-detail_name_en="{{ $data->title_en }}" ><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
-                            @endcan
-                            @can('support_data-delete')
-                            <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$title }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
-                            @endcan
-                            
-                            </td>
-                        </tr>
-                        @endforeach
                    
                     </tbody>
             </table>
            
-            {!! $details->render( "pagination::bootstrap-4") !!}
            
         </div>
          
@@ -112,7 +98,7 @@ $title="title".$lang;
                         
                         <div class="col-md-12">
                             <h5><span>ID : &nbsp;</span><span class="badge badge-info" id="id_show"></span></h5>
-                            <h5 class="text-indigo"><span>Title : &nbsp;</span><span id="name_show"></span></h5>
+                            <h5 class="text-indigo"><span>Category : &nbsp;</span><span id="name_show"></span></h5>
                         </div>
                     </div> 
                 </div>
@@ -126,85 +112,8 @@ $title="title".$lang;
     </div>
 </div>
 <!-- end show model -->
-
-<!--Create Modal -->
-<div class="modal fade" id="data_create" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-indigo">
-                <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Create Support Data</h5>
-                </div>
-                
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-                    
-            </div>
-            
-            <form method="POST" action="{{ route('titles.store') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
-                {{ csrf_field() }}
-                <div class="modal-body">
-
-                    <div class="row form-group">
-                        <label for="book_detail">Title</label>
-                        <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
-                        <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
-                        <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in English" >           
-                    </div>
-                   
-                    
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-sm btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Save</button>
-                </div>
-            </form>
-           
-        </div>
-    </div>
-</div>
-<!-- end Create model -->
-<!--Update Modal -->
-<div class="modal fade" id="data_update" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-indigo">
-                <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Update Support Data - <span id="to_updateName"></span></h5>
-                </div>
-                
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-                    
-            </div>
-            
-            <form method="POST" action="{{ route('update_titles') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
-                {{ csrf_field() }}
-                <div class="modal-body">
-
-                    <div class="row form-group">
-                        <label for="book_detail">Title</label>
-                        <input type="hidden" id="id_update" name="id_update">
-                        <input type="text" class="form-control mb-1" id="name_update_si" name="name_update_si" value="" placeholder="Name in Sinhala" >   
-                        <input type="text" class="form-control mb-1" id="name_update_ta" name="name_update_ta" value="" placeholder="Name in Tamil" >
-                        <input type="text" class="form-control mb-1" id="name_update_en" name="name_update_en" value="" placeholder="Name in English" >          
-                    </div>
-                    
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i> &nbsp; Update</button>
-                </div>
-            </form>
-           
-        </div>
-    </div>
-</div>
-<!-- end update model -->
+@include('resource_support.resource_creator.create')
+@include('resource_support.resource_creator.edit')
 
 <!--Delete Modal -->
 <div class="modal fade" id="data_delete" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -221,7 +130,7 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_titles')}}">
+            <form method="POST" action="{{ route('delete_resource_cat')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -262,7 +171,7 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_titles') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_creator') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -272,8 +181,7 @@ $title="title".$lang;
                         <label class="custom-file-label " for="customFile">Choose Excel file</label>
                     </div>
                     <div class="col-md-2">
-                    @can('code-import')
-                    @endcan
+                   
                 </div>
             </div>
                     
@@ -288,7 +196,7 @@ $title="title".$lang;
         </div>
     </div>
 </div>
-<!-- end Create model -->
+<!-- end import model -->
 
 @endsection
 @section('script')
@@ -296,6 +204,8 @@ $title="title".$lang;
 
 $(document).ready(function()
 {
+    load_datatable();
+
     $('#data_show').on('show.bs.modal', function (event) {
        
        var button = $(event.relatedTarget) 
@@ -312,13 +222,9 @@ $(document).ready(function()
         var d_name_si = button.data('detail_name_si');
         var d_name_ta = button.data('detail_name_ta');
         var d_name_en = button.data('detail_name_en');
-        var d_image = button.data('detail_image');
         $('#id_update').val(d_id);
         $('#name_update_si').val(d_name_si);  $('#name_update_ta').val(d_name_ta);  $('#name_update_en').val(d_name_en);
         $('#to_updateName').html(d_id);
-        $("#icon_update").attr("src","images/"+d_image);
-
-        $('#image_update').addClass("selected").html(d_image);
 
         @if($locale=="si")
         $("#name_update_si").prop('required',true);
@@ -352,15 +258,45 @@ $(document).ready(function()
 
 });
 
-
 $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
 
 
+function load_datatable()
+{
 
+    $('#guarantor_datatable').DataTable({
+        columnDefs: [
+        {"targets": [0],
+        "visible": false,
+        "searchable": false},
+        ],
+        responsive: true,
+        processing: true,
+        serverSide: false,
+        ordering: false,
+        searching: true,
 
+    ajax:{
+        type: "GET",
+        dataType : 'json',
+        url: "{{ route('member_guarantor.index') }}",
+    },
+    
+    columns:[
+        {data: "id",name: "ResourceID",orderable: true},
+        {data: "<?php echo $name; ?>",name: "name"},
+        {data: "<?php echo $address1; ?>",name: "address1"},
+        {data: "<?php echo $address2; ?>",name: "address2"},
+        {data: "nic",name: "nic",orderable: true},
+        {data: "mobile",name: "mobile",orderable: false},
+        {data: "action",name: "action",orderable: false}
+    ]
+
+    });
+}
 </script>
 
 @endsection

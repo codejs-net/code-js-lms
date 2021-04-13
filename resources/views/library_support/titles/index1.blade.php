@@ -16,7 +16,7 @@ $title="title".$lang;
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
-<div class="container">
+<div class="container-fluid">
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
