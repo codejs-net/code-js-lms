@@ -7,6 +7,7 @@ $lang="_".$locale;
 $name="name".$lang;
 $address1="address1".$lang;
 $address2="address2".$lang;
+$title="title".$lang;
 
 @endphp
 
@@ -112,8 +113,8 @@ $address2="address2".$lang;
     </div>
 </div>
 <!-- end show model -->
-@include('resource_support.resource_creator.create')
-@include('resource_support.resource_creator.edit')
+@include('member_support.member_guarantor.create')
+@include('member_support.member_guarantor.edit')
 
 <!--Delete Modal -->
 <div class="modal fade" id="data_delete" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -215,16 +216,15 @@ $(document).ready(function()
        $('#name_show').html(d_name);
    });
 
-    $('#data_update').on('show.bs.modal', function (event) {
+    $('#gurantor_edit').on('show.bs.modal', function (event) {
        
         var button = $(event.relatedTarget) 
-        var d_id = button.data('detail_id') 
-        var d_name_si = button.data('detail_name_si');
-        var d_name_ta = button.data('detail_name_ta');
-        var d_name_en = button.data('detail_name_en');
-        $('#id_update').val(d_id);
-        $('#name_update_si').val(d_name_si);  $('#name_update_ta').val(d_name_ta);  $('#name_update_en').val(d_name_en);
-        $('#to_updateName').html(d_id);
+        var guarant =button.data('gid');
+        console.log(button.data('gid'));
+
+        $('#id_update').val(guarant.id);
+        $('#name_update_si').val(guarant.name_si);  
+      
 
         @if($locale=="si")
         $("#name_update_si").prop('required',true);
@@ -248,11 +248,17 @@ $(document).ready(function()
    $('#data_create').on('show.bs.modal', function (event) {
        
         @if($locale=="si")
-        $("#name_si").prop('required',true);
+            $("#name_si").prop('required',true);
+            $("#Address1_si").prop('required',true);
+            $("#Address2_si").prop('required',true);
         @elseif($locale=="ta")
-        $("#name_ta").prop('required',true);
+            $("#name_ta").prop('required',true);
+            $("#Address1_ta").prop('required',true);
+            $("#Address2_ta").prop('required',true);
         @elseif($locale=="en")
-        $("#name_en").prop('required',true);
+            $("#name_en").prop('required',true);
+            $("#Address1_en").prop('required',true);
+            $("#Address2_en").prop('required',true);
         @endif
    });
 

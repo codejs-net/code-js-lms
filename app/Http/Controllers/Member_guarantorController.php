@@ -26,7 +26,7 @@ class Member_guarantorController extends Controller
         {$lang="_".$setting->value;}
 
         Session::put('db_locale', $lang);
-    
+        $titledata=title::all();
 
             if(request()->ajax())
             {
@@ -35,7 +35,7 @@ class Member_guarantorController extends Controller
                         ->addIndexColumn()
                         ->addColumn('action', function($data){
                             $button  = '<a class="btn btn-sm btn-outline-success mx-1" data-toggle="modal" data-target="#gurantor_show" data-gid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
-                            $button  = '<a class="btn btn-sm btn-outline-info mx-1" data-toggle="modal" data-target="#gurantor_edit" data-gid="'.$data->id.'"><i class="fa fa-pencil" ></i></a>';
+                            $button  .= '<a class="btn btn-sm btn-outline-info mx-1" data-toggle="modal" data-target="#gurantor_edit" data-gid="'.$data->id.'"><i class="fa fa-pencil" ></i></a>';
                             $button .= '<a class="btn btn-sm btn-outline-danger mx-1" data-toggle="modal" data-target="#gurantor_delete" data-sid="'.$data->id.'" data-sname="'.$data->name_en.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
                         })
@@ -43,7 +43,7 @@ class Member_guarantorController extends Controller
                         ->make(true);
                         
             }
-        return view('member_support.member_guarantor.index');
+        return view('member_support.member_guarantor.index')->with('tdata',$titledata);
     }
 
     /**
@@ -53,12 +53,12 @@ class Member_guarantorController extends Controller
      */
     public function create()
     {
-        $staffdata=designetion::all();
-        $titledata=title::all();
+        // $staffdata=designetion::all();
+        // $titledata=title::all();
 
-        $centerdata=center::all();
+        // $centerdata=center::all();
 
-        return view('staff.create')->with('Mdata',$staffdata)->with('tdata',$titledata)->with('cdata',$centerdata);
+        // return view('staff.create')->with('Mdata',$staffdata)->with('tdata',$titledata)->with('cdata',$centerdata);
        
     }
 
@@ -73,29 +73,17 @@ class Member_guarantorController extends Controller
         $locale = session()->get('locale');
         $lang="_".$locale;
 
-        $mbr=new staff;
+        $mbr=new member_guarantor;
         $this->validate($request,[
-            'title'=>'required',
-            'designation'=>'required',
-            'name'.$lang=>'required|max:100|min:5',
+            'name'.$lang=>'required|max:255|min:5',
             'Address1'.$lang=>'required|max:100|min:5',
             'nic'=>'required|max:12|min:10',
             'Mobile'=>'required|max:12|min:10',
-            'gender'=>'required',
             'Description'=>'max:150',
-            'registeredDate'=>'required',
             ]);
 
-        $imageName ="default_avatar.png";
-        $image = $request->file('image_member');
-        if ($image){
-            $imageName = $request->nic.'-'.time().'.'.$image->extension(); 
-            $image->move(public_path('images/staffs'), $imageName);
-        }
-
-
         $mbr->titleid=$request->title;
-        $mbr->designetion_id=$request->designation;
+     
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
@@ -107,25 +95,12 @@ class Member_guarantorController extends Controller
         $mbr->address2_en=$request->Address2_en;
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
-        $mbr->birthday=$request->birthday;
         $mbr->gender=$request->gender;
         $mbr->description=$request->Description;
-        $mbr->regdate=$request->registeredDate;
-        $mbr->image=$imageName;
         $mbr->status="1";
 
         $mbr->save();
-       
-        $check_centr = $request->input('center');
-        foreach ($check_centr as $check_centr_id)
-        {
-            $allocate = new center_allocation;
-            $allocate->staff_id=$mbr->id;
-            $allocate->center_id=$check_centr_id;
-            $allocate->save();
-        }
-
-        return response()->json(['data' => "Success"]);
+        return redirect()->back()->with('success','Details created successfully.');
         
     }
 
@@ -151,21 +126,7 @@ class Member_guarantorController extends Controller
      */
     public function edit($id)
     {
-        $editdata = staff::find($id);
-        $staffdata=designetion::all();
-        $titledata=title::all();
-        $centerdata=center::all();
-
-        $center_allocate = DB::table("center_allocations")->where("staff_id",$id)
-        ->pluck('center_id','center_id')
-        ->all();
-
-        return view('staff.edit')
-        ->with('edata',$editdata)
-        ->with('Mdata',$staffdata)
-        ->with('tdata',$titledata)
-        ->with('cdata',$centerdata)
-        ->with('allocatedata',$center_allocate);
+        
     }
 
     /**

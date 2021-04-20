@@ -1,10 +1,10 @@
 <!--Create Modal -->
-<div class="modal fade " id="data_create" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade bd-example-modal-lg" id="data_create" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Create Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Create Guarantor</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -13,27 +13,20 @@
                     
             </div>
             
-            <form method="POST" action="{{ route('resource_catagory.store') }}"class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('member_guarantor.store') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
             <div class="modal-body">
-                <div class="form-group">
-                    <div class="form-check form-check-inline" >
-                        <label for="name">Title:</label> &nbsp;
-                    </div>
-                    <div class="form-check form-check-inline" >
-                        <input type="radio" class="form-check-input" name="title" value="Mr" >
-                        <label class="form-check-label">Mr</label>
-                    </div>
-                    <div class="form-check form-check-inline" >
-                        <input type="radio" class="form-check-input" name="title" value="Mrs" >
-                        <label class="form-check-label">Mrs</label>
-                    </div>
-                    <div class="form-check form-check-inline" >
-                        <input type="radio" class="form-check-input" name="title" value="Miss" >
-                        <label class="form-check-label">Miss</label>
-                        <div class="invalid-feedback" style="margin-left: 1em" >Please choose Title</div>
-                    </div>  
+            <div class="form-group col-md-6">
+                <div class="form-check form-check-inline" >
+                    <label for="name">Title:</label> &nbsp;
                 </div>
+                @foreach($tdata as $item)
+                <div class="form-check form-check-inline" >
+                    <input type="radio" class="form-check-input" name="title" value="{{$item->id}}" required>
+                    <label class="form-check-label">{{$item->$title}}</label>
+                </div>
+                @endforeach
+            </div>
 
     
             <div class="form-group">
@@ -56,14 +49,22 @@
                 <input type="text" class="form-control mb-1"id="Address2_en"name="Address2_en" placeholder="Address Line 2 in English" value="{{old('Address2_en')}}">
                 <span class="text-danger">{{ $errors->first('Address2') }}</span>
             </div>
-
             <div class=" row form-group">
                 <div class="form-group col-md-6">
-                    <label for="Mobile">Mobile No :</label>
-                    <input type="text" class="form-control" id="Mobile" name="Mobile" placeholder="Mobile No" value="{{old('Mobile')}}" required>
-                    <span class="text-danger">{{ $errors->first('Mobile') }}</span>
+                    <label for="NIC">NIC :</label>
+                    <input type="text" class="form-control" name="nic" placeholder="NIC" value="{{old('nic')}}"required>
+                    <span class="text-danger">{{ $errors->first('nic') }}</span>
                 </div>
                 <div class="form-group col-md-6">
+                    <label for="Mobile">Mobile No :</label>
+                    <input type="text" class="form-control" name="Mobile" placeholder="Mobile No" value="{{old('Mobile')}}"required>
+                    <span class="text-danger">{{ $errors->first('Mobile') }}</span>
+                </div>
+            </div>
+
+            <div class=" row form-group">
+
+                <div class="form-group col-md-12">
                      <div class="form-group">
                         <label for="name">Gender:</label> &nbsp;<br>
                         <div class="form-check form-check-inline" >
@@ -80,7 +81,7 @@
             </div>
             <div class="form-group">
                 <label for="Description_staff">Description :</label>
-                <textarea class="form-control" rows="5" id="description" name="description" placeholder="Description" value=""></textarea>
+                <textarea class="form-control" rows="2" id="description" name="description" placeholder="Description" value=""></textarea>
                 <span class="text-danger">{{ $errors->first('description') }}</span>
             </div>
           
