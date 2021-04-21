@@ -7,6 +7,9 @@ $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
 $title="title".$lang;
+$guarantor="name".$lang;
+$address1="address1".$lang;
+$address2="address2".$lang;
 
 @endphp
 
@@ -156,6 +159,29 @@ $title="title".$lang;
                 </div>
             </div>
 
+            <div class="border border-primary bg-light mb-4">
+              <div class="m-2">
+              <div class="row">
+               <div class="col-md-11">
+                   <label for="member_guarantor">Guarantor : </label>
+                        <select class="form-control" id="member_guarantor" name="member_guarantor" value=""required>
+                            <option value="" class="" selected disabled>Select Guarantor</option>
+                            @foreach($gdata as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$guarantor}}-{{$item->$address1}}-{{$item->nic}}</option>
+                            @endforeach
+                        </select>
+                </div>
+                <div class="col-md-1">
+                    <label for="categry">&nbsp;</label><br>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#guarantor_create" >
+                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New</label>
+                </div>
+
+               </div>
+              </div>
+            </div>
+            <hr>
+
             <div class="form-row border border-secondary bg-light">
                 <div class="form-group col-md-3 col-3 p-2 mt-2">
                     <label for="status">Change Status</label><br>
@@ -196,7 +222,7 @@ $title="title".$lang;
     </div>
 </div>
 
-
+@include('members.create_guarantor_modal')
 @endsection
 
 @section('script')
@@ -223,6 +249,7 @@ $(document).ready(function()
         $('input:radio[name="gender"]').filter('[value="{{$edata->gender}}"]').attr('checked', true);
         $('#Description').val("{{$edata->description}}");
         $('#registeredDate').val("{{$edata->regdate}}");
+        $('#member_guarantor').val("{{$edata->guarantor_id}}");
         $('input:radio[name="status"]').filter('[value="{{$edata->status}}"]').attr('checked', true);
        
 
@@ -268,6 +295,69 @@ $(document).ready(function()
     //         })
 
     // });
+
+    $('#member_guarantor').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#guarantor_create').on('show.bs.modal', function (e) {
+       
+       @if($locale=="si")
+           $(this).find("#name_si").prop('required',true);
+           $(this).find("#Address1_si").prop('required',true);
+           $(this).find("#Address2_si").prop('required',true);
+        //    $(this).find('input[name="name_si"]').prop('required',true);
+       @elseif($locale=="ta")
+           $(this).find("#name_ta").prop('required',true);
+           $(this).find("#Address1_ta").prop('required',true);
+           $(this).find("#Address2_ta").prop('required',true);
+       @elseif($locale=="en")
+           $(this).find("#name_en").prop('required',true);
+           $(this).find("#Address1_en").prop('required',true);
+           $(this).find("#Address2_en").prop('required',true);
+       @endif
+  });
+
+
+});
+
+$('#guarantor_form').on('submit', function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    var op='';
+    $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('member_guarantor.store')}}", 
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+
+            success:function(data){
+                toastr.success('Guarantor Added Successfully')
+                for(var i=0;i<data.data.length;i++)
+                {
+                    op+='<option value="'+data.data[i].id+'">'+ 
+                        @if($locale=="si") data.data[i].name_si +"-"+ data.data[i].address1_si +"-"+ data.data[i].nic
+                        @elseif($locale=="ta") data.data[i].name_ta +"-"+ data.data[i].address1_ta +"-"+ data.data[i].nic
+                        @elseif($locale=="en") data.data[i].name_en +"-"+ data.data[i].address1_en +"-"+ data.data[i].nic
+                        @endif +
+                        '</option>';
+                }
+                $('#member_guarantor')
+                .empty()
+                .append(op)
+                .val(data.dataid);
+                $("#guarantor_form").trigger("reset");
+                $('#guarantor_create').modal('hide');
+            },
+            error:function(data){
+                toastr.error('Guarantor Add faild Plese try again')
+            }
+        })
+
 });
 
 </script>

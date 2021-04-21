@@ -1,10 +1,10 @@
 <!--Create Modal -->
-<div class="modal fade " id="data_create" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade bd-example-modal-lg" id="data_create" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h4 class="modal-title" id="modaltitle">Create Support Data</h4>
+                    <h5 class="modal-title" id="modaltitle">Create Creator Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -20,19 +20,12 @@
                     <div class="form-check form-check-inline" >
                         <label for="name">Title:</label> &nbsp;
                     </div>
+                    @foreach($tdata as $item)
                     <div class="form-check form-check-inline" >
-                        <input type="radio" class="form-check-input" name="title" value="Mr" >
-                        <label class="form-check-label">Mr</label>
+                        <input type="radio" class="form-check-input" name="title" value="{{$item->id}}" required>
+                        <label class="form-check-label">{{$item->$title}}</label>
                     </div>
-                    <div class="form-check form-check-inline" >
-                        <input type="radio" class="form-check-input" name="title" value="Mrs" >
-                        <label class="form-check-label">Mrs</label>
-                    </div>
-                    <div class="form-check form-check-inline" >
-                        <input type="radio" class="form-check-input" name="title" value="Miss" >
-                        <label class="form-check-label">Miss</label>
-                        <div class="invalid-feedback" style="margin-left: 1em" >Please choose Title</div>
-                    </div>  
+                    @endforeach
                 </div>
 
     

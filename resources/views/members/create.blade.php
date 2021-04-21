@@ -8,6 +8,8 @@ $lang="_".$locale;
 $category="category".$lang;
 $title="title".$lang;
 $guarantor="name".$lang;
+$address1="address1".$lang;
+$address2="address2".$lang;
 
 @endphp
 
@@ -170,7 +172,7 @@ $guarantor="name".$lang;
                         <select class="form-control" id="member_guarantor" name="member_guarantor" value=""required>
                             <option value="" class="" selected disabled>Select Guarantor</option>
                             @foreach($gdata as $item)
-                                    <option value="{{ $item->id }}">{{ $item->$guarantor}}</option>
+                                    <option value="{{ $item->id }}">{{ $item->$guarantor}}-{{$item->$address1}}-{{$item->nic}}</option>
                             @endforeach
                         </select>
                 </div>
@@ -310,13 +312,13 @@ $(document).ready(function()
            $(this).find("#Address2_si").prop('required',true);
         //    $(this).find('input[name="name_si"]').prop('required',true);
        @elseif($locale=="ta")
-           $("#name_ta").prop('required',true);
-           $("#Address1_ta").prop('required',true);
-           $("#Address2_ta").prop('required',true);
+           $(this).find("#name_ta").prop('required',true);
+           $(this).find("#Address1_ta").prop('required',true);
+           $(this).find("#Address2_ta").prop('required',true);
        @elseif($locale=="en")
-           $("#name_en").prop('required',true);
-           $("#Address1_en").prop('required',true);
-           $("#Address2_en").prop('required',true);
+           $(this).find("#name_en").prop('required',true);
+           $(this).find("#Address1_en").prop('required',true);
+           $(this).find("#Address2_en").prop('required',true);
        @endif
   });
 
@@ -348,9 +350,9 @@ $('#guarantor_form').on('submit', function(event){
                 for(var i=0;i<data.data.length;i++)
                 {
                     op+='<option value="'+data.data[i].id+'">'+ 
-                        @if($locale=="si") data.data[i].name_si 
-                        @elseif($locale=="ta") data.data[i].name_ta 
-                        @elseif($locale=="en") data.data[i].name_en
+                        @if($locale=="si") data.data[i].name_si +"-"+ data.data[i].address1_si +"-"+ data.data[i].nic
+                        @elseif($locale=="ta") data.data[i].name_ta +"-"+ data.data[i].address1_ta +"-"+ data.data[i].nic
+                        @elseif($locale=="en") data.data[i].name_en +"-"+ data.data[i].address1_en +"-"+ data.data[i].nic
                         @endif +
                         '</option>';
                 }

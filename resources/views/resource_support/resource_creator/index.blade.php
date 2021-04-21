@@ -7,6 +7,7 @@ $lang="_".$locale;
 $name="name".$lang;
 $address1="address1".$lang;
 $address2="address2".$lang;
+$title="title".$lang;
 
 @endphp
 

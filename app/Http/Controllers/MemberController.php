@@ -186,10 +186,13 @@ class MemberController extends Controller
         $editdata = member::find($id);
         $Memberdata=member_cat::all();
         $titledata=title::all();
+        $guarantdata=member_guarantor::all();
+
         return view('members.edit')
         ->with('edata',$editdata)
         ->with('Mdata',$Memberdata)
-        ->with('tdata',$titledata);
+        ->with('tdata',$titledata)
+        ->with('gdata',$guarantdata);
     }
 
     /**
@@ -253,6 +256,7 @@ class MemberController extends Controller
         $mbr->description_en=$request->Description;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
+        $mbr->guarantor_id=$request->member_guarantor;
         $mbr->status=$request->status;
 
         $mbr->save();

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\resource_creator;
 use App\Models\setting;
+use App\Models\title;
 use App\Imports\resource_creatorImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
@@ -28,8 +29,19 @@ class Resource_creatorController extends Controller
      */
     public function index()
     {
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
+
+        if($setting->value=="0")
+        {$lang="_".$locale;}
+        else
+        {$lang="_".$setting->value;}
+
+        Session::put('db_locale', $lang);
+        
+        $titledata=title::all();
         $details = resource_creator::orderBy('id','ASC')->paginate(15);
-        return view('resource_support.resource_creator.index',compact('details'));
+        return view('resource_support.resource_creator.index',compact('details'))->with('tdata',$titledata);
        
     }
 
