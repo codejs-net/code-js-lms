@@ -29,6 +29,7 @@ class member extends Model
                     'description',
                     'regdate',
                     'image',
+                    'guarantor_id',
                     'status'
                     ];
 

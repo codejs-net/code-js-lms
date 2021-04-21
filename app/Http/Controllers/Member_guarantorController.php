@@ -79,13 +79,12 @@ class Member_guarantorController extends Controller
         $this->validate($request,[
             'name'.$lang=>'required|max:255|min:5',
             'Address1'.$lang=>'required|max:100|min:5',
-            'nic'=>'required|max:12|min:10',
-            'Mobile'=>'required|max:12|min:10',
-            'Description'=>'max:150',
+            // 'nic'=>'max:12|min:10',
+            // 'Mobile'=>'max:12|min:10',
+            'description'=>'max:150',
             ]);
 
         $mbr->titleid=$request->title;
-     
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
@@ -100,9 +99,19 @@ class Member_guarantorController extends Controller
         $mbr->gender=$request->gender;
         $mbr->description=$request->description;
         $mbr->status="1";
-
         $mbr->save();
-        return redirect()->back()->with('success','Details created successfully.');
+
+        if(request()->ajax())
+        {
+            $guarantdata=member_guarantor::all();
+            return response()->json(['data' =>$guarantdata ,'dataid'=>$mbr->id]);
+        }
+        else
+        {
+           
+            return redirect()->back()->with('success','Details created successfully.');
+        }
+       
         
     }
 

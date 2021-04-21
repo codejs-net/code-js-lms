@@ -147,6 +147,7 @@ class MemberController extends Controller
         $mbr->description_en=$request->Description;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
+        $mbr->guarantor_id=$request->member_guarantor;
 
         $mbr->save();
        

@@ -176,7 +176,7 @@ $guarantor="name".$lang;
                 </div>
                 <div class="col-md-1">
                     <label for="categry">&nbsp;</label><br>
-                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
+                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#guarantor_create" >
                     <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New</label>
                 </div>
 
@@ -186,7 +186,7 @@ $guarantor="name".$lang;
             <hr>
         <div class="box-footer clearfix pull-right">
             
-            <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
+            <button type="submit" class="btn btn-success btn-sm" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
             &nbsp; &nbsp;
             <button type="button" class="btn btn-secondary btn-sm" id="cler">Reset
             <i class="fa fa-times"></i></button>
@@ -248,7 +248,7 @@ $guarantor="name".$lang;
     </div>
 </div>
 
-
+@include('members.create_guarantor_modal')
 @endsection
 
 @section('script')
@@ -301,6 +301,25 @@ $(document).ready(function()
     $('#member_guarantor').select2({
         theme: 'bootstrap4',
     });
+
+    $('#guarantor_create').on('show.bs.modal', function (e) {
+       
+       @if($locale=="si")
+           $(this).find("#name_si").prop('required',true);
+           $(this).find("#Address1_si").prop('required',true);
+           $(this).find("#Address2_si").prop('required',true);
+        //    $(this).find('input[name="name_si"]').prop('required',true);
+       @elseif($locale=="ta")
+           $("#name_ta").prop('required',true);
+           $("#Address1_ta").prop('required',true);
+           $("#Address2_ta").prop('required',true);
+       @elseif($locale=="en")
+           $("#name_en").prop('required',true);
+           $("#Address1_en").prop('required',true);
+           $("#Address2_en").prop('required',true);
+       @endif
+  });
+
 });
 
 
@@ -310,7 +329,44 @@ $(".custom-file-input").on("change", function() {
 });
 
 
+$('#guarantor_form').on('submit', function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    var op='';
+    $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('member_guarantor.store')}}", 
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
 
+            success:function(data){
+                toastr.success('Guarantor Added Successfully')
+                for(var i=0;i<data.data.length;i++)
+                {
+                    op+='<option value="'+data.data[i].id+'">'+ 
+                        @if($locale=="si") data.data[i].name_si 
+                        @elseif($locale=="ta") data.data[i].name_ta 
+                        @elseif($locale=="en") data.data[i].name_en
+                        @endif +
+                        '</option>';
+                }
+                $('#member_guarantor')
+                .empty()
+                .append(op)
+                .val(data.dataid);
+                $("#guarantor_form").trigger("reset");
+                $('#guarantor_create').modal('hide');
+            },
+            error:function(data){
+                toastr.error('Guarantor Add faild Plese try again')
+            }
+        })
+
+});
 </script>
 
 @endsection
