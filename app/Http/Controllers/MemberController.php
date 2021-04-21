@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\member_cat;
 use App\Models\member;
+use App\Models\member_guarantor;
 use App\Models\title;
 use App\Http\Controllers\SoapController;
 use App\Imports\MemberImport;
@@ -88,8 +89,9 @@ class MemberController extends Controller
     {
         $Memberdata=member_cat::all();
         $titledata=title::all();
+        $guarantdata=member_guarantor::all();
 
-        return view('members.create')->with('Mdata',$Memberdata)->with('tdata',$titledata);
+        return view('members.create')->with('Mdata',$Memberdata)->with('tdata',$titledata)->with('gdata',$guarantdata);
        
     }
 

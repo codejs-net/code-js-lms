@@ -7,6 +7,7 @@ $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
 $title="title".$lang;
+$guarantor="name".$lang;
 
 @endphp
 
@@ -159,7 +160,30 @@ $title="title".$lang;
                 <div class="form-group col-md-6">
                 </div>
             </div>
-            
+
+           
+            <div class="border border-primary bg-light mb-4">
+              <div class="m-2">
+              <div class="row">
+               <div class="col-md-11">
+                   <label for="member_guarantor">Guarantor : </label>
+                        <select class="form-control" id="member_guarantor" name="member_guarantor" value=""required>
+                            <option value="" class="" selected disabled>Select Guarantor</option>
+                            @foreach($gdata as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$guarantor}}</option>
+                            @endforeach
+                        </select>
+                </div>
+                <div class="col-md-1">
+                    <label for="categry">&nbsp;</label><br>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
+                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New</label>
+                </div>
+
+               </div>
+              </div>
+            </div>
+            <hr>
         <div class="box-footer clearfix pull-right">
             
             <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
@@ -272,6 +296,10 @@ $(document).ready(function()
                 }
             })
 
+    });
+
+    $('#member_guarantor').select2({
+        theme: 'bootstrap4',
     });
 });
 
