@@ -117,7 +117,7 @@ $title="title".$lang;
 @include('member_support.member_guarantor.edit')
 
 <!--Delete Modal -->
-<div class="modal fade" id="data_delete" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="gurantor_delete" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-indigo">
@@ -131,7 +131,7 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_resource_cat')}}">
+            <form method="POST" action="{{ route('delete_member_guarantor')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -163,7 +163,7 @@ $title="title".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Import Support Data</h5>
+                    <h5 class="modal-title" id="modaltitle">Import Guarantor Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -172,7 +172,7 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_resource_creator') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_member_guarantor') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -218,13 +218,43 @@ $(document).ready(function()
 
     $('#gurantor_edit').on('show.bs.modal', function (event) {
        
-        var button = $(event.relatedTarget) 
-        var guarant =button.data('gid');
-        console.log(button.data('gid'));
+        var dataid = $(event.relatedTarget) 
+        var g_id =dataid.data('gid');
+       
+       // -------------------------------------------
+       $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('edit_member_guarantor')}}", 
+            data: { g_id: g_id, },
+            success:function(data){
+                $('#guarnt_id').val(data.id);
+                $('#name_update_si').val(data.name_si);
+                $('#name_update_ta').val(data.name_ta);
+                $('#name_update_en').val(data.name_en);
+                $('#Address1_update_si').val(data.address1_si);
+                $('#Address1_update_ta').val(data.address1_ta);
+                $('#Address1_update_en').val(data.address1_en);
+                $('#Address2_update_si').val(data.address2_si);
+                $('#Address2_update_ta').val(data.address2_ta);
+                $('#Address2_update_en').val(data.address2_en);
+                $('#nic_update').val(data.nic);
+                $('#Mobile_update').val(data.mobile);
+                $('#description_update').val(data.description);
 
-        $('#id_update').val(guarant.id);
-        $('#name_update_si').val(guarant.name_si);  
-      
+                $('input:radio[name="title_update"][value="'+data.titleid+'"]').prop('checked', true);
+                $('input:radio[name="gender_update"][value="'+data.gender+'"]').prop('checked', true);
+              
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // -------------------------------------------
 
         @if($locale=="si")
         $("#name_update_si").prop('required',true);
@@ -236,11 +266,11 @@ $(document).ready(function()
 
     });
 
-    $('#data_delete').on('show.bs.modal', function (event) {
+    $('#gurantor_delete').on('show.bs.modal', function (event) {
        
        var button = $(event.relatedTarget) 
-       var d_id = button.data('detail_id') 
-       var d_name = button.data('detail_name')
+       var d_id = button.data('gid') 
+       var d_name = button.data('gname')
        $('#id_delete').val(d_id);
        $('#name_delete').html(d_name);
    });

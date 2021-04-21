@@ -140,7 +140,9 @@ class MemberController extends Controller
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
         $mbr->gender=$request->gender;
-        $mbr->description=$request->Description;
+        $mbr->description_si=$request->Description;
+        $mbr->description_ta=$request->Description;
+        $mbr->description_en=$request->Description;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
 
@@ -243,7 +245,9 @@ class MemberController extends Controller
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
         $mbr->gender=$request->gender;
-        $mbr->description=$request->Description;
+        $mbr->description_si=$request->Description;
+        $mbr->description_ta=$request->Description;
+        $mbr->description_en=$request->Description;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
         $mbr->status=$request->status;

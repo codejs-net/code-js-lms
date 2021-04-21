@@ -15,6 +15,7 @@
             
             <form method="POST" action="{{ route('update_member_guarantor') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
+                <input type="hidden" name="guarnt_id" id="guarnt_id">
             <div class="modal-body">
             <div class="form-group col-md-6">
                 <div class="form-check form-check-inline" >
@@ -22,7 +23,7 @@
                 </div>
                 @foreach($tdata as $item)
                 <div class="form-check form-check-inline" >
-                    <input type="radio" class="form-check-input" name="title" value="{{$item->id}}" required>
+                    <input type="radio" class="form-check-input" name="title_update" value="{{$item->id}}" required>
                     <label class="form-check-label">{{$item->$title}}</label>
                 </div>
                 @endforeach
@@ -68,11 +69,11 @@
                      <div class="form-group">
                         <label for="name">Gender:</label> &nbsp;<br>
                         <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Male" required>
+                            <input type="radio" class="form-check-input" name="gender_update" value="Male" required>
                             <label class="form-check-label">Male</label>
                         </div>
                         <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Female" required>
+                            <input type="radio" class="form-check-input" name="gender_update" value="Female" required>
                             <label class="form-check-label">Female</label>
                             <div class="invalid-feedback" style="margin-left: 1em" >Please choose Gender</div>
                         </div>  
@@ -81,7 +82,7 @@
             </div>
             <div class="form-group">
                 <label for="Description_staff">Description :</label>
-                <textarea class="form-control" rows="2" id="description" name="description" placeholder="Description" value=""></textarea>
+                <textarea class="form-control" rows="2" id="description_update" name="description_update" placeholder="Description" value=""></textarea>
                 <span class="text-danger">{{ $errors->first('description') }}</span>
             </div>
           

@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use File;
 use App\Models\setting;
 use App\Models\member_guarantor;
 use App\Models\title;
+use App\Imports\Member_guarantorImport;
 use Session;
 use DataTables;
 
@@ -36,7 +38,7 @@ class Member_guarantorController extends Controller
                         ->addColumn('action', function($data){
                             $button  = '<a class="btn btn-sm btn-outline-success mx-1" data-toggle="modal" data-target="#gurantor_show" data-gid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
                             $button  .= '<a class="btn btn-sm btn-outline-info mx-1" data-toggle="modal" data-target="#gurantor_edit" data-gid="'.$data->id.'"><i class="fa fa-pencil" ></i></a>';
-                            $button .= '<a class="btn btn-sm btn-outline-danger mx-1" data-toggle="modal" data-target="#gurantor_delete" data-sid="'.$data->id.'" data-sname="'.$data->name_en.'"><i class="fa fa-trash" ></i></a>';
+                            $button .= '<a class="btn btn-sm btn-outline-danger mx-1" data-toggle="modal" data-target="#gurantor_delete" data-gid="'.$data->id.'" data-gname="'.$data->name_en.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
                         })
                         ->rawColumns(['action'])
@@ -96,7 +98,7 @@ class Member_guarantorController extends Controller
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->gender=$request->gender;
-        $mbr->description=$request->Description;
+        $mbr->description=$request->description;
         $mbr->status="1";
 
         $mbr->save();
@@ -112,7 +114,7 @@ class Member_guarantorController extends Controller
      */
     public function show(Request $request)
     {
-        $data = view_staff_data::find($request->m_id);
+        $data = member_guarantor::find($request->m_id);
         return response()->json($data);
     }
 
@@ -124,9 +126,10 @@ class Member_guarantorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit_member_guarantor(Request $request)
     {
-        
+        $data = member_guarantor::find($request->g_id);
+        return response()->json($data);
     }
 
     /**
@@ -136,86 +139,32 @@ class Member_guarantorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_staff(Request $request)
+    public function update_detail(Request $request)
     {
         $locale = session()->get('locale');
         $lang="_".$locale;
 
-        $mbr= staff::find($request->staff_id);
-        $this->validate($request,[
-            'title'=>'required',
-            'designation'=>'required',
-            'name'.$lang=>'required|max:100|min:5',
-            'Address1'.$lang=>'required|max:100|min:5',
-            'nic'=>'required|max:12|min:10',
-            'Mobile'=>'required|max:12|min:10',
-            'gender'=>'required',
-            'Description'=>'max:150',
-            'registeredDate'=>'required',
-            ]);
-
-        $imageName =$mbr->image;
-        if($request->hasFile('image_member')){
-            
-            $imageName = $request->nic.'-'.time().'.'.$request->image_member->extension();   
-            $request->image_member->move(public_path('images/staffs'), $imageName);
-
-            if($mbr->image!="default_avatar.png")
-            {
-                $old_image = "images/staffs/".$mbr->image;
-                if(File::exists($old_image)) {
-                File::delete($old_image);
-                }
-            }
-            
-        }
-        $mbr->titleid=$request->title;
-        $mbr->designetion_id=$request->designation;
-        // $mbr->center_id=$request->center!="all" ? $request->center : null;
-        $mbr->name_si=$request->name_si;
-        $mbr->name_ta=$request->name_ta;
-        $mbr->name_en=$request->name_en;
-        $mbr->address1_si=$request->Address1_si;
-        $mbr->address1_ta=$request->Address1_ta;
-        $mbr->address1_en=$request->Address1_en;
-        $mbr->address2_si=$request->Address2_si;
-        $mbr->address2_ta=$request->Address2_ta;
-        $mbr->address2_en=$request->Address2_en;
-        $mbr->nic=$request->nic;
-        $mbr->mobile=$request->Mobile;
-        $mbr->birthday=$request->birthday;
-        $mbr->gender=$request->gender;
-        $mbr->description=$request->Description;
-        $mbr->regdate=$request->registeredDate;
-        $mbr->image=$imageName;
-        $mbr->status=$request->status;
+        $mbr= member_guarantor::find($request->guarnt_id);
+       
+        $mbr->titleid=$request->title_update;
+        $mbr->name_si=$request->name_update_si;
+        $mbr->name_ta=$request->name_update_ta;
+        $mbr->name_en=$request->name_update_en;
+        $mbr->address1_si=$request->Address1_update_si;
+        $mbr->address1_ta=$request->Address1_update_ta;
+        $mbr->address1_en=$request->Address1_update_en;
+        $mbr->address2_si=$request->Address2_update_si;
+        $mbr->address2_ta=$request->Address2_update_ta;
+        $mbr->address2_en=$request->Address2_update_en;
+        $mbr->nic=$request->nic_update;
+        $mbr->mobile=$request->Mobile_update;
+        $mbr->gender=$request->gender_update;
+        $mbr->description=$request->description_update;
 
         $mbr->save();
 
-       
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $allocate_old = center_allocation::where('staff_id',$mbr->id)->delete();
-        // $allocate_old->center_allocation()->whereIn('id', $$mbr->id)->delete();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        $check_centr =  $request->input('center');
-        if(!empty($check_centr))
-        {
-            foreach ($check_centr as $check_centr_id)
-            {
-                $allocate = new center_allocation;
-                $allocate->staff_id=$mbr->id;
-                $allocate->center_id=$check_centr_id;
-                $allocate->save();
-            }
-        }
-        
-
-        if($mbr)
-        { return redirect()->route('staff.index')->with("success","Staff Update Successfully");}
-        else
-        { return redirect()->back('staff.index')->with("error","Staff Update Faild");}
-       
+        return redirect()->route('member_guarantor.index')->with("success","Guarantar Update Successfully");
+      
     }
 
     /**
@@ -226,13 +175,13 @@ class Member_guarantorController extends Controller
      */
     public function delete(Request $request)
     {
-        $member=staff::find($request->delete_staff_id);
+        $member=member_guarantor::find($request->id_delete);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $member->delete();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        return redirect()->back()->with('success','Staff data Removed successfully.');
+        return redirect()->back()->with('success','Guarantor data Removed successfully.');
     }
 
     public function import(Request $request) 
@@ -241,8 +190,8 @@ class Member_guarantorController extends Controller
 
         if($request->hasFile('file'))
         {
-            $data=Excel::import(new MemberImport,request()->file('file'));
-            return redirect()->route('members.index')->with('success','Details imported successfully.');
+            $data=Excel::import(new Member_guarantorImport,request()->file('file'));
+            return redirect()->route('member_guarantor.index')->with('success','Details imported successfully.');
         }
         else
         {

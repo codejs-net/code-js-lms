@@ -214,6 +214,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     // --------Member support/guarantor--------------------------------
     Route::resource('member_guarantor', Member_guarantorController::class);
+    Route::post('edit_member_guarantor', [Member_guarantorController::class, 'edit_member_guarantor'])->name('edit_member_guarantor');
     Route::post('update_member_guarantor', [Member_guarantorController::class, 'update_detail'])->name('update_member_guarantor');
     Route::post('delete_member_guarantor', [Member_guarantorController::class, 'delete'])->name('delete_member_guarantor');
     Route::post('import_member_guarantor', [Member_guarantorController::class, 'import'])->name('import_member_guarantor');
