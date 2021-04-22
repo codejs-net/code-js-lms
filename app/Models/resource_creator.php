@@ -11,7 +11,7 @@ class resource_creator extends Model
     protected $table="resource_creators";
     protected $fillable = 
                     [
-                    'title',
+                    'titleid',
                     'name_si',
                     'name_ta',
                     'name_en',
@@ -22,7 +22,7 @@ class resource_creator extends Model
                     'address2_ta',
                     'address2_en',
                     'mobile',
-                    'gender',
+                    'genderid',
                     'description',
                     'image'
                     ];

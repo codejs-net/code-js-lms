@@ -46,8 +46,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function staff()
-    {
-        return $this->belongsTo('App\Models\staff','staff_id');
-    }
+    // public function staff()
+    // {
+    //     return $this->belongsTo('App\Models\staff','staff_id');
+    // }
 }

@@ -15,7 +15,10 @@ class CreateResourceCreatorsTable extends Migration
     {
         Schema::create('resource_creators', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->nullable();
+            
+            $table->integer('titleid')->unsigned()->nullable();
+            $table->foreign('titleid')->references('id')->on('titles');
+
             $table->string('name_si')->nullable();
             $table->string('name_ta')->nullable();
             $table->string('name_en')->nullable();
@@ -26,7 +29,10 @@ class CreateResourceCreatorsTable extends Migration
             $table->string('address2_ta')->nullable();
             $table->string('address2_en')->nullable();
             $table->string('mobile')->nullable();
-            $table->string('gender')->nullable();
+           
+            $table->integer('genderid')->unsigned()->nullable();
+            $table->foreign('genderid')->references('id')->on('genders');
+            
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();

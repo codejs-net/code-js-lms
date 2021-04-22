@@ -19,7 +19,9 @@ class CreateResourceDonatesTable extends Migration
             $table->integer('resource_id')->unsigned()->nullable();
             $table->foreign('resource_id')->references('id')->on('resources');
 
-            $table->string('doner_title')->nullable();
+            $table->integer('titleid')->unsigned()->nullable();
+            $table->foreign('titleid')->references('id')->on('titles');
+
             $table->string('doner_name_si')->nullable();
             $table->string('doner_name_ta')->nullable();
             $table->string('doner_name_en')->nullable();
@@ -30,7 +32,10 @@ class CreateResourceDonatesTable extends Migration
             $table->string('doner_address2_ta')->nullable();
             $table->string('doner_address2_en')->nullable();
             $table->string('doner_mobile')->nullable();
-            $table->string('doner_gender')->nullable();
+
+            $table->integer('genderid')->unsigned()->nullable();
+            $table->foreign('genderid')->references('id')->on('genders');
+            
             $table->string('donete_description')->nullable();
             $table->date('donate_date')->default(Carbon::now());
             $table->timestamps();

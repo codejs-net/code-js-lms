@@ -23,7 +23,7 @@ class member_guarantor extends Model
     'address2_en',
     'nic',
     'mobile',
-    'gender',
+    'genderid',
     'description',
     'status'
     ];

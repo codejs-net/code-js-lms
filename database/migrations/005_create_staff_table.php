@@ -31,16 +31,21 @@ class CreateStaffTable extends Migration
             $table->string('address2_si')->nullable();
             $table->string('address2_ta')->nullable();
             $table->string('address2_en')->nullable();
+
             $table->unsignedBigInteger('designetion_id')->nullable();
             $table->foreign('designetion_id')->references('id')->on('designetions');
+            
             $table->string('nic')->nullable();
             $table->string('mobile')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('gender')->nullable();
+
+            $table->integer('genderid')->unsigned()->nullable();
+            $table->foreign('genderid')->references('id')->on('genders');
+
             $table->string('description')->nullable();
             $table->date('regdate')->default(Carbon::now());
             $table->string('image')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

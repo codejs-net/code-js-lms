@@ -25,7 +25,7 @@ class member extends Model
                     'nic',
                     'mobile',
                     'birthday',
-                    'gender',
+                    'genderid',
                     'description',
                     'regdate',
                     'image',

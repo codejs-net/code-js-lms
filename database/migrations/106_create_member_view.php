@@ -38,14 +38,18 @@ class CreateMemberView extends Migration
                         titles.title_si,
                         titles.title_ta,
                         titles.title_en,
+                        genders.gender_si,
+                        genders.gender_ta,
+                        genders.gender_en,
                         member_guarantors.name_si AS guarantor_si,
                         member_guarantors.name_ta AS guarantor_ta,
                         member_guarantors.name_en AS guarantor_en,
                         member_guarantors.nic     AS guarantor_nic,
                         member_guarantors.mobile  AS guarantor_mobile
                 FROM    members 
-            LEFT JOIN   member_cats         ON members.categoryid = member_cats.id
-            LEFT JOIN   titles              ON members.titleid = titles.id
+            LEFT JOIN   member_cats         ON members.categoryid   = member_cats.id
+            LEFT JOIN   titles              ON members.titleid      = titles.id
+            LEFT JOIN   genders             ON members.genderid     = genders.id
             LEFT JOIN   member_guarantors   ON members.guarantor_id = member_guarantors.id
         SQL;
     }

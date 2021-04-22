@@ -30,9 +30,12 @@ class CreateMemberGuarantorsTable extends Migration
             $table->string('address2_en')->nullable();
             $table->string('nic')->nullable();
             $table->string('mobile')->nullable();
-            $table->string('gender')->nullable();
+           
+            $table->integer('genderid')->unsigned()->nullable();
+            $table->foreign('genderid')->references('id')->on('genders');
+            
             $table->string('description')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

@@ -38,7 +38,9 @@ class CreateMembersTable extends Migration
             $table->string('nic')->nullable();
             $table->string('mobile')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('gender')->nullable();
+           
+            $table->integer('genderid')->unsigned()->nullable();
+            $table->foreign('genderid')->references('id')->on('genders');
 
             $table->string('occupation_si')->nullable();
             $table->string('occupation_ta')->nullable();

@@ -58,13 +58,17 @@ class CreateStaffView extends Migration
                         titles.title_si,
                         titles.title_ta,
                         titles.title_en,
+                        genders.gender_si,
+                        genders.gender_ta,
+                        genders.gender_en,
                         centers.name_si AS center_si,
                         centers.name_ta AS center_ta,
                         centers.name_en AS center_en
                 FROM    staff 
-            LEFT JOIN   designetions ON staff.designetion_id = designetions.id
-            LEFT JOIN   centers      ON staff.center_id = centers.id
-            LEFT JOIN   titles       ON staff.titleid = titles.id
+            LEFT JOIN   designetions ON staff.designetion_id= designetions.id
+            LEFT JOIN   centers      ON staff.center_id     = centers.id
+            LEFT JOIN   titles       ON staff.titleid       = titles.id
+            LEFT JOIN   genders      ON members.genderid    = genders.id
         SQL;
     }
 
