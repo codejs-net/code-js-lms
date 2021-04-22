@@ -16,9 +16,7 @@ class CreateStaffTable extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('center_id')->unsigned()->nullable();
-            $table->foreign('center_id')->references('id')->on('centers');
-
+           
             $table->integer('titleid')->unsigned()->nullable();
             $table->foreign('titleid')->references('id')->on('titles');
 

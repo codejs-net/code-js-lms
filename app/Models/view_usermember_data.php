@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class view_user_data extends Model
+class view_usermember_data extends Model
 {
     use HasFactory;
-    public $table = "view_user_data";
+    public $table = "view_usermember_data";
 }

@@ -19,22 +19,10 @@ class CreateSurveyBoardsTable extends Migration
             $table->integer('survey_id')->unsigned()->nullable();
             $table->foreign('survey_id')->references('id')->on('surveys');
 
-            $table->integer('titleid')->unsigned()->nullable();
-            $table->foreign('titleid')->references('id')->on('titles');
-
-            $table->string('name_si')->nullable();
-            $table->string('name_ta')->nullable();
-            $table->string('name_en')->nullable();
-            $table->string('office_si')->nullable();
-            $table->string('office_ta')->nullable();
-            $table->string('office_en')->nullable();
-
-            $table->integer('genderid')->unsigned()->nullable();
-            $table->foreign('genderid')->references('id')->on('genders');
+            $table->integer('staff_id')->unsigned()->nullable();
+            $table->foreign('staff_id')->references('id')->on('staff');
 
             $table->string('survey_designetion')->nullable();
-            $table->string('nic')->nullable();
-            $table->string('mobile')->nullable();
             $table->timestamps();
         });
     }

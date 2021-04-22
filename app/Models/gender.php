@@ -11,22 +11,19 @@ class gender extends Model
     protected $table="genders";
     protected $fillable = ['gender_si','gender_ta','gender_en'];
 
-    public function creator()
-    {
-        return $this->belongsTo('App\Models\resource_creator','genderid');
-    }
-    public function guarantor()
-    {
-        return $this->belongsTo('App\Models\member_guarantor','genderid');
-    }
+    // public function creator()
+    // {
+    //     return $this->belongsTo('App\Models\resource_creator','genderid');
+    // }
+    // public function guarantor()
+    // {
+    //     return $this->belongsTo('App\Models\member_guarantor','genderid');
+    // }
 
-    public function donate()
-    {
-        return $this->belongsTo('App\Models\resource_donate','genderid');
-    }
+    // public function donate()
+    // {
+    //     return $this->belongsTo('App\Models\resource_donate','genderid');
+    // }
 
-    public function survey_board()
-    {
-        return $this->belongsTo('App\Models\survey_board','genderid');
-    }
+   
 }

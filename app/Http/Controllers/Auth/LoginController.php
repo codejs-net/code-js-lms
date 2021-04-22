@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\view_usermember_data;
+use App\Models\view_userstaff_data;
 use App\Models\setting;
 use App\Models\staff;
 use Session;
@@ -81,10 +83,18 @@ class LoginController extends Controller
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
         {
-            // $loguser=user::find(Auth::user()->id)->with('staff')->first();
-            $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
+            $user_type=Auth::user()->user_type;
+            if($user_type=="staff")
+            {
+                $loguser = view_userstaff_data::where('id', Auth::user()->id)->first();
+            }
+            elseif($user_type=="member")
+            {
+                $loguser = view_usermember_data::where('id', Auth::user()->id)->first();
+            }
+            
             // dd($loguser);
-            Session::put('user', $loguser->staff);
+            Session::put('user', $loguser);
             //-----------theme--------------------------------
             $default_theme = setting::where('setting','default_theme')->first();
             $theme_option = theme::where('user_id', Auth::user()->id)->first();

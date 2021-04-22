@@ -1,5 +1,6 @@
 @php 
     $locale = session()->get('locale');
+    $user = session()->get('user');
     $usernme="name_".$locale;
 @endphp
 <nav class="main-header navbar navbar-expand-sm navbar-toggleable-sm navbar-light js-nav-bg elevation-1 js-nav-text">

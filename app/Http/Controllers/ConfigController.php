@@ -92,7 +92,6 @@ class ConfigController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $mbr=new staff;
-        // $mbr->center_id=0;
         // $mbr->title=$request->title;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
@@ -107,7 +106,7 @@ class ConfigController extends Controller
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
-        $mbr->gender=$request->gender;
+        // $mbr->gender=$request->gender;
         $mbr->description=$request->Description_staff;
         $mbr->regdate=$request->registeredDate;
         $mbr->status="1";
@@ -123,11 +122,14 @@ class ConfigController extends Controller
     public function store_user(Request $request)
     {
         $staff= staff::latest()->first();
+        error_log("___________________________________________".$staff);
         $user = User::create([
+            'user_type'=>"staff",
             'email' => $request->email,
             'username' => $request->uname,
             'password' =>  Hash::make($request->password),
-            'staff_id' => $staff->id
+            'detail_id' => $staff->id,
+            'user_status' => "1"
         ]);
 
         $role = Role::where('name','Admin')->first();
