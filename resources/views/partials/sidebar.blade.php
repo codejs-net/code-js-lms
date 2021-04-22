@@ -334,36 +334,51 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @cannot('user-list')
+                          
                             <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>My Account</p>
                                 </a>
                             </li>
-                            @endcannot
+                          
                             @can('user-list')
+                            <li class="nav-item">
+                            <a href="{{ route('staff_users') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Staff Users Account</p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Users Account</p>
+                                    <p>Member Users Account</p>
                                 </a>
                             </li>
                             @endcan
-                            @can('role-list')
+                        </ul>
+                    </li>
+                    @can('role-list')
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-user-circle"></i>
+                            <p>
+                            Roles & Permisions
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
                             <li class="nav-item">
                                 <a href="{{ route('roles.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Roles & Permisions</p>
                                 </a>
                             </li>
-                            @endcan
-                            
+ 
                         </ul>
                     </li>
-                    
-                   
-
+                    @endcan
                    
                    
                     <li class="nav-item has-treeview">

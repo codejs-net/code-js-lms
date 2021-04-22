@@ -54,8 +54,22 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('delete_roles', [RoleController::class, 'delete'])->name('delete_roles');
     
      // --------User--------------------------------
-    Route::resource('users', UserController::class);
-    Route::post('update_users', [UserController::class, 'update_users'])->name('update_users');
+    // Route::resource('users', UserController::class);
+    Route::get('staff_users', [UserController::class, 'staff_users'])->name('staff_users');
+    Route::get('edit_staff_users/{id}', [UserController::class, 'edit_staff_users'])->name('edit_staff_users');
+    Route::get('show_staff_users/{id}', [UserController::class, 'show_staff_users'])->name('show_staff_users');
+    Route::get('create_staff_users', [UserController::class, 'create_staff_users'])->name('create_staff_users');
+    Route::post('store_staff_users', [UserController::class, 'store_staff_users'])->name('store_staff_users');
+    Route::post('update_staff_users', [UserController::class, 'update_staff_users'])->name('update_staff_users');
+
+    Route::get('member_users', [UserController::class, 'member_users'])->name('member_users');
+    Route::get('edit_member_users/{id}', [UserController::class, 'edit_member_users'])->name('edit_member_users');
+    Route::get('show_member_users/{id}', [UserController::class, 'show_member_users'])->name('show_member_users');
+    Route::get('create_member_users', [UserController::class, 'create_member_users'])->name('create_member_users');
+    Route::post('store_member_users', [UserController::class, 'store_member_users'])->name('store_member_users');
+    Route::post('update_member_users', [UserController::class, 'update_member_users'])->name('update_member_users');
+
+    Route::get('my_account', [UserController::class, 'my_account'])->name('my_account');
     Route::post('pw_reset', [UserController::class, 'pw_reset'])->name('pw_reset');
     Route::post('delete_users', [UserController::class, 'delete'])->name('delete_users');
     

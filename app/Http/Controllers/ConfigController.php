@@ -122,7 +122,6 @@ class ConfigController extends Controller
     public function store_user(Request $request)
     {
         $staff= staff::latest()->first();
-        error_log("___________________________________________".$staff);
         $user = User::create([
             'user_type'=>"staff",
             'email' => $request->email,

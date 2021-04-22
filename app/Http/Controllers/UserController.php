@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\view_user_data;
 use App\Models\setting;
 use App\Models\staff;
+use App\Models\view_usermember_data;
+use App\Models\view_userstaff_data;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -29,7 +31,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+   
+
+    public function staff_users(Request $request)
     {
         $locale = session()->get('locale');
         $setting = setting::where('setting','locale_db')->first();
@@ -38,29 +42,13 @@ class UserController extends Controller
         else{$lang="_".$setting->value;}
         Session::put('db_locale', $lang);
 
-        $data = User::select('*')->with(['staff'])->get();
-        // $data = User::all()->with(['staff']);
-        return view('users.index',compact('data'));
-    
-    }
+        $data = User::select('users.*','staff.name_si','staff.name_ta','staff.name_en')
+                    ->leftJoin('staff', 'users.detail_id', '=', 'staff.id')
+                    ->where('user_type',"staff")
+                    ->get();
 
-    public function index1(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = User::select('*');
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-     
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+        return view('users.staff_account.index',compact('data'));
     
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-        
-        return view('home.dtest');
     }
     
     /**
@@ -68,12 +56,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_staff_users()
     {
         // $roles = Role::pluck('name','name')->all();
         $roles=Role::all();
         $staffdata=staff::all();
-        return view('users.create',compact('roles','staffdata'));
+        return view('users.staff_account.create',compact('roles','staffdata'));
     }
     
     /**
@@ -82,7 +70,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store_staff_users(Request $request)
     {
         $_password="";
         $this->validate($request, [
@@ -106,15 +94,16 @@ class UserController extends Controller
 
 
         $user = User::create([
+            'user_type' => "staff",
             'email' => $request->email,
             'username' => $request->username,
             'password' =>  $_password,
-            'staff_id' => $request->staff,
+            'detail_id' => $request->staff,
         ]);
 
         $user->assignRole([$request->roles]);
     
-        return redirect()->route('users.index')
+        return redirect()->route('staff_users')
                         ->with('success','User created successfully');
     }
     
@@ -124,10 +113,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_staff_users($id)
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        return view('users.staff_account.show',compact('user'));
     }
     
     /**
@@ -136,14 +125,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit_staff_users($id)
     {
         $user = User::find($id);
         $userRole = $user->roles->pluck('id')->first();
         $roles=Role::all();
         $staffdata=staff::all();
     
-        return view('users.edit',compact('user','roles','userRole','staffdata'));
+        return view('users.staff_account.edit',compact('user','roles','userRole','staffdata'));
     }
     
     /**
@@ -153,7 +142,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_users(Request $request)
+    public function update_staff_users(Request $request)
     {
         $id=$request->user_id;
         $this->validate($request, [
@@ -167,13 +156,13 @@ class UserController extends Controller
         $user->username=$request->username;
         $user->email=$request->email;
         // $user->password=Hash::make($request->password);
-        $user->staff_id=$request->staff;
+        $user->detail_id=$request->staff;
         $user->save();
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user->assignRole([$request->roles]);
      
-        return redirect()->route('users.index')
+        return redirect()->route('staff_users')
                         ->with('success','User updated successfully');
     }
     public function pw_reset(Request $request)
@@ -196,13 +185,13 @@ class UserController extends Controller
         }
         $user->save();
 
-        return redirect()->route('users.index')->with('success','Password Reset successfully');
+        return redirect()->route('staff_users')->with('success','Password Reset successfully');
     }
 
     public function delete(Request $request)
     {
         User::find($request->id_delete)->delete();
-        return redirect()->route('users.index')
+        return redirect()->route('staff_users')
                         ->with('success','User deleted successfully');
     }
 }

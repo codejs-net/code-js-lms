@@ -20,7 +20,7 @@ $name="name".$lang;
             <h5> <i class="fa fa-search ml-4 pl-2"> Search User</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right p-2">
-            <a href="{{ route('users.create') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            <a href="{{ route('create_staff_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
         </div>
     </div>
     
@@ -47,7 +47,7 @@ $name="name".$lang;
  @foreach ($data as $key => $user)
   <tr>
     <td>{{ $user->id }}</td>
-    <td>{{ $user->staff->$name }}</td>
+    <td>{{ $user->$name }}</td>
     <td>{{ $user->username }}</td>
     <td>{{ $user->email }}</td>
     <td>
@@ -58,9 +58,9 @@ $name="name".$lang;
       @endif
     </td>
     <td>
-       <a class="btn btn-outline-info btn-sm" href="{{ route('users.show',$user->id) }}">Show</a>
-       <a class="btn btn-outline-primary btn-sm" href="{{ route('users.edit',$user->id) }}">Edit</a>
-       <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->staff->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+       <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
+       <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
+       <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
     </td>
   </tr>
  @endforeach
