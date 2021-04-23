@@ -44,26 +44,54 @@ $name="name".$lang;
  </tr>
  </thead>
  <tbody>
- @foreach ($data as $key => $user)
-  <tr>
-    <td>{{ $user->id }}</td>
-    <td>{{ $user->$name }}</td>
-    <td>{{ $user->username }}</td>
-    <td>{{ $user->email }}</td>
-    <td>
-      @if(!empty($user->getRoleNames()))
-        @foreach($user->getRoleNames() as $v)
-           <label class="badge badge-success">{{ $v }}</label>
+    @can('role-list')
+        @foreach ($data as $key => $user)
+            <tr>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->$name }}</td>
+                <td>{{ $user->username }}</td>
+                <td>{{ $user->email }}</td>
+                <td>
+                @if(!empty($user->getRoleNames()))
+                    @foreach($user->getRoleNames() as $v)
+                    <label class="badge badge-success">{{ $v }}</label>
+                    @endforeach
+                @endif
+                </td>
+                <td>
+                <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
+                <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
+                <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                </td>
+            </tr> 
         @endforeach
-      @endif
-    </td>
-    <td>
-       <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
-       <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
-       <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
-    </td>
-  </tr>
- @endforeach
+    @endcan  
+
+    @cannot('role-list')
+        @foreach ($data as $key => $user)
+            @if($user->can('role-list'))
+            @else
+                <tr>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->$name }}</td>
+                    <td>{{ $user->username }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                    @if(!empty($user->getRoleNames()))
+                        @foreach($user->getRoleNames() as $v)
+                        <label class="badge badge-success">{{ $v }}</label>
+                        @endforeach
+                    @endif
+                    </td>
+                    <td>
+                    <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                    </td>
+                </tr>              
+            @endif
+        @endforeach
+    @endcannot
  </tbody>
 </table>
 

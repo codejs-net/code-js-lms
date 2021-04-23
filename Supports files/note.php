@@ -76,3 +76,23 @@ function printDiv1()
     $categoires=implode(',',$request->category);
         $integercat = array_map('intval', explode(',', $categoires));
 
+
+
+        @role('Admin')
+                    @if($item->name=="role-list" || $item->name=="role-create" || $item->name=="role-edit" || $item->name=="role-delete")
+                @else
+                    I am not a writer...
+                @endrole
+
+//------------------------------------------------------------------------------
+    @hasrole('Admin')
+    @foreach($roles as $item)
+        <option value="{{ $item->id }}">{{ $item->name }}</option>
+    @endforeach
+@else
+    @foreach($roles as $item)
+        @if($item->name!="Admin")
+            <option value="{{ $item->id }}">{{ $item->name }}</option>
+        @endif
+    @endforeach 
+@endhasrole

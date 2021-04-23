@@ -49,16 +49,25 @@ $staff="name".$lang;
         <div class="form-group col-md-1 text-left">
             <label for="categry">&nbsp;</label><br>
             
-            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
-            <i class="fa fa-plus"></i></button><label for="">&nbsp;</label>
+            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal">
+            <i class="fa fa-plus"></i></button>
         </div>
         <div class="form-group col-md-5">
             <label for="role">Role : </label>
             <select class="form-control"name="roles" value="{{old('roles')}}"required>
             <option value="" disabled selected>Select Role </option>
-            @foreach($roles as $item)
-                <option value="{{ $item->id }}">{{ $item->name }}</option>
-            @endforeach
+               
+            @can('role-list')
+                @foreach($roles as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+            @else
+                @foreach($roles as $item)
+                    @if($item->name!="Admin")
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endif
+                @endforeach 
+            @endcan
     
             </select>
             <div class="invalid-feedback">{{ __("Please Select Use Role")}}</div>
@@ -67,8 +76,8 @@ $staff="name".$lang;
         <div class="form-group col-md-1 text-left">
             <label for="categry">&nbsp;</label><br>
             
-            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
-            <i class="fa fa-plus"></i></button><label for="">&nbsp;</label>
+            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal">
+            <i class="fa fa-plus"></i></button>
         </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12">
