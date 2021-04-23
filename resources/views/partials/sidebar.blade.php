@@ -350,7 +350,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                            <a href="{{ route('users.index') }}" class="nav-link">
+                            <a href="{{ route('member_users') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Member Users Account</p>
                                 </a>

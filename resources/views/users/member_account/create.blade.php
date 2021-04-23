@@ -2,7 +2,7 @@
 @section('content')
 @php
 $lang = session()->get('db_locale');
-$staff="name".$lang;
+$member="name".$lang;
 @endphp
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -18,7 +18,7 @@ $staff="name".$lang;
             <h5> <i class="fa fa-plus ml-1 pl-2"> Add User</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right p-2">
-            <a href="{{ route('staff_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plu"></i>&nbsp; back</a>
+            <a href="{{ route('member_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plu"></i>&nbsp; back</a>
         </div>
     </div>
     
@@ -30,21 +30,21 @@ $staff="name".$lang;
 
 
 
-<form method="post" action="{{ route('store_staff_users')}}"  id="user_form" class="needs-validation"  novalidate>
+<form method="post" action="{{ route('store_member_users')}}"  id="user_form" class="needs-validation"  novalidate>
 {{ csrf_field() }}
 
 <div class="row">
         <div class="form-group col-md-5">
-            <label for="staff">Staff : </label>
-            <select class="form-control" name="staff" id="staff" value="{{old('staff')}}"required>
-            <option value="" disabled selected>Select Staff's </option>
-            @foreach($staffdata as $item)
-                <option value="{{ $item->id }}">{{ $item->$staff }}</option>
+            <label for="member">Member : </label>
+            <select class="form-control" name="member" id="member" value="{{old('member')}}"required>
+            <option value="" disabled selected>Select Member </option>
+            @foreach($memberdata as $item)
+                <option value="{{ $item->id }}">{{ $item->$member }}</option>
             @endforeach
     
             </select>
-            <div class="invalid-feedback">{{ __("Please Select the Staff")}}</div>
-            <span class="text-danger">{{ $errors->first('staff') }}</span>
+            <div class="invalid-feedback">{{ __("Please Select the member")}}</div>
+            <span class="text-danger">{{ $errors->first('member') }}</span>
         </div>
         <div class="form-group col-md-1 text-left">
             <label for="categry">&nbsp;</label><br>
@@ -94,7 +94,11 @@ $staff="name".$lang;
             <span class="text-danger">{{ $errors->first('email') }}</span>
         </div>
     </div>
-    <div class="col-md-12 col-sm-12 text-left">
+   
+   
+</div>
+<div class="row">
+<div class="col-md-12 col-sm-12 text-left">
         <div class="form-group js-select-box">
             <div class="ml-2 mr-2">
                 <span for="category">Password</span>
@@ -108,27 +112,21 @@ $staff="name".$lang;
                         <label class="form-check-label">Mannual Password</label>
                     </div> 
                 </div>
-                <div class="row" style="display:none;" id="mannual_pw">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="staff">Password : </label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-                            
-                        </div>
+                <div style="display:none;" id="mannual_pw">
+                    <div class="form-group">
+                        <label for="staff">Password : </label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password"> 
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                        <label for="staff">Confirm Password : </label>
-                            <input type="password" name="confirm-password" id="confirm-password" class="form-control" placeholder="Confirm Password">
-                        </div>
+                
+                    <div class="form-group">
+                    <label for="staff">Confirm Password : </label>
+                        <input type="password" name="confirm-password" id="confirm-password" class="form-control" placeholder="Confirm Password">
                     </div>
-
                 </div>
                 <span class="text-danger">{{ $errors->first('password') }}</span>  
             </div>
         </div>
     </div>
-   
 </div>
 <hr>
     <div class="box-footer clearfix pull-right">    
@@ -149,7 +147,7 @@ $staff="name".$lang;
 
 $(document).ready(function()
 {
-    $('#staff').select2({
+    $('#member').select2({
         theme: 'bootstrap4',
     });
 

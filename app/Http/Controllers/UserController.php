@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\view_user_data;
 use App\Models\setting;
 use App\Models\staff;
+use App\Models\member;
 use App\Models\view_usermember_data;
 use App\Models\view_userstaff_data;
 use Spatie\Permission\Models\Role;
@@ -165,6 +166,143 @@ class UserController extends Controller
         return redirect()->route('staff_users')
                         ->with('success','User updated successfully');
     }
+
+    // ----------------------------------------member user-----------------------------------------
+
+    public function member_users(Request $request)
+    {
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
+
+        if($setting->value=="0"){$lang="_".$locale;}
+        else{$lang="_".$setting->value;}
+        Session::put('db_locale', $lang);
+
+        $data = User::select('users.*','members.name_si','members.name_ta','members.name_en')
+                    ->leftJoin('members', 'users.detail_id', '=', 'members.id')
+                    ->where('user_type',"member")
+                    ->get();
+
+        return view('users.member_account.index',compact('data'));
+    
+    }
+    
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_member_users()
+    {
+        // $roles = Role::pluck('name','name')->all();
+        $roles=Role::all();
+        $memberdata=member::all();
+        return view('users.member_account.create',compact('roles','memberdata'));
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_member_users(Request $request)
+    {
+        $_password="";
+        $this->validate($request, [
+            'username' => 'required|unique:users,username,',
+            'email' => 'required|email|unique:users,email',
+            'roles' => 'required'
+        ]);
+
+        if($request->preset=="default")
+        {
+            $setting = setting::where('setting','default_password')->first();
+            $_password=Hash::make($setting->value);
+        }
+        else if($request->preset=="mannual")
+        {
+            $this->validate($request, [
+                'password' => 'required|same:confirm-password',
+            ]);
+            $_password=Hash::make($request->password);
+        }
+
+
+        $user = User::create([
+            'user_type' => "member",
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' =>  $_password,
+            'detail_id' => $request->member,
+        ]);
+
+        $user->assignRole([$request->roles]);
+    
+        return redirect()->route('member_users')
+                        ->with('success','User created successfully');
+    }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_member_users($id)
+    {
+        $user = User::find($id);
+        return view('users.staff_account.show',compact('user'));
+    }
+    
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_member_users($id)
+    {
+        $user = User::find($id);
+        $userRole = $user->roles->pluck('id')->first();
+        $roles=Role::all();
+        $memberdata=member::all();
+    
+        return view('users.member_account.edit',compact('user','roles','userRole','memberdata'));
+    }
+    
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_member_users(Request $request)
+    {
+        $id=$request->user_id;
+        $this->validate($request, [
+            'username' => 'required|unique:users,username,'.$id,
+            'email' => 'required|email|unique:users,email,'.$id,
+            // 'password' => 'same:confirm-password',
+            'roles' => 'required'
+        ]);
+    
+        $user = User::find($id);
+        $user->username=$request->username;
+        $user->email=$request->email;
+        // $user->password=Hash::make($request->password);
+        $user->detail_id=$request->member;
+        $user->save();
+
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user->assignRole([$request->roles]);
+     
+        return redirect()->route('member_users')
+                        ->with('success','User updated successfully');
+    }
+
+
     public function pw_reset(Request $request)
     {
         $id=$request->user_id;
@@ -185,13 +323,12 @@ class UserController extends Controller
         }
         $user->save();
 
-        return redirect()->route('staff_users')->with('success','Password Reset successfully');
+        return redirect()->back()->with('success','Password Reset successfully');
     }
 
     public function delete(Request $request)
     {
         User::find($request->id_delete)->delete();
-        return redirect()->route('staff_users')
-                        ->with('success','User deleted successfully');
+        return redirect()->back()->with('success','User deleted successfully');
     }
 }

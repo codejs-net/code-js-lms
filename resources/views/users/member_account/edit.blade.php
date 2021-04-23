@@ -2,7 +2,7 @@
 @section('content')
 @php
 $lang = session()->get('db_locale');
-$staff="name".$lang;
+$member="name".$lang;
 @endphp
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -18,7 +18,7 @@ $staff="name".$lang;
             <h5> <i class="fa fa-plus ml-1 pl-2"> Edit User</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right p-2">
-            <a href="{{ route('staff_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plu"></i>&nbsp; back</a>
+            <a href="{{ route('member_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plu"></i>&nbsp; back</a>
         </div>
     </div>
     
@@ -29,22 +29,21 @@ $staff="name".$lang;
 <div class="container">
 <div class="card card-body">
 
-<form method="POST" action="{{ route('update_staff_users')}}"  id="user_form" class="needs-validation"  novalidate>
+<form method="POST" action="{{ route('update_member_users')}}"  id="user_form" class="needs-validation"  novalidate>
 {{ csrf_field() }}
 <input type="hidden" name="user_id" class="user_id">
 <div class="row">
-    <div class="form-group col-md-5">
-        <label for="staff">Staff : </label>
-        <select class="form-control"name="staff" id="staff" value="{{old('staff_id')}}"required>
-        <option value="" disabled selected>Select Staff's </option>
-        @foreach($staffdata as $item)
-            <option value="{{ $item->id }}">{{ $item->$staff }}</option>
-        @endforeach
-
-        </select>
-        <div class="invalid-feedback">{{ __("Please Select the Staff")}}</div>
-        <span class="text-danger">{{ $errors->first('staff') }}</span>
-    </div>
+<div class="form-group col-md-5">
+            <label for="member">Member : </label>
+            <select class="form-control" name="member" id="member" value="{{old('member')}}"required>
+            <option value="" disabled selected>Select Member </option>
+            @foreach($memberdata as $item)
+                <option value="{{ $item->id }}">{{ $item->$member }}</option>
+            @endforeach
+            </select>
+            <div class="invalid-feedback">{{ __("Please Select the member")}}</div>
+            <span class="text-danger">{{ $errors->first('member') }}</span>
+        </div>
     <div class="form-group col-md-1 text-left">
         <label for="categry">&nbsp;</label><br>
         <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal">
@@ -166,19 +165,21 @@ $staff="name".$lang;
 @section('script')
 <script>
 
+
 $(document).ready(function()
 {
     $('.user_id').val("{{$user->id}}");
-    $('#staff').val("{{$user->detail_id}}");
+    $('#member').val("{{$user->detail_id}}");
     $('#username').val("{{$user->username}}");
     $('#email').val("{{$user->email}}");
     $('#roles').val("{{$userRole}}");
 
     $('#reset_password').prop("disabled",true);
-
-    $('#staff').select2({
+    
+    $('#member').select2({
         theme: 'bootstrap4',
     });
+
 
 });
 $('input[type=radio][name=preset]').change(function() {

@@ -17,10 +17,10 @@ $name="name".$lang;
 <div class="container">
     <div class="row text-center">
         <div class="col-md-11 col-sm-6 text-left p-2"> 
-            <h5> <i class="fa fa-search ml-4 pl-2"> Staff User Account</i></h5>
+            <h5> <i class="fa fa-search ml-4 pl-2"> Member User Account</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right p-2">
-            <a href="{{ route('create_staff_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            <a href="{{ route('create_member_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
         </div>
     </div>
     
@@ -59,8 +59,8 @@ $name="name".$lang;
                 @endif
                 </td>
                 <td>
-                <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
-                <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
+                <a class="btn btn-outline-info btn-sm" href="{{ route('show_member_users',$user->id) }}">Show</a>
+                <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_member_users',$user->id) }}">Edit</a>
                 <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                 </td>
             </tr> 
@@ -84,8 +84,8 @@ $name="name".$lang;
                     @endif
                     </td>
                     <td>
-                    <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
-                    <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
+                    <a class="btn btn-outline-info btn-sm" href="{{ route('show_member_users',$user->id) }}">Show</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_member_users',$user->id) }}">Edit</a>
                     <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                     </td>
                 </tr>              
