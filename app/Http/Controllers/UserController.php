@@ -14,6 +14,7 @@ use App\Models\view_userstaff_data;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
+use Auth;
 use Illuminate\Support\Arr;
 use DataTables;
 use Session;
@@ -32,7 +33,45 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   
+    public function index()
+    {
+        
+        $user_id=Auth::user()->id;
+        $user_type=Auth::user()->user_type;
+        $user = User::find($user_id);
+        $userrole = $user->roles->pluck('name')->first();
+        $userdata="";
+        if($user_type=="staff")
+        {
+            $userdata = view_userstaff_data::where('id', $user_id)->first();
+        }
+        elseif($user_type=="member")
+        {
+            $userdata = view_usermember_data::where('id', $user_id)->first();
+        }
+
+        return view('users.index',compact('user','userrole','userdata'));
+    }
+
+    public function update_my_account(Request $request)
+    {
+        $id=$request->user_id;
+        $this->validate($request, [
+            'username' => 'required|unique:users,username,'.$id,
+            'email' => 'required|email|unique:users,email,'.$id,
+
+        ]);
+    
+        $user = User::find($id);
+        $user->username=$request->username;
+        $user->email=$request->email;
+        $user->save();
+
+        return redirect()->route('home')
+                        ->with('success','User updated successfully');
+    }
+
+    // ------------------------staff user----------------------------------------
 
     public function staff_users(Request $request)
     {

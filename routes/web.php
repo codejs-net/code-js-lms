@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('delete_roles', [RoleController::class, 'delete'])->name('delete_roles');
     
      // --------User--------------------------------
-    // Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class);
     Route::get('staff_users', [UserController::class, 'staff_users'])->name('staff_users');
     Route::get('edit_staff_users/{id}', [UserController::class, 'edit_staff_users'])->name('edit_staff_users');
     Route::get('show_staff_users/{id}', [UserController::class, 'show_staff_users'])->name('show_staff_users');
@@ -69,7 +69,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('store_member_users', [UserController::class, 'store_member_users'])->name('store_member_users');
     Route::post('update_member_users', [UserController::class, 'update_member_users'])->name('update_member_users');
 
-    Route::get('my_account', [UserController::class, 'my_account'])->name('my_account');
+    Route::post('update_my_account', [UserController::class, 'update_my_account'])->name('update_my_account');
+
     Route::post('pw_reset', [UserController::class, 'pw_reset'])->name('pw_reset');
     Route::post('delete_users', [UserController::class, 'delete'])->name('delete_users');
     
