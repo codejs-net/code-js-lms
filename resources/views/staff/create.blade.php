@@ -7,6 +7,7 @@ $locale = session()->get('locale');
 $lang="_".$locale;
 $designetion="designetion".$lang;
 $title="title".$lang;
+$gender="gender".$lang;
 $center="name".$lang;
 
 @endphp
@@ -64,7 +65,6 @@ $center="name".$lang;
                         @endforeach
                     </div>
 
-                   
                 </div>
             </div>
             
@@ -139,19 +139,17 @@ $center="name".$lang;
                     <span class="text-danger">{{ $errors->first('birthday') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="gender">Gender :</label><br>
-                   <div class="bg-light p-2">
-                        <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Male"required>
-                            <label class="form-check-label">Male</label>
-                        </div>
-                        <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Female"required>
-                            <label class="form-check-label">Female</label>
-                        </div>
-                   </div>
-
+                    <div class="form-check form-check-inline" >
+                        <label for="name">Gender:</label> &nbsp;
+                    </div>
+                    @foreach($gedata as $item)
+                    <div class="form-check form-check-inline" >
+                        <input type="radio" class="form-check-input" name="gender" value="{{$item->id}}" required>
+                        <label class="form-check-label">{{$item->$gender}}</label>
+                    </div>
+                    @endforeach
                 </div>
+
             </div>
             <div class="row form-group">
                 <label for="descrip">Description :</label>

@@ -12,7 +12,7 @@ $title="title".$lang;
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
       <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Support&nbsp;</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-info"></i> Member Support&nbsp;</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-info"></i> Library Support&nbsp;</a></li>
   </ol>
   </nav>
         <!-- Content Header (Page header) -->
@@ -20,7 +20,7 @@ $title="title".$lang;
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a href="{{ route('member_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Member Category</a>
+            <a href="{{ route('genders.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Gender</a>
             <a href="{{ route('titles.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Titles</a>
         </form>
     </nav>

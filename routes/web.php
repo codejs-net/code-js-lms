@@ -28,6 +28,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Member_categoryController;
 use App\Http\Controllers\Library_titleController;
+use App\Http\Controllers\Library_genderController;
 use App\Http\Controllers\Staff_designetionController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\CenterController;
@@ -239,8 +240,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_titles', [Library_titleController::class, 'update_detail'])->name('update_titles');
     Route::post('delete_titles', [Library_titleController::class, 'delete'])->name('delete_titles');
     Route::post('import_titles', [Library_titleController::class, 'import'])->name('import_titles');
-    Route::get('title_index1', [Library_titleController::class, 'index1'])->name('title_index1');
-    Route::get('title_index2', [Library_titleController::class, 'index2'])->name('title_index2');
+
+    // --------Library support/genders--------------------------------
+    Route::resource('genders', Library_genderController::class);
+    Route::post('update_genders', [Library_genderController::class, 'update_detail'])->name('update_genders');
+    Route::post('delete_genders', [Library_genderController::class, 'delete'])->name('delete_genders');
+    Route::post('import_genders', [Library_genderController::class, 'import'])->name('import_genders');
 
      // --------Staff support/designation--------------------------------
      Route::resource('designation', Staff_designetionController::class);

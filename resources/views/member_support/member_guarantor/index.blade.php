@@ -24,7 +24,7 @@ $title="title".$lang;
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
             <a href="{{ route('member_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Member Category</a>
-            <a href="{{ route('titles.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Titles</a>
+            {{-- <a href="{{ route('titles.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Titles</a> --}}
             <a href="{{ route('member_guarantor.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Guarantors</a>
         </form>
     </nav>

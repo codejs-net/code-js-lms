@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\designetion;
 use App\Models\staff;
 use App\Models\title;
+use App\Models\gender;
 use App\Models\center;
 use App\Http\Controllers\SoapController;
 use App\Imports\MemberImport;
@@ -80,10 +81,10 @@ class StaffController extends Controller
     {
         $staffdata=designetion::all();
         $titledata=title::all();
-
+        $genderdata=gender::all();
         $centerdata=center::all();
 
-        return view('staff.create')->with('Mdata',$staffdata)->with('tdata',$titledata)->with('cdata',$centerdata);
+        return view('staff.create')->with('Mdata',$staffdata)->with('tdata',$titledata)->with('cdata',$centerdata)->with('gedata',$genderdata);
        
     }
 

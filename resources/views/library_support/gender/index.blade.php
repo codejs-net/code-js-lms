@@ -4,23 +4,23 @@
 @php
 $locale = session()->get('locale');
 $lang="_".$locale;
-$title="title".$lang;
+$gender="gender".$lang;
 
 @endphp
 
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Support&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-info"></i> Member Support&nbsp;</a></li>
-</ol>
-</nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
+      <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Support&nbsp;</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-info"></i> Library Support&nbsp;</a></li>
+  </ol>
+  </nav>
         <!-- Content Header (Page header) -->
-<div class="container">
+<div class="container-fluid">
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a href="{{ route('member_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Member Category</a>
+            <a href="{{ route('genders.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Gender</a>
             <a href="{{ route('titles.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Titles</a>
         </form>
     </nav>
@@ -34,7 +34,7 @@ $title="title".$lang;
     <div class="card card-body">
         <div class="row text-center">
             <div class="col-md-10 col-sm-6 text-center"> 
-                <h5> <i class="fa fa-object-group"></i>&nbsp;Titles</h5>
+                <h5> <i class="fa fa-object-group"></i>&nbsp;Genders</h5>
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h5>
@@ -51,7 +51,7 @@ $title="title".$lang;
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col" style="width: 30%">Title</th>
+                            <th scope="col" style="width: 30%">Gender</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -59,16 +59,16 @@ $title="title".$lang;
                     @foreach ($details as $data)
                         <tr>
                             <td>{{ $data->id }}</td>
-                            <td>{{ $data->$title }}</td>
+                            <td>{{ $data->$gender }}</td>
                            
                             <td>
                                
-                            <a class="btn btn-sm btn-outline-success " data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$title }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
+                            <a class="btn btn-sm btn-outline-success " data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$gender }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
                             @can('support_data-edit')
-                            <a class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->title_si }}" data-detail_name_ta="{{ $data->title_ta }}" data-detail_name_en="{{ $data->title_en }}" ><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
+                            <a class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->gender_si }}" data-detail_name_ta="{{ $data->gender_ta }}" data-detail_name_en="{{ $data->gender_en }}" ><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
                             @can('support_data-delete')
-                            <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$title }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                            <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$gender }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                             @endcan
                             
                             </td>
@@ -112,7 +112,7 @@ $title="title".$lang;
                         
                         <div class="col-md-12">
                             <h5><span>ID : &nbsp;</span><span class="badge badge-info" id="id_show"></span></h5>
-                            <h5 class="text-indigo"><span>Title : &nbsp;</span><span id="name_show"></span></h5>
+                            <h5 class="text-indigo"><span>Gender : &nbsp;</span><span id="name_show"></span></h5>
                         </div>
                     </div> 
                 </div>
@@ -142,12 +142,12 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('titles.store') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('genders.store') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Title</label>
+                        <label for="book_detail">Gender</label>
                         <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in English" >           
@@ -181,12 +181,12 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('update_titles') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
+            <form method="POST" action="{{ route('update_genders') }}" enctype="multipart/form-data" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <label for="book_detail">Title</label>
+                        <label for="book_detail">gender</label>
                         <input type="hidden" id="id_update" name="id_update">
                         <input type="text" class="form-control mb-1" id="name_update_si" name="name_update_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_update_ta" name="name_update_ta" value="" placeholder="Name in Tamil" >
@@ -221,7 +221,7 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_titles')}}">
+            <form method="POST" action="{{ route('delete_genders')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -262,7 +262,7 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_titles') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_genders') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 
