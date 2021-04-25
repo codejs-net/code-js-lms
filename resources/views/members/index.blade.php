@@ -223,7 +223,7 @@ function load_datatable()
         {data: "<?php echo $address2; ?>",name: "address2"},
         {data: "nic",name: "nic",orderable: true},
         {data: "mobile",name: "mobile",orderable: false},
-        {data: "gender",name: "gender",orderable: false},
+        {data: "gender<?php echo $lang; ?>",name: "gender"},
         {data: "status",name: "status",orderable: false},
         {data: "action",name: "action",orderable: false}
     ],

@@ -59,8 +59,8 @@ class ResourceController extends Controller
 
         $resource_category=resource_category::all();
        
-        $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
-        $resource_center = center_allocation::where('staff_id', $loguser->staff_id)
+        $loguser = User::where('id', Auth::user()->id)->first();
+        $resource_center = center_allocation::where('staff_id', $loguser->detail_id)
         ->with(['staff','center'])
         ->get();
 

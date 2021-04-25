@@ -9,7 +9,7 @@ use App\Models\title;
 use App\Models\gender;
 use App\Models\center;
 use App\Http\Controllers\SoapController;
-use App\Imports\MemberImport;
+use App\Imports\StaffImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -107,7 +107,6 @@ class StaffController extends Controller
             'Address1'.$lang=>'required|max:100|min:5',
             'nic'=>'required|max:12|min:10',
             'Mobile'=>'required|max:12|min:10',
-            'gender'=>'required',
             'Description'=>'max:150',
             'registeredDate'=>'required',
             ]);
@@ -134,7 +133,7 @@ class StaffController extends Controller
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
-        $mbr->gender=$request->gender;
+        $mbr->genderid=$request->gender;
         $mbr->description=$request->Description;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
@@ -181,6 +180,7 @@ class StaffController extends Controller
         $staffdata=designetion::all();
         $titledata=title::all();
         $centerdata=center::all();
+        $genderdata=gender::all();
 
         $center_allocate = DB::table("center_allocations")->where("staff_id",$id)
         ->pluck('center_id','center_id')
@@ -191,6 +191,7 @@ class StaffController extends Controller
         ->with('Mdata',$staffdata)
         ->with('tdata',$titledata)
         ->with('cdata',$centerdata)
+        ->with('gedata',$genderdata)
         ->with('allocatedata',$center_allocate);
     }
 
@@ -249,7 +250,7 @@ class StaffController extends Controller
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
-        $mbr->gender=$request->gender;
+        $mbr->genderid=$request->gender;
         $mbr->description=$request->Description;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
@@ -306,8 +307,8 @@ class StaffController extends Controller
 
         if($request->hasFile('file'))
         {
-            $data=Excel::import(new MemberImport,request()->file('file'));
-            return redirect()->route('members.index')->with('success','Details imported successfully.');
+            $data=Excel::import(new StaffImport,request()->file('file'));
+            return redirect()->route('staff.index')->with('success','Details imported successfully.');
         }
         else
         {

@@ -139,15 +139,17 @@ $center="name".$lang;
                     <span class="text-danger">{{ $errors->first('birthday') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <div class="form-check form-check-inline" >
-                        <label for="name">Gender:</label> &nbsp;
+                    <label for="name">Gender:</label> <br>
+                    <div class="bg-light p-2">
+                        <div class="form-check form-check-inline" >
+                            @foreach($gedata as $item)
+                            <div class="form-check form-check-inline" >
+                                <input type="radio" class="form-check-input" name="gender" value="{{$item->id}}" required>
+                                <label class="form-check-label">{{$item->$gender}}</label>
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
-                    @foreach($gedata as $item)
-                    <div class="form-check form-check-inline" >
-                        <input type="radio" class="form-check-input" name="gender" value="{{$item->id}}" required>
-                        <label class="form-check-label">{{$item->$gender}}</label>
-                    </div>
-                    @endforeach
                 </div>
 
             </div>
@@ -195,7 +197,7 @@ $center="name".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Import Members</h5>
+                    <h5 class="modal-title" id="modaltitle">Import Staff</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -204,7 +206,7 @@ $center="name".$lang;
                     
             </div>
             
-            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_member') }}"class="needs-validation"  novalidate>
+            <form method="POST" method="POST" enctype="multipart/form-data" action="{{ route('import_staff') }}"class="needs-validation"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
 

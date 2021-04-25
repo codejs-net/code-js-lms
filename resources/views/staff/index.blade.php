@@ -4,6 +4,7 @@
 $lang = session()->get('db_locale');
 $designation="designetion".$lang;
 $title="title".$lang;
+$gender="gender".$lang;
 $name="name".$lang;
 $address1="address1".$lang;
 $address2="address2".$lang;
@@ -186,14 +187,14 @@ function load_datatable()
     columns:[
         {data: "id",name: "ResourceID",orderable: true},
         {data: "images",name: "images",orderable: false},
-        {data: "title<?php echo $lang; ?>",name: "title"},
+        {data: "<?php echo $title; ?>",name: "title"},
         {data: "designetion<?php echo $lang; ?>",name: "designetion"},
         {data: "<?php echo $name; ?>",name: "name"},
         {data: "<?php echo $address1; ?>",name: "address1"},
         {data: "<?php echo $address2; ?>",name: "address2"},
         {data: "nic",name: "nic",orderable: true},
         {data: "mobile",name: "mobile",orderable: false},
-        {data: "gender",name: "gender",orderable: false},
+        {data: "<?php echo $gender; ?>",name: "gender",orderable: false},
         {data: "status",name: "status",orderable: false},
         {data: "action",name: "action",orderable: false}
     ],

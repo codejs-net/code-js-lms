@@ -21,7 +21,6 @@ $designation="designetion".$lang;
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
             <a href="{{ route('designation.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Designations</a>
-            <a href="{{ route('title_index1') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Titles</a>
         </form>
     </nav>
     </div>

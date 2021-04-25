@@ -8,6 +8,7 @@ $lang="_".$locale;
 $designetion="designetion".$lang;
 $title="title".$lang;
 $center="name".$lang;
+$gender="gender".$lang;
 
 
 @endphp
@@ -135,19 +136,19 @@ $center="name".$lang;
                     <span class="text-danger">{{ $errors->first('birthday') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="gender">Gender :</label><br>
-                   <div class="bg-light p-2">
+                    <label for="name">Gender:</label> <br>
+                    <div class="bg-light p-2">
                         <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Male"required>
-                            <label class="form-check-label">Male</label>
+                            @foreach($gedata as $item)
+                            <div class="form-check form-check-inline" >
+                                <input type="radio" class="form-check-input" name="gender" value="{{$item->id}}" required>
+                                <label class="form-check-label">{{$item->$gender}}</label>
+                            </div>
+                            @endforeach
                         </div>
-                        <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Female"required>
-                            <label class="form-check-label">Female</label>
-                        </div>
-                   </div>
-
+                    </div>
                 </div>
+
             </div>
             <div class="form-group">
                 <label for="descrip">Description :</label>
@@ -229,7 +230,7 @@ $(document).ready(function()
         $('#nic').val("{{$edata->nic}}");
         $('#Mobile').val("{{$edata->mobile}}");
         $('#birthday').val("{{$edata->birthday}}");
-        $('input:radio[name="gender"]').filter('[value="{{$edata->gender}}"]').attr('checked', true);
+        $('input:radio[name="gender"]').filter('[value="{{$edata->genderid}}"]').attr('checked', true);
         $('#Description').val("{{$edata->description}}");
         $('#registeredDate').val("{{$edata->regdate}}");
         $('input:radio[name="status"]').filter('[value="{{$edata->status}}"]').attr('checked', true);

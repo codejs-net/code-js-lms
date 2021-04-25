@@ -7,6 +7,7 @@ $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
 $title="title".$lang;
+$gender="gender".$lang;
 $guarantor="name".$lang;
 $address1="address1".$lang;
 $address2="address2".$lang;
@@ -130,18 +131,17 @@ $address2="address2".$lang;
                     <span class="text-danger">{{ $errors->first('birthday') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="gender">Gender :</label><br>
-                   <div class="bg-light p-2">
+                    <label for="name">Gender:</label> <br>
+                    <div class="bg-light p-2">
                         <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Male"required>
-                            <label class="form-check-label">Male</label>
+                            @foreach($gedata as $item)
+                            <div class="form-check form-check-inline" >
+                                <input type="radio" class="form-check-input" name="gender" value="{{$item->id}}" required>
+                                <label class="form-check-label">{{$item->$gender}}</label>
+                            </div>
+                            @endforeach
                         </div>
-                        <div class="form-check form-check-inline" >
-                            <input type="radio" class="form-check-input" name="gender" value="Female"required>
-                            <label class="form-check-label">Female</label>
-                        </div>
-                   </div>
-
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -164,7 +164,7 @@ $address2="address2".$lang;
               <div class="row">
                <div class="col-md-11">
                    <label for="member_guarantor">Guarantor : </label>
-                        <select class="form-control" id="member_guarantor" name="member_guarantor" value=""required>
+                        <select class="form-control" id="member_guarantor" name="member_guarantor">
                             <option value="" class="" selected disabled>Select Guarantor</option>
                             @foreach($gdata as $item)
                                     <option value="{{ $item->id }}">{{ $item->$guarantor}}-{{$item->$address1}}-{{$item->nic}}</option>
@@ -246,7 +246,7 @@ $(document).ready(function()
         $('#nic').val("{{$edata->nic}}");
         $('#Mobile').val("{{$edata->mobile}}");
         $('#birthday').val("{{$edata->birthday}}");
-        $('input:radio[name="gender"]').filter('[value="{{$edata->gender}}"]').attr('checked', true);
+        $('input:radio[name="gender"]').filter('[value="{{$edata->genderid}}"]').attr('checked', true);
         $('#Description').val("{{$edata->description}}");
         $('#registeredDate').val("{{$edata->regdate}}");
         $('#member_guarantor').val("{{$edata->guarantor_id}}");

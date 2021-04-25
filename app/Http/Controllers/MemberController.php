@@ -7,6 +7,7 @@ use App\Models\member_cat;
 use App\Models\member;
 use App\Models\member_guarantor;
 use App\Models\title;
+use App\Models\gender;
 use App\Http\Controllers\SoapController;
 use App\Imports\MemberImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -89,9 +90,14 @@ class MemberController extends Controller
     {
         $Memberdata=member_cat::all();
         $titledata=title::all();
+        $genderdata=gender::all();
         $guarantdata=member_guarantor::all();
 
-        return view('members.create')->with('Mdata',$Memberdata)->with('tdata',$titledata)->with('gdata',$guarantdata);
+        return view('members.create')
+            ->with('Mdata',$Memberdata)
+            ->with('tdata',$titledata)
+            ->with('gedata',$genderdata)
+            ->with('gdata',$guarantdata);
        
     }
 
@@ -141,7 +147,7 @@ class MemberController extends Controller
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
-        $mbr->gender=$request->gender;
+        $mbr->genderid=$request->gender;
         $mbr->description_si=$request->Description;
         $mbr->description_ta=$request->Description;
         $mbr->description_en=$request->Description;
@@ -186,12 +192,14 @@ class MemberController extends Controller
         $editdata = member::find($id);
         $Memberdata=member_cat::all();
         $titledata=title::all();
+        $genderdata=gender::all();
         $guarantdata=member_guarantor::all();
 
         return view('members.edit')
         ->with('edata',$editdata)
         ->with('Mdata',$Memberdata)
         ->with('tdata',$titledata)
+        ->with('gedata',$genderdata)
         ->with('gdata',$guarantdata);
     }
 
@@ -250,7 +258,7 @@ class MemberController extends Controller
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
-        $mbr->gender=$request->gender;
+        $mbr->genderid=$request->gender;
         $mbr->description_si=$request->Description;
         $mbr->description_ta=$request->Description;
         $mbr->description_en=$request->Description;
