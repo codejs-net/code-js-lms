@@ -8,6 +8,7 @@ $name="name".$lang;
 $address1="address1".$lang;
 $address2="address2".$lang;
 $title="title".$lang;
+$gender="gender".$lang;
 
 @endphp
 

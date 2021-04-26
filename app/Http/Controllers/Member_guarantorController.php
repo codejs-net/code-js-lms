@@ -11,6 +11,7 @@ use File;
 use App\Models\setting;
 use App\Models\member_guarantor;
 use App\Models\title;
+use App\Models\gender;
 use App\Imports\Member_guarantorImport;
 use Session;
 use DataTables;
@@ -29,6 +30,7 @@ class Member_guarantorController extends Controller
 
         Session::put('db_locale', $lang);
         $titledata=title::all();
+        $genderdata=gender::all();
 
             if(request()->ajax())
             {
@@ -45,7 +47,7 @@ class Member_guarantorController extends Controller
                         ->make(true);
                         
             }
-        return view('member_support.member_guarantor.index')->with('tdata',$titledata);
+        return view('member_support.member_guarantor.index')->with('tdata',$titledata)->with('gedata',$genderdata);
     }
 
     /**
@@ -96,7 +98,7 @@ class Member_guarantorController extends Controller
         $mbr->address2_en=$request->Address2_en;
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
-        $mbr->gender=$request->gender;
+        $mbr->genderid=$request->gender;
         $mbr->description=$request->description;
         $mbr->status="1";
         $mbr->save();
@@ -167,7 +169,7 @@ class Member_guarantorController extends Controller
         $mbr->address2_en=$request->Address2_update_en;
         $mbr->nic=$request->nic_update;
         $mbr->mobile=$request->Mobile_update;
-        $mbr->gender=$request->gender_update;
+        $mbr->genderid=$request->gender_update;
         $mbr->description=$request->description_update;
 
         $mbr->save();

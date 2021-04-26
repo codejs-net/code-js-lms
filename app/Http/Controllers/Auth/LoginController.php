@@ -106,7 +106,15 @@ class LoginController extends Controller
             }
             
             //----------end theme-----------------------------
+            
+            // activity()
+            // ->causedBy($userModel)
+            // ->performedOn($someContentModel)
+            // ->withProperties(['key' => 'value'])
+            // ->createdAt(now()->subDays(10))
+            // ->log('edited');
 
+            activity()->log('login');
             return redirect()->route('home');
 
         }else{

@@ -30,7 +30,7 @@ class Member_guarantorImport implements ToModel, WithHeadingRow
             'address2_en' => $row['address2_en'],
             'nic'         => $row['nic'],
             'mobile'      => $row['mobile'],
-            'gender'      => $row['gender'],
+            'genderid'      => $row['genderid'],
             'description' => $row['description'],
         ]);
 

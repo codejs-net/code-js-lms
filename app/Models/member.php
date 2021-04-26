@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class member extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
+
     protected $table="members";
     protected $fillable = 
                     [
@@ -32,5 +34,11 @@ class member extends Model
                     'guarantor_id',
                     'status'
                     ];
+    // protected static $logAttributes = ['name_si', 'address1_si'];
+    protected static $logFillable = true;
+    // protected static $logUnguarded = true;
+    protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
+    protected static $logName = 'member';
 
 }
