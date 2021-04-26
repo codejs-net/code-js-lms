@@ -322,6 +322,8 @@ function load_datatable(catdata,centerdata,typedata)
         serverSide: false,
         ordering: false,
         searching: true,
+        cache: true,
+        deferRender: true,
 
     ajax:{
         type: "GET",

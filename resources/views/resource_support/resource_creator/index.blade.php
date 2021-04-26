@@ -8,23 +8,24 @@ $name="name".$lang;
 $address1="address1".$lang;
 $address2="address2".$lang;
 $title="title".$lang;
+$gender="gender".$lang;
 
 @endphp
 
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Support&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-info"></i> Resource Support&nbsp;</a></li>
-</ol>
-</nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
+      <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Support&nbsp;</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-info"></i> Resource Support&nbsp;</a></li>
+  </ol>
+  </nav>
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
             <a href="{{ route('resource_catagory.index') }}" class="btn btn-sm btn-outline-success ml-2" type="button">Resource Category</a>
-            <a href="{{ route('resource_type.index') }}"class="btn  btn-sm btn-outline-success ml-2" type="button">Resource Type</a>
+            <a href="{{ route('resource_type.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Type</a>
             <a href="{{ route('resource_dd_class.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Class</a>
             <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Devision</a>
             <a href="{{ route('resource_dd_section.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource DD Section</a>
@@ -34,9 +35,7 @@ $title="title".$lang;
             <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button">Resource Donates</a>
         </form>
     </nav>
-    </div>
-    
-    
+    </div> 
 </div>
 
         <!-- Main content -->
@@ -57,39 +56,23 @@ $title="title".$lang;
         </div>
         <div class="form-row">
         <div class="table-responsive">               
-            <table class="table table-hover table-bordered" id="book_datatable">
+            <table class="table table-hover table-bordered" id="creator_datatable">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col" style="width: 30%">Name</th>
-                            <th scope="col" style="width: 30%">Address</th>
+                            <th scope="col" style="width: 20%">Name</th>
+                            <th scope="col" style="width: 20%">Address1</th>
+                            <th scope="col" style="width: 20%">Address2</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Mobile</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>  
-                    @foreach ($details as $data)
-                        <tr>
-                            <td>{{ $data->id }}</td>
-                            <td>{{ $data->$name }}</td>
-                            <td>{{ $data->$address1 }}&nbsp;{{ $data->$address2 }}</td>
-                            <td>
-                               
-                            <a class="btn btn-sm btn-outline-success " data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}"><i class="fa fa-eye" ></i>&nbsp;Show</a>
-                            @can('support_data-edit')
-                            <a class="btn btn-sm btn-outline-info " data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" ><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
-                            @endcan
-                            @can('support_data-delete')
-                            <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
-                            @endcan
-                            
-                            </td>
-                        </tr>
-                        @endforeach
                    
                     </tbody>
             </table>
            
-            {!! $details->render( "pagination::bootstrap-4") !!}
            
         </div>
          
@@ -123,7 +106,7 @@ $title="title".$lang;
                         
                         <div class="col-md-12">
                             <h5><span>ID : &nbsp;</span><span class="badge badge-info" id="id_show"></span></h5>
-                            <h5 class="text-indigo"><span>Category : &nbsp;</span><span id="name_show"></span></h5>
+                            {{-- <h5 class="text-indigo"><span>name : &nbsp;</span><span id="name_show"></span></h5> --}}
                         </div>
                     </div> 
                 </div>
@@ -155,7 +138,7 @@ $title="title".$lang;
                     
             </div>
             
-            <form method="POST" action="{{ route('delete_resource_cat')}}">
+            <form method="POST" action="{{ route('delete_resource_creator')}}">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     
@@ -165,7 +148,7 @@ $title="title".$lang;
                             <h5><label type="text"  id="name_delete"></label></h5>
                         </div>
                         <div class="col-md-8">
-                            <h6 id="modallabel">Are you sure Remove Support Data ? </h6>
+                            <h6 id="modallabel">Are you sure Remove Creator ? </h6>
                         </div>
                     </div> 
                 </div>
@@ -187,7 +170,7 @@ $title="title".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Import Support Data</h5>
+                    <h5 class="modal-title" id="modaltitle">Import Creator Data</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -221,7 +204,7 @@ $title="title".$lang;
         </div>
     </div>
 </div>
-<!-- end Create model -->
+<!-- end import model -->
 
 @endsection
 @section('script')
@@ -229,25 +212,51 @@ $title="title".$lang;
 
 $(document).ready(function()
 {
+    load_datatable();
+
     $('#data_show').on('show.bs.modal', function (event) {
        
-       var button = $(event.relatedTarget) 
-       var d_id = button.data('detail_id') 
-       var d_name = button.data('detail_name')
-       $('#id_show').html(d_id);
-       $('#name_show').html(d_name);
+       $('#id_show').html($(event.relatedTarget).data('id'));
+      
    });
 
-    $('#data_update').on('show.bs.modal', function (event) {
+    $('#data_edit').on('show.bs.modal', function (event) {
        
-        var button = $(event.relatedTarget) 
-        var d_id = button.data('detail_id') 
-        var d_name_si = button.data('detail_name_si');
-        var d_name_ta = button.data('detail_name_ta');
-        var d_name_en = button.data('detail_name_en');
-        $('#id_update').val(d_id);
-        $('#name_update_si').val(d_name_si);  $('#name_update_ta').val(d_name_ta);  $('#name_update_en').val(d_name_en);
-        $('#to_updateName').html(d_id);
+        var c_id = $(event.relatedTarget).data('id') 
+       
+       // -------------------------------------------
+       $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('edit_resource_creator')}}", 
+            data: { c_id: c_id, },
+            success:function(data){
+                $('#creator_id').val(data.id);
+                $('#name_update_si').val(data.name_si);
+                $('#name_update_ta').val(data.name_ta);
+                $('#name_update_en').val(data.name_en);
+                $('#Address1_update_si').val(data.address1_si);
+                $('#Address1_update_ta').val(data.address1_ta);
+                $('#Address1_update_en').val(data.address1_en);
+                $('#Address2_update_si').val(data.address2_si);
+                $('#Address2_update_ta').val(data.address2_ta);
+                $('#Address2_update_en').val(data.address2_en);
+                $('#Mobile_update').val(data.mobile);
+                $('#description_update').val(data.description);
+
+                $('input:radio[name="title_update"][value="'+data.titleid+'"]').prop('checked', true);
+                $('input:radio[name="gender_update"][value="'+data.genderid+'"]').prop('checked', true);
+              
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            }
+        })
+        // -------------------------------------------
 
         @if($locale=="si")
         $("#name_update_si").prop('required',true);
@@ -262,8 +271,8 @@ $(document).ready(function()
     $('#data_delete').on('show.bs.modal', function (event) {
        
        var button = $(event.relatedTarget) 
-       var d_id = button.data('detail_id') 
-       var d_name = button.data('detail_name')
+       var d_id = button.data('id') 
+       var d_name = button.data('name')
        $('#id_delete').val(d_id);
        $('#name_delete').html(d_name);
    });
@@ -271,11 +280,17 @@ $(document).ready(function()
    $('#data_create').on('show.bs.modal', function (event) {
        
         @if($locale=="si")
-        $("#name_si").prop('required',true);
+            $("#name_si").prop('required',true);
+            $("#Address1_si").prop('required',true);
+            $("#Address2_si").prop('required',true);
         @elseif($locale=="ta")
-        $("#name_ta").prop('required',true);
+            $("#name_ta").prop('required',true);
+            $("#Address1_ta").prop('required',true);
+            $("#Address2_ta").prop('required',true);
         @elseif($locale=="en")
-        $("#name_en").prop('required',true);
+            $("#name_en").prop('required',true);
+            $("#Address1_en").prop('required',true);
+            $("#Address2_en").prop('required',true);
         @endif
    });
 
@@ -287,6 +302,39 @@ $(".custom-file-input").on("change", function() {
 });
 
 
+function load_datatable()
+{
+
+    $('#creator_datatable').DataTable({
+        columnDefs: [
+        {"targets": [0],
+        "visible": false,
+        "searchable": false},
+        ],
+        responsive: true,
+        processing: true,
+        serverSide: false,
+        ordering: false,
+        searching: true,
+
+    ajax:{
+        type: "GET",
+        dataType : 'json',
+        url: "{{ route('resource_creator.index') }}",
+    },
+    
+    columns:[
+        {data: "id",name: "ID",orderable: true},
+        {data: "<?php echo $name; ?>",name: "name"},
+        {data: "<?php echo $address1; ?>",name: "address1"},
+        {data: "<?php echo $address2; ?>",name: "address2"},
+        {data: "<?php echo $gender; ?>",name: "gender"},
+        {data: "mobile",name: "mobile",orderable: false},
+        {data: "action",name: "action",orderable: false}
+    ]
+
+    });
+}
 </script>
 
 @endsection

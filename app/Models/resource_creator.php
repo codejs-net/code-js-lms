@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class resource_creator extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
     protected $table="resource_creators";
     protected $fillable = 
                     [
@@ -27,6 +28,11 @@ class resource_creator extends Model
                     'image'
                     ];
 
-
+// protected static $logAttributes = ['name_si', 'address1_si'];
+protected static $logFillable = true;
+// protected static $logUnguarded = true;
+protected static $logOnlyDirty = true;
+protected static $submitEmptyLogs = false;
+protected static $logName = 'resource_creator';
     
 }

@@ -17,7 +17,7 @@ class resource_creatorImport implements ToModel, WithHeadingRow
     {
         return new resource_creator([
             'id'            => $row['id'],
-            'title'         => $row['title'],
+            // 'titleid'         => $row['titleid'],
             'name_si'       => $row['name_si'],
             'name_ta'       => $row['name_ta'],
             'name_en'       => $row['name_en'],
@@ -28,7 +28,7 @@ class resource_creatorImport implements ToModel, WithHeadingRow
             'address2_ta'   => $row['address2_ta'],
             'address2_en'   => $row['address2_en'],
             'mobile'        => $row['mobile'],
-            'gender'        => $row['gender'],
+            // 'genderid'        => $row['genderid'],
             'description'   => $row['description'],
             'image'         => $row['image'],
 

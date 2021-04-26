@@ -248,7 +248,7 @@ $(document).ready(function()
                 $('#description_update').val(data.description);
 
                 $('input:radio[name="title_update"][value="'+data.titleid+'"]').prop('checked', true);
-                $('input:radio[name="gender_update"][value="'+data.gender+'"]').prop('checked', true);
+                $('input:radio[name="gender_update"][value="'+data.genderid+'"]').prop('checked', true);
               
             },
             error:function(data){

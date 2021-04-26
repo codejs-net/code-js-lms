@@ -1,5 +1,5 @@
 <!--Create Modal -->
-<div class="modal fade bd-example-modal-lg" id="data_create" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="creator_create" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-indigo">
@@ -13,7 +13,7 @@
                     
             </div>
             
-            <form method="POST" action="{{ route('resource_creator.store') }}"class="needs-validation"  novalidate>
+            <form class="needs-validation" id="creator_form" novalidate>
                 {{ csrf_field() }}
             <div class="modal-body">
                 <div class="form-group">

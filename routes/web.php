@@ -133,6 +133,7 @@ Route::group(['middleware' => ['auth']], function() {
      // --------Resource support/creator--------------------------------
     Route::resource('resource_creator', Resource_creatorController::class);
     Route::post('update_resource_creator', [Resource_creatorController::class, 'update_detail'])->name('update_resource_creator');
+    Route::post('edit_resource_creator', [Resource_creatorController::class, 'edit_detail'])->name('edit_resource_creator');
     Route::post('delete_resource_creator', [Resource_creatorController::class, 'delete'])->name('delete_resource_creator');
     Route::post('import_resource_creator', [Resource_creatorController::class, 'import'])->name('import_resource_creator');
 

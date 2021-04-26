@@ -19,6 +19,8 @@ use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\view_resource_data_all;
 use App\Models\center_allocation;
+use App\Models\title;
+use App\Models\gender;
 use Session;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -158,8 +160,19 @@ class ResourceController extends Controller
         $dd_devisiondata=resource_dd_division::all();
         $dd_sectiondata=resource_dd_section::all();
         $typedata=resource_type::all();
-        return view('resources.create')->with('cat_data',$categorydata)->with('lang_data',$languagedata)->with('pub_data',$publisherdata)
-        ->with('type_data',$typedata)->with('dd_class_data',$dd_classdata)->with('dd_devision_data',$dd_devisiondata)->with('dd_section_data',$dd_sectiondata)->with('creator_data',$creatordata);
+        $titledata=title::all();
+        $genderdata=gender::all();
+        return view('resources.create')
+            ->with('cat_data',$categorydata)
+            ->with('lang_data',$languagedata)
+            ->with('pub_data',$publisherdata)
+            ->with('type_data',$typedata)
+            ->with('dd_class_data',$dd_classdata)
+            ->with('dd_devision_data',$dd_devisiondata)
+            ->with('dd_section_data',$dd_sectiondata)
+            ->with('creator_data',$creatordata)
+            ->with('tdata',$titledata)
+            ->with('gedata',$genderdata);
     }
 
     /**

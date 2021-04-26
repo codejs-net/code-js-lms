@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\resource_creator;
+use App\Models\view_creator_data;
 use App\Models\setting;
 use App\Models\title;
+use App\Models\gender;
 use App\Imports\resource_creatorImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use Session;
+use DataTables;
+use File;
 
 class Resource_creatorController extends Controller
 {
@@ -38,11 +42,25 @@ class Resource_creatorController extends Controller
         {$lang="_".$setting->value;}
 
         Session::put('db_locale', $lang);
-        
         $titledata=title::all();
-        $details = resource_creator::orderBy('id','ASC')->paginate(15);
-        return view('resource_support.resource_creator.index',compact('details'))->with('tdata',$titledata);
-       
+        $genderdata=gender::all();
+
+            if(request()->ajax())
+            {
+                $memdata = view_creator_data::select('*')->get();
+                return datatables()->of($memdata)
+                        ->addIndexColumn()
+                        ->addColumn('action', function($data){
+                            $button  = '<a class="btn btn-sm btn-outline-success mx-1" data-toggle="modal" data-target="#data_show" data-id="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
+                            $button  .= '<a class="btn btn-sm btn-outline-info mx-1" data-toggle="modal" data-target="#data_edit" data-id="'.$data->id.'"><i class="fa fa-pencil" ></i></a>';
+                            $button .= '<a class="btn btn-sm btn-outline-danger mx-1" data-toggle="modal" data-target="#data_delete" data-id="'.$data->id.'" data-name="'.$data->name_en.'"><i class="fa fa-trash" ></i></a>';
+                            return $button;   
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+                        
+            }
+        return view('resource_support.resource_creator.index')->with('tdata',$titledata)->with('gedata',$genderdata);
     }
 
     /**
@@ -64,24 +82,49 @@ class Resource_creatorController extends Controller
     public function store(Request $request)
     {
         
-        $form_data = array(
-            'name_si' =>  $request->name_si,
-            'name_ta' =>  $request->name_ta,
-            'name_en' =>  $request->name_en, 
-        );
-        resource_creator::create($form_data);
-        return redirect()->route('resource_creator.index')->with('success','Details created successfully.');
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+
+        $mbr=new resource_creator;
+        $this->validate($request,[
+            'name'.$lang=>'required|max:255|min:5',
+            'Address1'.$lang=>'max:100',
+            // 'Mobile'=>'max:12|min:10',
+            'description'=>'max:255',
+            ]);
+
+        $mbr->titleid=$request->title;
+        $mbr->name_si=$request->name_si;
+        $mbr->name_ta=$request->name_ta;
+        $mbr->name_en=$request->name_en;
+        $mbr->address1_si=$request->Address1_si;
+        $mbr->address1_ta=$request->Address1_ta;
+        $mbr->address1_en=$request->Address1_en;
+        $mbr->address2_si=$request->Address2_si;
+        $mbr->address2_ta=$request->Address2_ta;
+        $mbr->address2_en=$request->Address2_en;
+        $mbr->mobile=$request->Mobile;
+        $mbr->genderid=$request->gender;
+        $mbr->description=$request->description;
+        $mbr->save();
+
+        if(request()->ajax())
+        {
+            $creatordata=resource_creator::all();
+            return response()->json(['data' =>$creatordata ,'dataid'=>$mbr->id]);
+        }
+        else
+        {
+           
+            return redirect()->back()->with('success','Details created successfully.');
+        }
     }
     
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
+
+    public function show(Request $request)
     {
-        
+        $data = view_creator_data::find($request->id);
+        return response()->json($data);
     }
     
     /**
@@ -90,9 +133,10 @@ class Resource_creatorController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit_detail(Request $request)
     {
-        
+        $data = view_creator_data::find($request->c_id);
+        return response()->json($data);
     }
     
     /**
@@ -107,16 +151,30 @@ class Resource_creatorController extends Controller
         $locale = session()->get('locale');
         $lang="_".$locale;
 
-         request()->validate([
-            'name_update'.$lang => 'required',
-        ]);
-    
-        $detail=resource_creator::find($request->id_update);
-        $detail->name_si=$request->name_update_si;
-        $detail->name_ta=$request->name_update_ta;
-        $detail->name_en=$request->name_update_en;
-        $detail->save();
-        return redirect()->route('resource_creator.index')->with('success','Details Updated successfully.');
+        $mbr=resource_creator::find($request->creator_id);
+        $this->validate($request,[
+            'name_update'.$lang=>'required|max:255|min:5',
+            'Address1_update'.$lang=>'max:255',
+            // 'Mobile'=>'max:12|min:10',
+            'description_update'=>'max:255',
+            ]);
+
+        $mbr->titleid=$request->title_update;
+        $mbr->name_si=$request->name_update_si;
+        $mbr->name_ta=$request->name_update_ta;
+        $mbr->name_en=$request->name_update_en;
+        $mbr->address1_si=$request->Address1_update_si;
+        $mbr->address1_ta=$request->Address1_update_ta;
+        $mbr->address1_en=$request->Address1_update_en;
+        $mbr->address2_si=$request->Address2_update_si;
+        $mbr->address2_ta=$request->Address2_update_ta;
+        $mbr->address2_en=$request->Address2_update_en;
+        $mbr->mobile=$request->Mobile_update;
+        $mbr->genderid=$request->gender_update;
+        $mbr->description=$request->description_update;
+        $mbr->save();
+
+        return redirect()->route('resource_creator.index')->with("success","Creator Update Successfully");
     }
     
     /**

@@ -15,6 +15,8 @@ $dd_class="class".$lang;
 $dd_devision="devision".$lang;
 $dd_section="section".$lang;
 $creator="name".$lang;
+$title="title".$lang;
+$gender="gender".$lang;
 
 @endphp
 
@@ -118,7 +120,7 @@ $creator="name".$lang;
                     <div class="form-group col-md-11">
                         <label for="authors">Creator</label>
                             <select class="form-control" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}"required>
-                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="" selected disabled>Choose here</option>
                                 @foreach($creator_data as $item)
                                         <option value="{{ $item->id }}">{{ $item->$creator}}</option>
                                 @endforeach
@@ -126,9 +128,8 @@ $creator="name".$lang;
                         <span class="text-danger">{{ $errors->first('authors') }}</span>
                     </div>
                     <div class="form-group col-md-1">
-                        <label for="new_category">&nbsp;</label>  </br>
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal"  data-backdrop="static" data-opp_name="Book Category"
-                        onclick="add_by_modal('/save_Book_category')"><i class="fa fa-plus"></i></button>
+                        <label>&nbsp;</label></br>
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#creator_create"><i class="fa fa-plus"></i></button>
                     </div>
 
                     
@@ -321,7 +322,7 @@ $creator="name".$lang;
         </div>
     </div>
 </div>
-
+@include('resources.create_creator_modal')
 <!-- -------------------------end import---------------------------------------------------- -->
 @endsection
 
@@ -344,6 +345,21 @@ $("#book_aNo").change(function(){
         @elseif($locale=="en")
         $("#resource_title_en").prop('required',true);
         @endif
+
+        $('#resource_creator').select2({
+        theme: 'bootstrap4',
+        });
+
+        $('#creator_create').on('show.bs.modal', function (event) {
+       
+            @if($locale=="si")
+                $("#name_si").prop('required',true);
+            @elseif($locale=="ta")
+                $("#name_ta").prop('required',true);
+            @elseif($locale=="en")
+                $("#name_en").prop('required',true);
+            @endif
+        });
 
     });
 
@@ -374,7 +390,46 @@ $("#save_resource").click(function () {
        })
        
 });
-//--------------------------end resource Save-----------------------------
+//--------------------------end resource Save--------------------------
+
+//--------------------------creator create-----------------------------
+$('#creator_form').on('submit', function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    var op='';
+    $.ajax
+        ({
+        type: "POST",
+        dataType : 'json',
+        url: "{{route('resource_creator.store')}}", 
+        data: $('#creator_form').serialize(),
+        cache: false,
+        processData: true,
+
+        success:function(data){
+            toastr.info('Creator Added Successfully')
+            for(var i=0;i<data.data.length;i++)
+            {
+                op+='<option value="'+data.data[i].id+'">'+ 
+                    @if($locale=="si") data.data[i].name_si
+                    @elseif($locale=="ta") data.data[i].name_ta
+                    @elseif($locale=="en") data.data[i].name_en
+                    @endif +
+                    '</option>';
+            }
+            $('#resource_creator')
+            .empty()
+            .append(op)
+            .val(data.dataid);
+            $("#creator_form").trigger("reset");
+            $('#creator_create').modal('hide');
+        },
+        error:function(data){
+            toastr.error('Creator Add faild Plese try again')
+        }
+    })
+
+});
 
 </script>
 
