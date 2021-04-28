@@ -280,7 +280,7 @@ toastr.options = {
 
 function add_by_modal(rout) {
 
-$('#addModal').on('show.bs.modal', function (event) {
+$('#create_by_modal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) 
   var opp = button.data('opp_name') 
   var modal = $(this)

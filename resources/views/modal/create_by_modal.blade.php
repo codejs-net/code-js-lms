@@ -13,12 +13,13 @@
                     
             </div>
             
-            <form class="needs-validation" id="add_form"  novalidate>
+            <form class="needs-validation" id="modal_form"  novalidate>
                 {{ csrf_field() }}
                 <div class="modal-body">
-
+                    <input type="hidden" name="modal_route" id="modal_route">
+                    <input type="hidden" name="inputname" id="inputname">
                     <div class="row form-group">
-                        <label for="detail">Name</label>
+                        <label for="detail"><span id="modal_feild"></span></label>
                         <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="" placeholder="Name in Sinhala" >   
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in Tamil" >
                         <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="" placeholder="Name in English" >           

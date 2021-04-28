@@ -67,8 +67,7 @@ $gender="gender".$lang;
                     </div>
                     <div class="form-group col-md-1">
                         <label for="new_category">&nbsp;</label></br>
-                        <button type="button" id="btn_newcategory"  class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></button>
-
+                        <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
                     </div>
 
                     <div class="form-group col-md-5">
@@ -83,7 +82,7 @@ $gender="gender".$lang;
                     </div>
                     <div class="form-group col-md-1">
                         <label for="new_language">&nbsp;</label></br>
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#create_by_modal"><i class="fa fa-plus"></i></button>
+                        <a href="{{ route('resource_type.index') }}" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
                     </div>
 
                 </div>
@@ -149,8 +148,7 @@ $gender="gender".$lang;
                     </div>
                     <div class="form-group col-md-1">
                     <label for="new_publisher">&nbsp;</label> </br>
-                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Publisher"
-                    onclick="add_by_modal('/save_Book_publisher')"><i class="fa fa-plus"></i></button>
+                    <button type="button" id="btn_newpublisher" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></button>
 
                     </div>
 
@@ -166,8 +164,7 @@ $gender="gender".$lang;
                     </div>
                     <div class="form-group col-md-1">
                     <label for="new_language">&nbsp;</label>  </br>
-                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Language"
-                    onclick="add_by_modal('/save_Book_language')"><i class="fa fa-plus"></i></button>
+                    <button type="button" id="btn_newlanguage" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></button>
 
                     </div>
                     
@@ -362,6 +359,17 @@ $("#book_aNo").change(function(){
             @endif
         });
 
+        $('#create_by_modal').on('show.bs.modal', function (event) {
+       
+            @if($locale=="si")
+            $(this).find("#name_si").prop('required',true);
+            @elseif($locale=="ta")
+            $(this).find("#name_ta").prop('required',true);
+            @elseif($locale=="en")
+            $(this).find("#name_en").prop('required',true);
+            @endif
+        });
+
     });
 
 // -------------------------save resource----------------------------------
@@ -433,25 +441,38 @@ $('#creator_form').on('submit', function(event){
 });
 
 
-$('#btn_newcategory').on('click', function() {
+$('#btn_newpublisher').on('click', function() {
+    $("#modal_feild").html("Publisher")
+    $("#modal_route").val("{{route('resource_publisher.store')}}")
+    $("#inputname").val("#resource_publisher")
     $("#create_by_modal").modal('show');
 });
-//--------------------------quck create-----------------------------
-public function quick_create(formdata,route,inputselect)
-{
+
+
+$('#btn_newlanguage').on('click', function() {
+    $("#modal_feild").html("Language")
+    $("#modal_route").val("{{route('resource_language.store')}}")
+    $("#inputname").val("#resource_language")
+    $("#create_by_modal").modal('show');
+});
+
+
+//--------------------------Quick create-----------------------------
+$('#modal_form').on('submit', function(event){
     event.preventDefault();
+    var formData = new FormData(this);
     var op='';
     $.ajax
         ({
         type: "POST",
         dataType : 'json',
-        url: route, 
-        data: formdata,
+        url: $("#modal_route").val(), 
+        data: $('#modal_form').serialize(),
         cache: false,
         processData: true,
 
         success:function(data){
-            toastr.info('detail created Successfully')
+            toastr.info('Detail Added Successfully')
             for(var i=0;i<data.data.length;i++)
             {
                 op+='<option value="'+data.data[i].id+'">'+ 
@@ -461,19 +482,19 @@ public function quick_create(formdata,route,inputselect)
                     @endif +
                     '</option>';
             }
-            $(inputselect)
+            $($("#inputname").val())
             .empty()
             .append(op)
             .val(data.dataid);
-            $("#creator_form").trigger("reset");
-            $('#creator_create').modal('hide');
+            $("#modal_form").trigger("reset");
+            $('#create_by_modal').modal('hide');
         },
         error:function(data){
-            toastr.error('Creator Add faild Plese try again')
+            toastr.error('Detail Add faild Plese try again')
         }
     })
 
-}
+});
 
 </script>
 
