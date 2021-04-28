@@ -15,7 +15,6 @@ class CreateResourceRacksTable extends Migration
     {
         Schema::create('resource_racks', function (Blueprint $table) {
             $table->id();
-            $table->string('rack')->nullable();
             $table->string('rack_si')->nullable();
             $table->string('rack_ta')->nullable();
             $table->string('rack_en')->nullable();

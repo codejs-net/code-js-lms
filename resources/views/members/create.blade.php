@@ -78,7 +78,7 @@ $gender="gender".$lang;
             <div class="row form-group">
                 <div class="form-group col-md-6">
                     <label for="categry">Category : </label>
-                    <select class="form-control"name="category" value="{{old('category')}}"required>
+                    <select class="form-control"name="category" id="category" value="{{old('category')}}"required>
                     <option value="" disabled selected>Select Member's Category</option>
                     @foreach($Mdata as $item)
                         <option value="{{ $item->id }}">{{ $item->$category }}</option>
@@ -89,10 +89,8 @@ $gender="gender".$lang;
                     <span class="text-danger">{{ $errors->first('category') }}</span>
                 </div>
                 <div class="form-group col-md-6 text-left">
-                    <label for="categry">&nbsp;</label><br>
-                    
-                    <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
-                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New Category</label>
+                <label for="new_language">&nbsp;</label></br>
+                    <button type="button" id="btn_newcategory" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
             <div class="form-group">
@@ -252,6 +250,7 @@ $gender="gender".$lang;
 </div>
 
 @include('members.create_guarantor_modal')
+@include('modal.create_by_modal')
 @endsection
 
 @section('script')
@@ -323,6 +322,17 @@ $(document).ready(function()
        @endif
   });
 
+  $('#create_by_modal').on('show.bs.modal', function (event) {
+       
+       @if($locale=="si")
+       $(this).find("#name_si").prop('required',true);
+       @elseif($locale=="ta")
+       $(this).find("#name_ta").prop('required',true);
+       @elseif($locale=="en")
+       $(this).find("#name_en").prop('required',true);
+       @endif
+   });
+
 });
 
 
@@ -370,6 +380,55 @@ $('#guarantor_form').on('submit', function(event){
         })
 
 });
+
+
+$('#btn_newcategory').on('click', function() {
+    $("#modal_feild").html("Member Category")
+    $("#modal_route").val("{{route('member_catagory.store')}}")
+    $("#inputname").val("#category")
+    $("#create_by_modal").modal('show');
+});
+
+
+//--------------------------Quick create-----------------------------
+$('#modal_form').on('submit', function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    var op='';
+    $.ajax
+        ({
+        type: "POST",
+        dataType : 'json',
+        url: $("#modal_route").val(), 
+        data: $('#modal_form').serialize(),
+        cache: false,
+        processData: true,
+
+        success:function(data){
+            toastr.info('Detail Added Successfully')
+            for(var i=0;i<data.data.length;i++)
+            {
+                op+='<option value="'+data.data[i].id+'">'+ 
+                    @if($locale=="si") data.data[i].name_si
+                    @elseif($locale=="ta") data.data[i].name_ta
+                    @elseif($locale=="en") data.data[i].name_en
+                    @endif +
+                    '</option>';
+            }
+            $($("#inputname").val())
+            .empty()
+            .append(op)
+            .val(data.dataid);
+            $("#modal_form").trigger("reset");
+            $('#create_by_modal').modal('hide');
+        },
+        error:function(data){
+            toastr.error('Detail Add faild Plese try again')
+        }
+    })
+
+});
+
 </script>
 
 @endsection

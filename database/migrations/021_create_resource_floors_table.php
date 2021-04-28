@@ -19,7 +19,6 @@ class CreateResourceFloorsTable extends Migration
             $table->unsignedBigInteger('rack_id')->default(1);
             $table->foreign('rack_id')->references('id')->on('resource_racks');
 
-            $table->string('floor')->nullable();
             $table->string('floor_si')->nullable();
             $table->string('floor_ta')->nullable();
             $table->string('floor_en')->nullable();

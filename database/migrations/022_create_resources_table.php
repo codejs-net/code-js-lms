@@ -66,14 +66,6 @@ class CreateResourcesTable extends Migration
             $table->string('image')->nullable();
             $table->string('received_type')->nullable();
 
-            $table->unsignedBigInteger('rack_id')->nullable();
-            $table->foreign('rack_id')->references('id')->on('resource_racks');
-
-            $table->unsignedBigInteger('floor_id')->nullable();
-            $table->foreign('floor_id')->references('id')->on('resource_floors');
-
-            $table->string('placement_index')->nullable();
-
             $table->timestamps();
         });
     }

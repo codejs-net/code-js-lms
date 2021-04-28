@@ -263,7 +263,48 @@ $gender="gender".$lang;
                     </div>
                 </div>
 
-               <hr>
+                <hr>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="check_place">
+                    <label class="form-check-label" for="check_place">Set Resource Placement Later</label>
+                </div>
+                <div class="form-row border border-secondary bg-light" id="resoure_placement_div">
+               
+                    <!-- -------------------------------------------- -->
+                    <div class="form-group col">
+                            <label for="place_rack">Rack/Coupboard</label>
+                            <select class="form-control" id="place_rack" name="place_rack" value="{{old('place_rack')}}"required>
+                            <option value="" selected disabled hidden>Choose here</option>
+                            @foreach($dd_class_data as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$dd_class}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">{{ $errors->first('place_rack') }}</span>
+                    </div>
+
+                    <!-- -------------------------------------------- -->
+                    <div class="form-group col">
+                            <label for="place_floor">Floor</label>
+                            <select class="form-control" id="place_floor" name="place_floor" value="{{old('place_floor')}}"required>
+                            <option value="" selected disabled hidden>Choose here</option>
+                            @foreach($dd_devision_data as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$dd_devision}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">{{ $errors->first('place_floor') }}</span>
+                    </div>
+
+                     <!-- -------------------------------------------- -->
+                     <div class="form-group col-md-3">
+                            <label for="place_index">Placement Index</label>
+                            <input type="text" class="form-control" id="place_index" name="place_index" value="{{old('place_index')}}" placeholder="Placement index" required>
+                            <span class="text-danger">{{ $errors->first('place_index') }}</span>
+                    </div>
+                    
+                    <!-- -------------------------------------------- -->
+                </div>
+                <hr>
+
             <div class="box-footer clearfix pull-right">
                 <button type="button" class="btn btn-md btn-warning" id="reset_resource">
                 <i class="fa fa-times"></i> Reset</button>
@@ -495,6 +536,25 @@ $('#modal_form').on('submit', function(event){
     })
 
 });
+
+$("#check_place").change(function(){
+    // $("#resoure_placement_div").toggle();
+    if($("#check_place").prop("checked") == true)
+    {
+        $("#place_rack").prop('required',false);
+        $("#place_floor").prop('required',false);
+        $("#place_index").prop('required',false);
+        $("#resoure_placement_div").slideUp('slow');
+    }
+    else
+    {
+        $("#place_rack").prop('required',true);
+        $("#place_floor").prop('required',true);
+        $("#place_index").prop('required',true);
+        $("#resoure_placement_div").slideDown('slow');
+    }
+   
+  });
 
 </script>
 

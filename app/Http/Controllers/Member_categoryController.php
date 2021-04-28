@@ -34,6 +34,14 @@ class Member_categoryController extends Controller
 
     public function store(Request $request)
     {
+          
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+
+        $this->validate($request,[
+            'name'.$lang=>'required|max:255|min:5',
+            ]);
+
         $form_data = array(
             'category_si' =>  $request->name_si,
             'category_ta' =>  $request->name_ta,
@@ -51,7 +59,16 @@ class Member_categoryController extends Controller
         );
         $lending= lending_config::create($form_data_lending);
 
-        return redirect()->route('member_catagory.index')->with('success','Details created successfully.');
+       
+        if(request()->ajax())
+        {
+            $alldata = member_cat::select('id','category_si AS name_si','category_ta AS name_ta','category_en AS name_en')->get();
+            return response()->json(['data' =>$alldata ,'dataid'=>$membercat->id]);
+        }
+        else
+        {
+            return redirect()->route('member_catagory.index')->with('success','Details created successfully.');
+        }
     }
     
    

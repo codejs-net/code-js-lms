@@ -16,6 +16,8 @@ use App\Http\Controllers\Resource_dd_devisionController;
 use App\Http\Controllers\Resource_dd_sectionController;
 use App\Http\Controllers\Resource_donateController;
 use App\Http\Controllers\Resource_langController;
+use App\Http\Controllers\Resource_rackController;
+use App\Http\Controllers\Resource_floorController;
 use App\Http\Controllers\Resource_PublisherController;
 use App\Http\Controllers\SoapController;
 use App\Http\Controllers\MemberController;
@@ -97,6 +99,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('delete_resource_cat', [Resource_categoryController::class, 'delete'])->name('delete_resource_cat');
     Route::post('import_resource_cat', [Resource_categoryController::class, 'import'])->name('import_resource_cat');
     
+     // --------Resource support/rack--------------------------------
+     Route::resource('resource_rack', Resource_rackController::class);
+     Route::post('update_resource_rack', [Resource_rackController::class, 'update_detail'])->name('update_resource_rack');
+     Route::post('delete_resource_rack', [Resource_rackController::class, 'delete'])->name('delete_resource_rack');
+     Route::post('import_resource_rack', [Resource_rackController::class, 'import'])->name('import_resource_rack');
+
+      // --------Resource support/floor--------------------------------
+      Route::resource('resource_floor', Resource_floorController::class);
+      Route::post('update_resource_floor', [Resource_floorController::class, 'update_detail'])->name('update_resource_floor');
+      Route::post('edit_resource_floor', [Resource_floorController::class, 'edit_detail'])->name('edit_resource_floor');
+      Route::post('delete_resource_floor', [Resource_floorController::class, 'delete'])->name('delete_resource_floor');
+      Route::post('import_resource_floor', [Resource_floorController::class, 'import'])->name('import_resource_floor');
+      Route::get('load_resource_rack', [Resource_floorController::class, 'rack'])->name('load_resource_rack');
 
      // --------Resource support/type--------------------------------
      Route::resource('resource_type', Resource_typeController::class);

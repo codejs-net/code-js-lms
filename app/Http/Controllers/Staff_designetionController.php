@@ -29,13 +29,30 @@ class Staff_designetionController extends Controller
 
     public function store(Request $request)
     {
+            
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+
+        $this->validate($request,[
+            'name'.$lang=>'required|max:255|min:5',
+            ]);
+
         $form_data = array(
             'designetion_si' =>  $request->name_si,
             'designetion_ta' =>  $request->name_ta,
             'designetion_en' =>  $request->name_en, 
         );
-        designetion::create($form_data);
-        return redirect()->route('designation.index')->with('success','Details created successfully.');
+        $dta= designetion::create($form_data);
+       
+        if(request()->ajax())
+        {
+            $alldata = designetion::select('id','designetion_si AS name_si','designetion_ta AS name_ta','designetion_en AS name_en')->get();
+            return response()->json(['data' =>$alldata ,'dataid'=>$dta->id]);
+        }
+        else
+        {
+            return redirect()->route('designation.index')->with('success','Details created successfully.');
+        }
     }
     
    
