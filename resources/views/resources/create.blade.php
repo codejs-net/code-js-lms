@@ -67,7 +67,7 @@ $gender="gender".$lang;
                     </div>
                     <div class="form-group col-md-1">
                         <label for="new_category">&nbsp;</label></br>
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#create_by_modal"><i class="fa fa-plus"></i></button>
+                        <button type="button" id="btn_newcategory"  class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></button>
 
                     </div>
 
@@ -83,7 +83,7 @@ $gender="gender".$lang;
                     </div>
                     <div class="form-group col-md-1">
                         <label for="new_language">&nbsp;</label></br>
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Book Language" onclick="add_by_modal('/save_Book_language')"><i class="fa fa-plus"></i></button>
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#create_by_modal"><i class="fa fa-plus"></i></button>
                     </div>
 
                 </div>
@@ -432,44 +432,48 @@ $('#creator_form').on('submit', function(event){
 
 });
 
+
+$('#btn_newcategory').on('click', function() {
+    $("#create_by_modal").modal('show');
+});
 //--------------------------quck create-----------------------------
-// public function quick_create(formdata,route,inputselect)
-// {
-//     event.preventDefault();
-//     var op='';
-//     $.ajax
-//         ({
-//         type: "POST",
-//         dataType : 'json',
-//         url: route, 
-//         data: formdata,
-//         cache: false,
-//         processData: true,
+public function quick_create(formdata,route,inputselect)
+{
+    event.preventDefault();
+    var op='';
+    $.ajax
+        ({
+        type: "POST",
+        dataType : 'json',
+        url: route, 
+        data: formdata,
+        cache: false,
+        processData: true,
 
-//         success:function(data){
-//             toastr.info('detail created Successfully')
-//             for(var i=0;i<data.data.length;i++)
-//             {
-//                 op+='<option value="'+data.data[i].id+'">'+ 
-//                     @if($locale=="si") data.data[i].name_si
-//                     @elseif($locale=="ta") data.data[i].name_ta
-//                     @elseif($locale=="en") data.data[i].name_en
-//                     @endif +
-//                     '</option>';
-//             }
-//             $(inputselect)
-//             .empty()
-//             .append(op)
-//             .val(data.dataid);
-//             $("#creator_form").trigger("reset");
-//             $('#creator_create').modal('hide');
-//         },
-//         error:function(data){
-//             toastr.error('Creator Add faild Plese try again')
-//         }
-//     })
+        success:function(data){
+            toastr.info('detail created Successfully')
+            for(var i=0;i<data.data.length;i++)
+            {
+                op+='<option value="'+data.data[i].id+'">'+ 
+                    @if($locale=="si") data.data[i].name_si
+                    @elseif($locale=="ta") data.data[i].name_ta
+                    @elseif($locale=="en") data.data[i].name_en
+                    @endif +
+                    '</option>';
+            }
+            $(inputselect)
+            .empty()
+            .append(op)
+            .val(data.dataid);
+            $("#creator_form").trigger("reset");
+            $('#creator_create').modal('hide');
+        },
+        error:function(data){
+            toastr.error('Creator Add faild Plese try again')
+        }
+    })
 
-// }
+}
 
 </script>
 

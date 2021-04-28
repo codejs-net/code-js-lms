@@ -278,6 +278,19 @@ toastr.options = {
 
 // $.fn.select2.defaults.set( "theme", "bootstrap" );
 
+function add_by_modal(rout) {
+
+$('#addModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) 
+  var opp = button.data('opp_name') 
+  var modal = $(this)
+ 
+  document.getElementById("opp_title").innerHTML = 'Add New '+ opp;
+  document.getElementById("opp_lbl").innerHTML = opp;
+  document.getElementById("modalform").action = rout;
+})
+}
+
 </script>
 
 
