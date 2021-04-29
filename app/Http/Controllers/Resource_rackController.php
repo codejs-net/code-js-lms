@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\resource_rack;
-use App\Imports\Resource_categoryImport;
+use App\Imports\Resource_rackImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use File;
@@ -50,16 +50,13 @@ class Resource_rackController extends Controller
      */
     public function store(Request $request)
     {
-        $imageName = time().'.'.$request->image->extension();   
-        $request->image->move(public_path('images'), $imageName);
         $form_data = array(
-            'category_si' =>  $request->name_si,
-            'category_ta' =>  $request->name_ta,
-            'category_en' =>  $request->name_en, 
-            'image'       =>  $imageName,
+            'rack_si' =>  $request->name_si,
+            'rack_ta' =>  $request->name_ta,
+            'rack_en' =>  $request->name_en, 
         );
-        resource_category::create($form_data);
-        return redirect()->route('resource_catagory.index')->with('success','Details created successfully.');
+        resource_rack::create($form_data);
+        return redirect()->route('resource_rack.index')->with('success','Details created successfully.');
     }
     
     /**
@@ -93,26 +90,13 @@ class Resource_rackController extends Controller
      */
     public function update_detail(Request $request)
     {
-        $detail=resource_category::find($request->id_update);
-        $imageName =$detail->image;
-        if($request->hasFile('image_update')){
-            
-            $imageName = time().'.'.$request->image_update->extension();   
-            $request->image_update->move(public_path('images'), $imageName);
+        $detail=resource_rack::find($request->id_update);
 
-            $old_image = "images/".$detail->image;
-            if(File::exists($old_image)) {
-                File::delete($old_image);
-            }
-        }
-
-        $detail->category_si=$request->name_update_si;
-        $detail->category_ta=$request->name_update_ta;
-        $detail->category_en=$request->name_update_en;
-        // $detail->image=$request->hasFile('image_update') ? $image_name : $detail->image;
-        $detail->image=$imageName;
+        $detail->rack_si=$request->name_update_si;
+        $detail->rack_ta=$request->name_update_ta;
+        $detail->rack_en=$request->name_update_en;
         $detail->save();
-        return redirect()->route('resource_catagory.index')->with('success','Details Updated successfully.');
+        return redirect()->route('resource_rack.index')->with('success','Details Updated successfully.');
     }
     
     /**
@@ -123,15 +107,15 @@ class Resource_rackController extends Controller
      */
     public function delete(Request $request)
     {
-        $detail=resource_category::find($request->id_delete);
+        $detail=resource_rack::find($request->id_delete);
         $detail->delete();
         return redirect()->route('resource_catagory.index')->with('success','Details Removed successfully.');
     }
     public function import() 
     {
         // resource_category::query()->truncate();
-        $data=Excel::import(new Resource_categoryImport,request()->file('file'));
-        return redirect()->route('resource_catagory.index')->with('success','Details imported successfully.');
+        $data=Excel::import(new Resource_rackImport,request()->file('file'));
+        return redirect()->route('resource_rack.index')->with('success','Details imported successfully.');
     }
 
 }

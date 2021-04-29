@@ -18,7 +18,7 @@ $staff="name".$lang;
             <h5> <i class="fa fa-plus ml-1 pl-2"> Add User</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right p-2">
-            <a href="{{ route('staff_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plu"></i>&nbsp; back</a>
+            <a href="{{ route('staff_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; back</a>
         </div>
     </div>
     
