@@ -108,6 +108,7 @@ Route::group(['middleware' => ['auth']], function() {
       // --------Resource support/floor--------------------------------
       Route::resource('resource_floor', Resource_floorController::class);
       Route::post('update_resource_floor', [Resource_floorController::class, 'update_detail'])->name('update_resource_floor');
+      Route::post('show_resource_floor', [Resource_floorController::class, 'show_detail'])->name('show_resource_floor');
       Route::post('edit_resource_floor', [Resource_floorController::class, 'edit_detail'])->name('edit_resource_floor');
       Route::post('delete_resource_floor', [Resource_floorController::class, 'delete'])->name('delete_resource_floor');
       Route::post('import_resource_floor', [Resource_floorController::class, 'import'])->name('import_resource_floor');

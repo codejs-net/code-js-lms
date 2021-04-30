@@ -27,7 +27,7 @@ class Resource_rackController extends Controller
      */
     public function index()
     {
-        $details = resource_rack::orderBy('id','ASC')->paginate(5);
+        $details = resource_rack::orderBy('id','ASC')->paginate(10);
         return view('resource_support.resource_rack.index',compact('details'));
        
     }
@@ -109,7 +109,7 @@ class Resource_rackController extends Controller
     {
         $detail=resource_rack::find($request->id_delete);
         $detail->delete();
-        return redirect()->route('resource_catagory.index')->with('success','Details Removed successfully.');
+        return redirect()->route('resource_rack.index')->with('success','Details Removed successfully.');
     }
     public function import() 
     {
