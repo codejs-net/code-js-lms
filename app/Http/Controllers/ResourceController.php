@@ -21,6 +21,9 @@ use App\Models\view_resource_data_all;
 use App\Models\center_allocation;
 use App\Models\title;
 use App\Models\gender;
+use App\Models\resource_rack;
+use App\Models\resource_floor;
+use App\Models\resource_placement;
 use Session;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -133,6 +136,12 @@ class ResourceController extends Controller
         return response()->json($data);
     }
 
+    public function load_floor(Request $request)
+    {
+        $data = resource_floor::where('rack_id',$request->rack)->get();
+        return response()->json($data);
+    }
+
     public function filter_by_type($id)
     {
         //
@@ -162,6 +171,7 @@ class ResourceController extends Controller
         $typedata=resource_type::all();
         $titledata=title::all();
         $genderdata=gender::all();
+        $rackdata=resource_rack::all();
         return view('resources.create')
             ->with('cat_data',$categorydata)
             ->with('lang_data',$languagedata)
@@ -172,7 +182,8 @@ class ResourceController extends Controller
             ->with('dd_section_data',$dd_sectiondata)
             ->with('creator_data',$creatordata)
             ->with('tdata',$titledata)
-            ->with('gedata',$genderdata);
+            ->with('gedata',$genderdata)
+            ->with('rdata',$rackdata);
     }
 
     /**
@@ -220,8 +231,16 @@ class ResourceController extends Controller
         $res->status            =  "1";
         $res->br_qr_code        =  "";
         $res->image             =  "";
-
         $res->save();
+
+        if (! $request->has('check_place')) {
+            $place=new resource_placement;
+            $place->resource_id     = $res->id;
+            $place->rack_id         = $request->place_rack;
+            $place->floor_id        = $request->place_floor;
+            $place->placement_index = $request->place_index;
+            $place->save();
+        }
         return response()->json(['data' => "Success"]);
         
     }
@@ -542,5 +561,6 @@ class ResourceController extends Controller
         return view('resources.catelog');
 
     }
+
 
 }

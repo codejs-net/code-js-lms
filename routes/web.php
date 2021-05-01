@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('load_resource_dd_class', [Resource_dd_devisionController::class, 'ddclass'])->name('load_resource_dd_class');
     Route::post('load_resource_dd_devision', [Resource_dd_sectionController::class, 'dddevision'])->name('load_resource_dd_devision');
     Route::post('load_resource_type', [ResourceController::class, 'load_type'])->name('load_resource_type');
+    Route::post('load_resource_floor', [ResourceController::class, 'load_floor'])->name('load_resource_floor');
     Route::get('filter_by_type/{id}', [ResourceController::class, 'filter_by_type'])->name('filter_by_type');
     Route::get('filter_by_category', [ResourceController::class, 'filter_by_category'])->name('filter_by_category');
     Route::post('import_resource', [ResourceController::class, 'import'])->name('import_resource');

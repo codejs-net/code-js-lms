@@ -248,7 +248,8 @@ margin: 10%;
 .dash-notify{
 /* display:flex; */
 position:relative;
-margin-top: 200px;
+margin-top:200px;
+
 }
 
 .js-filter-box{

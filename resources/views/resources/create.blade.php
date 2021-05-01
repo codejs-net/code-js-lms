@@ -17,6 +17,7 @@ $dd_section="section".$lang;
 $creator="name".$lang;
 $title="title".$lang;
 $gender="gender".$lang;
+$rack="rack".$lang;
 
 @endphp
 
@@ -265,7 +266,7 @@ $gender="gender".$lang;
 
                 <hr>
                 <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="check_place">
+                    <input class="form-check-input" type="checkbox" value="" id="check_place" name="check_place">
                     <label class="form-check-label" for="check_place">Set Resource Placement Later</label>
                 </div>
                 <div class="form-row border border-secondary bg-light" id="resoure_placement_div">
@@ -274,9 +275,9 @@ $gender="gender".$lang;
                     <div class="form-group col">
                             <label for="place_rack">Rack/Coupboard</label>
                             <select class="form-control" id="place_rack" name="place_rack" value="{{old('place_rack')}}"required>
-                            <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_class_data as $item)
-                                    <option value="{{ $item->id }}">{{ $item->$dd_class}}</option>
+                            <option value="" selected disabled hidden>Choose Rack/Coupboard</option>
+                            @foreach($rdata as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$rack}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('place_rack') }}</span>
@@ -285,12 +286,14 @@ $gender="gender".$lang;
                     <!-- -------------------------------------------- -->
                     <div class="form-group col">
                             <label for="place_floor">Floor</label>
-                            <select class="form-control" id="place_floor" name="place_floor" value="{{old('place_floor')}}"required>
-                            <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_devision_data as $item)
-                                    <option value="{{ $item->id }}">{{ $item->$dd_devision}}</option>
-                                @endforeach
-                            </select>
+                            <div class="input-group">
+                                <select class="form-control" id="place_floor" name="place_floor" value="{{old('place_floor')}}"required>
+                                <option value="" selected disabled hidden>Choose Floor</option>
+                                </select>
+                                <span class="input-group-addon" id="loader_floor" style="display:none">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </span>
+                            </div>
                             <span class="text-danger">{{ $errors->first('place_floor') }}</span>
                     </div>
 
@@ -306,10 +309,10 @@ $gender="gender".$lang;
                 <hr>
 
             <div class="box-footer clearfix pull-right">
-                <button type="button" class="btn btn-md btn-warning" id="reset_resource">
+                <button type="button" class="btn btn-sm btn-secondary" id="reset_resource">
                 <i class="fa fa-times"></i> Reset</button>
                 &nbsp; &nbsp;
-                <button type="submit" class="btn btn-md btn-success" value="Save" id="save_resource" >
+                <button type="submit" class="btn btn-sm btn-success" value="Save" id="save_resource" >
                 <i class="fa fa-floppy-o"></i> Save</button>
             </div>   
             </form>
@@ -363,6 +366,7 @@ $gender="gender".$lang;
 @include('resources.create_creator_modal')
 @include('modal.create_by_modal')
 <!-- -------------------------end import---------------------------------------------------- -->
+<br>
 @endsection
 
 @section('script')
@@ -555,6 +559,50 @@ $("#check_place").change(function(){
     }
    
   });
+
+function load_floor(rack)
+{
+     var op_d="";
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('load_resource_floor')}}", 
+            data: { rack: rack, },
+            beforeSend: function(){
+                    $("#loader_floor").show();
+            },
+            success:function(data){
+                op_d+='<option value="" disabled selected>Choose Floor</option>';
+                for(var i=0;i<data.length;i++)
+                {
+                    op_d+='<option value="'+data[i].id+'">'+ 
+                        @if($locale=="si") data[i].floor_si 
+                        @elseif($locale=="ta") data[i].floor_ta 
+                        @elseif($locale=="en") data[i].floor_en
+                        @endif +
+                        '</option>';
+                }
+                $("#place_floor").empty().append(op_d);
+               
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            },
+            complete:function(data){
+                    $("#loader_floor").hide();
+            }
+        })
+        // --------------------------------------------------------
+}
+
+$("#place_rack").change(function () {
+    var r_rack=$('#place_rack').val();
+    load_floor(r_rack);
+});
 
 </script>
 

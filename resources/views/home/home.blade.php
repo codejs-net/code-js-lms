@@ -235,7 +235,7 @@ $theme = session()->get('theme');
                         <div id="MyClockDisplay" class="clock text-center" onload="showTime()"></div>
                     </div>
                    
-                    <div class="calendar mt-3">
+                    <div class="calendar mt-3 mb-3 pb-3">
                         <div class="header">
                             <a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
                             <div class="text" data-render="month-year"></div>
