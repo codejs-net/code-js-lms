@@ -142,6 +142,18 @@ class ResourceController extends Controller
         return response()->json($data);
     }
 
+    public function load_dd_devision(Request $request)
+    {
+        $data = resource_dd_division::where('dd_class_id',$request->dd_class_id)->get();
+        return response()->json($data);
+    }
+
+    public function load_dd_section(Request $request)
+    {
+        $data = resource_dd_section::where('dd_devision_id',$request->dd_devision_id)->get();
+        return response()->json($data);
+    }
+
     public function filter_by_type($id)
     {
         //
@@ -172,6 +184,12 @@ class ResourceController extends Controller
         $titledata=title::all();
         $genderdata=gender::all();
         $rackdata=resource_rack::all();
+
+        $loguser = User::where('id', Auth::user()->id)->first();
+        $centerdata = center_allocation::where('staff_id', $loguser->detail_id)
+        ->with(['staff','center'])
+        ->get();
+
         return view('resources.create')
             ->with('cat_data',$categorydata)
             ->with('lang_data',$languagedata)
@@ -183,7 +201,8 @@ class ResourceController extends Controller
             ->with('creator_data',$creatordata)
             ->with('tdata',$titledata)
             ->with('gedata',$genderdata)
-            ->with('rdata',$rackdata);
+            ->with('rdata',$rackdata)
+            ->with('center_data',$centerdata);
     }
 
     /**
@@ -205,6 +224,12 @@ class ResourceController extends Controller
         'resource_price'        =>'required',
         ]);
 
+        $imageName ="default_book.jpg";
+        if($request->hasFile('resource_image')){
+            $imageName = $request->resoure_accession.'-'.time().'.'.$request->resource_image->extension();   
+            $request->resource_image->move(public_path('images/resources'), $imageName);
+        }
+
         $res->accessionNo       =  $request->resoure_accession;
         $res->standard_number   =  $request->resoure_isn;
         $res->title_si          =  $request->resource_title_si;
@@ -217,7 +242,7 @@ class ResourceController extends Controller
         $res->dd_devision_id    =  $request->resource_dd_devision;
         $res->dd_section_id     =  $request->resource_dd_section;
         $res->ddc               =  $request->resource_ddc;
-        $res->center_id         =  1;
+        $res->center_id         =  $request->resource_center;
         $res->language_id       =  $request->resource_language;
         $res->publisher_id      =  $request->resource_publisher;
         $res->purchase_date     =  $request->resource_purchase_date;
@@ -230,7 +255,7 @@ class ResourceController extends Controller
         $res->note_en           =  $request->resource_note;
         $res->status            =  "1";
         $res->br_qr_code        =  "";
-        $res->image             =  "";
+        $res->image             =  $imageName;
         $res->save();
 
         if (! $request->has('check_place')) {
@@ -321,8 +346,7 @@ class ResourceController extends Controller
                 if(File::exists($old_image)) {
                 File::delete($old_image);
             }
-            }
-            
+            } 
         }
 
         $res->accessionNo       =  $request->resoure_accession;

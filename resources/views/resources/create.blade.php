@@ -18,6 +18,7 @@ $creator="name".$lang;
 $title="title".$lang;
 $gender="gender".$lang;
 $rack="rack".$lang;
+$center="name".$lang;
 
 @endphp
 
@@ -51,42 +52,57 @@ $rack="rack".$lang;
          <div class="col-md-12">
                 <!-- --------------------------- section 1------------------------------------- -->
     
-                <form onSubmit="return false;" name="resource_save" id="resource_save" class="needs-validation"  novalidate>
+                <form enctype="multipart/form-data"  name="resource_save" id="resource_save" class="needs-validation"  novalidate>
                 {{ csrf_field() }}
 
                 <div class="form-row border border-secondary bg-light">
-
-                    <div class="form-group col-md-5">
-                        <label for="book_category">Category</label>
-                        <select class="form-control" id="resoure_category" name="resoure_category" value="{{old('resoure_category')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
-                        @foreach($cat_data as $item)
-                                <option value="{{ $item->id }}">{{ $item->$category}}</option>
-                        @endforeach
-                        </select>
-                        <span class="text-danger">{{ $errors->first('category') }}</span>
+                    <div class="col-md-2 col-12 mt-2 pl-2">
+                        <img src="{{ asset('images/resources/default_book.jpg') }}" class="img-resource1 elevation-3" id="avater">
                     </div>
-                    <div class="form-group col-md-1">
-                        <label for="new_category">&nbsp;</label></br>
-                        <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+                    <div class="col-md-10 col-12">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="image">Resource Image</label>
+                                <div class="col-md-11 col-12"><input type="file" id="resource_image" name="resource_image" class="form-control-file bg-white p-1 elevation-1"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label for="book_category" class="">Category</label>
+                                <select class="form-control elevation-1" id="resoure_category" name="resoure_category" value="{{old('resoure_category')}}"required>
+                                <option value="" selected disabled hidden>Choose here</option>
+                                @foreach($cat_data as $item)
+                                        <option value="{{ $item->id }}">{{ $item->$category}}</option>
+                                @endforeach
+                                </select>
+                                <span class="text-danger">{{ $errors->first('category') }}</span>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="new_category">&nbsp;</label></br>
+                                <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+                            </div>
+        
+                            <div class="form-group col-md-5">
+                                <label for="language">Type &nbsp;
+                                    <span id="loader_type" style="display:none"><i class="fa fa-spinner fa-spin fa-md"></i></span>
+                                </label>
+                                <div class="input-group">
+                                    <select class="form-control elevation-1" id="resoure_type" name="resoure_type" value="{{old('resoure_type')}}"required>
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    </select>
+                                   
+                                    <span class="text-danger">{{ $errors->first('language') }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="new_language">&nbsp;</label></br>
+                                <a href="{{ route('resource_type.index') }}" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group col-md-5">
-                        <label for="language">Type</label>
-                        <select class="form-control" id="resoure_type" name="resoure_type" value="{{old('resoure_type')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
-                        @foreach($type_data as $item)
-                                <option value="{{ $item->id }}">{{ $item->$type }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger">{{ $errors->first('language') }}</span>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="new_language">&nbsp;</label></br>
-                        <a href="{{ route('resource_type.index') }}" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
-                    </div>
-
+                    
                 </div>
+
 
                 <hr>
                 <div class="form-row">
@@ -175,7 +191,7 @@ $rack="rack".$lang;
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
                             <label for="dewey_decimal">Dewey Decimal Class</label>
-                            <select class="form-control" id="resource_dd_class" name="resource_dd_class" value="{{old('resource_dd_class')}}"required>
+                            <select class="form-control" id="resource_dd_class" name="resource_dd_class" value="{{old('resource_dd_class')}}">
                             <option value="" selected disabled hidden>Choose here</option>
                             @foreach($dd_class_data as $item)
                                     <option value="{{ $item->id }}">{{ $item->$dd_class}}</option>
@@ -186,24 +202,22 @@ $rack="rack".$lang;
 
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
-                            <label for="dewey_decimal">Dewey Decimal Devision</label>
-                            <select class="form-control" id="resource_dd_devision" name="resource_dd_devision" value="{{old('resource_dd_devision')}}"required>
+                            <label for="dewey_decimal">Dewey Decimal Devision &nbsp;
+                                <span id="loader_dd_devision" style="display:none"><i class="fa fa-spinner fa-spin fa-md"></i></span>
+                            </label>
+                            <select class="form-control" id="resource_dd_devision" name="resource_dd_devision" value="{{old('resource_dd_devision')}}">
                             <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_devision_data as $item)
-                                    <option value="{{ $item->id }}">{{ $item->$dd_devision}}</option>
-                                @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
                     </div>
 
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
-                            <label for="dewey_decimal">Dewey Decimal Section</label>
-                            <select class="form-control" id="resource_dd_section" name="resource_dd_section" value="{{old('resource_dd_section')}}"required>
+                            <label for="dewey_decimal">Dewey Decimal Section &nbsp;
+                                <span id="loader_dd_section" style="display:none"><i class="fa fa-spinner fa-spin fa-md"></i></span>
+                            </label>
+                            <select class="form-control" id="resource_dd_section" name="resource_dd_section" value="{{old('resource_dd_section')}}">
                             <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_section_data as $item)
-                                    <option value="{{ $item->id }}">{{ $item->section_code}}-{{ $item->$dd_section}}</option>
-                                @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
                     </div>
@@ -257,14 +271,28 @@ $rack="rack".$lang;
                         <span class="text-danger">{{ $errors->first('phydetails') }}</span>
                     </div>
                     <!-- ------------------------ -->
-                     <div class="form-group col-md-9">
+                    <div class="form-group col-md-9">
                         <label for="note">Note</label>
-                        <textarea class="form-control" id="resource_note" name="resource_note" placeholder="Note" value="{{old('resource_note')}}" rows="3"></textarea>
+                        <textarea class="form-control mb-1" id="resource_note_si" name="resource_note_si" placeholder="Note in Sinhala" value="{{old('resource_note_si')}}" rows="1"></textarea>
+                        <textarea class="form-control mb-1" id="resource_note_ta" name="resource_note_ta" placeholder="Note in Tamil" value="{{old('resource_note_ta')}}" rows="1"></textarea>
+                        <textarea class="form-control mb-1" id="resource_note_en" name="resource_note_en" placeholder="Note in English" value="{{old('resource_note_en')}}" rows="1"></textarea>
                         <span class="text-danger">{{ $errors->first('note') }}</span>
                     </div>
                 </div>
 
                 <hr>
+                <div class="form-row border border-secondary bg-light">
+                   <div class="form-group col-md-12 col-12 p-2 mt-2">
+                    <label for="note">Resource Center:</label>
+                        <select class="form-control form-control-sm"name="resource_center" id="resource_center">
+                                @foreach($center_data as $item)
+                                    <option value="{{ $item->center_id }}">{{ $item->center->$center}}</option>
+                                @endforeach
+                        </select> 
+                    </div>
+               </div>
+               <hr>
+
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" value="" id="check_place" name="check_place">
                     <label class="form-check-label" for="check_place">Set Resource Placement Later</label>
@@ -285,14 +313,11 @@ $rack="rack".$lang;
 
                     <!-- -------------------------------------------- -->
                     <div class="form-group col">
-                            <label for="place_floor">Floor</label>
+                            <label for="place_floor">Floor &nbsp;<span id="loader_floor" style="display:none"><i class="fa fa-spinner fa-spin"></i></span></label>
                             <div class="input-group">
                                 <select class="form-control" id="place_floor" name="place_floor" value="{{old('place_floor')}}"required>
                                 <option value="" selected disabled hidden>Choose Floor</option>
                                 </select>
-                                <span class="input-group-addon" id="loader_floor" style="display:none">
-                                    <i class="fa fa-refresh fa-spin"></i>
-                                </span>
                             </div>
                             <span class="text-danger">{{ $errors->first('place_floor') }}</span>
                     </div>
@@ -418,22 +443,31 @@ $("#book_aNo").change(function(){
     });
 
 // -------------------------save resource----------------------------------
-$("#save_resource").click(function () {
-   
-   $.ajax
+$('#resource_save').on('submit', function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    $.ajax
        ({
-           type: "POST",
-           dataType : 'json',
-           url: "{{ route('resource.store') }}", 
-           data: $('#resource_save').serialize(),
+            type: "POST",
+            dataType : 'json',
+            url: "{{ route('resource.store') }}", 
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
 
            beforeSend: function(){
             //    $("#loader").show();
            },
 
            success:function(data){
-               toastr.success('Resource Created Successfully')
-               $("#resource_save").trigger("reset");
+                toastr.success('Resource Created Successfully')
+                $("#resource_save").trigger("reset");
+                $("#resource_save").removeClass( "was-validated" ).addClass( "needs-validation" );
+                $("#resource_creator").val('');
+                // $('#resource_creator option').prop('selected', function(){
+                // return this.defaultSelected;
+                // }).prop('disabled', false);
            },
            error:function(data){
                toastr.error('Resource Created faild Plese try again')
@@ -576,7 +610,7 @@ function load_floor(rack)
                     $("#loader_floor").show();
             },
             success:function(data){
-                op_d+='<option value="" disabled selected>Choose Floor</option>';
+                op_d+='<option value="" disabled selected hidden>Choose Floor</option>';
                 for(var i=0;i<data.length;i++)
                 {
                     op_d+='<option value="'+data[i].id+'">'+ 
@@ -599,9 +633,143 @@ function load_floor(rack)
         // --------------------------------------------------------
 }
 
+function load_type(cdta)
+{
+     var op_d="";
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('load_resource_type')}}", 
+            data: { cdta: cdta, },
+            beforeSend: function(){
+                    $("#loader_type").show();
+            },
+            success:function(data){
+                op_d+='<option value="" disabled selected hidden>Choose here</option>';
+                for(var i=0;i<data.length;i++)
+                {
+                    op_d+='<option value="'+data[i].id+'">'+ 
+                        @if($locale=="si") data[i].type_si 
+                        @elseif($locale=="ta") data[i].type_ta 
+                        @elseif($locale=="en") data[i].type_en
+                        @endif +
+                        '</option>';
+                }
+                $("#resoure_type").empty().append(op_d);
+               
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            },
+            complete:function(data){
+                    $("#loader_type").hide();
+            }
+        })
+        // --------------------------------------------------------
+}
+
+function load_dd_devision(dd_class_id)
+{
+     var op_d="";
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('load_dd_devision')}}", 
+            data: { dd_class_id: dd_class_id, },
+            beforeSend: function(){
+                    $("#loader_dd_devision").show();
+            },
+            success:function(data){
+                op_d+='<option value="" disabled selected hidden>Choose here</option>';
+                for(var i=0;i<data.length;i++)
+                {
+                    op_d+='<option value="'+data[i].id+'">'+ 
+                        @if($locale=="si")  data[i].devision_code+'-'+ data[i].devision_si 
+                        @elseif($locale=="ta") data[i].devision_code+'-'+data[i].devision_ta 
+                        @elseif($locale=="en") data[i].devision_code+'-'+data[i].devision_en
+                        @endif +
+                        '</option>';
+                }
+                $("#resource_dd_devision").empty().append(op_d);
+               
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            },
+            complete:function(data){
+                    $("#loader_dd_devision").hide();
+            }
+        })
+        // --------------------------------------------------------
+}
+
+function load_dd_section(dd_devision_id)
+{
+     var op_d="";
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax
+        ({
+            type: "POST",
+            dataType : 'json',
+            url: "{{route('load_dd_section')}}", 
+            data: { dd_devision_id: dd_devision_id, },
+            beforeSend: function(){
+                    $("#loader_dd_section").show();
+            },
+            success:function(data){
+                op_d+='<option value="" disabled selected hidden>Choose here</option>';
+                for(var i=0;i<data.length;i++)
+                {
+                    op_d+='<option value="'+data[i].id+'">'+ 
+                        @if($locale=="si")  data[i].section_code+'-'+ data[i].section_si 
+                        @elseif($locale=="ta") data[i].section_code+'-'+data[i].section_ta 
+                        @elseif($locale=="en") data[i].section_code+'-'+data[i].section_en
+                        @endif +
+                        '</option>';
+                }
+                $("#resource_dd_section").empty().append(op_d);
+               
+            },
+            error:function(data){
+                toastr.error('Some thing went Wrong!')
+            },
+            complete:function(data){
+                    $("#loader_dd_section").hide();
+            }
+        })
+        // --------------------------------------------------------
+}
+$("#resoure_category").change(function () {
+    var r_cat=$('#resoure_category').val();
+    load_type(r_cat);
+});
+
 $("#place_rack").change(function () {
     var r_rack=$('#place_rack').val();
     load_floor(r_rack);
+});
+
+$("#resource_dd_class").change(function () {
+    var dd_class_id=$('#resource_dd_class').val();
+    load_dd_devision(dd_class_id);
+    var op ='<option value="" disabled selected hidden>Choose here</option>';
+    $("#resource_dd_section").empty().append(op);
+
+});
+
+$("#resource_dd_devision").change(function () {
+    var dd_devision_id=$('#resource_dd_devision').val();
+    load_dd_section(dd_devision_id);
 });
 
 </script>
