@@ -345,38 +345,8 @@ $class="class".$db_locale;
 $(document).ready(function()
 {
     $('#data_show').on('show.bs.modal', function (event) {
-       
-       var button = $(event.relatedTarget) 
-       var d_id = button.data('detail_id') 
-       // -------------------------------------------
-       $.ajaxSetup({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        });
-        $.ajax
-        ({
-            type: "POST",
-            dataType : 'json',
-            url: "{{route('show_resource_type')}}", 
-            data: { d_id: d_id, },
-            success:function(data){
-                @if($locale=="si") 
-                $('#category_show').html(data.category.category_si);
-                @elseif($locale=="ta") 
-                $('#category_show').html(data.category.category_ta);
-                @elseif($locale=="en")
-                $('#category_show').html(data.category.category_en);
-                @endif
-                $('#id_show').html(data.id);
-                $('#type_show').html(data.type_si+" /"+data.type_ta+" /"+data.type_en);
-            },
-            error:function(data){
-                toastr.error('Some thing went Wrong!')
-            }
-        })
-        // -------------------------------------------
 
-       
-   });
+    });
 
     $('#data_update').on('show.bs.modal', function (event) {
        
@@ -457,7 +427,7 @@ function load_class()
     $.ajax
     ({
         type: "GET",
-        url: "{{route('load_resource_dd_class')}}", 
+        url: "{{route('load_dd_class')}}", 
         success:function(data){
             op_c+='<option value="" disabled selected>DD Class</option>';
             for(var i=0;i<data.length;i++)
@@ -491,7 +461,7 @@ function load_Devision(d_class)
         ({
             type: "POST",
             dataType : 'json',
-            url: "{{route('load_resource_dd_devision')}}", 
+            url: "{{route('load_dd_devision')}}", 
             data: { d_class: d_class, },
             success:function(data){
                 op_d+='<option value="" disabled selected>DD Devision</option>';

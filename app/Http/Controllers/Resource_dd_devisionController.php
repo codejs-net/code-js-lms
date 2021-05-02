@@ -49,18 +49,7 @@ class Resource_dd_devisionController extends Controller
        
     }
 
-    public function ddclass()
-    {
-        // error_log("ok");
-        $data=resource_dd_class::all();
-        return response()->json($data);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         

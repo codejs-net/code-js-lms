@@ -79,12 +79,17 @@ Route::group(['middleware' => ['auth']], function() {
     
     // --------Resource--------------------------------
     Route::resource('resource', ResourceController::class);
-    Route::get('load_resource_dd_class', [Resource_dd_devisionController::class, 'ddclass'])->name('load_resource_dd_class');
-    Route::post('load_resource_dd_devision', [Resource_dd_sectionController::class, 'dddevision'])->name('load_resource_dd_devision');
+    
+    Route::get('load_resource_category', [ResourceController::class, 'load_category'])->name('load_resource_category');
     Route::post('load_resource_type', [ResourceController::class, 'load_type'])->name('load_resource_type');
+
+    Route::get('load_resource_rack', [ResourceController::class, 'load_rack'])->name('load_resource_rack');
     Route::post('load_resource_floor', [ResourceController::class, 'load_floor'])->name('load_resource_floor');
+
+    Route::get('load_dd_class', [ResourceController::class, 'load_dd_class'])->name('load_dd_class');
     Route::post('load_dd_devision', [ResourceController::class, 'load_dd_devision'])->name('load_dd_devision');
     Route::post('load_dd_section', [ResourceController::class, 'load_dd_section'])->name('load_dd_section');
+
     Route::get('filter_by_type/{id}', [ResourceController::class, 'filter_by_type'])->name('filter_by_type');
     Route::get('filter_by_category', [ResourceController::class, 'filter_by_category'])->name('filter_by_category');
     Route::post('import_resource', [ResourceController::class, 'import'])->name('import_resource');

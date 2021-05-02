@@ -194,7 +194,7 @@ $center="name".$lang;
                             <select class="form-control" id="resource_dd_class" name="resource_dd_class" value="{{old('resource_dd_class')}}">
                             <option value="" selected disabled hidden>Choose here</option>
                             @foreach($dd_class_data as $item)
-                                    <option value="{{ $item->id }}">{{ $item->$dd_class}}</option>
+                                    <option value="{{ $item->id }}">{{ $item->class_code}}-{{ $item->$dd_class}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
@@ -388,9 +388,10 @@ $center="name".$lang;
         </div>
     </div>
 </div>
+
+<!-- -------------------------end import---------------------------------------------------- -->
 @include('resources.create_creator_modal')
 @include('modal.create_by_modal')
-<!-- -------------------------end import---------------------------------------------------- -->
 <br>
 @endsection
 
@@ -493,7 +494,9 @@ $('#creator_form').on('submit', function(event){
         data: $('#creator_form').serialize(),
         cache: false,
         processData: true,
-
+        beforeSend: function(){
+                    $("#loader_creator_save").show();
+        },
         success:function(data){
             toastr.info('Creator Added Successfully')
             for(var i=0;i<data.data.length;i++)
@@ -514,6 +517,9 @@ $('#creator_form').on('submit', function(event){
         },
         error:function(data){
             toastr.error('Creator Add faild Plese try again')
+        },
+        complete:function(data){
+                    $("#loader_creator_save").hide();
         }
     })
 

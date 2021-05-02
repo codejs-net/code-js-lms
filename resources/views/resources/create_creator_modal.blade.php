@@ -81,7 +81,10 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Save</button>
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i> &nbsp; Save &nbsp;
+                        <span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader_creator_save'></span>
+                    </button>
                 </div>
             </form>
            

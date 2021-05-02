@@ -38,11 +38,7 @@ use App\Models\staff;
 
 class ResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         // dd($request->dta);
@@ -127,6 +123,12 @@ class ResourceController extends Controller
         return view('resources.index')->with('cat_data',$resource_category)->with('center_data',$resource_center);
     }
 
+    public function load_category()
+    {
+        $data=resource_category::all();
+        return response()->json($data);
+    }
+
     public function load_type(Request $request)
     {
        if($request->cdta=="All")
@@ -136,9 +138,20 @@ class ResourceController extends Controller
         return response()->json($data);
     }
 
+    public function load_rack()
+    {
+        $data=resource_rack::all();
+        return response()->json($data);
+    }
     public function load_floor(Request $request)
     {
         $data = resource_floor::where('rack_id',$request->rack)->get();
+        return response()->json($data);
+    }
+
+    public function load_dd_class()
+    {
+        $data=resource_dd_class::all();
         return response()->json($data);
     }
 
@@ -163,11 +176,6 @@ class ResourceController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         // $locale = session()->get('locale');
@@ -178,9 +186,9 @@ class ResourceController extends Controller
         $publisherdata=resource_publisher::all();
         $creatordata=resource_creator::all();
         $dd_classdata=resource_dd_class::all();
-        $dd_devisiondata=resource_dd_division::all();
-        $dd_sectiondata=resource_dd_section::all();
-        $typedata=resource_type::all();
+        // $dd_devisiondata=resource_dd_division::all();
+        // $dd_sectiondata=resource_dd_section::all();
+        // $typedata=resource_type::all();
         $titledata=title::all();
         $genderdata=gender::all();
         $rackdata=resource_rack::all();
@@ -194,10 +202,7 @@ class ResourceController extends Controller
             ->with('cat_data',$categorydata)
             ->with('lang_data',$languagedata)
             ->with('pub_data',$publisherdata)
-            ->with('type_data',$typedata)
             ->with('dd_class_data',$dd_classdata)
-            ->with('dd_devision_data',$dd_devisiondata)
-            ->with('dd_section_data',$dd_sectiondata)
             ->with('creator_data',$creatordata)
             ->with('tdata',$titledata)
             ->with('gedata',$genderdata)
@@ -205,12 +210,6 @@ class ResourceController extends Controller
             ->with('center_data',$centerdata);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $locale = session()->get('locale');
@@ -250,9 +249,9 @@ class ResourceController extends Controller
         $res->price             =  $request->resource_price;
         $res->publishyear       =  $request->resource_publishyear;
         $res->phydetails        =  $request->resource_phydetails;
-        $res->note_si           =  $request->resource_note;
-        $res->note_ta           =  $request->resource_note;
-        $res->note_en           =  $request->resource_note;
+        $res->note_si           =  $request->resource_note_si;
+        $res->note_ta           =  $request->resource_note_ta;
+        $res->note_en           =  $request->resource_note_en;
         $res->status            =  "1";
         $res->br_qr_code        =  "";
         $res->image             =  $imageName;
@@ -270,57 +269,45 @@ class ResourceController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
 
         $resouredata = view_resource_data_all::find($id);
-        $categorydata=resource_category::all();
+        // $categorydata=resource_category::all();
         $languagedata=resource_language::all();
         $publisherdata=resource_publisher::all();
         $creatordata=resource_creator::all();
-        $dd_classdata=resource_dd_class::all();
-        $dd_devisiondata=resource_dd_division::all();
-        $dd_sectiondata=resource_dd_section::all();
-        $typedata=resource_type::all();
-        $centerdata=center::all();
+        // $dd_classdata=resource_dd_class::all();
+        // $dd_devisiondata=resource_dd_division::all();
+        // $dd_sectiondata=resource_dd_section::all();
+        // $typedata=resource_type::all();
+        // $rackdata=resource_rack::all();
+        $titledata=title::all();
+        $genderdata=gender::all();
+        $loguser = User::where('id', Auth::user()->id)->first();
+        $centerdata = center_allocation::where('staff_id', $loguser->detail_id)
+        ->with(['staff','center'])
+        ->get();
+
 
         return view('resources.edit')
         ->with('resouredata',$resouredata)
-        ->with('cat_data',$categorydata)
         ->with('lang_data',$languagedata)
         ->with('pub_data',$publisherdata)
-        ->with('type_data',$typedata)
-        ->with('dd_class_data',$dd_classdata)
-        ->with('dd_devision_data',$dd_devisiondata)
-        ->with('dd_section_data',$dd_sectiondata)
         ->with('creator_data',$creatordata)
+        ->with('tdata',$titledata)
+        ->with('gedata',$genderdata)
         ->with('center_data',$centerdata);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update_resource(Request $request)
     {
         $locale = session()->get('locale');
@@ -369,9 +356,9 @@ class ResourceController extends Controller
         $res->price             =  $request->resource_price;
         $res->publishyear       =  $request->resource_publishyear;
         $res->phydetails        =  $request->resource_phydetails;
-        $res->note_si           =  $request->resource_note;
-        $res->note_ta           =  $request->resource_note;
-        $res->note_en           =  $request->resource_note;
+        $res->note_si           =  $request->resource_note_si;
+        $res->note_ta           =  $request->resource_note_ta;
+        $res->note_en           =  $request->resource_note_en;
         $res->status            =  $request->status;
         $res->image             =  $imageName;
         
