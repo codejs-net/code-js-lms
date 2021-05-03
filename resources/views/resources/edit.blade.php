@@ -68,6 +68,9 @@ $center="name".$lang;
                                 <label for="book_category" class="">Category</label>
                                 <select class="form-control elevation-1" id="resoure_category" name="resoure_category" value="{{old('resoure_category')}}"required>
                                 <option value="" selected disabled hidden>Choose here</option>
+                                @foreach($cat_data as $item)
+                                    <option value="{{ $item->id }}">{{ $item->$category}}</option>
+                                @endforeach
                                 </select>
                                 <span class="text-danger">{{ $errors->first('category') }}</span>
                             </div>
@@ -187,6 +190,9 @@ $center="name".$lang;
                             <label for="dewey_decimal">Dewey Decimal Class</label>
                             <select class="form-control" id="resource_dd_class" name="resource_dd_class" value="{{old('resource_dd_class')}}">
                             <option value="" selected disabled hidden>Choose here</option>
+                            @foreach($dd_class_data as $item)
+                                <option value="{{ $item->id }}">{{ $item->class_code}}-{{ $item->$dd_class}}</option>
+                            @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
                     </div>
@@ -286,6 +292,9 @@ $center="name".$lang;
                             <label for="place_rack">Rack/Coupboard</label>
                             <select class="form-control" id="place_rack" name="place_rack" value="{{old('place_rack')}}"required>
                             <option value="" selected disabled hidden>Choose Rack/Coupboard</option>
+                            @foreach($rdata as $item)
+                                <option value="{{ $item->id }}">{{ $item->$rack}}</option>
+                            @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('place_rack') }}</span>
                     </div>
@@ -337,11 +346,11 @@ $center="name".$lang;
 
                <hr>
             <div class="box-footer clearfix pull-right">
-                <button type="button" class="btn btn-md btn-warning  elevation-2" id="reset_resource">
+                <button type="button" class="btn btn-sm btn-secondary  elevation-2" id="reset_resource">
                 <i class="fa fa-times"></i> Reset</button>
                 &nbsp; &nbsp;
-                <button type="submit" class="btn btn-md btn-success elevation-2" value="Save" id="update_resource" >
-                <i class="fa fa-floppy-o"></i> Save</button>
+                <button type="submit" class="btn btn-sm btn-success elevation-2" value="Save" id="update_resource" >
+                <i class="fa fa-floppy-o"></i> Update</button>
             </div>   
             </form>
                         
@@ -366,22 +375,27 @@ $("#book_aNo").change(function(){
 
 $(document).ready(function()
 {
-    load_category();
-    load_rack();
-    load_dd_class();
+
     $('#resoure_category').val("{{$resouredata->category_id}}");
     $('#resource_dd_class').val("{{$resouredata->dd_class_id}}");
 
     load_type($('#resoure_category').val(),false);
+
     load_dd_devision($('#resource_dd_class').val(),false);
     $('#resource_dd_devision').val("{{$resouredata->dd_devision_id}}");
     
     load_dd_section($('#resource_dd_devision').val(),false);
     $('#resource_dd_section').val("{{$resouredata->dd_section_id}}");
 
+    @if(!empty($place_data))
+    $('#place_rack').val("{{$place_data->rack_id}}");
+    load_floor($('#place_rack').val(),false);
+    $('#place_floor').val("{{$place_data->floor_id}}");
+    $('#place_index').val("{{$place_data->placement_index}}");
+    @endif
+
     $("#avater_update").attr('src','/images/resources/{{$resouredata->image}}');
     $('#resource_id').val("{{$resouredata->id}}");
-   
     $('#resoure_type').val("{{$resouredata->type_id}}");
     $('#resoure_isn').val("{{$resouredata->standard_number}}");
     $('#resoure_accession').val("{{$resouredata->accessionNo}}");

@@ -193,7 +193,7 @@ $center="name".$lang;
                             <label for="dewey_decimal">Dewey Decimal Class</label>
                             <select class="form-control" id="resource_dd_class" name="resource_dd_class" value="{{old('resource_dd_class')}}">
                             <option value="" selected disabled hidden>Choose here</option>
-                            @foreach($dd_class_data as $item)
+                                @foreach($dd_class_data as $item)
                                     <option value="{{ $item->id }}">{{ $item->class_code}}-{{ $item->$dd_class}}</option>
                                 @endforeach
                             </select>
@@ -304,7 +304,7 @@ $center="name".$lang;
                             <label for="place_rack">Rack/Coupboard</label>
                             <select class="form-control" id="place_rack" name="place_rack" value="{{old('place_rack')}}"required>
                             <option value="" selected disabled hidden>Choose Rack/Coupboard</option>
-                            @foreach($rdata as $item)
+                                @foreach($rdata as $item)
                                     <option value="{{ $item->id }}">{{ $item->$rack}}</option>
                                 @endforeach
                             </select>

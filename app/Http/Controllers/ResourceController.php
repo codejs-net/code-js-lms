@@ -186,9 +186,6 @@ class ResourceController extends Controller
         $publisherdata=resource_publisher::all();
         $creatordata=resource_creator::all();
         $dd_classdata=resource_dd_class::all();
-        // $dd_devisiondata=resource_dd_division::all();
-        // $dd_sectiondata=resource_dd_section::all();
-        // $typedata=resource_type::all();
         $titledata=title::all();
         $genderdata=gender::all();
         $rackdata=resource_rack::all();
@@ -279,32 +276,37 @@ class ResourceController extends Controller
     public function edit($id)
     {
 
-        $resouredata = view_resource_data_all::find($id);
-        // $categorydata=resource_category::all();
+        $resouredata = resource::find($id);
+        $categorydata=resource_category::all();
         $languagedata=resource_language::all();
         $publisherdata=resource_publisher::all();
         $creatordata=resource_creator::all();
-        // $dd_classdata=resource_dd_class::all();
-        // $dd_devisiondata=resource_dd_division::all();
-        // $dd_sectiondata=resource_dd_section::all();
-        // $typedata=resource_type::all();
-        // $rackdata=resource_rack::all();
+        $dd_classdata=resource_dd_class::all();
+        $rackdata=resource_rack::all();
         $titledata=title::all();
         $genderdata=gender::all();
+
         $loguser = User::where('id', Auth::user()->id)->first();
         $centerdata = center_allocation::where('staff_id', $loguser->detail_id)
         ->with(['staff','center'])
         ->get();
+        $placedata = resource_placement::where('resource_id',$id)
+        ->with(['rack','floor'])
+        ->first();
 
-
+        // dd($placedata);
         return view('resources.edit')
+        ->with('cat_data',$categorydata)
         ->with('resouredata',$resouredata)
         ->with('lang_data',$languagedata)
         ->with('pub_data',$publisherdata)
         ->with('creator_data',$creatordata)
         ->with('tdata',$titledata)
         ->with('gedata',$genderdata)
-        ->with('center_data',$centerdata);
+        ->with('center_data',$centerdata)
+        ->with('dd_class_data',$dd_classdata)
+        ->with('rdata',$rackdata)
+        ->with('place_data',$placedata);
     }
 
 
@@ -361,8 +363,20 @@ class ResourceController extends Controller
         $res->note_en           =  $request->resource_note_en;
         $res->status            =  $request->status;
         $res->image             =  $imageName;
-        
         $res->save();
+
+        if (! $request->has('check_place')) {
+            $place = resource_placement::where('resource_id',$request->resource_id)->first();
+            if(empty($place))
+            {$place=new resource_placement;}
+
+            $place->resource_id     = $request->resource_id;
+            $place->rack_id         = $request->place_rack;
+            $place->floor_id        = $request->place_floor;
+            $place->placement_index = $request->place_index;
+            $place->save();  
+        }
+
         if($res)
         { return redirect()->route('resource.index')->with("success","Resource Update Successfully");}
         else
