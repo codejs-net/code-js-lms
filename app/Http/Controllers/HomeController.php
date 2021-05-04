@@ -54,12 +54,37 @@ class HomeController extends Controller
         $return_count = lending_detail::where('return_date',$today)->count();
         $income = receipt::where('receipt_date',$today)->sum('payment');
 
+// -----------summary chart--------------------------------
+        $issue_summary= array();
+        $return_summary= array();
+        // $thismonth = Carbon::now()->month();
+        $thisyear = Carbon::now()->isoFormat('YYYY');
+        for($i=1;$i<=12;$i++)
+        {
+            $_issue = lending_detail::select('id')
+                ->whereYear('issue_date',$thisyear)
+                ->whereMonth('issue_date',$i)
+                ->count();
+            $_return = lending_detail::select('id')
+                ->where('return',1)
+                ->whereYear('return_date',$thisyear)
+                ->whereMonth('return_date',$i)
+                ->count();
+            array_push($issue_summary,$_issue);
+            array_push($return_summary,$_return);
+        }
+        $_issue_summary = implode(',',$issue_summary);
+        $_return_summary = implode(',',$return_summary);
+//----------end Summary Chart-----------------------------
+
         return view('home.home')
         ->with('rcount',$reso_count)
         ->with('mcount',$mem_count)
         ->with('rtncount',$return_count)
         ->with('issucount',$issue_count)
-        ->with('income',$income);
+        ->with('income',$income)
+        ->with('i_summary',$_issue_summary)
+        ->with('r_summary',$_return_summary);
 
         
     }

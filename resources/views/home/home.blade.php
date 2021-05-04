@@ -355,7 +355,7 @@ $(document).ready(function()
             },
             series: [{
 
-                 data: [2500, 11600, 3400, 5500, 7900, 5500, 2500, 1025, 10254, 6524,5245, 3254]
+                 data: [<?php echo $i_summary; ?>]
             }],
             stroke: {
                 width: 1,
@@ -377,7 +377,7 @@ $(document).ready(function()
                 }
             },
             title: {
-                text: 'Book return - 2021',
+                text: ' Issue- 2021',
                 align: 'center',
                 floating: true
             },
@@ -453,7 +453,7 @@ var options1 = {
             },
             series: [ {
                 name: 'Hours',
-                data: [150, 165, 30, 210, 56, 94, 120, 40, 260, 20,0, 0]
+                data: [<?php echo $r_summary; ?>]
             }],
             xaxis: {
                 type: 'category',
