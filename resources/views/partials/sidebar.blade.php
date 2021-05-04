@@ -85,7 +85,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('return.index') }}" class="nav-link">
+                                <a href="{{ route('lending.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Lending History</p>
                                 </a>

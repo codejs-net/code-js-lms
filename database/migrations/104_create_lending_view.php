@@ -48,6 +48,7 @@ class CreateLendingView extends Migration
                         members.address2_ta,
                         members.address2_en,
                         members.mobile,
+                        members.nic,
                         member_cats.category_si AS member_category_si,
                         member_cats.category_ta AS member_category_ta,
                         member_cats.category_en AS member_category_en,

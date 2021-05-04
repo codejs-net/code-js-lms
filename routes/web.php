@@ -25,6 +25,7 @@ use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\LendingController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReportController;
@@ -178,6 +179,11 @@ Route::group(['middleware' => ['auth']], function() {
 
     // --------Resource support/Donate--------------------------------
     Route::resource('resource_dd_donate', Resource_donateController::class);
+
+    //----------------------Lending----------------------------------
+    Route::resource('lending', LendingController::class);
+    Route::POST('show_lending', [LendingController::class, 'show'])->name('show_lending');
+    Route::POST('delete_lending', [LendingController::class, 'delete'])->name('delete_lending');
 
    // ----------------------Issue-------------------------------------
    Route::resource('issue', IssueController::class);
