@@ -45,7 +45,7 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-1 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>10658</h3>
+                                    <h3>{{$rcount}}</h3>
                                     <p>Total Resources</p>
                                 </div>
                                 <div class="icon">
@@ -59,7 +59,7 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-2 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>825</h3>
+                                    <h3>{{$mcount}}</h3>
                                     <p>Total members</p>
                                 </div>
                                 <div class="icon">
@@ -73,7 +73,7 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-3 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>44</h3>
+                                    <h3>{{$issucount}}</h3>
         
                                     <p>Issue-Today</p>
                                 </div>
@@ -88,7 +88,7 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-4 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>38</h3>
+                                    <h3>{{$rtncount}}</h3>
         
                                     <p>Retund-Today</p>
                                 </div>

@@ -16,6 +16,7 @@ use App\Http\Controllers\SoapController;
 use Session;
 use Carbon\Carbon;
 use Auth;
+use System;
 use App\Models\User;
 use App\Models\staff;
 
@@ -79,11 +80,11 @@ class IssueController extends Controller
         $center_array= array();
 
 
-
-        $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
-        $resource_center = center_allocation::where('staff_id', $loguser->staff_id)
+        $loguser = User::where('id', Auth::user()->id)->first();
+        $resource_center = center_allocation::where('staff_id', $loguser->detail_id)
         ->with(['center'])
         ->get();
+
         foreach($resource_center as $value)
         {
             array_push($center_array,$value->center->id);
@@ -140,8 +141,8 @@ class IssueController extends Controller
         $center_array= array();
 
        
-        $loguser = User::where('id', Auth::user()->id)->with(['staff'])->first();
-        $resource_center = center_allocation::where('staff_id', $loguser->staff_id)
+        $loguser = User::where('id', Auth::user()->id)->first();
+        $resource_center = center_allocation::where('staff_id', $loguser->detail_id)
         ->with(['center'])
         ->get();
         foreach($resource_center as $value)
@@ -228,7 +229,13 @@ class IssueController extends Controller
         } else {
             $message_text = $library_name . "\r\n" . "සාමාජික විස්තර - (" . $lend->member_id . ")" . $request->membername . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->issue_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
         }
-        $SoapController->multilang_msg_Send($mobile_no, $message_text);
+        $setting_sms_send = setting::where('setting', 'sms_issue')->first();
+        if ($setting_sms_send->value == "1") 
+        {
+            if($SoapController->is_connected()==true)
+            {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
+        } 
+        
         //-----------------------End SMS Alert----------------------
 
         return response()->json(['lend_id' => $lend->id]);
@@ -302,5 +309,19 @@ class IssueController extends Controller
         // $lending = lending::where('lending_id',$id )->first();
         $lendingdata = view_lending_data::where('lending_id', $id)->get();
         return view('receipts.issue_receipt')->with('lendingdata', $lendingdata);
+    }
+
+    public function isconnect()
+    {
+        $response = null;
+        System("ping -c 1 google.com", $response);
+        if($response == 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

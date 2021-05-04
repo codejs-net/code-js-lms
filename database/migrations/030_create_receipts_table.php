@@ -22,6 +22,9 @@ class CreateReceiptsTable extends Migration
             $table->foreign('member_id')->references('id')->on('members');
 
             $table->string('receipts')->nullable();
+            $table->string('receipt_type')->nullable();
+            $table->string('referance')->nullable();
+
             $table->double('discount', 8, 2)->nullable();
             $table->double('tax', 8, 2)->nullable();
             $table->string('Payment_methord')->nullable();

@@ -130,10 +130,10 @@ class ReturnController extends Controller
     {
         $settle=new fine_settle;
         $receiptid=$request->receipt_id;
-        if($request->settlement_type=="Payment" && $request->receipt_type=="system")
-        {
-            $receiptid= session()->get('receipt_id');
-        }
+        // if($request->settlement_type=="Payment" && $request->receipt_type=="system")
+        // {
+        //     $receiptid= session()->get('receipt_id');
+        // }
       
         $settle->lending_detail_id  =$request->lend_id;
         $settle->settlement_type    =$request->settlement_type;
@@ -146,14 +146,23 @@ class ReturnController extends Controller
         $settle->description_en     =$request->discrtpt_en;
         $settle->save();
 
+        // -----------receipt details----------------------
+        $receipt =new receipt_detail;
+        $receipt->receipt_id        =$request->receipt_id;
+        $receipt->item              =$request->accno;
+        $receipt->quentity          =1;
+        $receipt->price             =$request->fine_amount;
+        $receipt->amount            =$request->fine_amount;
+        $receipt->save();
+        // ------------------------------------------------
         $detail=lending_detail::find($request->lend_id);
 
-        if($request->methord=="1")
+        if($request->methord=="1") //settle
         {
             $detail->fine_amount    =$request->fine_amount;
             $detail->save();
         }
-        else if($request->methord=="2")
+        else if($request->methord=="2") //settle and extend
         {
 
             $detail->fine_amount    =$request->fine_amount;
@@ -178,7 +187,7 @@ class ReturnController extends Controller
             $lendd->issue_by       =  Auth::user()->id;
             $lendd->save();
         }
-        else
+        else                            //settle and return
         {
             $detail->fine_amount    =$request->fine_amount;
             $detail->return         =1;
@@ -221,8 +230,13 @@ class ReturnController extends Controller
             else{
                
             }
-         
-            $SoapController->multilang_msg_Send($mobile_no,$message_text);
+            $setting_sms_send = setting::where('setting', 'sms_return')->first();
+            if ($setting_sms_send->value == "1") 
+            {
+                if($SoapController->is_connected()==true)
+                { $SoapController->multilang_msg_Send($mobile_no,$message_text);} 
+            } 
+           
             //-----------------------End SMS Alert----------------------
 
             return response()->json(['massage' => "success",'lendid' =>$request->cellVal_lend_id]);
@@ -240,14 +254,16 @@ class ReturnController extends Controller
         $receipt->receipt_date  =$request->date_settle;
         $receipt->member_id     =$request->mem_id;
         $receipt->receipts      =$request->receipt;
-        $receipt->payment      =$request->receipt_tot_fine;
+        $receipt->receipt_type  =$request->receipt_type;
+        $receipt->referance     =$request->referance;
+        $receipt->payment       =$request->receipt_tot_fine;
         $receipt->user_id       =Auth::user()->id;
         $receipt->save();
         Session::put('receipt_id', $receipt->id);
 
         if($receipt)
         {
-            return response()->json(['massage' => "success"]);
+            return response()->json(['massage' => "success",'receipt_id' => $receipt->id]);
         }
         else
         {

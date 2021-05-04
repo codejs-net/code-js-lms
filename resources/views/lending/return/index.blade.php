@@ -579,9 +579,10 @@ $type="type".$lang;
             var receipt="fine";
             var receipt_id="";
             var methord= $("input[name='methord']:checked").val();
+            var referance= $("#receipt_no").val();
             $("#fine_receiptTable tbody").empty();
             // ==============receipt=============================
-            if(settlement_type=="Payment" && receipt_type=="system")
+            if(settlement_type=="Payment")
             {
                 $('#fineTable tbody tr').each(function(){
 
@@ -601,36 +602,37 @@ $type="type".$lang;
 
                 }).promise().done(function(){
                 
-                        if(payment_check==0){
-                            toastr.error('Plece Check the resources to settle fine');
-                        }
-                        else{
-                            //-------------------------------------------------------
-                            $.ajaxSetup({
-                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-                            });
-                            $.ajax({
-                                type: 'POST',
-                                dataType : 'json',
-                                data:{
-                                    receipt: receipt,
-                                    mem_id: mem_id,
-                                    date_settle: date_settle,
-                                    receipt_tot_fine:receipt_tot_fine
-                                    },
-                                url: "{{route('fine_receipt')}}",
-                                success: function(data){ 
-                                    if(data.massage=="success"){
-                                    toastr.success('Receipt Success');
-                                    }
+                    if(payment_check==1)
+                    {
+                        //-------------------------------------------------------
+                        $.ajaxSetup({
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            dataType : 'json',
+                            async: false,
+                            data:{
+                                receipt: receipt,
+                                receipt_type:receipt_type,
+                                mem_id: mem_id,
+                                date_settle: date_settle,
+                                receipt_tot_fine:receipt_tot_fine,
+                                referance:referance
                                 },
-                                error: function(data){
-                                    toastr.error('Receipt Error');
+                            url: "{{route('fine_receipt')}}",
+                            success: function(data){ 
+                                if(data.massage=="success"){
+                                toastr.success('Receipt Success');
+                                receipt_id=data.receipt_id;
                                 }
-                            });
-                            //---------------------------------------------------------
-                        }
-
+                            },
+                            error: function(data){
+                                toastr.error('Receipt Error');
+                            }
+                        });
+                        //---------------------------------------------------------
+                    }
                 });
                 $("#fine_receiptTable tbody").append(op);
                 $("#receipt_tot_fine").html(receipt_tot_fine);
@@ -638,8 +640,8 @@ $type="type".$lang;
                 $("#receipt_date").html(date_settle);
                 
             }
-            receipt_id= $("#receipt_no").val();
             //================end================================
+            //---------------settal fine---- receipt details-----
             $('#fineTable tbody tr').each(function(){
 
                 if($(this).find(".pay_check").prop("checked") == true)
@@ -668,6 +670,7 @@ $type="type".$lang;
                             methord:methord,
                             accno:accno,
                             receipt_id:receipt_id,
+                            referance:referance,
                             discrtpt_si:discrtpt_si,
                             discrtpt_ta:discrtpt_ta,
                             discrtpt_en:discrtpt_en
@@ -700,16 +703,20 @@ $type="type".$lang;
                         print_receiptDiv();
                         $("#settel_show").modal('hide');
                     }
-                }
-                else
-                {
-                    if(payment_check==0)
+                    else
                     {
                         toastr.error('Plece Check the resources to settle fine');
                     }
-                    else
+                }
+                else
+                {
+                    if(payment_check==1)
                     {
                         $("#settel_show").modal('hide');
+                    }
+                    else
+                    {
+                        toastr.error('Plece Check the resources to settle fine');
                     }
                 }
             });

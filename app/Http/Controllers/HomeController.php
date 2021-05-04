@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Session;
 use App\Models\library;
 use App\Models\theme;
+use App\Models\resource;
+use App\Models\member;
+use App\Models\lending_detail;
+use Carbon\Carbon;
+use system;
 use Auth;
 
 class HomeController extends Controller
@@ -39,20 +44,24 @@ class HomeController extends Controller
         {
             Session::put('locale', 'si');
         }
+        $today = Carbon::now()->isoFormat('YYYY-MM-DD');
+        // dd($today);
+        $reso_count = resource::where('status',1)->count();
+        $mem_count = member::where('status',1)->count();
+        $issue_count = lending_detail::where('issue_date',$today)->count();
+        $return_count = lending_detail::where('return_date',$today)->count();
 
-       
-        return view('home.home');
-        // $library = library::all();
-        // if ($library) {
-        //     return view('configuration.create');
-        //     //App::abort(404);
-        //   }
-        // else{
-        //     return view('home.home');
-        // }
+        return view('home.home')
+        ->with('rcount',$reso_count)
+        ->with('mcount',$mem_count)
+        ->with('rtncount',$return_count)
+        ->with('issucount',$issue_count);
+
+        
     }
 
-    
+
+ 
 
    
 }
