@@ -354,8 +354,8 @@ $(document).ready(function()
                 }
             },
             series: [{
-
-                 data: [<?php echo $i_summary; ?>]
+                name: 'Issued',
+                data: [<?php echo $i_summary; ?>]
             }],
             stroke: {
                 width: 1,
@@ -372,12 +372,12 @@ $(document).ready(function()
                     },
                 },
             yaxis: {
-                labels: {
-                    show: false
+                title: {
+                    text: 'Issued Count'
                 }
             },
             title: {
-                text: ' Issue- 2021',
+                text: 'Resource Issue-'+ new Date().getFullYear(),
                 align: 'center',
                 floating: true
             },
@@ -391,11 +391,9 @@ $(document).ready(function()
                     show: false
                 },
                 y: {
-                    title: {
-                        formatter: function() {
-                            return ''
-                        }
-                    }
+                    formatter: function (val) {
+                    return val+ " Resources"
+                    }  
                 }
             }
         }
@@ -452,7 +450,7 @@ var options1 = {
                 colors: ['#010101']
             },
             series: [ {
-                name: 'Hours',
+                name: 'Returned',
                 data: [<?php echo $r_summary; ?>]
             }],
             xaxis: {
@@ -467,11 +465,11 @@ var options1 = {
                 },
             yaxis: {
                 title: {
-                    text: 'Hours'
+                    text: 'Returned Count'
                 }
             },
             title: {
-                text: 'Book Lending -2021',
+                text: 'Resource Returned-'+ new Date().getFullYear(),
                 align: 'center',
                 floating: true
             },
@@ -482,7 +480,7 @@ var options1 = {
             tooltip: {
                 y: {
                     formatter: function (val) {
-                        return "$ " + val + " thousands"
+                        return val+ " Resources"
                     }
                 }
             }
