@@ -182,6 +182,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //----------------------Lending----------------------------------
     Route::resource('lending', LendingController::class);
+    Route::get('lending_history', [LendingController::class, 'lending_history'])->name('lending_history');
     Route::POST('show_lending', [LendingController::class, 'show'])->name('show_lending');
     Route::POST('delete_lending', [LendingController::class, 'delete'])->name('delete_lending');
 

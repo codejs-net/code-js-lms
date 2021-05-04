@@ -46,7 +46,9 @@ class HomeController extends Controller
         {
             Session::put('locale', 'si');
         }
+        $test = Carbon::hasTestNow();
         $today = Carbon::now()->isoFormat('YYYY-MM-DD');
+        
         // dd($today);
         $reso_count = resource::where('status',1)->count();
         $mem_count = member::where('status',1)->count();

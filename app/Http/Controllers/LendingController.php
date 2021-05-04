@@ -18,6 +18,10 @@ class LendingController extends Controller
 {
     public function index(Request $request)
     {
+
+    }
+    public function lending_history(Request $request)
+    {
         $locale = session()->get('locale');
         $setting = setting::where('setting','locale_db')->first();
 
@@ -47,7 +51,7 @@ class LendingController extends Controller
                            
                             $button  = '<a class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#data_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
                             $button .= '&nbsp;&nbsp;';
-                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#data_delete" data-mid="'.$data->id.'" data-mname="'.$data->accessionNo.'"><i class="fa fa-trash" ></i></a>';
+                            // $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#data_delete" data-mid="'.$data->id.'" data-mname="'.$data->accessionNo.'"><i class="fa fa-trash" ></i></a>';
                             return $button;   
                         })
 
@@ -63,7 +67,7 @@ class LendingController extends Controller
                         ->make(true);
                         
             }
-        return view('lending.index')
+        return view('lending.history')
                 ->with('today', $today);
     }
 

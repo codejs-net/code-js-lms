@@ -59,7 +59,7 @@ $address2="address2".$lang;
                     <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" value="" id="btn_filter" >
                         <i class="fa fa-filter"></i>&nbsp;Filter
                     </button>
-                    <a href="{{ route('lending.index') }}" class="btn btn-sm btn-secondary elevation-2 mx-2" id="btn_reset" >
+                    <a href="{{ route('lending_history') }}" class="btn btn-sm btn-secondary elevation-2 mx-2" id="btn_reset" >
                         <i class="fa fa-times pt-2">&nbsp;Reset</i>
                     </a>
                 </div>
@@ -155,7 +155,7 @@ $address2="address2".$lang;
 $(document).ready(function()
 {
     $("input[name=returned][value='All']").prop("checked",true);
-    var returnfilter= $("input[name='returned']").val()
+    var returnfilter= $("input[name='returned']:checked").val()
     var date_type= $('#date_type').val();
     var from_date= $('#dte_from').val();
     var to_date= $('#dte_to').val();
@@ -191,7 +191,7 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
     ajax:{
         type: "GET",
         dataType : 'json',
-        url: "{{ route('lending.index') }}",
+        url: "{{ route('lending_history') }}",
         data: { 
             returnfilter: returnfilter,
             from_date: from_date,
@@ -237,7 +237,7 @@ $("input[name='returned']").click(function(){
 
 $('#btn_filter').click(function() {
     $('#lending_datatable').DataTable().clear().destroy();
-    var returnfilter= $("input[name='returned']").val()
+    var returnfilter= $("input[name='returned']:checked").val()
     var date_type= $('#date_type').val();
     var from_date= $('#dte_from').val();
     var to_date= $('#dte_to').val();
@@ -245,17 +245,7 @@ $('#btn_filter').click(function() {
 });
 
 $('#btn_reset').click(function() {
-    // $('#lending_datatable').DataTable().clear().destroy();
-    // $("input[name=returned][value='All']").prop("checked",true);
-    // $('#date_type').val("issue_date");
-    // $('#dte_from').val(new Date().toLocaleDateString());
-    // $('#dte_to').val(new Date().toLocaleDateString());
-
-    // var returnfilter= $("input[name='returned']").val()
-    // var date_type= $('#date_type').val();
-    // var from_date= $('#dte_from').val();
-    // var to_date= $('#dte_to').val();
-    // load_datatable(returnfilter,from_date,to_date,date_type);    
+   
 });
 </script>
 
