@@ -7,6 +7,10 @@
 @section('content')
 @php
 $theme = session()->get('theme');
+$locale = session()->get('locale');
+$lang="_".$locale;
+$title="title".$lang;
+$member="member".$lang;
 @endphp
 
     <section class="content">
@@ -101,7 +105,7 @@ $theme = session()->get('theme');
                         <div class="col">
                             <div class="small-box js-box-bg-5 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>Rs 150</h3>
+                                    <h3>Rs&nbsp;{{$income}}</h3>
         
                                     <p>Income-today</p>
                                 </div>
@@ -174,36 +178,7 @@ $theme = session()->get('theme');
                             {{-- <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span> --}}
                             <span class="info-box-text">Members</span>
                         </a>
-                        <!-- 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-user-circle fa-md"></i></span>
-                            <span class="info-box-text">Member Account</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon"><i class="fas fa-cog fa-md  pt-2"></i></span>
-                            <span class="info-box-text">Setting</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-barcode fa-md pt-2"></i></span>
-                            <span class="info-box-text">Code Genarate</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-list fa-md pt-2"></i></span>
-                            <span class="info-box-text">Board of Survey</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
-                            <span class="info-box-text">Member Support</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-bars fa-md"></i></span>
-                            <span class="info-box-text">Resource Support</span>
-                        </a>  -->
+                      
                        
                     </div>
                     <div class="row mt-3 pt-4">
@@ -282,6 +257,49 @@ $theme = session()->get('theme');
 <script src="{{ asset('plugins/calendar/js/calendar.js') }}"defer></script>
 
 <script>
+$(document).ready(function()
+{
+    var op="";
+    $.ajax
+    ({
+        type: "GET",
+        url: "{{route('latast_lending')}}", 
+        async: false,
+        success:function(data){
+            for(var i=0;i<4;i++)
+            {
+                op+= '<div class="card card-notify">';
+                op+= '<div class="card-header card-notify-header1 px-2 py-1">';
+                op+= '<h5 class="card-title">'+(i+1)+'-{{trans('Latest Resource Issue') }}</h5>';
+                op+= '<div class="card-tools">';
+                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '</i></button></div></div>';
+                op+= '<div class="card-body px-2 py-1">';
+                op+= data.issue[i].accessionNo+'-'+data.issue[i].{{$title}}+'&nbsp;{{trans('Issue to') }} '+data.issue[i].{{$member}};
+                op+= '</div></div>';                  
+            }
+           for(var j=0;j<4;j++)
+           {
+                op+= '<div class="card card-notify">';
+                op+= '<div class="card-header card-notify-header1 px-2 py-1">';
+                op+= '<h5 class="card-title">'+(j+1)+'-{{trans('Latest Resource Return') }}</h5>';
+                op+= '<div class="card-tools">';
+                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '</i></button></div></div>';
+                op+= '<div class="card-body px-2 py-1">';
+                op+= data.issue[i].accessionNo+'-'+ data.return[j].{{$title}}+'&nbsp;{{trans('Return by') }} '+data.return[j].{{$member}};
+                op+= '</div></div>';               
+           }
+            
+        },
+        error:function(data){
+        }
+    })
+    $("#notificetion").append(op);
+
+});
+
+
  var options = {
             chart: {
                 height: 280,
@@ -478,35 +496,6 @@ var options1 = {
         chart1.render();
 
 
-        $(document).ready(function()
-        {
-           var op="";
-           for(var i=0;i<3;i++)
-           {
-                op+= '<div class="card card-notify">';
-                op+= '<div class="card-header card-notify-header1">';
-                op+= '<h4 class="card-title">Latest Resource Issue</h4>';
-                op+= '<div class="card-tools">';
-                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
-                op+= '</i></button></div></div>';
-                op+= '<div class="card-body">';
-                op+= 'BKPS-1524 issued to Member-1';
-                op+= '</div></div>';                  
-           }
-           for(var j=0;j<3;j++)
-           {
-                op+= '<div class="card card-notify">';
-                op+= '<div class="card-header card-notify-header2">';
-                op+= '<h4 class="card-title">latest Resource Return</h4>';
-                op+= '<div class="card-tools">';
-                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
-                op+= '</i></button></div></div>';
-                op+= '<div class="card-body">';
-                op+= 'BKPS-1524 returnd by Member-2';
-                op+= '</div></div>';                  
-           }
-           $("#notificetion").append(op);
-
-        });
+       
 </script>
 @endsection

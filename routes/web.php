@@ -52,11 +52,14 @@ Route::get('test_dt', [UserController::class, 'index1'])->name('users.index1');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
-      // --------Roles--------------------------------
+
+    // --------Home--------------------------------
+    Route::get('latast_lending', [HomeController::class, 'latast_lending'])->name('latast_lending');
+    // --------Roles--------------------------------
     Route::resource('roles', RoleController::class);
     Route::post('delete_roles', [RoleController::class, 'delete'])->name('delete_roles');
     
-     // --------User--------------------------------
+    // --------User--------------------------------
     Route::resource('users', UserController::class);
     Route::get('staff_users', [UserController::class, 'staff_users'])->name('staff_users');
     Route::get('edit_staff_users/{id}', [UserController::class, 'edit_staff_users'])->name('edit_staff_users');

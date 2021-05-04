@@ -8,7 +8,9 @@ use App\Models\library;
 use App\Models\theme;
 use App\Models\resource;
 use App\Models\member;
+use App\Models\receipt;
 use App\Models\lending_detail;
+use App\Models\view_lending_data;
 use Carbon\Carbon;
 use system;
 use Auth;
@@ -50,18 +52,34 @@ class HomeController extends Controller
         $mem_count = member::where('status',1)->count();
         $issue_count = lending_detail::where('issue_date',$today)->count();
         $return_count = lending_detail::where('return_date',$today)->count();
+        $income = receipt::where('receipt_date',$today)->sum('payment');
 
         return view('home.home')
         ->with('rcount',$reso_count)
         ->with('mcount',$mem_count)
         ->with('rtncount',$return_count)
-        ->with('issucount',$issue_count);
+        ->with('issucount',$issue_count)
+        ->with('income',$income);
 
         
     }
 
+    public function latast_lending()
+    {
+        $latast_issue = view_lending_data::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
+        ->orderBy('id', 'DESC')
+        ->offset(5)
+        ->limit(5)
+        ->get();
 
- 
+        $latast_return = view_lending_data::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
+        ->where('return',1)
+        ->orderBy('id', 'DESC')
+        ->offset(5)
+        ->limit(5)
+        ->get();
 
-   
+        return response()->json(['issue' => $latast_issue,'return' => $latast_return]);
+    }
+
 }

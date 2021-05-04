@@ -22,6 +22,11 @@
     "Mobile":"දුරකතන අං",
     "Gender":"ස්ත්‍රී පුරුෂ භාවය",
     "Status":"තත්වය",
-    "Action":"ක්‍රියාවන්"
+    "Action":"ක්‍රියාවන්",
+
+    "Issue to":"බැහැර දීම්",
+    "Return by":"ආපසු භාර දීම්",
+    "Latest Resource Issue":"අවසාන බැහැර දීම්",
+    "Latest Resource Return":"අවසාන ආපසු භාර දීම්"
 
   }

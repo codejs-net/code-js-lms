@@ -66,7 +66,8 @@ class ReturnController extends Controller
             {
                 for($i=0;$i<$lend->count();$i++)
                 {
-                    $fine_amount=0; $fine_settle="N/A";
+                    $fine_amount=0; 
+                    $fine_settle="N/A";
                     $issudate = Carbon::parse($lend[$i]['issue_date']);
                     $_issudate=Carbon::parse($lend[$i]['issue_date']);
                     $returndate=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
@@ -130,16 +131,10 @@ class ReturnController extends Controller
     {
         $settle=new fine_settle;
         $receiptid=$request->receipt_id;
-        // if($request->settlement_type=="Payment" && $request->receipt_type=="system")
-        // {
-        //     $receiptid= session()->get('receipt_id');
-        // }
       
         $settle->lending_detail_id  =$request->lend_id;
         $settle->settlement_type    =$request->settlement_type;
         $settle->settlement_date    =$request->date_settle;
-        $settle->receipt_type       =$request->receipt_type;
-
         $settle->receipt_id         =$receiptid;
         $settle->description_si     =$request->discrtpt_si;
         $settle->description_ta     =$request->discrtpt_ta;
