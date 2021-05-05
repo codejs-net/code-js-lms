@@ -431,7 +431,7 @@ $(document).ready(function()
         $.ajax
         ({
             type: "GET",
-            url: "{{route('load_resource_dd_class')}}", 
+            url: "{{route('load_dd_class')}}", 
             success:function(data){
                 for(var i=0;i<data.length;i++)
                 {

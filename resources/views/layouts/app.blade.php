@@ -225,8 +225,8 @@
 
     <!-- ======================================================================== -->
 
-    <script>
-    
+<script>
+$('#footer-year').html(new Date().getFullYear());
  //- ---------------------alert Auto Close---------------------->
 
     window.setTimeout(function() {

@@ -117,6 +117,8 @@ class PermissionSeeder extends Seeder
             ['name'=>'library_support_data-report','category'=>'report'],
             ['name'=>'receipt-report','category'=>'report'],
             ['name'=>'survey-report','category'=>'report'],
+            ['name'=>'user-report','category'=>'report'],
+            ['name'=>'log-report','category'=>'report'],
 
             ['name'=>'activity-log','category'=>'Activity log'],
 

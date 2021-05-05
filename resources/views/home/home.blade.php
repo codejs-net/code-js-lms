@@ -191,6 +191,7 @@ $member="member".$lang;
                             <!-- <hr> -->
                         </div>
                     </div>
+                    @can('dashboard')
                     <div class="row pl-4 pr-4 mb-4">
                        <div class="col-12 col-sm-12 col-md-6 p-3">
                             <div class="js-chart elevation-3">
@@ -203,6 +204,7 @@ $member="member".$lang;
                             </div>
                        </div>
                     </div>
+                    @endcan
             </div>
         
             <div class="col-12 col-sm-6 col-md-3 p-3 js-rightbar-bg">
@@ -296,7 +298,6 @@ $(document).ready(function()
         }
     })
     $("#notificetion").append(op);
-
 });
 
 

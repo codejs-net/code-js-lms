@@ -17,6 +17,10 @@
         font-size: 14px !important;
         font-weight: lighter;
     }
+    footer{
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+    }
     .form-control.is-valid,
     .was-validated .form-control:valid {
         background-image: none !important;
