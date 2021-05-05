@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\setting;
+use Illuminate\Support\Facades\DB;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
@@ -18,7 +19,41 @@ class LendingController extends Controller
 {
     public function index(Request $request)
     {
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
 
+        if($setting->value=="0")
+        {$lang="_".$locale;}
+        else
+        {$lang="_".$setting->value;}
+
+        Session::put('db_locale', $lang);
+        $today = Carbon::now()->isoFormat('YYYY-MM-DD');
+       
+        // dd($lendingdata);
+            if(request()->ajax())
+            {
+                $lendingdata = lending::select('lendings.*','members.name_si','members.name_ta','members.name_en')
+                ->whereBetween('lendings.issue_date', [$request->from_date, $request->to_date])
+                ->leftJoin('members', 'lendings.member_id', '=', 'members.id')
+                ->orderBy('lendings.updated_at', 'DESC')
+                ->get();
+
+                return datatables()->of($lendingdata)
+                        ->addIndexColumn()
+                        ->addColumn('action', function($data){
+                           
+                            $button  = '<a class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#data_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
+                            $button .= '&nbsp;&nbsp;';
+                            $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#data_delete" data-mid="'.$data->id.'" data-mname="'.$data->description.'"><i class="fa fa-trash" ></i></a>';
+                            return $button;   
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+                        
+            }
+        return view('lending.index')
+                ->with('today', $today);
     }
     public function lending_history(Request $request)
     {
@@ -69,6 +104,27 @@ class LendingController extends Controller
             }
         return view('lending.history')
                 ->with('today', $today);
+    }
+
+    public function show(Request $request)
+    {
+        $data = view_lending_data::where('lending_id',$request->lend_id)->get();
+        return response()->json($data);
+    }
+
+    public function delete(Request $request)
+    {
+        $lend=lending::find($request->delete_id);
+        $lend_detail = lending_detail::where('lending_id',$lend->id)->get();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        $lend->delete();
+        foreach ($lend_detail as $data) {
+            $data->delete();
+        }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->back()->with('success','Lending Recorde Removed successfully.');
     }
 
 }

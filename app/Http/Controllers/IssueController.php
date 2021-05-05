@@ -238,7 +238,7 @@ class IssueController extends Controller
         
         //-----------------------End SMS Alert----------------------
 
-        return response()->json(['lend_id' => $lend->id]);
+        return response()->json(['lend_id' => $lend->id,'return_date' => $returndate]);
     }
 
     public function store_issue(Request $request)

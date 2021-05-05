@@ -397,7 +397,7 @@ $creator="name".$lang;
                     var oCells = oTable.rows.item(i).cells;
                     var resourceaccno = oCells.item(1).innerHTML;
                     var resourcetitles = oCells.item(3).innerHTML;
-                    descript[i]=resourcetitles+"("+resourceaccno+")";
+                    descript[i-1]=resourcetitles+"("+resourceaccno+")";
                 }
                 var description = descript.toString();
 
@@ -424,6 +424,7 @@ $creator="name".$lang;
                         },
                         success: function(data){
                             var lendid=data.lend_id;
+                            var dtereturn=data.return_date;
                             // ---------------------lending Details save--------------
                             for (j = 1; j < rowLength; j++)
                             {
@@ -461,6 +462,7 @@ $creator="name".$lang;
                                 // --------------print--------------------------
                                 $('#print_member').html($('#member_Name').html());
                                 $('#print_issuedate').html(dteissue);
+                                $('#print_returndate').html(dtereturn);
                                 
                                 for (k = 1; k < rowLength; k++)
                                 {
