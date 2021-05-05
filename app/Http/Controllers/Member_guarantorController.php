@@ -18,6 +18,15 @@ use DataTables;
 
 class Member_guarantorController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:member_support_data-list|member_support_data-create|member_support_data-edit|member_support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:member_support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:member_support_data-edit', ['only' => ['edit_member_guarantor','update_detail']]);
+         $this->middleware('permission:member_support_data-delete', ['only' => ['delete']]);
+         $this->middleware('permission:member_support_data-import', ['only' => ['import']]);
+    }
+
     public function index()
     {
         $locale = session()->get('locale');

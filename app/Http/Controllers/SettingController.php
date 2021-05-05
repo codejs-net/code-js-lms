@@ -12,6 +12,20 @@ use Session;
 
 class SettingController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:basic_setting-list|basic_setting-edit', ['only' => ['basic_setting']]);
+         $this->middleware('permission:basic_setting-edit', ['only' => ['edit','update_basic_setting']]);
+
+         $this->middleware('permission:lms_setting-list|lms_setting-edit', ['only' => ['lms_setting']]);
+         $this->middleware('permission:lms_setting-edit', ['only' => ['update_locale','update_db_locale']]);
+
+         $this->middleware('permission:lending_setting-list|lending_setting-edit', ['only' => ['lending_setting']]);
+         $this->middleware('permission:lending_setting-edit', ['only' => ['update_lending_config','update_fine','update_period','update_limit']]);
+
+         $this->middleware('permission:notification_setting-list|notification_setting-edit', ['only' => ['notification_setting']]);
+         $this->middleware('permission:notification_setting-edit', ['only' => ['update_sms_option','update_email_option']]);
+    }
     public function lms_setting()
     {
         $theme = setting::where('setting','default_theme')->first();

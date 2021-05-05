@@ -24,7 +24,7 @@ $description="description".$lang;
         </div>  
         <div class="col-md-2 col-sm-6 text-right">
             <h5>
-            @can('data-import')
+            @can('survey-create')
                 <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#start_new_survey" ><i class="fa fa-plus" ></i>&nbsp;Create New</a>
             @endcan
             </h5>  

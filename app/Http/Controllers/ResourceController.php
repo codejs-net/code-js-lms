@@ -38,6 +38,14 @@ use App\Models\staff;
 
 class ResourceController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:resource-list|resource-create|resource-edit|resource-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:resource-create', ['only' => ['create','store']]);
+         $this->middleware('permission:resource-edit', ['only' => ['edit','update_resource']]);
+         $this->middleware('permission:resource-delete', ['only' => ['delete']]);
+         $this->middleware('permission:resource-catalogue', ['only' => ['resource_catelog','catelog_quick_search']]);
+    }
 
     public function index(Request $request)
     {

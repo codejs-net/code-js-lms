@@ -18,6 +18,14 @@ use DataTables;
 
 class CenterController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:center-list|center-create|center-edit|center-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:center-create', ['only' => ['create','store']]);
+         $this->middleware('permission:center-edit', ['only' => ['edit','update_center']]);
+         $this->middleware('permission:center-delete', ['only' => ['delete']]);
+    }
+
     public function index()
     {
         $locale = session()->get('locale');

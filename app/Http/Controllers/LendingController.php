@@ -17,6 +17,12 @@ use Auth;
 
 class LendingController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:lenging-list|lenging-delete', ['only' => ['index','lending_history','show']]);
+         $this->middleware('permission:lenging-delete', ['only' => ['delete']]);
+    }
+
     public function index(Request $request)
     {
         $locale = session()->get('locale');

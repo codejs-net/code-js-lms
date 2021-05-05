@@ -25,6 +25,15 @@ use Crypt;
 
 class SurveyController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:survey-list|survey-create|survey-edit|survey-delete', ['only' => ['index','view_survey','survey_history']]);
+         $this->middleware('permission:survey-create', ['only' => ['create','store']]);
+         $this->middleware('permission:survey-edit', ['only' => ['edit']]);
+         $this->middleware('permission:survey-delete', ['only' => ['delete']]);
+         $this->middleware('permission:survey-finalize', ['only' => ['finalize_survey']]);
+         $this->middleware('permission:survey-unfinalize', ['only' => ['unfinalize_survey']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -579,6 +588,10 @@ class SurveyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function unfinalize_survey(Request $request)
+    {
+
+    }
     public function update(Request $request, $id)
     {
         //

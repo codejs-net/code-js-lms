@@ -29,6 +29,19 @@ use App\Exports\ResourceExport;
 
 class ReportController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:resource-report', ['only' => ['resource_index']]);
+         $this->middleware('permission:member-report', ['only' => ['index']]);
+         $this->middleware('permission:satff-report', ['only' => ['index']]);
+         $this->middleware('permission:lending-report', ['only' => ['index']]);
+         $this->middleware('permission:resource_support_data-report', ['only' => ['index']]);
+         $this->middleware('permission:member_support_data-report', ['only' => ['index']]);
+         $this->middleware('permission:staff_support_data-report', ['only' => ['index']]);
+         $this->middleware('permission:library_support_data-report', ['only' => ['index']]);
+         $this->middleware('permission:receipt-report', ['only' => ['index']]);
+         $this->middleware('permission:survey-report', ['only' => ['index']]);
+    }
 
     public function resource_index()
     {

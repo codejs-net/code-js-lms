@@ -14,11 +14,11 @@ class Resource_rackController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:support_data-list|support_data-create|support_data-edit|support_data-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
-         $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
-         $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
-         $this->middleware('permission:data-import', ['only' => ['import']]);
+         $this->middleware('permission:resource_support_data-list|resource_support_data-create|resource_support_data-edit|resource_support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:resource_support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:resource_support_data-edit', ['only' => ['update_detail']]);
+         $this->middleware('permission:resource_support_data-delete', ['only' => ['delete']]);
+         $this->middleware('permission:resource_support_data-import', ['only' => ['import']]);
     }
     /**
      * Display a listing of the resource.

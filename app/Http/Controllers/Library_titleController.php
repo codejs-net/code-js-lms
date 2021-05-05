@@ -15,11 +15,11 @@ class Library_titleController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:support_data-list|support_data-create|support_data-edit|support_data-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
-         $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
-         $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
-         $this->middleware('permission:data-import', ['only' => ['import']]);
+         $this->middleware('permission:library_support_data-list|library_support_data-create|library_support_data-edit|library_support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:library_support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:library_support_data-edit', ['only' => ['update_detail']]);
+         $this->middleware('permission:library_support_data-delete', ['only' => ['delete']]);
+         $this->middleware('permission:library_support_data-import', ['only' => ['import']]);
     }
 
     public function index()

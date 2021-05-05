@@ -23,6 +23,15 @@ use DataTables;
 
 class StaffController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:staff-list|staff-create|staff-edit|staff-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:staff-create', ['only' => ['create','store']]);
+         $this->middleware('permission:staff-edit', ['only' => ['edit','update_staff']]);
+         $this->middleware('permission:staff-delete', ['only' => ['delete']]);
+         $this->middleware('permission:staff-import', ['only' => ['import']]);
+    }
+
     public function index()
     {
         $locale = session()->get('locale');

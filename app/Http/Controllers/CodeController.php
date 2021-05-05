@@ -22,8 +22,7 @@ class CodeController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:code-import|code-genarate', ['only' => ['index','import','barcoderange','barcodeview','importExportView','export','import']]);
-         $this->middleware('permission:code-genarate', ['only' => ['generateCodePDF','CodeRangepdf']]);
+         $this->middleware('permission:code-genarate|code-genarate', ['only' => ['index','import','barcoderange','barcodeview','importExportView','export','import','generateCodePDF','CodeRangepdf']]);
     }
 
     public function index(Request $request)

@@ -23,7 +23,14 @@ use DataTables;
 
 class MemberController extends Controller
 {
-    
+    function __construct()
+    {
+         $this->middleware('permission:member-list|member-create|member-edit|member-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:member-create', ['only' => ['create','store']]);
+         $this->middleware('permission:member-edit', ['only' => ['edit','update_member']]);
+         $this->middleware('permission:member-delete', ['only' => ['delete']]);
+         $this->middleware('permission:member-import', ['only' => ['import']]);
+    }
     /**
      * Display a listing of the resource.
      *

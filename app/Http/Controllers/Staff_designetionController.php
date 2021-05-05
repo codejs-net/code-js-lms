@@ -14,11 +14,11 @@ class Staff_designetionController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:support_data-list|support_data-create|support_data-edit|support_data-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
-         $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
-         $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
-         $this->middleware('permission:data-import', ['only' => ['import']]);
+         $this->middleware('permission:staff_support_data-list|staff_support_data-create|staff_support_data-edit|staff_support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:staff_support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:staff_support_data-edit', ['only' => ['update_detail']]);
+         $this->middleware('permission:staff_support_data-delete', ['only' => ['delete']]);
+         $this->middleware('permission:staff_support_data-import', ['only' => ['import']]);
     }
 
     public function index()

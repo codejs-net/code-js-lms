@@ -23,6 +23,11 @@ use Auth;
 class ReturnController extends Controller
 {
 
+    function __construct()
+    {
+         $this->middleware('permission:Lenging-return', ['only' => ['index']]);
+    }
+
     public function index()
     {
         $locale = session()->get('locale');
