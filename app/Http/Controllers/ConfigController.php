@@ -137,7 +137,11 @@ class ConfigController extends Controller
         $SoapController =new SoapController;
         $mobile_no = session()->get('mob');
         $message_text="Welcome To LMS"."\r\n"."**Admin-User**"."\r\n"."User name :".$request->uname."\r\n"."Password : ".$request->password."\r\n"."Thank you..!";
-        $msgStatus=$SoapController->Singal_msg_Send($mobile_no,$message_text);
+        
+        if($SoapController->is_connected()==true)
+        {
+            $msgStatus=$SoapController->Singal_msg_Send($mobile_no,$message_text);
+        } 
         // error_log("massage report".$msgStatus);
         //--------------------------------------
         

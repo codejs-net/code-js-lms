@@ -47,8 +47,10 @@ $rack="rack".$lang;
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h5>
+                    @can('resource_support_data-create')
                     <a class="btn btn-sm btn-outline-primary " data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
-                    @can('data-import')
+                    @endcan
+                    @can('resource_support_data-import')
                     <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
                     @endcan
                 </h5>   
@@ -70,10 +72,10 @@ $rack="rack".$lang;
                             <td>{{ $data->id }}</td>
                             <td>{{ $data->$rack }}</td>
                             <td>
-                            @can('support_data-edit')
+                            @can('resource_support_data-edit')
                             <a class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_name_si="{{ $data->rack_si }}" data-detail_name_ta="{{ $data->rack_ta }}" data-detail_name_en="{{ $data->rack_en }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
-                            @can('support_data-delete')
+                            @can('resource_support_data-delete')
                             <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$rack }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                             @endcan
                             

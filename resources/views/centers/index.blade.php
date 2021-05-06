@@ -21,8 +21,10 @@ $address2="address2".$lang;
         <div class="col-md-10 col-sm-6 text-left p-2"> 
             <h5> <i class="fa fa-search ml-4 pl-2"> Search centers</i></h5>
         </div>  
-        <div class="col-md-2 col-sm-6 text-right p-2">
+        <div class="col-md-2 col-sm-6 text-right p-2">2
+            @can('center-create')
             <a href="{{ route('create_center') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            @endcan
         </div>
     </div>
     

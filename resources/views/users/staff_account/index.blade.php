@@ -20,7 +20,9 @@ $name="name".$lang;
             <h5> <i class="fa fa-search ml-4 pl-2"> Staff User Account</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right p-2">
+            @can('user-create')
             <a href="{{ route('create_staff_users') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            @endcan
         </div>
     </div>
     
@@ -61,7 +63,9 @@ $name="name".$lang;
                 <td>
                 <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
                 <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
+                @can('user-delete')
                 <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                @endcan
                 </td>
             </tr> 
         @endforeach
@@ -86,7 +90,9 @@ $name="name".$lang;
                     <td>
                     <a class="btn btn-outline-info btn-sm" href="{{ route('show_staff_users',$user->id) }}">Show</a>
                     <a class="btn btn-outline-primary btn-sm" href="{{ route('edit_staff_users',$user->id) }}">Edit</a>
+                    @can('user-delete')
                     <a class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#data_delete" data-dataid="{{ $user->id }}" data-dataname="{{ $user->$name }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
+                    @endcan
                     </td>
                 </tr>              
             @endif

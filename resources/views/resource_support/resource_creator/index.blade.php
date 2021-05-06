@@ -49,8 +49,10 @@ $gender="gender".$lang;
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h5>
+                    @can('resource_support_data-create')
                     <a class="btn btn-sm btn-outline-primary " data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
-                    @can('data-import')
+                    @endcan
+                    @can('resource_support_data-import')
                     <a class="btn btn-sm btn-outline-primary bg-indigo " data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
                     @endcan
                 </h5>   

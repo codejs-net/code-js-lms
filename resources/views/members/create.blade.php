@@ -28,7 +28,7 @@ $gender="gender".$lang;
             <h5> <i class="fa fa-plus"> Add Member</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
-            @can('data-import')
+            @can('member-import')
             <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
             @endcan
         </div>

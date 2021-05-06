@@ -167,9 +167,23 @@ class MemberController extends Controller
 
         $SoapController =new SoapController;
         $mobile_no=$request->Mobile;
-        $message_text="Welcome To Bulathkohupitiya Public Library."."\r\n"."Member ID :".$mbr->id."\r\n"."Name : ".$request->name_si."\r\n"."Thank you..!";
+        $library = session()->get('library');
         
-        $SoapController->Singal_msg_Send($mobile_no,$message_text);
+        if ($lang == "_si") {
+            $message_text=$library->name_si." වෙත සාදරයෙන් පිළිගනිමු."."\r\n"."සාමාජික අංකය :".$mbr->id."\r\n"."නම : ".$request->name_si."\r\n"."ස්තූතියි..!";
+        } elseif ($lang == "_en") {
+            $message_text="Welcome to the.".$library->name_en."\r\n"."Member ID :".$mbr->id."\r\n"."Name : ".$request->name_en."\r\n"."Thankyou..!";
+        } else {
+            $message_text=$library->name_ta." வரவேற்கிறோம்."."\r\n"."உறுப்பினர் அடையாள :".$mbr->id."\r\n"."பெயர் : ".$request->name_ta."\r\n"."நன்றி..!";
+        }
+
+        $setting_sms_send = setting::where('setting', 'sms_member_create')->first();
+        if ($setting_sms_send->value == "1") 
+        {
+            if($SoapController->is_connected()==true)
+            {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
+        } 
+
         return response()->json(['data' => "Success"]);
         
     }

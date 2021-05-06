@@ -24,8 +24,12 @@ $address2="address2".$lang;
             <h5> <i class="fa fa-search ml-4 pl-2"> Search Members</i></h5>
         </div>  
         <div class="col-md-2 col-sm-6 text-right p-2">
+            @can('member-create')
             <a href="{{ route('create_member') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            @endcan
+            @can('member-report')
             <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#member_card_range" ><i class="fa fa-file-pdf-o" ></i>&nbsp;Member Card</a>
+            @endcan
         </div>
     </div>
     
