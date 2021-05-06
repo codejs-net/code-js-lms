@@ -77,7 +77,6 @@ class UserController extends Controller
     {
         $locale = session()->get('locale');
         $setting = setting::where('setting','locale_db')->first();
-
         if($setting->value=="0"){$lang="_".$locale;}
         else{$lang="_".$setting->value;}
         Session::put('db_locale', $lang);
@@ -112,6 +111,13 @@ class UserController extends Controller
      */
     public function store_staff_users(Request $request)
     {
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
+        if($setting->value=="0"){$lang="_".$locale;}
+        else{$lang="_".$setting->value;}
+        Session::put('db_locale', $lang);
+
+
         $_password="";
         $this->validate($request, [
             'username' => 'required|unique:users,username,',
@@ -142,6 +148,27 @@ class UserController extends Controller
         ]);
 
         $user->assignRole([$request->roles]);
+        $userdata = view_userstaff_data::where('id', $user->detail_id)->first();
+        // send sms
+        $SoapController =new SoapController;
+        $mobile_no=$userdata->mobile;
+        $library = session()->get('library');
+        
+        if ($lang == "_si") {
+            $message_text=$library->name_si."- පරිශීලක ගිණුම් විස්තර"."\r\n"."නම : ".$userdata->name_si."\r\n"."පරිශිලක නම: ".$user->username."\r\n"."විද්‍යුත් ලිපිනය : ".$user->email."\r\n"."මුරපදය : ".$request->password."\r\n";
+        } elseif ($lang == "_en") {
+            $message_text=$library->name_en."- User Account Detail"."\r\n"."Name : ".$userdata->name_en."\r\n"."User Name : ".$user->username."\r\n"."Email : ".$user->email."\r\n"."Password : ".$request->password."\r\n";
+        } else {
+            $message_text=$library->name_ta."- பயனர் கணக்கு விவரம்"."\r\n"."பெயர் : ".$userdata->name_ta."\r\n"."பயனர் பெயர் : ".$user->username."\r\n"."மின்னஞ்சல் : ".$user->email."\r\n"."கடவுச்சொல் : ".$request->password."\r\n";
+        }
+
+        $setting_sms_send = setting::where('setting', 'sms_user_create')->first();
+        if ($setting_sms_send->value == "1") 
+        {
+            if($SoapController->is_connected()==true)
+            {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
+        } 
+        //end sms
     
         return redirect()->route('staff_users')
                         ->with('success','User created successfully');
@@ -233,6 +260,7 @@ class UserController extends Controller
      */
     public function create_member_users()
     {
+        
         // $roles = Role::pluck('name','name')->all();
         $roles=Role::all();
         $memberdata=member::all();
@@ -247,6 +275,13 @@ class UserController extends Controller
      */
     public function store_member_users(Request $request)
     {
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
+        if($setting->value=="0"){$lang="_".$locale;}
+        else{$lang="_".$setting->value;}
+        Session::put('db_locale', $lang);
+
+
         $_password="";
         $this->validate($request, [
             'username' => 'required|unique:users,username,',
