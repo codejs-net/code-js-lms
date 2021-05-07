@@ -20,10 +20,10 @@ $address2="address2".$lang;
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 text-left p-2"> 
-            <h5> <i class="fa fa-search  pl-2"> Lending History</i></h5>
+        <div class="col-md-1 text-left p-2"> 
+            <h5> <i class="fa fa-search  pl-2">&nbsp;History</i></h5>
         </div>  
-        <div class="col-md-10 text-right">
+        <div class="col-md-11 text-right">
             <form class="needs-validation" novalidate id="filter_form">
                 {{ csrf_field() }}
                 <div class="input-group mb-3">
@@ -36,6 +36,10 @@ $address2="address2".$lang;
                         <div class="form-check form-check-inline text-info" >
                             <label class="form-check-label"><i class="fa fa-times"></i> &nbsp;Not Returned&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="returned" value="0" required>|
+                        </div>
+                        <div class="form-check form-check-inline text-danger" >
+                            <label class="form-check-label"><i class="fa fa-times"></i> &nbsp;Late&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="returned" value="Late" required>|
                         </div>
                         <div class="form-check form-check-inline text-success" >
                             <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp; All&nbsp;</label>
@@ -231,7 +235,7 @@ $("input[name='returned']").click(function(){
     var returnfilter=$(this).val();
     $('#lending_datatable').DataTable().clear().destroy();
     
-    if(returnfilter=="0"){
+    if(returnfilter=="0" || returnfilter=="Late"){
         $( "#date_type").val("issue_date");
         $( "#date_type").prop( "disabled", true );
     }
@@ -257,9 +261,11 @@ $('#btn_reset').click(function() {
    
 });
 
-$("#lending_datatable").on('click', '.remainder', function () {
+$("#lending_datatable").on('click', '.remainder', function (event) {
     var lend_detail_id =  $(this).closest('tr').find(".lend_id").html();
     var to_be_return =  $(this).closest('tr').find(".to_be_return").html();
+    $(this).find(".loader_before").hide();
+    $(this).find(".loader_after").show();
     $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -275,6 +281,8 @@ $("#lending_datatable").on('click', '.remainder', function () {
         },
 
         beforeSend: function(){
+            
+            
         },
 
         success:function(data){
@@ -284,10 +292,11 @@ $("#lending_datatable").on('click', '.remainder', function () {
         toastr.error('Remainder Massage Falid Send Plese Try again');
         },
         complete:function(data){
-
+            $(this).find(".loader_before").show();
+            $(this).find(".loader_after").hide();
         }
     })
-
+    
 });
 
 </script>

@@ -81,14 +81,51 @@ class LendingController extends Controller
             if(request()->ajax())
             {
                 $_return="";
-                if($request->returnfilter=="All"){$_return="%";}
-                else{$_return= $request->returnfilter;}
+                if($request->returnfilter=="All")
+                {
+                    $_return="%";
+                    $lendingdata = view_lending_data_all::select('*')
+                    ->where('return','LIKE',$_return)
+                    ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->orderBy('updated_at', 'DESC')
+                    ->get();
+                }
+                elseif($request->returnfilter=="Late")
+                {
+                    $_return=0;
+                    $lendingdata=array();
+                    $_lendingdata = view_lending_data_all::select('*')
+                    ->where('return','LIKE',$_return)
+                    ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->orderBy('updated_at', 'DESC')
+                    ->get();
+                    // ------------------------
+                    $today = Carbon::now();
+                    foreach( $_lendingdata as $item)
+                    {
+                        $lending_period = $item->lending_period;
+                        $issudate = Carbon::parse($item->issue_date);
+                        $diff =  $today->diffInDays($issudate);
 
-                $lendingdata = view_lending_data_all::select('*')
-                ->where('return','LIKE',$_return)
-                ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
-                ->orderBy('updated_at', 'DESC')
-                ->get();
+                        if($diff>$lending_period)
+                        {
+                            array_push($lendingdata,$item);
+                        }
+                    }
+                    // ------------------------
+
+                }
+                else
+                {
+                    $_return= $request->returnfilter;
+                    $lendingdata = view_lending_data_all::select('*')
+                    ->where('return','LIKE',$_return)
+                    ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->orderBy('updated_at', 'DESC')
+                    ->get();
+                }
+
+               
 
                 return datatables()->of($lendingdata)
                         ->addIndexColumn()
@@ -144,7 +181,7 @@ class LendingController extends Controller
                             if($diff>$lending_period && $data->return==0)
                             {
                                 $button  = '<a class="btn btn-sm btn-outline-success mx-1" data-toggle="modal" data-target="#data_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
-                                $button .= '<button class="btn btn-sm btn-outline-danger remainder"><i class="fa fa-commenting-o" ></i></button>';
+                                $button .= '<button class="btn btn-sm btn-outline-danger remainder"><i class="fa fa-commenting-o loader_before" ></i><i class="fa fa-spin fa-circle-o-notch loader_after" style="display:none;"></i></</button>';
                             }
                             else
                             {
@@ -195,6 +232,7 @@ class LendingController extends Controller
         $member="member". $lang;
         $lib_name = "name" . $lang;
         $title = "title" . $lang;
+        $reminder = "reminder_msg" . $lang;
         $data = view_lending_data::where('id',$request->lend_detail_id)->first();
 
         //-------------------SMS Alert-----------------------------
@@ -205,20 +243,14 @@ class LendingController extends Controller
         $lend_member = $data->$member;
         $lend_title = $data->$title;
 
-        if ($lang == "_si") {
-            $reminder_msg="";
-        } elseif ($lang == "_en") {
-            $reminder_msg="";
-        } else {
-            $reminder_msg="";
-        }
+        $reminder_msg = setting::where('setting',$reminder)->first();
         
         $library = session()->get('library');
         if (!empty($library)) {
             $library_name = $library->$lib_name;
         }
        
-        $message_text = $library_name ."-".trans('Reminder')."\r\n \r\n".trans('Member Detail')."-". $lend_member ."(". $data->member_id .")". "\r\n" .trans('Lending Detail')."-". $lend_title. "\r\n" .trans('Issue Date')."-" .$issudate. "\r\n" .trans('To Be Return') ."-". $to_be_return ."\r\n".$reminder_msg;
+        $message_text = $library_name ."-".trans('Reminder')."\r\n \r\n".trans('Member Detail')."-". $lend_member ."(". $data->member_id .")". "\r\n" .trans('Lending Detail')."-". $lend_title. "\r\n" .trans('Issue Date')."-" .$issudate. "\r\n" .trans('To Be Return') ."-". $to_be_return ."\r\n".$reminder_msg->value;
         if($SoapController->is_connected()==true)
         {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
         

@@ -105,6 +105,24 @@ class SettingSeeder extends Seeder
         'category'=>'6',
         'value'=>'js-blue-dark',
         'detail'=>'Defalut Active Theme'
+        ],
+        [  
+        'setting'=>'reminder_msg_si',
+        'category'=>'7',
+        'value'=>'බැහැර දුන් කාළසීමාව අවසන් වී ඇත, කරුණාකර පුස්ථකාල සම්පත් නැවත භාර දීමට කටයුතු කරන්න. ස්තූතියි!',
+        'detail'=>'Reminder massage for sms and email'
+        ],
+        [  
+        'setting'=>'reminder_msg_ta',
+        'category'=>'7',
+        'value'=>'',
+        'detail'=>'Reminder massage for sms and email'
+        ],
+        [  
+        'setting'=>'reminder_msg_en',
+        'category'=>'7',
+        'value'=>'lending Periode end Plese Return Resources. Thank you!',
+        'detail'=>'Reminder massage for sms and email'
         ]
        
     ];
