@@ -85,8 +85,10 @@ $address2="address2".$lang;
                             <th scope="col" style="width: 15%">Member</th>
                             <th scope="col">NIC</th>
                             <th scope="col">Issue Date</th>
+                            <th scope="col">To Be Return</th>
                             <th scope="col">Return</th>
-                            <th scope="col">Return Date</th>
+                            <th scope="col">Returned Date</th>
+                            <th scope="col">Fine</th>
                             <th scope="col"style="width: 10%">Action</th>
                         </tr>
                     </thead>
@@ -210,10 +212,18 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
         {data: "nic",name: "nic",orderable: true},
         // {data: "mobile",name: "mobile",orderable: false},
         {data: "issue_date",name: "issue_date"},
-        {data: "return",name: "return"},
+        {data: "to_be_return",name: "to_be_return"},
+        {data: "returned",name: "returned"},
         {data: "return_date",name: "return_date"},
+        {data: "fine",name: "fine"},
         {data: "action",name: "action",orderable: false}
     ],
+    "createdRow": function( row, data, dataIndex ) {
+            if(data['fine'] != 0.00 && data['return'] == 0 ) 
+            {        
+                $('td', row).addClass('font-weight-bold text-red');
+            }
+        }
    
     });
 }

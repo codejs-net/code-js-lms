@@ -10,6 +10,7 @@ use App\Models\lending_detail;
 use App\Models\lending;
 use App\Models\lending_config;
 use App\Models\view_lending_data;
+use App\Models\view_lending_data_all;
 use App\Models\member;
 use Session;
 use Carbon\Carbon;
@@ -73,6 +74,8 @@ class LendingController extends Controller
 
         Session::put('db_locale', $lang);
         $today = Carbon::now()->isoFormat('YYYY-MM-DD');
+        $fine_rate = setting::where('setting','fine_rate')->first();
+        Session::put('fine_rate', $fine_rate->value);
 
             if(request()->ajax())
             {
@@ -80,7 +83,7 @@ class LendingController extends Controller
                 if($request->returnfilter=="All"){$_return="%";}
                 else{$_return= $request->returnfilter;}
 
-                $lendingdata = view_lending_data::select('*')
+                $lendingdata = view_lending_data_all::select('*')
                 ->where('return','LIKE',$_return)
                 ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
                 ->orderBy('updated_at', 'DESC')
@@ -88,23 +91,59 @@ class LendingController extends Controller
 
                 return datatables()->of($lendingdata)
                         ->addIndexColumn()
-                        ->addColumn('action', function($data){
+        
+                        ->addColumn('to_be_return', function ($data) {
+                            $lending_period = $data->lending_period;
+                            $issudate = Carbon::parse($data->issue_date);
+                            $to_be_return=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
+                            return $to_be_return;  
                            
-                            $button  = '<a class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#data_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
-                            $button .= '&nbsp;&nbsp;';
-                            // $button .= '<a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#data_delete" data-mid="'.$data->id.'" data-mname="'.$data->accessionNo.'"><i class="fa fa-trash" ></i></a>';
+                        })
+
+                        ->addColumn('returned', function ($data) {
+                            if($data->return==1)
+                            {$button = '<label class="text-success"><i class="fa fa-check" ></i></label>';}
+                            else
+                            {$button = '<label class="text-dark"><i class="fa fa-minus" ></i></label>';}
+                            return $button;  
+                        })
+                        ->addColumn('fine', function ($data) {
+                            $today = Carbon::now();
+                            $fine_rate = session()->get('fine_rate');
+                            $lending_period = $data->lending_period;
+                            $issudate = Carbon::parse($data->issue_date);
+                            $diff =  $today->diffInDays($issudate);
+
+                            if($diff>$lending_period && $data->return==0)
+                            {
+                                $fine_amount=number_format($fine_rate* ($diff-$lending_period),2);
+                            }
+                            else
+                            {
+                                $fine_amount=number_format($data->fine_amount,2);
+                            }
+
+                            return $fine_amount;  
+                        })
+                        ->addColumn('action', function($data){
+                            $today = Carbon::now();
+                            $lending_period = $data->lending_period;
+                            $issudate = Carbon::parse($data->issue_date);
+                            $diff =  $today->diffInDays($issudate);
+
+                            if($diff>$lending_period && $data->return==0)
+                            {
+                                $button  = '<a class="btn btn-sm btn-outline-success mx-1" data-toggle="modal" data-target="#data_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
+                                $button .= '<a href="" class="btn btn-sm btn-outline-danger"><i class="fa fa-commenting-o" ></i></a>';
+                            }
+                            else
+                            {
+                                $button  = '<a class="btn btn-sm btn-outline-success mx-1" data-toggle="modal" data-target="#data_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
+                            }
                             return $button;   
                         })
 
-                        ->addColumn('return', function ($data) {
-                            if($data->return==1)
-                            {$button = '<label class="btn btn-success btn-sm"><i class="fa fa-check" ></i></label>';}
-                            else
-                            {$button = '<label class="btn btn-default btn-sm"><i class="fa fa-minus" ></i></label>';}
-                            return $button;  
-                        })
-
-                        ->rawColumns(['action','return'])
+                        ->rawColumns(['to_be_return','returned','fine','action'])
                         ->make(true);
                         
             }
