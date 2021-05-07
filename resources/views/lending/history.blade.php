@@ -79,7 +79,7 @@ $address2="address2".$lang;
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="lending_datatable">
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
-                            <th scope="col">Lending ID</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Accession No</th>
                             <th scope="col" style="width: 15%">Title</th>
                             <th scope="col" style="width: 15%">Member</th>
@@ -179,11 +179,11 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
 {
 
     $('#lending_datatable').DataTable({
-        columnDefs: [
-        {"targets": [0],
-        "visible": false,
-        "searchable": false},
-        ],
+        // columnDefs: [
+        // {"targets": [0],
+        // "visible": false,
+        // "searchable": false},
+        // ],
         responsive: true,
         processing: true,
         serverSide: false,
@@ -204,7 +204,7 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
     // pageLength: 15,
     
     columns:[
-        {data: "id",name: "lendingid",orderable: true},
+        {data: "id",name: "lendingid" ,"sClass": "lend_id",orderable: true},
         {data: "accessionNo",name: "AccessionNo",orderable: true},
         // {data: "standard_number",name: "standard_number",orderable: true},
         {data: "title<?php echo $lang; ?>",name: "title"},
@@ -212,9 +212,9 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
         {data: "nic",name: "nic",orderable: true},
         // {data: "mobile",name: "mobile",orderable: false},
         {data: "issue_date",name: "issue_date"},
-        {data: "to_be_return",name: "to_be_return"},
+        {data: "to_be_return",name: "to_be_return","sClass": "to_be_return"},
         {data: "returned",name: "returned"},
-        {data: "return_date",name: "return_date"},
+        {data: "returned_date",name: "returned_date"},
         {data: "fine",name: "fine"},
         {data: "action",name: "action",orderable: false}
     ],
@@ -224,7 +224,6 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
                 $('td', row).addClass('font-weight-bold text-red');
             }
         }
-   
     });
 }
 
@@ -257,6 +256,40 @@ $('#btn_filter').click(function() {
 $('#btn_reset').click(function() {
    
 });
+
+$("#lending_datatable").on('click', '.remainder', function () {
+    var lend_detail_id =  $(this).closest('tr').find(".lend_id").html();
+    var to_be_return =  $(this).closest('tr').find(".to_be_return").html();
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: "GET",
+        dataType : 'json',
+        url: "{{ route('lending_remainder') }}", 
+        data: { 
+            lend_detail_id: lend_detail_id,
+            to_be_return:to_be_return,
+        },
+
+        beforeSend: function(){
+        },
+
+        success:function(data){
+        toastr.success('Remainder Massage Send Successfully');
+        },
+        error:function(data){
+        toastr.error('Remainder Massage Falid Send Plese Try again');
+        },
+        complete:function(data){
+
+        }
+    })
+
+});
+
 </script>
 
 @endsection

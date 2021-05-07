@@ -185,6 +185,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('lending_history', [LendingController::class, 'lending_history'])->name('lending_history');
     Route::POST('show_lending', [LendingController::class, 'show'])->name('show_lending');
     Route::POST('delete_lending', [LendingController::class, 'delete'])->name('delete_lending');
+    Route::get('lending_remainder', [LendingController::class, 'lending_remainder'])->name('lending_remainder');
 
    // ----------------------Issue-------------------------------------
    Route::resource('issue', IssueController::class);
@@ -192,7 +193,7 @@ Route::group(['middleware' => ['auth']], function() {
    Route::post('resource_view', [IssueController::class, 'resourceview'])->name('resource_view');
    Route::post('select_resource_view', [IssueController::class, 'select_resource_view'])->name('select_resource_view');
    Route::post('store_issue', [IssueController::class, 'store_issue'])->name('store_issue');
-   Route::get('/issue_riceipt/{id}', [IssueController::class, 'issue_receipt'])->name('issue_riceipt');
+   Route::get('issue_riceipt/{id}', [IssueController::class, 'issue_receipt'])->name('issue_riceipt');
 
    // ----------------------Return-------------------------------------
    Route::resource('return', ReturnController::class);
@@ -201,7 +202,7 @@ Route::group(['middleware' => ['auth']], function() {
    Route::post('store_return', [ReturnController::class, 'store_return'])->name('store_return');
    Route::post('settle_fine', [ReturnController::class, 'settle_fine'])->name('settle_fine');
    Route::post('fine_receipt', [ReturnController::class, 'fine_receipt'])->name('fine_receipt');
-   Route::get('/return_riceipt/{id}', [ReturnController::class, 'return_riceipt'])->name('return_riceipt');
+   Route::get('return_riceipt/{id}', [ReturnController::class, 'return_riceipt'])->name('return_riceipt');
 
     // --------Code--------------------------------
     Route::resource('codes', CodeController::class);

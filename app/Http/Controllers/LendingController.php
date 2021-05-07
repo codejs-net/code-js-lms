@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\setting;
+use App\Http\Controllers\SoapController;
 use Illuminate\Support\Facades\DB;
+use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
 use App\Models\lending;
@@ -107,6 +108,15 @@ class LendingController extends Controller
                             {$button = '<label class="text-dark"><i class="fa fa-minus" ></i></label>';}
                             return $button;  
                         })
+
+                        ->addColumn('returned_date', function ($data) {
+                            if($data->return==1)
+                            {$returned_date=$data->return_date;}
+                            else
+                            {$returned_date= trans('N/A');}
+                            return $returned_date;  
+                        })
+
                         ->addColumn('fine', function ($data) {
                             $today = Carbon::now();
                             $fine_rate = session()->get('fine_rate');
@@ -134,7 +144,7 @@ class LendingController extends Controller
                             if($diff>$lending_period && $data->return==0)
                             {
                                 $button  = '<a class="btn btn-sm btn-outline-success mx-1" data-toggle="modal" data-target="#data_show" data-mid="'.$data->id.'"><i class="fa fa-eye" ></i></a>';
-                                $button .= '<a href="" class="btn btn-sm btn-outline-danger"><i class="fa fa-commenting-o" ></i></a>';
+                                $button .= '<button class="btn btn-sm btn-outline-danger remainder"><i class="fa fa-commenting-o" ></i></button>';
                             }
                             else
                             {
@@ -143,7 +153,7 @@ class LendingController extends Controller
                             return $button;   
                         })
 
-                        ->rawColumns(['to_be_return','returned','fine','action'])
+                        ->rawColumns(['to_be_return','returned','returned_date','fine','action'])
                         ->make(true);
                         
             }
@@ -170,6 +180,51 @@ class LendingController extends Controller
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         return redirect()->back()->with('success','Lending Recorde Removed successfully.');
+    }
+
+    public function lending_remainder(Request $request)
+    {
+        $locale = session()->get('locale');
+        $setting = setting::where('setting','locale_db')->first();
+
+        if($setting->value=="0")
+        {$lang="_".$locale;}
+        else
+        {$lang="_".$setting->value;}
+
+        $member="member". $lang;
+        $lib_name = "name" . $lang;
+        $title = "title" . $lang;
+        $data = view_lending_data::where('id',$request->lend_detail_id)->first();
+
+        //-------------------SMS Alert-----------------------------
+        $SoapController = new SoapController;
+        $mobile_no = $data->mobile;
+        $issudate = $data->issue_date;
+        $to_be_return = $request->to_be_return;
+        $lend_member = $data->$member;
+        $lend_title = $data->$title;
+
+        if ($lang == "_si") {
+            $reminder_msg="";
+        } elseif ($lang == "_en") {
+            $reminder_msg="";
+        } else {
+            $reminder_msg="";
+        }
+        
+        $library = session()->get('library');
+        if (!empty($library)) {
+            $library_name = $library->$lib_name;
+        }
+       
+        $message_text = $library_name ."-".trans('Reminder')."\r\n \r\n".trans('Member Detail')."-". $lend_member ."(". $data->member_id .")". "\r\n" .trans('Lending Detail')."-". $lend_title. "\r\n" .trans('Issue Date')."-" .$issudate. "\r\n" .trans('To Be Return') ."-". $to_be_return ."\r\n".$reminder_msg;
+        if($SoapController->is_connected()==true)
+        {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
+        
+        //-----------------------End SMS Alert----------------------
+
+        return response()->json(['massage' => "success"]);
     }
 
 }
