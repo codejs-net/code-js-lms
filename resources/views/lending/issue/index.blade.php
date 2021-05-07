@@ -40,92 +40,78 @@ $creator="name".$lang;
 </div>
 
 <div class="container-fluid">
-    <div class="card card-body">
+    <input type="hidden" name="member_Name_id"id="member_Name_id">
+    <input type="hidden" name="member_Name_sms"id="member_Name_sms">
+    <input type="hidden" name="member_mobile"id="member_mobile">
+    <input type="hidden" name="db_count"id="db_count">
+    <input type="hidden" name="lending_limit" id="lending_limit">
+    <div class="main-content">
         <div class="row">
-        <input type="hidden" name="member_Name_id"id="member_Name_id">
-        <input type="hidden" name="member_Name_sms"id="member_Name_sms">
-        <input type="hidden" name="member_mobile"id="member_mobile">
-        <input type="hidden" name="db_count"id="db_count">
-        <input type="hidden" name="lending_limit" id="lending_limit">
-
-            <div class="col-md-3 col-sm-12 text-left mt-1">
+            <div class="col-md-3 col-sm-12 text-left mt-1 p-3  js-rightbar-bg">
               <div class="input-group">
                   <div class="input-group-prepend">
-                     <span class="input-group-addon"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
+                     <span class="input-group-addon elevation-1"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-success" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
+                    <input type="text" class="form-control elevation-1" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
+                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
                 </div>  
             </div>
 
-             <div class="col-md-5 col-sm-12 text-left mt-1">
+             <div class="col-md-6 col-sm-12 text-left p-3 mt-1 bg-white">
               <div class="input-group">
                   <div class="input-group-prepend">
-                     <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
+                     <span class="input-group-addon elevation-1"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fas fa-cart-plus"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-success" id="addbarrow_serch"><i class="fa fa-search"></i></button>
+                    <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
+                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fas fa-cart-plus"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
             </div>
-             <div class="col-md-1 col-sm-12">
-             </div>
-            <div class="col-md-3 col-sm-12 text-right mt-1">
-                <div class="input-group pull-right">
+            <div class="col-md-3 col-sm-12 text-right mt-1 p-3 bg-white">
+                <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-addon"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
+                        <span class="input-group-addon elevation-1"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
                     </div>
                     @if(auth()->user()->can('date-change'))
-                    <input type="date" class="form-control" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1">
+                    <input type="date" class="form-control elevation-1" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1">
                     @else
-                    <input type="date" class="form-control" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1"disabled>
+                    <input type="date" class="form-control elevation-1" name="issuedte" id="issuedte" value="{{$issuedate}}" aria-describedby="basic-addon1"disabled>
                     @endif
-                    
                 </div>
             </div>
-
         </div>
-
-        <div class="row text-center mt-4">
-            <div class="col-md-12">
-                <!-- small box -->
-                    <div class="card card-name-1" style="height:2.5rem;">
-                        <div class="text-center ">
-                        <span><i class="fa fa-user-circle-o">&nbsp;
-                            <span id="member_Name"class="text-indigo font-weight-bold"></span>
-                            <!-- <span id="member_show_id"class="font-weight-bold badge badge-info"></span> -->
-                        </i></span>
-                        
-                        </div>
-                    </div>
-
-            </div>
-        </div>
-
-            <div class="form-row ">
-            <div class="table-responsive"style="overflow-x: auto;"> 
-                <table class="table table-hover" id="resourceTable">
-                <thead class="thead-light">
-                    <tr>
-                    <th scope="col" class="td_id">ID</th>
-                    <th scope="col">Accession No</th>
-                    <th scope="col">ISBN/ISSN</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Creator</th>
-                    <!-- <th scope="col">Category</th> -->
-                    <th scope="col">Type</th>
-                    <th scope="col">&nbsp;</th>
-                    </tr>    
-                </thead>
-
-                    <tbody class="tbody_data" id="resourcedata">
-                           
-                    </tbody>
-                </table>
+        <div class="row">
+            <div class="col-md-3 col-3 p-3 js-rightbar-bg">
+                <div class="text-center ">
+                    <span>
+                        {{-- <i class="fa fa-user-circle-o">&nbsp;</i> --}}
+                        <span id="member_Name"class="text-indigo font-weight-bold"></span>
+                        <span id="member_lend"class="font-weight-bold"></span>
+                    </span>
                 </div>
             </div>
+            <div class="col-md-9 col-9 p-3 bg-white">
+                <div class="table-responsive"style="overflow-x: auto;"> 
+                    <table class="table" id="resourceTable">
+                        <thead class="js-tbl-header">
+                            <tr>
+                            <th scope="col" class="td_id">ID</th>
+                            <th scope="col">Accession No</th>
+                            <th scope="col">ISBN/ISSN</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Creator</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">&nbsp;</th>
+                            </tr>    
+                        </thead>
+                        <tbody class="tbody_data" id="resourcedata">       
+                        </tbody>
 
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <hr>
     <div class="input-group box-footer clearfix pull-right">
@@ -133,10 +119,10 @@ $creator="name".$lang;
             <input class="form-check-input" type="checkbox" value="" id="check_print">
             <label class="form-check-label" for="check_print">Print Recipt</label>
         </div>
-            <button type="button" class="btn btn-sm btn-primary btn-md ml-2" id="issue_resource">
+            <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="issue_resource">
             <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
             &nbsp; &nbsp;
-            <button type="button" class="btn btn-sm btn-warning btn-md ml-2" id="reset_issue">
+            <button type="button" class="btn btn-sm btn-secondary elevation-2" id="reset_issue">
             <i class="fa fa-times"></i> Reset</button>
         </div> 
     </div>
@@ -220,6 +206,7 @@ $creator="name".$lang;
 
         $('#addbarrowmember').on("click",function(){
         var memberid = $("#member_id").val();
+        var dteissue = $("#issuedte").val();
         $('#resource_details').val('');
         $('#member_Name_id').val('');
         $('#db_count').val('');
@@ -236,25 +223,36 @@ $creator="name".$lang;
         $.ajax({
             type: 'POST',
             dataType : 'json',
-            data: { memberid: memberid },
+            data: { 
+                memberid: memberid,
+                dteissue:dteissue
+                },
             url: "{{route('member_view')}}",
             success: function(data){
-    
-                var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
-                $('#member_Name').html(mem_detail);
-                $('#member_Name_sms').val(data.member_nme);
-                $('#member_mobile').val(data.mobile);
-                $('#member_Name_id').val(data.member_id);
-                $('#db_count').val(data.db_count);
-                $('#lending_limit').val(data.lending_limit);
                 $('#member_id').val('');
-                document.getElementById("resource_details").focus();
+                if(data.status=="success")
+                {
+                    var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
+                    $('#member_Name').html(mem_detail);
+                    $('#member_Name_sms').val(data.member_nme);
+                    $('#member_mobile').val(data.mobile);
+                    $('#member_Name_id').val(data.member_id);
+                    $('#db_count').val(data.db_count);
+                    $('#lending_limit').val(data.lending_limit);
+                    document.getElementById("resource_details").focus();
+                }
+                else if(data.status=="error")
+                {
+                    toastr.error('Member Not Found!')
+                    document.getElementById("member_id").focus();
+                }
+               
             
             },
             error: function(data){
-            toastr.error('Member Not Found!')
-            $('#member_id').val('');
-            document.getElementById("member_id").focus();
+                toastr.error('Something went wrong!')
+                $('#member_id').val('');
+                document.getElementById("member_id").focus();
             }
         });
     });

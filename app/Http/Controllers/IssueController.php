@@ -54,23 +54,99 @@ class IssueController extends Controller
 
     public function memberview(Request $request)
     {
+        
         $lang = session()->get('db_locale');
 
-        $name = "name" . $lang;
         $address1 = "address1" . $lang;
         $address2 = "address2" . $lang;
+        $title="title".$lang;  
+        $category="category".$lang;  
+        $type="type".$lang; 
+        $member="name".$lang;
+        $status="";
+        $lenddata=array();
 
         $mbr = member::find($request->memberid);
-        $lendm = view_lending_data::select('*')
-            ->where('member_id', $request->memberid)
-            ->Where('return', 0)
-            ->get();
+        if($mbr)
+        {
+            $lending_config = lending_config::where('categoryid',$mbr->categoryid)->first();
+            $finerate = setting::where('setting','fine_rate')->first();
+            $lending_period = $lending_config->lending_period;
+            $lending_limit = $lending_config->lending_limit;
+            Session::put('lending_period', $lending_config->lending_period);
+            Session::put('lending_limit', $lending_config->lending_limit);
+            
+            $lend = view_lending_data::select('*')
+                ->where('member_id', $mbr->id)
+                ->Where('return', 0)
+                ->get();
 
-        $lending_config = lending_config::where('categoryid',$mbr->categoryid)->first();
-        Session::put('lending_period', $lending_config->lending_period);
-        Session::put('lending_limit', $lending_config->lending_limit);
+            // ------------------------
+            if($lend->count()!=0)
+            {
+                $status="success";
+                
+                for($i=0;$i<$lend->count();$i++)
+                {
+                    $fine_amount=0; 
+                    $fine_settle="N/A";
+                    $fine_rate = $finerate->value;
+                    $issudate = Carbon::parse($lend[$i]['issue_date']);
+                    $issudate_ = Carbon::parse($lend[$i]['issue_date']);
+                    $returndate=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
+                    $nowdate = Carbon::parse($request->dteissue);
+                    $diff =  $nowdate->diffInDays($issudate_);
 
-        return response()->json(['member_nme' => $mbr->$name, 'member_id' => $mbr->id, 'member_adds1' => $mbr->$address1, 'member_adds2' => $mbr->$address2, 'mobile' => $mbr->mobile, 'db_count' => $lendm->count(), 'lending_limit' => $lending_config->lending_limit]);
+                    if($lend[$i]['fine_settle']=="")
+                    {
+                        if($diff>$lending_period)
+                        {
+                            $fine_amount=number_format($fine_rate * ($diff-$lending_period),2);
+                            $fine_settle="unsettled";
+                        }
+                    }
+                    else
+                    { 
+                        $fine_amount=$lend[$i]['fine_amount'];
+                        $fine_settle="settled";
+                    }
+                
+                    $lenddata[$i]['id']               =$lend[$i]['id'];
+                    $lenddata[$i]['lending_id']       =$lend[$i]['lendind_id'];
+                    $lenddata[$i]['resource_id']      =$lend[$i]['resource_id'];
+                    $lenddata[$i]['resource_title']   =$lend[$i][$title];
+                    $lenddata[$i]['resource_cat']     =$lend[$i][$category];
+                    $lenddata[$i]['resource_type']    =$lend[$i][$type];
+                    $lenddata[$i]['resource_accno']   =$lend[$i]['accessionNo'];
+                    $lenddata[$i]['resource_isn']     =$lend[$i]['standard_number'];
+                    $lenddata[$i]['issue_date']       =$lend[$i]['issue_date'];
+                    $lenddata[$i]['return_date']      =$returndate;
+                    $lenddata[$i]['return']           =$lend[$i]['return'];
+                    $lenddata[$i]['fine_amount']      =$fine_amount;
+                    $lenddata[$i]['fine_settle']      =$fine_settle; 
+                }
+            }
+            else
+            {
+                $status  ="no";
+            }  
+        } 
+        else
+        {
+            $status  ="error";
+        }  
+        // ------------------------
+
+        
+        return response()->json(['lend_data'=>$lenddata,
+                                'status'=>$status,
+                                'member_nme' => $mbr->$member, 
+                                'member_id' => $mbr->id, 
+                                'member_adds1' => $mbr->$address1, 
+                                'member_adds2' => $mbr->$address2, 
+                                'mobile' => $mbr->mobile, 
+                                'db_count' => $lend->count(), 
+                                'lending_limit' => $lending_limit]);
     }
 
     public function resourceview(Request $request)

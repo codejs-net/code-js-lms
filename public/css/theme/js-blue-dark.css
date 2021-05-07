@@ -320,36 +320,37 @@ a.btn-js:hover {
 /* -------------table--------------------------------- */
 
 .js-tbl-header {
-    background: #f0f2fa;
+    background: rgb(184,221,246);
+    background: linear-gradient(90deg, rgba(184,221,246,1) 0%, rgba(242,242,242,1) 35%, rgba(184,222,242,1) 100%); 
 }
 
-/* .js-tbl-header th:first-child {
-    border: unset;
+.js-tbl-header th {
+    border: unset !important;
 }
 
-.js-tbl-header th:last-child {
+/* .js-tbl-header th {
     border: unset;
 } */
 
 .js-tbl-header th:first-child {
-    border-left: #007bff solid 1px !important;
+    /* border-left: #007bff solid 1px !important; */
     border-top-left-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
     
 }
 
 .js-tbl-header th:last-child {
-    border-right: #007bff solid 1px !important;
+    /* border-right: #007bff solid 1px !important; */
     border-top-right-radius: 10px !important;
     border-bottom-right-radius: 10px !important;
    
 
 }
-.js-tbl-header th{
+/* .js-tbl-header th{
     border-top: #007bff solid 1px !important;
     border-bottom: #007bff solid 1px !important;
    
-}
+} */
 
 
 tbody:before {

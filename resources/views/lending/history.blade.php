@@ -264,8 +264,9 @@ $('#btn_reset').click(function() {
 $("#lending_datatable").on('click', '.remainder', function (event) {
     var lend_detail_id =  $(this).closest('tr').find(".lend_id").html();
     var to_be_return =  $(this).closest('tr').find(".to_be_return").html();
-    $(this).find(".loader_before").hide();
-    $(this).find(".loader_after").show();
+    var lbefor=$(this).find(".loader_before");
+    var lafter=$(this).find(".loader_after");
+
     $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -281,19 +282,23 @@ $("#lending_datatable").on('click', '.remainder', function (event) {
         },
 
         beforeSend: function(){
-            
-            
+            lbefor.hide();
+            lafter.show();
         },
 
         success:function(data){
-        toastr.success('Remainder Massage Send Successfully');
+            if(data=="success")
+            {toastr.success('Remainder Massage Send Successfully');}
+            else if(data=="notconnect")
+            {toastr.info('No Internet, Try Checking the Network cables, Modem, and Router or Reconnecting to Wi-Fi');}
+        
         },
         error:function(data){
         toastr.error('Remainder Massage Falid Send Plese Try again');
         },
         complete:function(data){
-            $(this).find(".loader_before").show();
-            $(this).find(".loader_after").hide();
+            lbefor.show();
+            lafter.hide();
         }
     })
     

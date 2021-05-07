@@ -252,11 +252,15 @@ class LendingController extends Controller
        
         $message_text = $library_name ."-".trans('Reminder')."\r\n \r\n".trans('Member Detail')."-". $lend_member ."(". $data->member_id .")". "\r\n" .trans('Lending Detail')."-". $lend_title. "\r\n" .trans('Issue Date')."-" .$issudate. "\r\n" .trans('To Be Return') ."-". $to_be_return ."\r\n".$reminder_msg->value;
         if($SoapController->is_connected()==true)
-        {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
-        
+        {
+            $SoapController->multilang_msg_Send($mobile_no, $message_text);
+            $status="success";
+        } 
+        else
+        {$status="notconnect";}
         //-----------------------End SMS Alert----------------------
 
-        return response()->json(['massage' => "success"]);
+        return response()->json($status);
     }
 
 }

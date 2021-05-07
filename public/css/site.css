@@ -21,6 +21,11 @@
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
     }
+    .main-content{
+        padding-left: 10px;
+        padding-right: 10px;
+        /* border: 1px solid #d1cccc; */
+    }
     .form-control.is-valid,
     .was-validated .form-control:valid {
         background-image: none !important;
