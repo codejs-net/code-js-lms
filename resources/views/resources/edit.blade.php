@@ -395,7 +395,7 @@ $(document).ready(function()
     $('#place_index').val("{{$place_data->placement_index}}");
     @endif
 
-    $("#avater_update").attr('src','/images/resources/{{$resouredata->image}}');
+    $("#avater_update").attr("src","{{asset('images/resources/'.$resouredata->image)}}");
     $('#resource_id').val("{{$resouredata->id}}");
     $('#resoure_type').val("{{$resouredata->type_id}}");
     $('#resoure_isn').val("{{$resouredata->standard_number}}");

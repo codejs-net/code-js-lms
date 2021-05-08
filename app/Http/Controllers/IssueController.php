@@ -126,28 +126,35 @@ class IssueController extends Controller
                     $lenddata[$i]['fine_amount']      =$fine_amount;
                     $lenddata[$i]['fine_settle']      =$fine_settle; 
                 }
+                return response()->json(['lend_data'=>$lenddata,
+                'status'=>$status,
+                'member_nme' => $mbr->$member, 
+                'member_id' => $mbr->id, 
+                'member_adds1' => $mbr->$address1, 
+                'member_adds2' => $mbr->$address2, 
+                'mobile' => $mbr->mobile, 
+                'db_count' => $lend->count(), 
+                'lending_limit' => $lending_limit]);
             }
             else
             {
                 $status  ="no";
+                return response()->json(['status'=>$status,
+                'member_nme' => $mbr->$member, 
+                'member_id' => $mbr->id, 
+                'member_adds1' => $mbr->$address1, 
+                'member_adds2' => $mbr->$address2, 
+                'mobile' => $mbr->mobile, 
+                'db_count' => $lend->count(), 
+                'lending_limit' => $lending_limit]);
             }  
         } 
         else
         {
             $status  ="error";
+            return response()->json(['status'=>$status]);
         }  
         // ------------------------
-
-        
-        return response()->json(['lend_data'=>$lenddata,
-                                'status'=>$status,
-                                'member_nme' => $mbr->$member, 
-                                'member_id' => $mbr->id, 
-                                'member_adds1' => $mbr->$address1, 
-                                'member_adds2' => $mbr->$address2, 
-                                'mobile' => $mbr->mobile, 
-                                'db_count' => $lend->count(), 
-                                'lending_limit' => $lending_limit]);
     }
 
     public function resourceview(Request $request)

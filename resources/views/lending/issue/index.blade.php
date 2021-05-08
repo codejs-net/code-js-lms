@@ -81,7 +81,7 @@ $creator="name".$lang;
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="issue-cart" style="display: none;">
             <div class="col-md-3 col-3 p-3 js-rightbar-bg">
                 <div class="text-center ">
                     <h5 id="member_Name"class="text-dark font-weight-bold"></h5>
@@ -107,7 +107,9 @@ $creator="name".$lang;
 
                     </table>
                 </div>
+               
             </div>
+            
         </div>
     </div>
     <hr>
@@ -116,12 +118,12 @@ $creator="name".$lang;
             <input class="form-check-input" type="checkbox" value="" id="check_print">
             <label class="form-check-label" for="check_print">Print Recipt</label>
         </div>
-            <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="issue_resource">
-            <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
-            &nbsp; &nbsp;
-            <button type="button" class="btn btn-sm btn-secondary elevation-2" id="reset_issue">
-            <i class="fa fa-times"></i> Reset</button>
-        </div> 
+        <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="issue_resource">
+        <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
+        &nbsp; &nbsp;
+        <button type="button" class="btn btn-sm btn-secondary elevation-2" id="reset_issue">
+        <i class="fa fa-times"></i> Reset</button>
+    </div> 
     </div>
     
 </form>
@@ -166,7 +168,8 @@ $creator="name".$lang;
               
 <!------------------------------------------------------------------------------------------->
                             
-@include('lending.issue.same_resource_modal')                       
+@include('lending.issue.same_resource_modal')
+<br>                    
 @endsection
 @section('script')
 
@@ -210,6 +213,8 @@ $creator="name".$lang;
         $('#member_Name').html('');
         $("#resourceTable tbody").empty();
         $("#print_table tbody").empty();
+        $('#issue-cart').hide();
+        $('#member_lend').html('');
         var op='';
         $.ajaxSetup({
             headers: {
@@ -227,8 +232,10 @@ $creator="name".$lang;
             url: "{{route('member_view')}}",
             success: function(data){
                 $('#member_id').val('');
+               
                 if(data.status=="success")
                 {
+                    $('#issue-cart').show();
                     var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
                     $('#member_Name').html(mem_detail);
                     $('#member_Name_sms').val(data.member_nme);
@@ -237,32 +244,37 @@ $creator="name".$lang;
                     $('#db_count').val(data.db_count);
                     $('#lending_limit').val(data.lending_limit);
                     document.getElementById("resource_details").focus();
-                    console.log(data.lend_data);
                     // --------resource list-------
-                    op='<label>Not Returned Resource List</label>';
+                    op='<label>Non Returned Resource List</label>';
                     for (j = 0; j < data.lend_data.length; j++)
                     {
                         op+='<div class="card">';
                             op+='<div class="card-body">';
-                                op+='<div class="row">';
-                                    op+='<div class="col">';
-                                        op+='<img class="img-resource1" src="images/resources/'+data.lend_data[j]['image']+'" alt="image">';
-                                    op+='</div>';
-                                    op+='<div class="col">';
-                                        op+='<h6>'+data.lend_data[j]['resource_accno']+'</h6>';
+                                op+='<div class="row issue-card">';
+                                    op+='<div class="col-md-4 col-4">';
+                                        op+='<img class="img-resource-80" src="images/resources/'+data.lend_data[j]['image']+'" alt="image">';
                                         op+='<h6>'+data.lend_data[j]['resource_cat']+'-'+data.lend_data[j]['resource_type']+'</h6>';
+                                    op+='</div>';
+                                    op+='<div class="col-md-8 col-8 pl-2">';                                      
                                         op+='<h5>'+data.lend_data[j]['resource_title']+'</h5>';
-                                        op+='<hr>';
+                                        op+='<div><span>AccessionNo:'+data.lend_data[j]['resource_accno']+'</span></div>';
+                                        op+='<div><span>IssueDate: '+data.lend_data[j]['issue_date']+'</span></div>';
+                                        op+='<div><span>To Be Return: '+data.lend_data[j]['return_date']+'</span></div>';
+                                        if(data.lend_data[j]['fine_amount']!=0)
+                                        {
+                                            op+='<div><span class="text-danger font-weight-bold"> Fine: '+data.lend_data[j]['fine_amount']+'</span></div>';
+                                            op+='<div><span class="text-danger font-weight-bold"> Fine Status: '+data.lend_data[j]['fine_settle']+'</span></div>';
+                                        }
+                                        else
+                                        {
+                                            op+='<div><span> Fine: '+data.lend_data[j]['fine_amount']+'</span></div>';
+                                            op+='<div><span> Fine Status: '+data.lend_data[j]['fine_settle']+'</span></div>';
+                                        }
+                                        
                                     op+='</div>';
                                 op+='</div>';
                                 op+='<div class="row text-center">';
-                                    op+='<span>Issue Date : '+data.lend_data[j]['issue_date']+'</span>';
-                                    op+='<br/>';
-                                    op+='<span>To Be Return : '+data.lend_data[j]['return_date']+'</span>';
-                                    op+='<br/>';
-                                    op+='<span> Fine : '+data.lend_data[j]['fine_amount']+'</span>';
-                                    op+='<br/>';
-                                    op+='<span> Fine Settle : '+data.lend_data[j]['fine_settle']+'</span>';
+                                    
                                 op+='</div>';
                             op+='</div>';
                         op+='</div>';
@@ -270,6 +282,21 @@ $creator="name".$lang;
                     }
                     $('#member_lend').html(op);
                     // ----------------------------
+                }
+                else if(data.status=="no")
+                {
+                    $('#issue-cart').show();
+                    var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
+                    $('#member_Name').html(mem_detail);
+                    $('#member_Name_sms').val(data.member_nme);
+                    $('#member_mobile').val(data.mobile);
+                    $('#member_Name_id').val(data.member_id);
+                    $('#db_count').val(data.db_count);
+                    $('#lending_limit').val(data.lending_limit);
+                    document.getElementById("resource_details").focus();
+                    // --------resource list-------
+                    op='<label>Non Returned Resource Empty</label>';
+                    $('#member_lend').html(op);
                 }
                 else if(data.status=="error")
                 {
@@ -516,6 +543,7 @@ $creator="name".$lang;
                             $("#resourceTable tbody").empty();
                             $("#print_table tbody").empty();
                             $('#member_lend').html('');
+                            $('#issue-cart').hide();
                             document.getElementById("member_id").focus();
                         },
                         error: function(data){

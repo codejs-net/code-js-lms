@@ -230,7 +230,7 @@ $address2="address2".$lang;
 
 $(document).ready(function()
 {
-        $("#avater_update").attr('src','/images/members/{{$edata->image}}');
+        $("#avater_update").attr("src","{{asset('images/members/'.$edata->image)}}");
         $('#member_id').val("{{$edata->id}}");
         $('input:radio[name="title"]').filter('[value="{{$edata->titleid}}"]').attr('checked', true);
         $('#category').val("{{$edata->categoryid}}");
