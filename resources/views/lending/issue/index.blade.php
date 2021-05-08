@@ -46,7 +46,7 @@ $creator="name".$lang;
     <input type="hidden" name="db_count"id="db_count">
     <input type="hidden" name="lending_limit" id="lending_limit">
     <div class="main-content">
-        <div class="row">
+        <div class="row elevation-1">
             <div class="col-md-3 col-sm-12 text-left mt-1 p-3  js-rightbar-bg">
               <div class="input-group">
                   <div class="input-group-prepend">
@@ -81,10 +81,10 @@ $creator="name".$lang;
                 </div>
             </div>
         </div>
-        <div class="row" id="issue-cart" style="display: none;">
+        <div class="row elevation-1" id="issue-cart" style="display: none;">
             <div class="col-md-3 col-3 p-3 js-rightbar-bg">
                 <div class="text-center ">
-                    <h5 id="member_Name"class="text-dark font-weight-bold"></h5>
+                    <h6 id="member_Name"class="text-indigo font-weight-bold"></h6>
                     <div id="member_lend"class="mt-2"></div>
                 </div>
             </div>

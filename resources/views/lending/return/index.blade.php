@@ -9,6 +9,9 @@ $lang="_".$locale;
 $category="category".$lang;
 $type="type".$lang;
 
+$librarydata = session()->get('library');
+$lib_name="name".$lang;
+
 @endphp
 
 <nav aria-label="breadcrumb">
@@ -38,38 +41,37 @@ $type="type".$lang;
         <input type="hidden" name="member_Name_sms"id="member_Name_sms">
         <input type="hidden" name="member_mobile"id="member_mobile">
 
-            <div class="col-md-3 col-sm-12 text-left mt-1">
+            <div class="col-md-3 col-sm-12 text-left px-3">
               <div class="input-group">
                   <div class="input-group-prepend">
-                     <span class="input-group-addon"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
+                     <span class="input-group-addon elevation-1"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-success" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
+                    <input type="text" class="form-control elevation-1" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
+                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
                 </div>  
             </div>
 
-             <div class="col-md-5 col-sm-12 text-left mt-1">
+             <div class="col-md-6 col-sm-12 text-left px-3">
               <div class="input-group">
                   <div class="input-group-prepend">
-                     <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
+                     <span class="input-group-addon elevation-1"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-check-square-o fa-lg" id="loader_icon"></i><span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
-                    <button type="button" class="btn btn-sm btn-outline-success" id="addbarrow_serch"><i class="fa fa-search"></i></button>
+                    <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
+                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-check-square-o fa-lg" id="loader_icon"></i><span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
+                    <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
             </div>
-             <div class="col-md-1 col-sm-12">
-             </div>
-            <div class="col-md-3 col-sm-12 text-right mt-1">
-                <div class="input-group pull-right">
+
+            <div class="col-md-3 col-sm-12 text-right px-3">
+                <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-addon"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
+                        <span class="input-group-addon elevation-1"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
                     </div>
                     @if(auth()->user()->can('date-change'))
-                    <input type="date" class="form-control" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1">
+                    <input type="date" class="form-control elevation-1" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1">
                     @else
-                    <input type="date" class="form-control" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1" disabled>
+                    <input type="date" class="form-control elevation-1" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1" disabled>
                     @endif
                    
                 </div>
@@ -77,6 +79,7 @@ $type="type".$lang;
 
         </div>
 
+        <div class="" id="issue-cart" style="display: none;">
         <div class="row text-center mt-4">
             <div class="col-md-12">
                 <!-- small box -->
@@ -93,7 +96,7 @@ $type="type".$lang;
             </div>
         </div>
 
-            <div class="form-row ">
+        <div class="form-row">
             <div class="table-responsive"style="overflow-x: auto;"> 
                 <table class="table table-hover" id="resourceTable">
                 <thead class="thead-light">
@@ -117,9 +120,9 @@ $type="type".$lang;
                            
                     </tbody>
                 </table>
-                </div>
             </div>
-
+        </div>
+        </div>
     </div>
     <hr>
     <div class="row mt-4">
@@ -132,10 +135,10 @@ $type="type".$lang;
         </div>
         <div class="col-md-6">
             <div class="input-group box-footer clearfix pull-right">
-                <button type="button" class="btn btn-sm btn-primary btn-md ml-2" id="print_return">
+                <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="print_return">
                 <i class="fa fa-print"></i> Print</button>
                 &nbsp; &nbsp;
-                <button type="button" class="btn btn-sm btn-warning btn-md ml-2" id="reset_issue">
+                <button type="button" class="btn btn-sm btn-secondary elevation-2" id="reset_issue">
                 <i class="fa fa-times"></i> Reset</button>
             </div> 
         </div>
@@ -147,21 +150,19 @@ $type="type".$lang;
 <div id="printdiv" style="display: none;">
     <div class="col-md-4">
         <div id="print_lendding" style="text-align: center;">
-            <div class="text-center"><u><h3>Issue Receipt</h3></u></div>
+            <div class="text-center"><u><h3>Return Receipt</h3></u></div>
             </br>
-            
+                <h4 id="print_library">{{$librarydata->$lib_name}}</h4>
                 <h5 >Member : <span id="print_member"></span></h5>
-                <h5 >Issue Date : <span id="print_issuedate"></span></h5>
-                <h5>Return Date :<span id="print_returndate"></span></h5>
+                <h5>Returned Date :<span id="print_returndate"></span></h5>
                 
                 <table id="print_table">
-                    <!-- <thead>
+                    <thead>
                         <tr>
-                            <th>Accession No</th>
-                            <th>Title</th>
-                            <th>&nbsp;</th>
+                            <th>Issue Date</th>
+                            <th>Resources</th>
                         </tr>    
-                    </thead> -->
+                    </thead> 
                     <tbody> 
                     </tbody>
                 </table>
@@ -269,10 +270,10 @@ $type="type".$lang;
 
                 <div class="modal-footer">
                     <div class="form-group text-center">
-                        <div class="form-check form-check-inline text-primary" >
+                        {{-- <div class="form-check form-check-inline text-primary" >
                             <label class="form-check-label"><i class="fa fa-check"></i> &nbsp;save&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="1" required>|
-                        </div>
+                        </div> --}}
                         <div class="form-check form-check-inline text-info" >
                             <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;save & Extend&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="2" required>|
@@ -401,11 +402,15 @@ $type="type".$lang;
                 $('#member_id').val('');
                 if(data[0]['status']=="success")
                 {
+                    $('#issue-cart').show();
                     var membr=data[0]['member_id']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
                     $('#member_Name').html(membr);
                     $('#member_Name_id').val(data[0]['member_id']);
                     $('#member_Name_sms').val(data[0]['member_name']);
                     $('#member_mobile').val(data[0]['mobile']);
+                    $('#print_member').html(membr);
+                    $('#print_returndate').html(dtereturn);
+                   
                     // ------------table-----------------------------
                     for (j = 0; j < data.length; j++)
                     {
@@ -414,11 +419,11 @@ $type="type".$lang;
                         else{op+='<tr>';}
                         op+='<td class="td_id">'+data[j]['id']+'</td>';
                         op+='<td>'+data[j]['resource_id']+'</td>';
-                        op+='<td>'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
+                        op+='<td class="td_type">'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
                         op+='<td class="td_input td_acceno">'+data[j]['resource_accno']+'</td>';
                         op+='<td class="td_input">'+data[j]['resource_isn']+'</td>';
                         op+='<td class="td_title">'+data[j]['resource_title']+'</td>';
-                        op+='<td>'+data[j]['issue_date']+'</td>';
+                        op+='<td class="td_issue_date">'+data[j]['issue_date']+'</td>';
                         op+='<td>'+data[j]['return_date']+'</td>';
                         op+='<td class="fine_amount">'+data[j]['fine_amount']+'</td>';
                         op+='<td>'+data[j]['return']+'</td>';
@@ -444,6 +449,7 @@ $type="type".$lang;
                 else if(data[0]['status']=="no")
                 {
                     toastr.info('No resources to return by '+data[0]['member_name']);
+                    $('#issue-cart').hide();
                     document.getElementById("member_id").focus();
                 }
                 else
@@ -464,7 +470,7 @@ $type="type".$lang;
     $('#addbarrow').on("click",function(){
         var resourceinput = $("#resource_details").val();
         var limit = $("#lending_limit").val();
-        var op ="";
+        // var op ="";
         var bexsist=false;
         if($('#member_Name_id').val())
         {    
@@ -481,9 +487,12 @@ $type="type".$lang;
                 {
                     var oCells = oTable.rows.item(j).cells;
                     var cellVal_accno = oCells.item(3).innerHTML;
+                    var cellVal_title = oCells.item(5).innerHTML;
                     var cellVal_snumber = oCells.item(4).innerHTML;
                     var cellVal_lend_id = oCells.item(0).innerHTML;
                     var cellVal_fine = oCells.item(8).innerHTML;
+                    var cellVal_type = oCells.item(2).innerHTML;
+                    var cellVal_issue_date = oCells.item(6).innerHTML;
                     var description=oCells.item(5).innerHTML +"("+oCells.item(3).innerHTML+")";
                     if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
                     { 
@@ -514,12 +523,21 @@ $type="type".$lang;
                                         // console.log(data);
                                         if(data.massage=="success")
                                         {
-                                            
+                                            //---------- ptint table---------
+                                            var op="";
+                                            op+='<tr>';
+                                            op+='<td>'+cellVal_issue_date+'</td><td>'+description+'</td>';
+                                            op+='</tr>';
+                                            $("#print_table tbody").append(op);
+                                            //-------------------------------
                                             $('#resourceTable').find('.td_id').each(function(){
                                                 if($(this).text() == data.lendid){
                                                     $(this).parent('tr').remove();
                                                 }
                                             });
+                                            var _rowCount = $('#resourceTable tr').length;
+                                            if(_rowCount==1)
+                                            { $('#issue-cart').hide();}
                                             toastr.success('Resources Successfully Returnd');
                                         }
                                     },
@@ -700,7 +718,8 @@ $type="type".$lang;
                 {
                     if(payment_check==1)
                     {
-                        print_receiptDiv();
+                        print_div($('#fine_receipt').html());
+                        
                         $("#settel_show").modal('hide');
                     }
                     else
@@ -753,6 +772,9 @@ $type="type".$lang;
                                 $(this).parent('tr').remove();
                             }
                         });
+                        var _rowCount = $('#resourceTable tr').length;
+                        if(_rowCount==1)
+                        { $('#issue-cart').hide();}
                         toastr.success('Resources Successfully Returnd');
                     }
                 },
@@ -856,10 +878,12 @@ $type="type".$lang;
         $("#receipt_no").val('');
 
     });
-
-    function print_receiptDiv(){
-        var contents = $("#fine_receipt").html();
-        
+    $('#print_return').on("click",function(event){
+        print_div($('#print_lendding').html());
+    });
+    function print_div(print_content){
+        // var contents = $("#fine_receipt").html();
+        var contents = print_content;
         var frame1 = $('<iframe />');
         frame1[0].name = "frame1";
         frame1[0].id = "frame1";
