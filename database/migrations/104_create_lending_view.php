@@ -37,6 +37,7 @@ class CreateLendingView extends Migration
                         resources.title_en,
                         resources.category_id,
                         resources.type_id,
+                        resources.image,
                         members.categoryid AS member_categoryid,
                         members.name_si    AS member_si,
                         members.name_ta    AS member_ta,

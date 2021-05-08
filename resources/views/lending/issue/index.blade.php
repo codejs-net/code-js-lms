@@ -84,11 +84,8 @@ $creator="name".$lang;
         <div class="row">
             <div class="col-md-3 col-3 p-3 js-rightbar-bg">
                 <div class="text-center ">
-                    <span>
-                        {{-- <i class="fa fa-user-circle-o">&nbsp;</i> --}}
-                        <span id="member_Name"class="text-indigo font-weight-bold"></span>
-                        <span id="member_lend"class="font-weight-bold"></span>
-                    </span>
+                    <h5 id="member_Name"class="text-dark font-weight-bold"></h5>
+                    <div id="member_lend"class="mt-2"></div>
                 </div>
             </div>
             <div class="col-md-9 col-9 p-3 bg-white">
@@ -213,7 +210,7 @@ $creator="name".$lang;
         $('#member_Name').html('');
         $("#resourceTable tbody").empty();
         $("#print_table tbody").empty();
-
+        var op='';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -240,6 +237,39 @@ $creator="name".$lang;
                     $('#db_count').val(data.db_count);
                     $('#lending_limit').val(data.lending_limit);
                     document.getElementById("resource_details").focus();
+                    console.log(data.lend_data);
+                    // --------resource list-------
+                    op='<label>Not Returned Resource List</label>';
+                    for (j = 0; j < data.lend_data.length; j++)
+                    {
+                        op+='<div class="card">';
+                            op+='<div class="card-body">';
+                                op+='<div class="row">';
+                                    op+='<div class="col">';
+                                        op+='<img class="img-resource1" src="images/resources/'+data.lend_data[j]['image']+'" alt="image">';
+                                    op+='</div>';
+                                    op+='<div class="col">';
+                                        op+='<h6>'+data.lend_data[j]['resource_accno']+'</h6>';
+                                        op+='<h6>'+data.lend_data[j]['resource_cat']+'-'+data.lend_data[j]['resource_type']+'</h6>';
+                                        op+='<h5>'+data.lend_data[j]['resource_title']+'</h5>';
+                                        op+='<hr>';
+                                    op+='</div>';
+                                op+='</div>';
+                                op+='<div class="row text-center">';
+                                    op+='<span>Issue Date : '+data.lend_data[j]['issue_date']+'</span>';
+                                    op+='<br/>';
+                                    op+='<span>To Be Return : '+data.lend_data[j]['return_date']+'</span>';
+                                    op+='<br/>';
+                                    op+='<span> Fine : '+data.lend_data[j]['fine_amount']+'</span>';
+                                    op+='<br/>';
+                                    op+='<span> Fine Settle : '+data.lend_data[j]['fine_settle']+'</span>';
+                                op+='</div>';
+                            op+='</div>';
+                        op+='</div>';
+
+                    }
+                    $('#member_lend').html(op);
+                    // ----------------------------
                 }
                 else if(data.status=="error")
                 {
@@ -455,6 +485,7 @@ $creator="name".$lang;
                             }
                             //------------------------end-----------------------------
                             toastr.success('lending Processe Successfuly Completed');
+                           
                             if($("#check_print").prop("checked") == true)
                             {
                                 // --------------print--------------------------
@@ -484,6 +515,7 @@ $creator="name".$lang;
                             $('#member_Name').html('');
                             $("#resourceTable tbody").empty();
                             $("#print_table tbody").empty();
+                            $('#member_lend').html('');
                             document.getElementById("member_id").focus();
                         },
                         error: function(data){

@@ -213,7 +213,7 @@ $gender="gender".$lang;
 
 $(document).ready(function()
 {
-        $("#avater_update").attr('src','/images/staffs/{{$edata->image}}');
+        $("#avater_update").attr("src","{{asset('images/staffs/'.$edata->image)}}");
         $('#staff_id').val("{{$edata->id}}");
         $('input:radio[name="title"]').filter('[value="{{$edata->titleid}}"]').attr('checked', true);
         $('#designation').val("{{$edata->designetion_id}}");

@@ -112,12 +112,13 @@ class IssueController extends Controller
                     }
                 
                     $lenddata[$i]['id']               =$lend[$i]['id'];
-                    $lenddata[$i]['lending_id']       =$lend[$i]['lendind_id'];
+                    $lenddata[$i]['lending_id']       =$lend[$i]['lending_id'];
                     $lenddata[$i]['resource_id']      =$lend[$i]['resource_id'];
                     $lenddata[$i]['resource_title']   =$lend[$i][$title];
                     $lenddata[$i]['resource_cat']     =$lend[$i][$category];
                     $lenddata[$i]['resource_type']    =$lend[$i][$type];
                     $lenddata[$i]['resource_accno']   =$lend[$i]['accessionNo'];
+                    $lenddata[$i]['image']            =$lend[$i]['image'];
                     $lenddata[$i]['resource_isn']     =$lend[$i]['standard_number'];
                     $lenddata[$i]['issue_date']       =$lend[$i]['issue_date'];
                     $lenddata[$i]['return_date']      =$returndate;
