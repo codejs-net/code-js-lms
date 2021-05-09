@@ -72,27 +72,21 @@ class ReturnController extends Controller
                 for($i=0;$i<$lend->count();$i++)
                 {
                     $fine_amount=0; 
-                    $fine_settle="N/A";
                     $issudate = Carbon::parse($lend[$i]['issue_date']);
                     $_issudate=Carbon::parse($lend[$i]['issue_date']);
                     $returndate=$issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
                     $nowdate = Carbon::parse($request->dtereturn);
                     $diff =  $nowdate->diffInDays($_issudate);
 
-                    if($lend[$i]['fine_settle']=="")
+                    if($diff>$lending_period)
                     {
-                        if($diff>$lending_period)
-                        {
-                            $fine_amount=number_format($fine_rate * ($diff-$lending_period),2);
-                            $fine_settle="unsettled";
-                        }
+                        $fine_amount=number_format($fine_rate * ($diff-$lending_period),2);
                     }
                     else
-                    { 
-                        $fine_amount=$lend[$i]['fine_amount'];
-                        $fine_settle="settled";
+                    {
+                        $fine_amount=number_format(0.00,2);
                     }
-                   
+
 
                     $lenddata[$i]['status']           ="success";
                     $lenddata[$i]['id']               =$lend[$i]['id'];
@@ -108,11 +102,11 @@ class ReturnController extends Controller
                     $lenddata[$i]['resource_type']    =$lend[$i][$type];
                     $lenddata[$i]['resource_accno']   =$lend[$i]['accessionNo'];
                     $lenddata[$i]['resource_isn']     =$lend[$i]['standard_number'];
+                    $lenddata[$i]['image']            =$lend[$i]['image'];
                     $lenddata[$i]['issue_date']       =$lend[$i]['issue_date'];
                     $lenddata[$i]['return_date']      =$returndate;
                     $lenddata[$i]['return']           =$lend[$i]['return'];
                     $lenddata[$i]['fine_amount']      =$fine_amount;
-                    $lenddata[$i]['fine_settle']      =$fine_settle;
                     
                 }
             }

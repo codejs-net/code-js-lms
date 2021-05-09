@@ -38,10 +38,10 @@ $lib_name="name".$lang;
     <input type="hidden" name="member_Name_id"id="member_Name_id">
     <input type="hidden" name="member_Name_sms"id="member_Name_sms">
     <input type="hidden" name="member_mobile"id="member_mobile">
-
-    <div class="main-content">
-        <div class="row elevation-1">
-            <div class="col-md-3 col-sm-12 text-left mt-1 p-3  js-rightbar-bg">
+    
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-md-3 col-sm-12 text-left px-3">
               <div class="input-group">
                   <div class="input-group-prepend">
                      <span class="input-group-addon elevation-1"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
@@ -52,17 +52,18 @@ $lib_name="name".$lang;
                 </div>  
             </div>
 
-             <div class="col-md-6 col-sm-12 text-left p-3 mt-1 bg-white">
+             <div class="col-md-6 col-sm-12 text-left px-3">
               <div class="input-group">
                   <div class="input-group-prepend">
                      <span class="input-group-addon elevation-1"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
                     <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fas fa-cart-plus"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-check-square-o fa-lg" id="loader_icon"></i><span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
                     <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
             </div>
-            <div class="col-md-3 col-sm-12 text-right mt-1 p-3 bg-white">
+
+            <div class="col-md-3 col-sm-12 text-right px-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-addon elevation-1"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
@@ -70,51 +71,57 @@ $lib_name="name".$lang;
                     @if(auth()->user()->can('date-change'))
                     <input type="date" class="form-control elevation-1" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1">
                     @else
-                    <input type="date" class="form-control elevation-1" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1"disabled>
+                    <input type="date" class="form-control elevation-1" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1" disabled>
                     @endif
+                   
                 </div>
+            </div>
+
+        </div>
+
+        <div class="" id="issue-cart" style="display: none;">
+        <div class="row text-center mt-4">
+            <div class="col-md-12">
+                <!-- small box -->
+                    <div class="card card-name" style="height:2.5rem;">
+                        <div class="text-center">
+                        <span><i class="fa fa-user-circle-o">&nbsp;
+                            <span id="member_Name"class="text-dark font-weight-bold"></span>
+                            <!-- <span id="member_show_id"class="font-weight-bold badge badge-info"></span> -->
+                        </i></span>
+                        
+                        </div>
+                    </div>
+
             </div>
         </div>
-        <div class="row elevation-1" id="return-cart" style="display: none;">
-            <div class="col-md-3 col-3 p-3 js-rightbar-bg">
-                <div class="text-center ">
-                    <h6 id="member_Name"class="text-indigo font-weight-bold"></h6>
-                    <div id="member_lend"class="mt-2">
-                        <table style="width: 100%;" id="resourceTable">
-                            <tbody class="tbody_data" id="resourcedata">    
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
+        <div class="form-row">
+            <div class="table-responsive"style="overflow-x: auto;"> 
+                <table class="table table-hover" id="resourceTable">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Resource ID</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Accession No</th>
+                    <th scope="col">ISBN/ISSN</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Issue Date</th>
+                    <th scope="col">Dateof Return</th>
+                    <th scope="col">Fine(Rs)</th>
+                    <th scope="col">Return</th>
+                    <th scope="col">Fine Status</th>
+                    <th scope="col" style="width:10%;">Action</th>
+                    </tr>    
+                    </thead>
+
+                    <tbody class="tbody_data" id="resourcedata">
+                           
+                    </tbody>
+                </table>
             </div>
-            <div class="col-md-9 col-9 p-3 bg-white">
-                <div class="table-responsive"style="overflow-x: auto;"> 
-                    <table class="table table-hover" id="returnTable">
-                        <thead class="js-tbl-header">
-                            <tr>
-                            <th scope="col">ID</th>
-                            {{-- <th scope="col">Resource ID</th> --}}
-                            <th scope="col">Type</th>
-                            <th scope="col">Accession No</th>
-                            <th scope="col">ISBN/ISSN</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Issue Date</th>
-                            <th scope="col">To Be Return</th>
-                            <th scope="col">Fine(Rs)</th>
-                            {{-- <th scope="col">Return</th> --}}
-                            {{-- <th scope="col">Fine Status</th> --}}
-                            <th scope="col">Action</th>
-                            <th scope="col">&nbsp;</th>
-                            </tr>    
-                            </thead>
-        
-                            <tbody class="tbody_data" id="returndata">    
-                            </tbody>
-                    </table>
-                </div>
-               
-            </div>
-            
+        </div>
         </div>
     </div>
     <hr>
@@ -128,14 +135,10 @@ $lib_name="name".$lang;
         </div>
         <div class="col-md-6">
             <div class="input-group box-footer clearfix pull-right">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="check_print">
-                    <label class="form-check-label" for="check_print">Print Recipt</label>
-                </div>
-                <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="return_resource">
-                <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
+                <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="print_return">
+                <i class="fa fa-print"></i> Print</button>
                 &nbsp; &nbsp;
-                <button type="button" class="btn btn-sm btn-secondary elevation-2" id="btn_reset">
+                <button type="button" class="btn btn-sm btn-secondary elevation-2" id="reset_issue">
                 <i class="fa fa-times"></i> Reset</button>
             </div> 
         </div>
@@ -295,10 +298,10 @@ $lib_name="name".$lang;
     </div>
 </div>
 <!-- end settle model -->
-                                                   
-<br>                    
+                            
+                        
 @endsection
-@section('script')
+@push('scripts')
 
     <script>
     $(document).ready(function() {
@@ -362,16 +365,11 @@ $lib_name="name".$lang;
         })
 
     });
-    // --------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 
     $('#addbarrowmember').on("click",function(){
         var memberid = $("#member_id").val();
         memberSelect(memberid);
-    });
-
-    $('#addbarrow').on("click",function(){
-        var resourceinput = $("#resource_details").val();
-        add_to_retun_table(resourceinput)
     });
     // ------------------------------------------------------------------------
     function memberSelect(member)
@@ -384,7 +382,6 @@ $lib_name="name".$lang;
         $("#resourceTable tbody").empty();
         $("#fineTable tbody").empty();
         $("#print_table tbody").empty();
-        $('#return-cart').hide();
         var op="";
         $.ajaxSetup({
             headers: {
@@ -405,7 +402,7 @@ $lib_name="name".$lang;
                 $('#member_id').val('');
                 if(data[0]['status']=="success")
                 {
-                    $('#return-cart').show();
+                    $('#issue-cart').show();
                     var membr=data[0]['member_id']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
                     $('#member_Name').html(membr);
                     $('#member_Name_id').val(data[0]['member_id']);
@@ -414,52 +411,45 @@ $lib_name="name".$lang;
                     $('#print_member').html(membr);
                     $('#print_returndate').html(dtereturn);
                    
-                    // --------resource list-------
+                    // ------------table-----------------------------
                     for (j = 0; j < data.length; j++)
                     {
-                        if(data[j]['fine_amount']!=0.00){op+='<tr class="text-danger font-weight-bold">';}
+                        if(data[j]['fine_settle']=="unsettled"){op+='<tr class="text-danger font-weight-bold">';}
+                        else if(data[j]['fine_settle']=="settled"){op+='<tr class="text-info font-weight-bold">';}
                         else{op+='<tr>';}
-                        op+='<td>';
-                        op+='<div class="card">';
-                            op+='<div class="card-body">';
-                                op+='<div class="row issue-card">';
-                                    op+='<div class="col-md-4 col-4">';
-                                        op+='<img class="img-resource-80" src="images/resources/'+data[j]['image']+'" alt="image">';
-                                        op+='<h6><span class="r_type">'+data[j]['resource_cat']+'-'+data[j]['resource_type']+'</span></h6>';
-                                    op+='</div>';
-                                    op+='<div class="col-md-8 col-8 pl-2">';                                      
-                                        op+='<h5><span class="r_title">'+data[j]['resource_title']+'</span></h5>';
-                                        op+='<div><span>AccessionNo:</span><span class="r_accno">'+data[j]['resource_accno']+'</span></div>';
-                                        op+='<div><span>Lending ID:</span><span class="r_lendid">'+data[j]['id']+'</span></div>';
-                                        op+='<div><span>SNumber:</span><span class="r_snumber">'+data[j]['resource_isn']+'</span></div>';
-                                        op+='<div><span>IssueDate: </span><span class="r_issuedate">'+data[j]['issue_date']+'</span></div>';
-                                        op+='<div><span>To Be Return: </span><span class="r_returndate">'+data[j]['return_date']+'</span></div>';
-                                        op+='<div><span> Fine: </span><span class="r_fine">'+data[j]['fine_amount']+'</span></div>';
+                        op+='<td class="td_id">'+data[j]['id']+'</td>';
+                        op+='<td>'+data[j]['resource_id']+'</td>';
+                        op+='<td class="td_type">'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
+                        op+='<td class="td_input td_acceno">'+data[j]['resource_accno']+'</td>';
+                        op+='<td class="td_input">'+data[j]['resource_isn']+'</td>';
+                        op+='<td class="td_title">'+data[j]['resource_title']+'</td>';
+                        op+='<td class="td_issue_date">'+data[j]['issue_date']+'</td>';
+                        op+='<td>'+data[j]['return_date']+'</td>';
+                        op+='<td class="fine_amount">'+data[j]['fine_amount']+'</td>';
+                        op+='<td>'+data[j]['return']+'</td>';
+                        op+='<td class="fine_settle">'+data[j]['fine_settle']+'</td>';
 
-                                        if(data[j]['fine_amount']!=0.00)
-                                        {
-                                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine" data-toggle="modal" data-target="#settel_show"><i class="fa fa-money"></i></button>';
-                                        }
-                                        else
-                                        {
-                                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
-                                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
-                                        }
-                                        
-                                    op+='</div>';
-                                op+='</div>';
-                            op+='</div>';
-                        op+='</div>';
+                        op+='<td>';
+                        if(data[j]['fine_settle']=="unsettled")
+                        {
+                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine" data-toggle="modal" data-target="#settel_show"><i class="fa fa-money"></i></button>';
+                        }
+                        else
+                        {
+                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
+                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
+                        }
                         op+='</td>';
-                        op+='</tr>';
+                        op+='</tr>';  
                     }
+                    //-------------end table-------------------------
                     $("#resourceTable tbody").append(op);
-                    // ----------------------------
                     document.getElementById("resource_details").focus();
                 }
                 else if(data[0]['status']=="no")
                 {
                     toastr.info('No resources to return by '+data[0]['member_name']);
+                    $('#issue-cart').hide();
                     document.getElementById("member_id").focus();
                 }
                 else
@@ -476,53 +466,100 @@ $lib_name="name".$lang;
             }
         });
     }
-    function add_to_retun_table(resourceinput)
-    {
-        var op ="";
-        var exsist=false;
-        var resource_found=0;
+
+    $('#addbarrow').on("click",function(){
+        var resourceinput = $("#resource_details").val();
+        var limit = $("#lending_limit").val();
+        // var op ="";
+        var bexsist=false;
         if($('#member_Name_id').val())
         {    
             if(resourceinput)
             {
-                // --------add to return Table------------------
-                $('#resourceTable tbody tr').each(function(){
-                    var accno=$(this).find(".r_accno").html();
-                    var snumber=$(this).find(".r_snumber").html();
-                    var fine=$(this).find(".r_fine").html();
-                    if(resourceinput.toUpperCase()==accno.toUpperCase() || resourceinput.toUpperCase()==snumber.toUpperCase() )
-                    {
+                var rowCount = $('#resourceTable tr').length;
+                var oTable = document.getElementById('resourceTable');
+                var mem_id = $("#member_Name_id").val();
+                var dtereturn = $("#returndte").val();
+                var membername=$('#member_Name_sms').val();
+                var membermobile=$('#member_mobile').val();
+                var resource_found=0;
+                for (j = 1; j < rowCount; j++)
+                {
+                    var oCells = oTable.rows.item(j).cells;
+                    var cellVal_accno = oCells.item(3).innerHTML;
+                    var cellVal_title = oCells.item(5).innerHTML;
+                    var cellVal_snumber = oCells.item(4).innerHTML;
+                    var cellVal_lend_id = oCells.item(0).innerHTML;
+                    var cellVal_fine = oCells.item(8).innerHTML;
+                    var cellVal_type = oCells.item(2).innerHTML;
+                    var cellVal_issue_date = oCells.item(6).innerHTML;
+                    var description=oCells.item(5).innerHTML +"("+oCells.item(3).innerHTML+")";
+                    if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
+                    { 
                         resource_found=1;
-                        if(fine==0.00)
+                        if(cellVal_fine==0)
                         {
-                            $('#returnTable tbody tr').each(function(){
-                                var td_accno=$(this).find(".td_acceno").html();
-                                if(accno.toUpperCase()==td_accno.toUpperCase())
-                                {exsist=true;}   
-                            });
-                            if(exsist==false)
-                            {
-                                op+='<tr>';
-                                op+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
-                                op+='<td class="td_type">'+$(this).find(".r_type").html()+'</td>';
-                                op+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
-                                op+='<td class="td_snumber">'+$(this).find(".r_snumber").html()+'</td>';
-                                op+='<td class="td_title">'+$(this).find(".r_title").html()+'</td>';
-                                op+='<td class="td_issuedate">'+$(this).find(".r_issuedate").html()+'</td>';
-                                op+='<td class="td_title">'+$(this).find(".r_returndate").html()+'</td>';
-                                op+='<td class="td_fine_amount">'+$(this).find(".r_fine").html()+'</td>';
-                                op+='<td class="td_action">Return</td>';
-                                op+='<td><button type="button" value="'+$(this).find(".r_lendid").html()+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>'
-                                op+='</tr>';  
-                            }
-                            else{toastr.error('Resource Alrady in Return Cart')} 
+                            //-------------------------------------------------------
+                            $.ajaxSetup({
+                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                                $.ajax({
+                                    type: 'POST',
+                                    dataType : 'json',
+                                    data:{
+                                        mem_id: mem_id,
+                                        dtereturn: dtereturn,
+                                        cellVal_lend_id: cellVal_lend_id,
+                                        cellVal_fine:cellVal_fine,
+                                        membername:membername,
+                                        membermobile:membermobile,
+                                        description:description
+                                        },
+                                    url: "{{route('store_return')}}",
+                                    beforeSend: function(){
+                                        $("#loader_icon").hide();
+                                        $("#loader").show();
+                                    },
+                                    success: function(data){  
+                                        // console.log(data);
+                                        if(data.massage=="success")
+                                        {
+                                            //---------- ptint table---------
+                                            var op="";
+                                            op+='<tr>';
+                                            op+='<td>'+cellVal_issue_date+'</td><td>'+description+'</td>';
+                                            op+='</tr>';
+                                            $("#print_table tbody").append(op);
+                                            //-------------------------------
+                                            $('#resourceTable').find('.td_id').each(function(){
+                                                if($(this).text() == data.lendid){
+                                                    $(this).parent('tr').remove();
+                                                }
+                                            });
+                                            var _rowCount = $('#resourceTable tr').length;
+                                            if(_rowCount==1)
+                                            { $('#issue-cart').hide();}
+                                            toastr.success('Resources Successfully Returnd');
+                                        }
+                                    },
+                                    error: function(data){
+                                        toastr.error('Returing Error');
+                                    },
+                                    complete:function(data){
+                                    $("#loader").hide();
+                                    $("#loader_icon").show();
+                                    }
+                                });
+                            //---------------------------------------------------------
                         }
-                        else{toastr.warning('Plese Settle the Fine Before Return');}  
-                    } 
-                });
+                        else
+                        {
+                            toastr.warning('Plese Settle the Fine Before Return');
+                        }
+                    
+                    }
+                }
+               
                 if(resource_found==0){  toastr.error('Resource Not Found!');}
-                $("#returnTable tbody").append(op);
-                // --------------------------------------------     
             }
             else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
         }
@@ -531,14 +568,11 @@ $lib_name="name".$lang;
             toastr.error('Plese Select Member first');
             document.getElementById("member_id").focus();
         }
-    }
-    // -----------------------------------------------------
-    $("#returnTable").on('click', '.remove_resources', function () {
-        $(this).closest('tr').remove();
-        document.getElementById("resource_details").focus();
+        
 
     });
-
+    // -----------------------------------------------------
+    
     $('#btn_fine_settle').on("click",function(event){
 
         if ($('#form_settle_fine')[0].checkValidity() === false) {
@@ -876,4 +910,4 @@ $lib_name="name".$lang;
     
 
 </script>
-@endsection
+@endpush

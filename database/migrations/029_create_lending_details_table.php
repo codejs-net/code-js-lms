@@ -17,8 +17,11 @@ class CreateLendingDetailsTable extends Migration
         Schema::create('lending_details', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('lending_id')->unsigned()->nullable();
-            $table->foreign('lending_id')->references('id')->on('lendings');
+            $table->integer('lending_issue_id')->unsigned()->nullable();
+            $table->foreign('lending_issue_id')->references('id')->on('lending_issues');
+
+            $table->integer('lending_return_id')->unsigned()->nullable();
+            $table->foreign('lending_return_id')->references('id')->on('lending_returns');
 
             $table->integer('member_id')->unsigned()->nullable();
             $table->foreign('member_id')->references('id')->on('members');

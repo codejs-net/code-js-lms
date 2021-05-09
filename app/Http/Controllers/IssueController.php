@@ -8,7 +8,7 @@ use App\Models\resource;
 use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
-use App\Models\lending;
+use App\Models\lending_issue;
 use App\Models\lending_config;
 use App\Models\view_lending_data;
 use App\Models\center_allocation;
@@ -293,7 +293,7 @@ class IssueController extends Controller
         $lending_period = session()->get('lending_period');
         $lib_name = "name" . $lang;
 
-        $lend = new lending;
+        $lend = new lending_issue;
         $lend->member_id     =  $request->mem_id;
         $lend->description   =  $request->description;
         $lend->issue_date    =  $request->dteissue;
@@ -335,13 +335,13 @@ class IssueController extends Controller
         // $issudate = Carbon::parse($request->dteissue);
         // $returndate=$issudate->addDays(14);
 
-        $lend->lending_id     =  $request->lendid;
-        $lend->member_id      =  $request->mem_id;
-        $lend->resource_id    =  $request->resourceid;
-        $lend->issue_date     =  $request->dteissue;
-        $lend->return         =  0;
-        $lend->fine_amount    =  0;
-        $lend->issue_by       =  Auth::user()->id;
+        $lend->lending_issue_id  =  $request->lendid;
+        $lend->member_id         =  $request->mem_id;
+        $lend->resource_id       =  $request->resourceid;
+        $lend->issue_date        =  $request->dteissue;
+        $lend->return            =  0;
+        $lend->fine_amount       =  0;
+        $lend->issue_by          =  Auth::user()->id;
 
         $lend->save();
 
@@ -395,21 +395,8 @@ class IssueController extends Controller
     public function issue_receipt($id)
     {
         // $lending = lending::where('lending_id',$id )->first();
-        $lendingdata = view_lending_data::where('lending_id', $id)->get();
+        $lendingdata = view_lending_data::where('lending_issue_id', $id)->get();
         return view('receipts.issue_receipt')->with('lendingdata', $lendingdata);
     }
 
-    public function isconnect()
-    {
-        $response = null;
-        System("ping -c 1 google.com", $response);
-        if($response == 0)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
 }
