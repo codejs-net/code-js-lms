@@ -267,16 +267,12 @@ $lib_name="name".$lang;
 
                 <div class="modal-footer">
                     <div class="form-group text-center">
-                        {{-- <div class="form-check form-check-inline text-primary" >
-                            <label class="form-check-label"><i class="fa fa-check"></i> &nbsp;save&nbsp;</label>
-                            <input type="radio" class="form-check-input methord" name="methord" value="1" required>|
-                        </div> --}}
                         <div class="form-check form-check-inline text-info" >
-                            <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;save & Extend&nbsp;</label>
+                            <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;Extend&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="2" required>|
                         </div>
                         <div class="form-check form-check-inline text-success" >
-                            <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp; save & Return&nbsp;</label>
+                            <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp;Return&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="3" required>
                         </div>
                         
@@ -334,30 +330,26 @@ $lib_name="name".$lang;
         $("#fineTable tbody").empty();
 
             $('#resourceTable tr').each(function(){
-                if($(this).find(".fine_settle").html() == "unsettled"){
+                if($(this).find(".r_fine").html() != 0.00){
                     op+='<tr>';
-                    op+='<td class="td_id">'+$(this).find(".td_id").html()+'</td>';
-                    op+='<td class="td_acceno">'+$(this).find(".td_acceno").html()+'</td>';
-                    op+='<td class="td_title">'+$(this).find(".td_title").html()+'</td>';
-                    op+='<td class="fine_amount">'+$(this).find(".fine_amount").html()+'</td>';
+                    op+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
+                    op+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
+                    op+='<td class="td_title">'+$(this).find(".r_title").html()+'</td>';
+                    op+='<td class="fine_amount">'+$(this).find(".r_fine").html()+'</td>';
                     op+='<td class="fine_pay"><input class="form-check-input pay_check" type="checkbox" value="1"></td>';
                     op+='</tr>';  
-                    tot_fine += parseFloat($(this).find(".fine_amount").html());
+                    tot_fine += parseFloat($(this).find(".r_fine").html());
                 }
             });
             $("#fineTable tbody").append(op);
             $("#tot_fine").html(tot_fine);
-            
-
-           
-        
         
         });
         // --------end settel Model------------------------------------------
 
         $('#settel_show').on('hidden.bs.modal', function (event) {
-            var memberid=$('#member_Name_id').val();
-            memberSelect(memberid);
+            // var memberid=$('#member_Name_id').val();
+            // memberSelect(memberid);
             $('#form_settle_fine')[0].reset();
         })
 
@@ -371,7 +363,7 @@ $lib_name="name".$lang;
 
     $('#addbarrow').on("click",function(){
         var resourceinput = $("#resource_details").val();
-        add_to_retun_table(resourceinput)
+        add_to_retun_table(resourceinput,"Return");
     });
     // ------------------------------------------------------------------------
     function memberSelect(member)
@@ -382,6 +374,7 @@ $lib_name="name".$lang;
         $('#member_Name_id').val('');
         $('#member_Name').html('');
         $("#resourceTable tbody").empty();
+        $("#returnTable tbody").empty();
         $("#fineTable tbody").empty();
         $("#print_table tbody").empty();
         $('#return-cart').hide();
@@ -442,8 +435,8 @@ $lib_name="name".$lang;
                                         }
                                         else
                                         {
-                                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
-                                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
+                                            op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
+                                            op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
                                         }
                                         
                                     op+='</div>';
@@ -476,7 +469,7 @@ $lib_name="name".$lang;
             }
         });
     }
-    function add_to_retun_table(resourceinput)
+    function add_to_retun_table(resourceinput,returnaction)
     {
         var op ="";
         var exsist=false;
@@ -511,7 +504,7 @@ $lib_name="name".$lang;
                                 op+='<td class="td_issuedate">'+$(this).find(".r_issuedate").html()+'</td>';
                                 op+='<td class="td_title">'+$(this).find(".r_returndate").html()+'</td>';
                                 op+='<td class="td_fine_amount">'+$(this).find(".r_fine").html()+'</td>';
-                                op+='<td class="td_action">Return</td>';
+                                op+='<td class="td_action">'+returnaction+'</td>';
                                 op+='<td><button type="button" value="'+$(this).find(".r_lendid").html()+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>'
                                 op+='</tr>';  
                             }
@@ -637,7 +630,8 @@ $lib_name="name".$lang;
                     var discrtpt_si= $("#description_si").val();
                     var discrtpt_ta= $("#description_ta").val();
                     var discrtpt_en= $("#description_en").val();
-                
+                    var op1="";
+                    var returnaction="";
                     //-------------------------------------------------------
                     $.ajaxSetup({
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
@@ -661,17 +655,39 @@ $lib_name="name".$lang;
                             },
                         url: "{{route('settle_fine')}}",
                         success: function(data){ 
-                            //
                             if(data.massage=="success"){
-                                opp_status=1; 
+                                // opp_status=1; 
                                 toastr.success('Fine Settled Successfully');
-                                // console.log(data.massage);
-                                // $("#opp_status").val(data.massage);
+                            // -------------add to return table-------------
+                            if(methord==2){returnaction="Extend";}
+                            else if(methord==3){returnaction="Return";}
+
+                                $('#resourceTable tbody tr').each(function(){
+                                    var r_lendid=$(this).find(".r_lendid").html();
+                                    if(lend_id==r_lendid)
+                                    {
+                                        op1+='<tr>';
+                                        op1+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
+                                        op1+='<td class="td_type">'+$(this).find(".r_type").html()+'</td>';
+                                        op1+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
+                                        op1+='<td class="td_snumber">'+$(this).find(".r_snumber").html()+'</td>';
+                                        op1+='<td class="td_title">'+$(this).find(".r_title").html()+'</td>';
+                                        op1+='<td class="td_issuedate">'+$(this).find(".r_issuedate").html()+'</td>';
+                                        op1+='<td class="td_title">'+$(this).find(".r_returndate").html()+'</td>';
+                                        op1+='<td class="td_fine_amount">'+$(this).find(".r_fine").html()+'</td>';
+                                        op1+='<td class="td_action">'+returnaction+'</td>';
+                                        op1+='<td><button type="button" value="'+$(this).find(".r_lendid").html()+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>'
+                                        op1+='</tr>';  
+                                        $("#returnTable tbody").append(op1);
+                                    }   
+                                });
+
+                            // ---------------------------------------------
                             }
                         },
                         error: function(data){
                             toastr.error('Fine Settled Error');
-                            opp_status=0; 
+                            // opp_status=0; 
                         }
                     });
                     //---------------------------------------------------------
@@ -711,84 +727,143 @@ $lib_name="name".$lang;
 
     });
 
-
-    $("#resourceTable").on('click', '.return_lending', function () {
-        // $(this).closest('tr').remove();
+    $('#return_resource').on("click",function(){
+        var oTable = document.getElementById('returnTable');
+        var rowLength = oTable.rows.length;
+        var mem_id = $("#member_Name_id").val();
         var dtereturn = $("#returndte").val();
-        var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
-        var cellVal_lend_id=$(this).val();
-        // toastr.error("lend id:"+lend_id+" fine:"+fine_amount);
-        //-------------------------------------------------------
-        $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-            $.ajax({
-                type: 'POST',
-                dataType : 'json',
-                data:{
-                    dtereturn: dtereturn,
-                    cellVal_lend_id: cellVal_lend_id
-                    },
-                url: "{{route('store_return')}}",
-                success: function(data){  
-                    // console.log(data);
-                    if(data.massage=="success")
-                    {
-                        $('#resourceTable').find('.td_id').each(function(){
-                            if($(this).text() == data.lendid){
-                                $(this).parent('tr').remove();
-                            }
-                        });
-                        var _rowCount = $('#resourceTable tr').length;
-                        if(_rowCount==1)
-                        { $('#issue-cart').hide();}
-                        toastr.success('Resources Successfully Returnd');
-                    }
-                },
-                error: function(data){
-                    toastr.error('Returing Error');
+        var membername=$('#member_Name_sms').val();
+        var membermobile=$('#member_mobile').val();
+        var descript=[];
+        if($('#member_Name_id').val())
+        {
+            if(rowLength>1)
+            {
+                for (i = 1; i < rowLength; i++)
+                {
+                    var oCells = oTable.rows.item(i).cells;
+                    var resourceaccno = oCells.item(2).innerHTML;
+                    var resourcetitles = oCells.item(4).innerHTML;
+                    descript[i-1]=resourcetitles+"("+resourceaccno+")";
                 }
-            });
-        //---------------------------------------------------------
-        document.getElementById("resource_details").focus();
+                var description = descript.toString();
+
+                // ------------------------lending save--------------------------------
+                    $.ajaxSetup({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType : 'json',
+                        url: "{{route('return.store')}}",
+                        data:{
+                            description: description,
+                            mem_id: mem_id,
+                            dtereturn: dteissue,
+                            membername:membername,
+                            membermobile:membermobile
+                            },
+                        beforeSend: function(){
+                            $("#loader").show();
+                        },
+                        success: function(data){
+                            var lendid=data.lend_id;
+                            // ---------------------lending Details save--------------
+                            for (j = 1; j < rowLength; j++)
+                            {
+                                var op="";
+                                var oCells = oTable.rows.item(j).cells;
+                                var lend_detailid = oCells.item(0).innerHTML;
+                                var fine_amount = oCells.item(7).innerHTML;
+
+                                $.ajaxSetup({
+                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                                $.ajax({
+                                    type: 'POST',
+                                    dataType : 'json',
+                                    data:{
+                                        fine_amount: fine_amount,
+                                        dtereturn: dtereturn,
+                                        lend_detailid: lend_detailid
+                                        },
+                                    url: "{{route('store_return')}}",
+                                    success: function(data){  
+                                    
+                                    },
+                                    error: function(data){
+                                    
+                                    },
+                                    complete:function(data){
+                                    $("#loader").hide();
+                                    }
+                                });
+                            }
+                            //------------------------end-----------------------------
+                            toastr.success('lending Processe Successfuly Completed');
+                           
+                            if($("#check_print").prop("checked") == true)
+                            {
+                                // --------------print--------------------------
+                                $('#print_member').html($('#member_Name').html());
+                                $('#print_issuedate').html(dteissue);
+                                $('#print_returndate').html(dtereturn);
+                                
+                                for (k = 1; k < rowLength; k++)
+                                {
+                                    var op="";
+                                    var oCells = oTable.rows.item(k).cells;
+                                    var resourceacceno = oCells.item(2).innerHTML;
+                                    var resourcetitle = oCells.item(4).innerHTML;
+                                    var resourcetype = oCells.item(1).innerHTML;
+                                
+                                    op+='<tr>';
+                                    op+='<td>'+resourceacceno+'</td><td>&nbsp;-&nbsp;'+resourcetitle+'</td><td>&nbsp;('+resourcetype+')</td>';
+                                    op+='</tr>';
+                                    $("#print_table tbody").append(op);
+                                }
+                                printDiv();
+                                //---------------end print----------------------  
+                            }
+                            
+                            $('#resource_details').val('');
+                            $('#member_Name_id').val('');
+                            $('#member_Name').html('');
+                            $("#resourceTable tbody").empty();
+                            $("#print_table tbody").empty();
+                            $("#returnTable tbody").empty();
+                            $('#member_lend').html('');
+                            $('#return-cart').hide();
+                            document.getElementById("member_id").focus();
+                        },
+                        error: function(data){
+                            toastr.error('lending Processe faild');
+                        }
+                });
+                // ----------------------end lending save-------------------------------
+            }
+            else
+            {toastr.warning('Lending Cart is empty');}
+        }
+        else
+        {
+            toastr.error('Plese Select Member first');
+            document.getElementById("member_id").focus();
+        }
 
     });
 
-    $("#resourceTable").on('click', '.extend_lending', function () {
-        // $(this).closest('tr').remove();
-        var dtereturn = $("#returndte").val();
-        var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
-        var accno =  $(this).closest('tr').find(".td_acceno").html();
-        var lend_id=$(this).val();
-        // toastr.error("lend id:"+lend_id+" fine:"+fine_amount);
-        //-------------------------------------------------------
-        $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-            $.ajax({
-                type: 'POST',
-                dataType : 'json',
-                data:{
-                    dtereturn: dtereturn,
-                    lend_id: lend_id,
-                    fine_amount: fine_amount,
-                    accno: accno
-                    },
-                url: "{{route('extend_lending')}}",
-                success: function(data){  
-                    // console.log(data);
-                    if(data.massage=="success")
-                    {
-                        var memberid=$('#member_Name_id').val();
-                        memberSelect(memberid);
-                        toastr.success('Lending Period Extend Successfully');
-                    }
-                },
-                error: function(data){
-                    toastr.error('Extend Error');
-                }
-            });
-        //---------------------------------------------------------
-        document.getElementById("resource_details").focus();
+    $("#resourceTable").on('click', '.return_lending', function () {
+        // var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
+        var resourceinput=$(this).val();
+        add_to_retun_table(resourceinput,"Return");
+    });
 
+    $("#resourceTable").on('click', '.extend_lending', function () {
+        var resourceinput=$(this).val();
+        add_to_retun_table(resourceinput,"Extend");
     });
 
     $('#returndte').change(function() {

@@ -149,46 +149,48 @@ class ReturnController extends Controller
         $receipt->amount            =$request->fine_amount;
         $receipt->save();
         // ------------------------------------------------
-        $detail=lending_detail::find($request->lend_id);
 
-        if($request->methord=="1") //settle
-        {
-            $detail->fine_amount    =$request->fine_amount;
-            $detail->save();
-        }
-        else if($request->methord=="2") //settle and extend
-        {
+        
+        // $detail=lending_detail::find($request->lend_id);
 
-            $detail->fine_amount    =$request->fine_amount;
-            $detail->return         =1;
-            $detail->return_date    =$request->date_settle;
-            $detail->return_by      =Auth::user()->id;
-            $detail->save();
+        // if($request->methord=="1") //settle
+        // {
+        //     $detail->fine_amount    =$request->fine_amount;
+        //     $detail->save();
+        // }
+        // else if($request->methord=="2") //settle and extend
+        // {
 
-            $lend=new lending;
-            $lend->member_id        =  $detail->member_id;
-            $lend->description      =  $request->accno;
-            $lend->issue_date       =  $request->date_settle;
-            $lend->save();
+        //     $detail->fine_amount    =$request->fine_amount;
+        //     $detail->return         =1;
+        //     $detail->return_date    =$request->date_settle;
+        //     $detail->return_by      =Auth::user()->id;
+        //     $detail->save();
 
-            $lendd=new lending_detail;
-            $lendd->lending_id     =  $lend->id;
-            $lendd->member_id      =  $detail->member_id;
-            $lendd->resource_id    =  $detail->resource_id;
-            $lendd->issue_date     =  $request->date_settle;
-            $lendd->return         =  0;
-            $lendd->fine_amount    =  0;
-            $lendd->issue_by       =  Auth::user()->id;
-            $lendd->save();
-        }
-        else                            //settle and return
-        {
-            $detail->fine_amount    =$request->fine_amount;
-            $detail->return         =1;
-            $detail->return_date    =$request->date_settle;
-            $detail->return_by      =Auth::user()->id;
-            $detail->save();
-        }
+        //     $lend=new lending;
+        //     $lend->member_id        =  $detail->member_id;
+        //     $lend->description      =  $request->accno;
+        //     $lend->issue_date       =  $request->date_settle;
+        //     $lend->save();
+
+        //     $lendd=new lending_detail;
+        //     $lendd->lending_id     =  $lend->id;
+        //     $lendd->member_id      =  $detail->member_id;
+        //     $lendd->resource_id    =  $detail->resource_id;
+        //     $lendd->issue_date     =  $request->date_settle;
+        //     $lendd->return         =  0;
+        //     $lendd->fine_amount    =  0;
+        //     $lendd->issue_by       =  Auth::user()->id;
+        //     $lendd->save();
+        // }
+        // else                            //settle and return
+        // {
+        //     $detail->fine_amount    =$request->fine_amount;
+        //     $detail->return         =1;
+        //     $detail->return_date    =$request->date_settle;
+        //     $detail->return_by      =Auth::user()->id;
+        //     $detail->save();
+        // }
 
         return response()->json(['massage' => "success"]);
     }
