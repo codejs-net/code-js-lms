@@ -8,7 +8,8 @@ use App\Models\resource;
 use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
-use App\Models\lending;
+use App\Models\lending_return;
+use App\Models\lending_issue;
 use App\Models\lending_config;
 use App\Models\view_lending_data;
 use App\Models\fine_settle;
@@ -150,97 +151,122 @@ class ReturnController extends Controller
         $receipt->save();
         // ------------------------------------------------
 
-        
-        // $detail=lending_detail::find($request->lend_id);
-
-        // if($request->methord=="1") //settle
-        // {
-        //     $detail->fine_amount    =$request->fine_amount;
-        //     $detail->save();
-        // }
-        // else if($request->methord=="2") //settle and extend
-        // {
-
-        //     $detail->fine_amount    =$request->fine_amount;
-        //     $detail->return         =1;
-        //     $detail->return_date    =$request->date_settle;
-        //     $detail->return_by      =Auth::user()->id;
-        //     $detail->save();
-
-        //     $lend=new lending;
-        //     $lend->member_id        =  $detail->member_id;
-        //     $lend->description      =  $request->accno;
-        //     $lend->issue_date       =  $request->date_settle;
-        //     $lend->save();
-
-        //     $lendd=new lending_detail;
-        //     $lendd->lending_id     =  $lend->id;
-        //     $lendd->member_id      =  $detail->member_id;
-        //     $lendd->resource_id    =  $detail->resource_id;
-        //     $lendd->issue_date     =  $request->date_settle;
-        //     $lendd->return         =  0;
-        //     $lendd->fine_amount    =  0;
-        //     $lendd->issue_by       =  Auth::user()->id;
-        //     $lendd->save();
-        // }
-        // else                            //settle and return
-        // {
-        //     $detail->fine_amount    =$request->fine_amount;
-        //     $detail->return         =1;
-        //     $detail->return_date    =$request->date_settle;
-        //     $detail->return_by      =Auth::user()->id;
-        //     $detail->save();
-        // }
 
         return response()->json(['massage' => "success"]);
     }
 
-    public function store_return(Request $request)
+    public function store(Request $request)
     {
         $lang = session()->get('db_locale');
-        $lib_name="name".$lang;
-        $detail=lending_detail::find($request->cellVal_lend_id);
-        if($detail)
-        {
-            $detail->return=1;
-            $detail->return_date=$request->dtereturn;
-            $detail->return_by=Auth::user()->id;
-            $detail->save();
+        $lending_period = session()->get('lending_period');
+        $lib_name = "name" . $lang;
+        $print_r="";
+        $print_i="";
 
-             //-------------------SMS Alert-----------------------------
-            $SoapController =new SoapController;
-            $mobile_no=$request->membermobile;
-           
-            $library = session()->get('library');
-            if(!empty($library))
+        $lend_data=json_decode($request->get('lend_data'));
+        $return_data=json_decode($request->get('return_data'));
+
+        $lend_r = new lending_return;
+        $lend_r->member_id     =  $lend_data[0]->mem_id;
+        $lend_r->description   =  $lend_data[0]->return_descript;
+        $lend_r->return_date   =  $lend_data[0]->dtereturn;
+        $lend_r->save();
+
+        foreach($return_data as $item)
+        {
+            $detail_r=lending_detail::find($item->lend_id);
+            if($detail_r)
             {
-                $library_name=$library->$lib_name;
+                $detail_r->lending_return_id=$lend_r->id;
+                $detail_r->return=1;
+                $detail_r->return_date=$lend_data[0]->dtereturn;
+                $detail_r->fine_amount=$item->fine_amount;
+                $detail_r->return_by=Auth::user()->id;
+                $detail_r->save();
+
+                $print_r.='<tr>';
+                $print_r.='<td><span>'.$item->type.'&nbsp;'.$item->title.'('.$item->accno.')'.'</span></td>';
+                $print_r.='</tr>';
             }
-          
-            if($lang=="_si"){
-                $message_text= $library_name."-ආපසු භාර දීම්\r\n \r\n"."සාමාජික විස්තර -".$request->membername."(".$request->mem_id.")"."\r\n"."ආපසු භාර දීම් විස්තර - ".$request->description."\r\n"."ආපසු භාරදුන් දිනය - ".$request->dtereturn."\r\n"."ස්තූතියි!";
-            }
-            elseif($lang=="_en"){
-              
-            }
-            else{
-               
-            }
-            $setting_sms_send = setting::where('setting', 'sms_return')->first();
-            if ($setting_sms_send->value == "1") 
+        }
+
+        if($lend_data[0]->extend_descript !="")
+        {
+            $lend_i = new lending_issue;
+            $lend_i->member_id     =  $lend_data[0]->mem_id;
+            $lend_i->description   =  $lend_data[0]->extend_descript;
+            $lend_i->issue_date    =  $lend_data[0]->dtereturn;
+            $lend_i->save();
+
+            foreach($return_data as $item)
             {
-                if($SoapController->is_connected()==true)
-                { $SoapController->multilang_msg_Send($mobile_no,$message_text);} 
+                if($item->return_action=="Extend")
+                {
+                    $detail_i = new lending_detail;
+                    $detail_i->lending_issue_id  =  $lend_i->id;
+                    $detail_i->member_id         =  $lend_data[0]->mem_id;
+                    $detail_i->resource_id       =  $item->reso_id;
+                    $detail_i->issue_date        =  $lend_data[0]->dtereturn;
+                    $detail_i->return            =  0;
+                    $detail_i->fine_amount       =  0;
+                    $detail_i->issue_by          =  Auth::user()->id;
+                    $detail_i->save();
+
+                    $print_i.='<tr>';
+                    $print_i.='<td><span>'.$item->type.'&nbsp;'.$item->title.'('.$item->accno.')'.'</span></td>';
+                    $print_i.='</tr>';
+                }
+            }
+        }
+
+        //-------------------SMS Alert-----------------------------
+        $SoapController = new SoapController;
+        $mobile_no = $lend_data[0]->membermobile;
+        $member_name = $lend_data[0]->membername;
+        $returndate = $lend_data[0]->dtereturn;
+        $issudate = Carbon::parse($lend_data[0]->dtereturn);
+        $extend_returndate = $issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
+
+        $library = session()->get('library');
+        if (!empty($library)) {
+            $library_name = $library->$lib_name;
+        }
+
+        
+       
+        $setting_sms_send = setting::where('setting', 'sms_return')->first();
+        if ($setting_sms_send->value == "1") 
+        {
+            if($SoapController->is_connected()==true)
+            {
+                $message_text_r = $library_name ."-".trans('Returned')."\r\n \r\n".trans('Member Detail')."-". $member_name ."(". $lend_data[0]->mem_id .")". "\r\n" .trans('Returned Detail')."-". $lend_data[0]->return_descript. "\r\n" .trans('Returned Date')."-" .$returndate. "\r\n".trans('Thank You!');
+                $SoapController->multilang_msg_Send($mobile_no, $message_text_r);
+
+                if($lend_data[0]->extend_descript !="")
+                {
+                    $message_text_i = $library_name ."-".trans('Issue')."\r\n \r\n".trans('Member Detail')."-". $member_name ."(". $lend_data[0]->mem_id .")". "\r\n" .trans('Issue Detail')."-". $lend_data[0]->extend_descript. "\r\n" .trans('To Be Return') ."-". $extend_returndate ."\r\n".trans('Thank You!');
+                    $SoapController->multilang_msg_Send($mobile_no, $message_text_i);
+                }
             } 
-           
-            //-----------------------End SMS Alert----------------------
+        } 
+        
+        //-----------------------End SMS Alert----------------------
+        return response()->json([
+            'status'=>'success',
+            'print_r'=>$print_r,
+            'print_i'=>$print_i,
+            'tobe_return'=>$extend_returndate]);
+       
+    }
 
-            return response()->json(['massage' => "success",'lendid' =>$request->cellVal_lend_id]);
-        }
-        else
-        {
-            return response()->json(['massage' => "error"]);
-        }
+    public function store_return(Request $request)
+    {
+        
+       
+        // else
+        // {
+            return response()->json($return_data);
+        // }
        
     }
 
@@ -260,40 +286,6 @@ class ReturnController extends Controller
         if($receipt)
         {
             return response()->json(['massage' => "success",'receipt_id' => $receipt->id]);
-        }
-        else
-        {
-            return response()->json(['massage' => "error"]);
-        }
-       
-    }
-    public function extend_lending(Request $request)
-    {
-        $detail=lending_detail::find($request->lend_id);
-        if($detail)
-        {
-            $detail->fine_amount    =$request->fine_amount;
-            $detail->return         =1;
-            $detail->return_date    =$request->dtereturn;
-            $detail->return_by      =Auth::user()->id;
-            $detail->save();
-
-            $lend=new lending;
-            $lend->member_id        =  $detail->member_id;
-            $lend->description      =  $request->accno;
-            $lend->issue_date       =  $request->dtereturn;
-            $lend->save();
-
-            $lendd=new lending_detail;
-            $lendd->lending_id     =  $lend->id;
-            $lendd->member_id      =  $detail->member_id;
-            $lendd->resource_id    =  $detail->resource_id;
-            $lendd->issue_date     =  $request->dtereturn;
-            $lendd->return         =  0;
-            $lendd->fine_amount    =  0;
-            $lendd->issue_by       =  Auth::user()->id;
-            $lendd->save();
-            return response()->json(['massage' => "success"]);
         }
         else
         {

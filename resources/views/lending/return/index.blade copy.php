@@ -880,6 +880,111 @@ $lib_name="name".$lang;
     });
     $('#print_return').on("click",function(event){
         print_div($('#print_lendding').html());
+        var oTable = document.getElementById('returnTable');
+        var rowLength = oTable.rows.length;
+
+        var mem_id = $("#member_Name_id").val();
+        var dtereturn = $("#returndte").val();
+        var membername=$('#member_Name_sms').val();
+        var membermobile=$('#member_mobile').val();
+        var _return_descript = [];
+        var _extend_descript = [];
+
+        if($('#member_Name_id').val())
+        {
+            if(rowLength>1)
+            {
+                for (i = 1; i < rowLength; i++)
+                {
+                    var oCells = oTable.rows.item(i).cells;
+                    var resourceaccno = oCells.item(3).innerHTML;
+                    var resourcetitles = oCells.item(5).innerHTML;
+                    var return_action = oCells.item(9).innerHTML;
+                    if(return_action=="Extend")
+                    { 
+                        _extend_descript[i-1]=resourcetitles+"("+resourceaccno+")";
+                    }
+                    _return_descript[i-1]=resourcetitles+"("+resourceaccno+")";
+                }
+                var extend_descript = _extend_descript.toString();
+                var return_descript = _return_descript.toString();
+                var lend_data = [];
+                var return_data = [];
+                var lend_id, reso_id, type,accno,snumber,title,issuedate,tobe_return,fine_amount,return_action;
+
+                lend_data.push({
+                    mem_id: mem_id,
+                    dtereturn: dtereturn,
+                    membername: membername,
+                    membermobile: membermobile,
+                    return_descript:return_descript,
+                    extend_descript:extend_descript
+                    });
+
+                $('#returnTable tbody tr').each(function(){
+                    lend_id = $(this).find(".td_id").html();
+                    reso_id = $(this).find(".td_reso_id").html();
+                    type = $(this).find(".td_type").html();
+                    accno = $(this).find(".td_acceno").html();
+                    snumber = $(this).find(".td_snumber").html();
+                    title = $(this).find(".td_title").html();
+                    issuedate = $(this).find(".td_issuedate").html();
+                    tobe_return = $(this).find(".td_tobereturn").html();
+                    fine_amount = $(this).find(".td_fine_amount").html();
+                    return_action = $(this).find(".td_action").html();
+
+                    return_data.push({
+                        lend_id: lend_id,
+                        reso_id: reso_id,
+                        accno: accno,
+                        snumber: snumber,
+                        title: title,
+                        issuedate: issuedate,
+                        tobe_return: tobe_return,
+                        fine_amount: fine_amount,
+                        return_action:return_action
+                        });
+                });
+            
+                $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                $.ajax({
+                    type: 'POST',
+                    dataType : 'json',
+                    // async:false,
+                    data:{
+                        lend_data:lend_data,
+                        return_data:return_data,
+                        },
+                    url: "{{route('return.store')}}",
+                    beforeSend: function(){
+                        $("#loader").show();
+                    },
+                    success: function(data){  
+                        toastr.success('Processe Successfuly Completed'); 
+                        console.log(data);
+                        
+                    },
+                    error: function(data){
+                        toastr.error('Processe Faild'); 
+                    },
+                    complete:function(data){
+                    $("#loader").hide();
+                    }
+                });
+
+            }
+            else
+            {toastr.warning('Lending Cart is empty');}
+        }
+        else
+        {
+            toastr.error('Plese Select Member first');
+            document.getElementById("member_id").focus();
+        }
+
+       
+
     });
     function print_div(print_content){
         // var contents = $("#fine_receipt").html();

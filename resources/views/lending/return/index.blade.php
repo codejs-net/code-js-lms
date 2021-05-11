@@ -87,19 +87,21 @@ $lib_name="name".$lang;
                     </div>
                 </div>
             </div>
+            <form  id="form_returntable" class="">
+            {{ csrf_field() }}
             <div class="col-md-9 col-9 p-3 bg-white">
                 <div class="table-responsive"style="overflow-x: auto;"> 
                     <table class="table table-hover" id="returnTable">
                         <thead class="js-tbl-header">
                             <tr>
                             <th scope="col">ID</th>
-                            {{-- <th scope="col">Resource ID</th> --}}
+                            <th scope="col">Resource</th>
                             <th scope="col">Type</th>
-                            <th scope="col">Accession No</th>
+                            <th scope="col">Accession</th>
                             <th scope="col">ISBN/ISSN</th>
                             <th scope="col">Title</th>
-                            <th scope="col">Issue Date</th>
-                            <th scope="col">To Be Return</th>
+                            <th scope="col">Issue</th>
+                            <th scope="col">ToBeReturn</th>
                             <th scope="col">Fine(Rs)</th>
                             {{-- <th scope="col">Return</th> --}}
                             {{-- <th scope="col">Fine Status</th> --}}
@@ -114,7 +116,7 @@ $lib_name="name".$lang;
                 </div>
                
             </div>
-            
+        </form>
         </div>
     </div>
     <hr>
@@ -153,17 +155,29 @@ $lib_name="name".$lang;
                 <h5 >Member : <span id="print_member"></span></h5>
                 <h5>Returned Date :<span id="print_returndate"></span></h5>
                 
-                <table id="print_table">
+                <table id="print_table_return">
                     <thead>
                         <tr>
-                            <th>Issue Date</th>
                             <th>Resources</th>
                         </tr>    
                     </thead> 
                     <tbody> 
                     </tbody>
                 </table>
-
+                <hr>
+               <div id="div_extend" style="display: none;">
+                <h5>Issue Date :<span id="print_issuedate"></span></h5>
+                <table id="print_table_issue">
+                    <thead>
+                        <tr>
+                            <th>Resources</th>
+                        </tr>    
+                    </thead> 
+                    <tbody> 
+                    </tbody>
+                </table>
+                <h5>To Be Return :<span id="print_tobe_return"></span></h5>
+               </div>
                 </br>
                 <div class="text-center mb-3"><h3>Thank You!</h3></div>
             </div>
@@ -376,8 +390,10 @@ $lib_name="name".$lang;
         $("#resourceTable tbody").empty();
         $("#returnTable tbody").empty();
         $("#fineTable tbody").empty();
-        $("#print_table tbody").empty();
+        $("#print_table_issue tbody").empty();
+        $("#print_table_return tbody").empty();
         $('#return-cart').hide();
+        $('#div_extend').hide();
         var op="";
         $.ajaxSetup({
             headers: {
@@ -422,6 +438,7 @@ $lib_name="name".$lang;
                                     op+='</div>';
                                     op+='<div class="col-md-8 col-8 pl-2">';                                      
                                         op+='<h5><span class="r_title">'+data[j]['resource_title']+'</span></h5>';
+                                        op+='<div><span>ResourceID:</span><span class="r_resoid">'+data[j]['resource_id']+'</span></div>';
                                         op+='<div><span>AccessionNo:</span><span class="r_accno">'+data[j]['resource_accno']+'</span></div>';
                                         op+='<div><span>Lending ID:</span><span class="r_lendid">'+data[j]['id']+'</span></div>';
                                         op+='<div><span>SNumber:</span><span class="r_snumber">'+data[j]['resource_isn']+'</span></div>';
@@ -497,12 +514,13 @@ $lib_name="name".$lang;
                             {
                                 op+='<tr>';
                                 op+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
+                                op+='<td class="td_reso_id">'+$(this).find(".r_resoid").html()+'</td>';
                                 op+='<td class="td_type">'+$(this).find(".r_type").html()+'</td>';
                                 op+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
                                 op+='<td class="td_snumber">'+$(this).find(".r_snumber").html()+'</td>';
                                 op+='<td class="td_title">'+$(this).find(".r_title").html()+'</td>';
                                 op+='<td class="td_issuedate">'+$(this).find(".r_issuedate").html()+'</td>';
-                                op+='<td class="td_title">'+$(this).find(".r_returndate").html()+'</td>';
+                                op+='<td class="td_tobereturn">'+$(this).find(".r_returndate").html()+'</td>';
                                 op+='<td class="td_fine_amount">'+$(this).find(".r_fine").html()+'</td>';
                                 op+='<td class="td_action">'+returnaction+'</td>';
                                 op+='<td><button type="button" value="'+$(this).find(".r_lendid").html()+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>'
@@ -668,6 +686,7 @@ $lib_name="name".$lang;
                                     {
                                         op1+='<tr>';
                                         op1+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
+                                        op1+='<td class="td_reso_id">'+$(this).find(".r_resoid").html()+'</td>';
                                         op1+='<td class="td_type">'+$(this).find(".r_type").html()+'</td>';
                                         op1+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
                                         op1+='<td class="td_snumber">'+$(this).find(".r_snumber").html()+'</td>';
@@ -730,11 +749,15 @@ $lib_name="name".$lang;
     $('#return_resource').on("click",function(){
         var oTable = document.getElementById('returnTable');
         var rowLength = oTable.rows.length;
+
         var mem_id = $("#member_Name_id").val();
         var dtereturn = $("#returndte").val();
         var membername=$('#member_Name_sms').val();
         var membermobile=$('#member_mobile').val();
-        var descript=[];
+        var _return_descript = [];
+        var _extend_descript = [];
+        var reso_extend=false;
+
         if($('#member_Name_id').val())
         {
             if(rowLength>1)
@@ -742,107 +765,99 @@ $lib_name="name".$lang;
                 for (i = 1; i < rowLength; i++)
                 {
                     var oCells = oTable.rows.item(i).cells;
-                    var resourceaccno = oCells.item(2).innerHTML;
-                    var resourcetitles = oCells.item(4).innerHTML;
-                    descript[i-1]=resourcetitles+"("+resourceaccno+")";
+                    var resourceaccno = oCells.item(3).innerHTML;
+                    var resourcetitles = oCells.item(5).innerHTML;
+                    var return_action = oCells.item(9).innerHTML;
+                    var desc=resourcetitles+"("+resourceaccno+")";
+                    if(return_action=="Extend")
+                    { 
+                        _extend_descript.push(desc);
+                        reso_extend=true;
+                    }
+                    _return_descript.push(desc);
                 }
-                var description = descript.toString();
+                var extend_descript = _extend_descript.toString();
+                var return_descript = _return_descript.toString();
+                var lend_data = [];
+                var return_data = [];
+                var lend_id, reso_id, type,accno,snumber,title,issuedate,tobe_return,fine_amount,return_action;
 
-                // ------------------------lending save--------------------------------
-                    $.ajaxSetup({
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
+                lend_data.push({
+                    mem_id: mem_id,
+                    dtereturn: dtereturn,
+                    membername: membername,
+                    membermobile: membermobile,
+                    return_descript:return_descript,
+                    extend_descript:extend_descript
                     });
 
-                    $.ajax({
-                        type: 'POST',
-                        dataType : 'json',
-                        url: "{{route('return.store')}}",
-                        data:{
-                            description: description,
-                            mem_id: mem_id,
-                            dtereturn: dteissue,
-                            membername:membername,
-                            membermobile:membermobile
-                            },
-                        beforeSend: function(){
-                            $("#loader").show();
-                        },
-                        success: function(data){
-                            var lendid=data.lend_id;
-                            // ---------------------lending Details save--------------
-                            for (j = 1; j < rowLength; j++)
-                            {
-                                var op="";
-                                var oCells = oTable.rows.item(j).cells;
-                                var lend_detailid = oCells.item(0).innerHTML;
-                                var fine_amount = oCells.item(7).innerHTML;
+                $('#returnTable tbody tr').each(function(){
+                    lend_id = $(this).find(".td_id").html();
+                    reso_id = $(this).find(".td_reso_id").html();
+                    type = $(this).find(".td_type").html();
+                    accno = $(this).find(".td_acceno").html();
+                    snumber = $(this).find(".td_snumber").html();
+                    title = $(this).find(".td_title").html();
+                    issuedate = $(this).find(".td_issuedate").html();
+                    tobe_return = $(this).find(".td_tobereturn").html();
+                    fine_amount = $(this).find(".td_fine_amount").html();
+                    return_action = $(this).find(".td_action").html();
 
-                                $.ajaxSetup({
-                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-                                $.ajax({
-                                    type: 'POST',
-                                    dataType : 'json',
-                                    data:{
-                                        fine_amount: fine_amount,
-                                        dtereturn: dtereturn,
-                                        lend_detailid: lend_detailid
-                                        },
-                                    url: "{{route('store_return')}}",
-                                    success: function(data){  
-                                    
-                                    },
-                                    error: function(data){
-                                    
-                                    },
-                                    complete:function(data){
-                                    $("#loader").hide();
-                                    }
-                                });
-                            }
-                            //------------------------end-----------------------------
-                            toastr.success('lending Processe Successfuly Completed');
-                           
+                    return_data.push({
+                        lend_id: lend_id,
+                        reso_id: reso_id,
+                        type:type,
+                        accno: accno,
+                        snumber: snumber,
+                        title: title,
+                        issuedate: issuedate,
+                        tobe_return: tobe_return,
+                        fine_amount: fine_amount,
+                        return_action:return_action
+                        });
+                });
+        
+                $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                $.ajax({
+                    type: 'POST',
+                    dataType : 'json',
+                    // async:false,
+                    data: {
+                    'lend_data':JSON.stringify(lend_data),
+                    'return_data':JSON.stringify(return_data)
+                    },
+                    url: "{{route('return.store')}}",
+                    beforeSend: function(){
+                        $("#loader").show();
+                    },
+                    success: function(data){  
+                        if(data.status=="success")
+                        {
+                            toastr.success('Return Processe Successfuly Completed'); 
+                            if(reso_extend==true){$('#div_extend').show();}
                             if($("#check_print").prop("checked") == true)
                             {
-                                // --------------print--------------------------
-                                $('#print_member').html($('#member_Name').html());
-                                $('#print_issuedate').html(dteissue);
-                                $('#print_returndate').html(dtereturn);
-                                
-                                for (k = 1; k < rowLength; k++)
-                                {
-                                    var op="";
-                                    var oCells = oTable.rows.item(k).cells;
-                                    var resourceacceno = oCells.item(2).innerHTML;
-                                    var resourcetitle = oCells.item(4).innerHTML;
-                                    var resourcetype = oCells.item(1).innerHTML;
-                                
-                                    op+='<tr>';
-                                    op+='<td>'+resourceacceno+'</td><td>&nbsp;-&nbsp;'+resourcetitle+'</td><td>&nbsp;('+resourcetype+')</td>';
-                                    op+='</tr>';
-                                    $("#print_table tbody").append(op);
-                                }
-                                printDiv();
-                                //---------------end print----------------------  
+                                $("#print_table_return tbody").append(data.print_r);
+                                $("#print_table_issue tbody").append(data.print_i);
+                                $("#print_member").html(membername);
+                                $("#print_returndate").html(dtereturn);
+                                $("#print_issuedate").html(dtereturn);
+                                $("#print_tobe_return").html(data.tobe_return);
+                                print_div($("#print_lendding").html());
                             }
-                            
-                            $('#resource_details').val('');
-                            $('#member_Name_id').val('');
-                            $('#member_Name').html('');
-                            $("#resourceTable tbody").empty();
-                            $("#print_table tbody").empty();
-                            $("#returnTable tbody").empty();
-                            $('#member_lend').html('');
-                            $('#return-cart').hide();
-                            document.getElementById("member_id").focus();
-                        },
-                        error: function(data){
-                            toastr.error('lending Processe faild');
+                            memberSelect(mem_id);
                         }
+                        
+                    },
+                    error: function(data){
+                        toastr.error('Processe Faild'); 
+                    },
+                    complete:function(data){
+                    $("#loader").hide();
+                    }
                 });
-                // ----------------------end lending save-------------------------------
+
             }
             else
             {toastr.warning('Lending Cart is empty');}
@@ -919,9 +934,9 @@ $lib_name="name".$lang;
         $("#receipt_no").val('');
 
     });
-    $('#print_return').on("click",function(event){
-        print_div($('#print_lendding').html());
-    });
+    // $('#print_return').on("click",function(event){
+    //     print_div($('#print_lendding').html());
+    // });
     function print_div(print_content){
         // var contents = $("#fine_receipt").html();
         var contents = print_content;

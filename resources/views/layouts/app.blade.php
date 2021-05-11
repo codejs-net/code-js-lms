@@ -291,6 +291,13 @@ $('#create_by_modal').on('show.bs.modal', function (event) {
 })
 }
 
+// ------------------disable source---------------------
+  // $(function() {
+  //     $(this).bind("contextmenu", function(e) {
+  //         e.preventDefault();
+  //     });
+  // }); 
+// -----------------------------------------------------
 </script>
 
 
