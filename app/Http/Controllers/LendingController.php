@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\DB;
 use App\Models\setting;
 use App\Models\view_resource_data;
 use App\Models\lending_detail;
-use App\Models\lending;
+use App\Models\lending_issue;
+use App\Models\lending_return;
 use App\Models\lending_config;
 use App\Models\view_lending_data;
 use App\Models\view_lending_data_all;
+use App\Models\center_allocation;
 use App\Models\member;
 use Session;
 use Carbon\Carbon;
@@ -41,11 +43,23 @@ class LendingController extends Controller
         // dd($lendingdata);
             if(request()->ajax())
             {
-                $lendingdata = lending::select('lendings.*','members.name_si','members.name_ta','members.name_en')
-                ->whereBetween('lendings.issue_date', [$request->from_date, $request->to_date])
-                ->leftJoin('members', 'lendings.member_id', '=', 'members.id')
-                ->orderBy('lendings.updated_at', 'DESC')
-                ->get();
+                if($request->lending=="issue")
+                {
+                    $lendingdata = lending_issue::select('lending_issues.*','members.name_si','members.name_ta','members.name_en')
+                    ->whereBetween('lending_issues.lending_date', [$request->from_date, $request->to_date])
+                    ->leftJoin('members', 'lending_issues.member_id', '=', 'members.id')
+                    ->orderBy('lending_issues.updated_at', 'DESC')
+                    ->get();
+                }
+                else if($request->lending=="return")
+                {
+                    $lendingdata = lending_return::select('lending_returns.*','members.name_si','members.name_ta','members.name_en')
+                    ->whereBetween('lending_returns.lending_date', [$request->from_date, $request->to_date])
+                    ->leftJoin('members', 'lending_returns.member_id', '=', 'members.id')
+                    ->orderBy('lending_returns.updated_at', 'DESC')
+                    ->get();
+                }
+               
 
                 return datatables()->of($lendingdata)
                         ->addIndexColumn()
@@ -81,12 +95,18 @@ class LendingController extends Controller
             if(request()->ajax())
             {
                 $_return="";
+                $center_array= array();
+                $resource_center = center_allocation::where('staff_id', Auth::user()->detail_id)->with(['center'])->get();
+                foreach($resource_center as $value)
+                {array_push($center_array,$value->center->id);}
+
                 if($request->returnfilter=="All")
                 {
                     $_return="%";
                     $lendingdata = view_lending_data_all::select('*')
                     ->where('return','LIKE',$_return)
                     ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->whereIn('center_id', $center_array)
                     ->orderBy('updated_at', 'DESC')
                     ->get();
                 }
@@ -97,6 +117,7 @@ class LendingController extends Controller
                     $_lendingdata = view_lending_data_all::select('*')
                     ->where('return','LIKE',$_return)
                     ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->whereIn('center_id', $center_array)
                     ->orderBy('updated_at', 'DESC')
                     ->get();
                     // ------------------------
@@ -121,11 +142,10 @@ class LendingController extends Controller
                     $lendingdata = view_lending_data_all::select('*')
                     ->where('return','LIKE',$_return)
                     ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->whereIn('center_id', $center_array)
                     ->orderBy('updated_at', 'DESC')
                     ->get();
                 }
-
-               
 
                 return datatables()->of($lendingdata)
                         ->addIndexColumn()

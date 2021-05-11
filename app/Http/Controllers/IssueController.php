@@ -296,13 +296,13 @@ class IssueController extends Controller
         $lend = new lending_issue;
         $lend->member_id     =  $request->mem_id;
         $lend->description   =  $request->description;
-        $lend->issue_date    =  $request->dteissue;
+        $lend->lending_date  =  $request->dteissue;
 
         $lend->save();
         //-------------------SMS Alert-----------------------------
         $SoapController = new SoapController;
         $mobile_no = $request->membermobile;
-        $issudate = Carbon::parse($lend->issue_date);
+        $issudate = Carbon::parse($lend->lending_date);
         $returndate = $issudate->addDays($lending_period)->isoFormat('YYYY-MM-DD');
 
         $library = session()->get('library');
@@ -311,11 +311,11 @@ class IssueController extends Controller
         }
 
         if ($lang == "_si") {
-            $message_text = $library_name . "-බැහැර දීම්\r\n \r\n" . "සාමාජික විස්තර -" . $request->membername . "(" . $lend->member_id . ")" . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->issue_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
+            $message_text = $library_name . "-බැහැර දීම්\r\n \r\n" . "සාමාජික විස්තර -" . $request->membername . "(" . $lend->member_id . ")" . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->lending_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
         } elseif ($lang == "_en") {
-            $message_text = $library_name . "\r\n" . "සාමාජික විස්තර - (" . $lend->member_id . ")" . $request->membername . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->issue_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
+            $message_text = $library_name . "\r\n" . "සාමාජික විස්තර - (" . $lend->member_id . ")" . $request->membername . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->lending_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
         } else {
-            $message_text = $library_name . "\r\n" . "සාමාජික විස්තර - (" . $lend->member_id . ")" . $request->membername . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->issue_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
+            $message_text = $library_name . "\r\n" . "සාමාජික විස්තර - (" . $lend->member_id . ")" . $request->membername . "\r\n" . "බැහැර දීම් විස්තර - " . $request->description . "\r\n" . "බැහැර දුන් දිනය - " . $lend->lending_date . "\r\n" . "ආපසු භාරදිය යුතු දිනය - " . $returndate . "\r\n" . "ස්තූතියි!";
         }
         $setting_sms_send = setting::where('setting', 'sms_issue')->first();
         if ($setting_sms_send->value == "1") 

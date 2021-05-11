@@ -37,6 +37,8 @@ class CreateLendingViewAll extends Migration
                         resources.title_en,
                         resources.category_id,
                         resources.type_id,
+                        resources.image,
+                        resources.center_id,
                         members.categoryid AS member_categoryid,
                         members.name_si    AS member_si,
                         members.name_ta    AS member_ta,
@@ -59,15 +61,19 @@ class CreateLendingViewAll extends Migration
                         resource_types.type_si,
                         resource_types.type_ta,
                         resource_types.type_en,
+                        centers.name_si AS center_si,
+                        centers.name_ta AS center_ta,
+                        centers.name_en AS center_en,
                         fine_settles.id AS fine_settle
                 FROM    lending_details 
-            LEFT JOIN   resources           ON lending_details.resource_id = resources.id
-            LEFT JOIN   members             ON lending_details.member_id = members.id
-            LEFT JOIN   member_cats         ON members.categoryid = member_cats.id
-            LEFT JOIN   lending_configs     ON members.categoryid = lending_configs.categoryid
-            LEFT JOIN   resource_categories ON resources.category_id = resource_categories.id
-            LEFT JOIN   resource_types      ON resources.type_id = resource_types.id
-            LEFT JOIN   fine_settles        ON lending_details.id = fine_settles.lending_detail_id
+            LEFT JOIN   resources           ON lending_details.resource_id  = resources.id
+            LEFT JOIN   members             ON lending_details.member_id    = members.id
+            LEFT JOIN   member_cats         ON members.categoryid           = member_cats.id
+            LEFT JOIN   lending_configs     ON members.categoryid           = lending_configs.categoryid
+            LEFT JOIN   resource_categories ON resources.category_id        = resource_categories.id
+            LEFT JOIN   resource_types      ON resources.type_id            = resource_types.id
+            LEFT JOIN   centers             ON resources.center_id          = centers.id
+            LEFT JOIN   fine_settles        ON lending_details.id           = fine_settles.lending_detail_id
         SQL;
     }
 

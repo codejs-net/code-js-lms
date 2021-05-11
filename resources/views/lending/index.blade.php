@@ -26,8 +26,19 @@ $member="member".$lang;
         <div class="col-md-10 text-right">
             <form class="needs-validation" novalidate id="filter_form">
                 {{ csrf_field() }}
+               
                 <div class="input-group mb-3">
-                   
+                    <div class="border border-secondary pt-1 px-2 mr-2">
+                        <div class="form-check form-check-inline text-info" >
+                            <label class="form-check-label"><i class="fa fa-shopping-cart"></i> &nbsp;Issue&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="lending" value="issue" required>
+                        </div>
+                        <div class="form-check form-check-inline text-info" >
+                            <label class="form-check-label"><i class="fa fa-shopping-cart"></i> &nbsp;Return&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="lending" value="return" required>
+                        </div>
+                        
+                    </div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">From</span>
                     </div>
@@ -179,9 +190,11 @@ $member="member".$lang;
 
 $(document).ready(function()
 {
+    $("input[name='lending'][value='issue']").prop("checked",true);
+    var lending= $("input[name='lending']:checked").val()
     var from_date= $('#dte_from').val();
     var to_date= $('#dte_to').val();
-    load_datatable(from_date,to_date);
+    load_datatable(from_date,to_date,lending);
 
     // start lending delete function
     $('#data_delete').on('show.bs.modal', function (event) {
@@ -238,7 +251,7 @@ $(document).ready(function()
 
 });
 
-function load_datatable(from_date,to_date)
+function load_datatable(from_date,to_date,lending)
 {
 
     $('#lending_datatable').DataTable({
@@ -256,13 +269,14 @@ function load_datatable(from_date,to_date)
         data: { 
             from_date: from_date,
             to_date: to_date,
+            lending:lending,
         },
     },
     // pageLength: 15,
     
     columns:[
         {data: "id",name: "lendingid",orderable: true},
-        {data: "issue_date",name: "issue_date",orderable: true},
+        {data: "lending_date",name: "lending_date",orderable: true},
         {data: "description",name: "title"},
         {data: "<?php echo $name; ?>",name: "name"},
         {data: "action",name: "action",orderable: false}
@@ -274,9 +288,18 @@ function load_datatable(from_date,to_date)
 
 $('#btn_filter').click(function() {
     $('#lending_datatable').DataTable().clear().destroy();
+    var lending= $("input[name='lending']:checked").val()
     var from_date= $('#dte_from').val();
     var to_date= $('#dte_to').val();
-    load_datatable(from_date,to_date);   
+    load_datatable(from_date,to_date,lending);   
+});
+
+$("input[name='lending']").click(function(){
+    $('#lending_datatable').DataTable().clear().destroy();
+    var lending= $("input[name='lending']:checked").val()
+    var from_date= $('#dte_from').val();
+    var to_date= $('#dte_to').val();
+    load_datatable(from_date,to_date,lending);   
 });
 
 $('#btn_reset').click(function() {

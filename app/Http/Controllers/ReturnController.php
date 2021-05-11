@@ -169,7 +169,7 @@ class ReturnController extends Controller
         $lend_r = new lending_return;
         $lend_r->member_id     =  $lend_data[0]->mem_id;
         $lend_r->description   =  $lend_data[0]->return_descript;
-        $lend_r->return_date   =  $lend_data[0]->dtereturn;
+        $lend_r->lending_date  =  $lend_data[0]->dtereturn;
         $lend_r->save();
 
         foreach($return_data as $item)
@@ -195,7 +195,7 @@ class ReturnController extends Controller
             $lend_i = new lending_issue;
             $lend_i->member_id     =  $lend_data[0]->mem_id;
             $lend_i->description   =  $lend_data[0]->extend_descript;
-            $lend_i->issue_date    =  $lend_data[0]->dtereturn;
+            $lend_i->lending_date  =  $lend_data[0]->dtereturn;
             $lend_i->save();
 
             foreach($return_data as $item)
