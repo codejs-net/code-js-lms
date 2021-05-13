@@ -9,8 +9,8 @@ return [
 	'keywords'              => '',
 	'creator'               => 'Code-js',
 	'display_mode'          => 'fullpage',
-	'margin_header'        	=> 0,
-	'margin_footer'        	=> 0,
+	'margin_header'        	=> 10,
+	'margin_footer'        	=> 10,
 	'tempDir'               => base_path('../temp/'),
 	'font_path' => base_path('resources/fonts/'),
 	'font_data' => [

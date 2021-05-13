@@ -30,16 +30,20 @@ $address2="address2".$lang;
                     {{--  --}}
                     <div class="border border-secondary pt-1 px-2 mr-2">
                         <div class="form-check form-check-inline text-primary" >
-                            <label class="form-check-label"><i class="fa fa-check"></i> &nbsp;Returned&nbsp;</label>
-                            <input type="radio" class="form-check-input methord" name="returned" value="1" required>|
+                            <label class="form-check-label"><i class="fa fa-shopping-cart"></i> &nbsp;Issued&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="returned" value="Issue" required>
+                        </div>
+                        <div class="form-check form-check-inline text-primary" >
+                            <label class="form-check-label"><i class="fa fa-shopping-cart"></i> &nbsp;Returned&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="returned" value="Return" required>
                         </div>
                         <div class="form-check form-check-inline text-info" >
-                            <label class="form-check-label"><i class="fa fa-times"></i> &nbsp;Not Returned&nbsp;</label>
-                            <input type="radio" class="form-check-input methord" name="returned" value="0" required>|
+                            <label class="form-check-label"><i class="fa fa-times"></i> &nbsp;Non Returned&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="returned" value="Non Return" required>
                         </div>
                         <div class="form-check form-check-inline text-danger" >
                             <label class="form-check-label"><i class="fa fa-times"></i> &nbsp;Late&nbsp;</label>
-                            <input type="radio" class="form-check-input methord" name="returned" value="Late" required>|
+                            <input type="radio" class="form-check-input methord" name="returned" value="Late" required>
                         </div>
                         <div class="form-check form-check-inline text-success" >
                             <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp; All&nbsp;</label>
@@ -56,10 +60,11 @@ $address2="address2".$lang;
                         <span class="input-group-text" id="basic-addon1">To</span>
                     </div>
                     <input type="date" name="dte_to" id="dte_to" class="form-control"  value="{{$today}}" aria-describedby="basic-addon1"required>
-                    <select class="form-control mx-2" name="date_type" id="date_type">
+                    {{-- <select class="form-control mx-2" name="date_type" id="date_type">
+                        <option value="All">All</option>
                         <option value="issue_date">Issue Date</option>
                         <option value="return_date">Return Date</option>
-                    </select>
+                    </select> --}}
                     <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" value="" id="btn_filter" >
                         <i class="fa fa-filter"></i>&nbsp;Filter
                     </button>
@@ -104,55 +109,26 @@ $address2="address2".$lang;
             </table>
         </div>
         </div>               
-
+    </div>
+    <div class="col-12 text-right pb-2">
+        <form class="form-inline pull-right" action="{{ route('report_lending') }}" id="report_form" method="POST">
+        {{ csrf_field() }}
+            <input type="hidden" name="rpt_from" class="rpt_from">
+            <input type="hidden" name="rpt_to" class="rpt_to">
+            <input type="hidden" name="rpt_filter" class="rpt_filter">
+            <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" target="_blank"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
+        </form>
+        <form class="form-inline pull-right" action="{{ route('export_lending') }}" id="export_form" method="POST">
+        {{ csrf_field() }}
+            <input type="hidden" name="rpt_from" class="rpt_from">
+            <input type="hidden" name="rpt_to" class="rpt_to">
+            <input type="hidden" name="rpt_filter" class="rpt_filter">
+            <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Excel</button>
+        </form>
     </div>
 </div>
 {{-- end main --}}
 
-<!-- --------------------------start  modal delete------------------------------- -->
-   
-<div class="modal fade" id="member_delete" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-info">
-                <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Remove Lending Record</h5>
-                </div>
-                
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-                    
-            </div>
-            
-            <form method="post" action="{{ route('delete_member')}}">
-                {{ csrf_field() }}
-                <div class="modal-body">
-                    
-                    <input type="hidden" id="delete_member_id" name="delete_member_id">
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <h5 id="modallabel">Are you sure Remove Recorde </h5>
-                        </div>
-                        <div class="col-md-8">
-                            <h5><label type="text"  id="delete_member_name"></label></h5>
-                        </div>
-                    </div> 
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> &nbsp; Delete</button>
-                </div>
-            </form>
-           
-        </div>
-    </div>
-</div>
-<!-- ---------------------end delete Model------------------------------------- -->
-
-@include('members.show_modal')
-@include('members.member_card_modal')
 @endsection
 
 @section('script')
@@ -162,10 +138,12 @@ $(document).ready(function()
 {
     $("input[name=returned][value='All']").prop("checked",true);
     var returnfilter= $("input[name='returned']:checked").val()
-    var date_type= $('#date_type').val();
     var from_date= $('#dte_from').val();
     var to_date= $('#dte_to').val();
-    load_datatable(returnfilter,from_date,to_date,date_type);
+    $('.rpt_from').val(from_date);
+    $('.rpt_to').val(to_date);
+    $('.rpt_filter').val(returnfilter);
+    load_datatable(returnfilter,from_date,to_date);
 
     // start member delete function
     $('#member_delete').on('show.bs.modal', function (event) {
@@ -179,7 +157,7 @@ $(document).ready(function()
 
 });
 
-function load_datatable(returnfilter,from_date,to_date,date_type)
+function load_datatable(returnfilter,from_date,to_date)
 {
 
     $('#lending_datatable').DataTable({
@@ -202,7 +180,6 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
             returnfilter: returnfilter,
             from_date: from_date,
             to_date: to_date,
-            date_type: date_type,
         },
     },
     // pageLength: 15,
@@ -234,27 +211,23 @@ function load_datatable(returnfilter,from_date,to_date,date_type)
 $("input[name='returned']").click(function(){
     var returnfilter=$(this).val();
     $('#lending_datatable').DataTable().clear().destroy();
-    
-    if(returnfilter=="0" || returnfilter=="Late"){
-        $( "#date_type").val("issue_date");
-        $( "#date_type").prop( "disabled", true );
-    }
-    else{
-        $( "#date_type" ).prop( "disabled", false );
-    }
-    var date_type= $('#date_type').val();
     var from_date= $('#dte_from').val();
     var to_date= $('#dte_to').val();
-    load_datatable(returnfilter,from_date,to_date,date_type);
+    $('.rpt_from').val(from_date);
+    $('.rpt_to').val(to_date);
+    $('.rpt_filter').val(returnfilter);
+    load_datatable(returnfilter,from_date,to_date);
 });
 
 $('#btn_filter').click(function() {
     $('#lending_datatable').DataTable().clear().destroy();
     var returnfilter= $("input[name='returned']:checked").val()
-    var date_type= $('#date_type').val();
     var from_date= $('#dte_from').val();
     var to_date= $('#dte_to').val();
-    load_datatable(returnfilter,from_date,to_date,date_type);    
+    $('.rpt_from').val(from_date);
+    $('.rpt_to').val(to_date);
+    $('.rpt_filter').val(returnfilter);
+    load_datatable(returnfilter,from_date,to_date);    
 });
 
 $('#btn_reset').click(function() {

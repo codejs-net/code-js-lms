@@ -102,13 +102,41 @@ class LendingController extends Controller
 
                 if($request->returnfilter=="All")
                 {
-                    $_return="%";
                     $lendingdata = view_lending_data_all::select('*')
-                    ->where('return','LIKE',$_return)
-                    ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->whereIn('center_id', $center_array)
+                    ->whereBetween('issue_date', [$request->from_date, $request->to_date])
+                    ->orwhereBetween('return_date', [$request->from_date, $request->to_date])
                     ->whereIn('center_id', $center_array)
                     ->orderBy('updated_at', 'DESC')
-                    ->get();
+                    ->get(); 
+                }
+                else if($request->returnfilter=="Non Return")
+                {
+                    $_return=0;
+                    $lendingdata = view_lending_data_all::select('*')
+                    ->where('return','LIKE',$_return)
+                    ->whereIn('center_id', $center_array)
+                    ->whereBetween('issue_date', [$request->from_date, $request->to_date])
+                    ->orderBy('updated_at', 'DESC')
+                    ->get(); 
+                }
+                else if($request->returnfilter=="Return")
+                {
+                    $_return=1;
+                    $lendingdata = view_lending_data_all::select('*')
+                    ->where('return','LIKE',$_return)
+                    ->whereIn('center_id', $center_array)
+                    ->whereBetween('return_date', [$request->from_date, $request->to_date])
+                    ->orderBy('updated_at', 'DESC')
+                    ->get(); 
+                }
+                else if($request->returnfilter=="Issue")
+                {
+                    $lendingdata = view_lending_data_all::select('*')
+                    ->whereIn('center_id', $center_array)
+                    ->whereBetween('issue_date', [$request->from_date, $request->to_date])
+                    ->orderBy('updated_at', 'DESC')
+                    ->get(); 
                 }
                 elseif($request->returnfilter=="Late")
                 {
@@ -116,7 +144,8 @@ class LendingController extends Controller
                     $lendingdata=array();
                     $_lendingdata = view_lending_data_all::select('*')
                     ->where('return','LIKE',$_return)
-                    ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
+                    ->whereIn('center_id', $center_array)
+                    ->whereBetween('issue_date', [$request->from_date, $request->to_date])
                     ->whereIn('center_id', $center_array)
                     ->orderBy('updated_at', 'DESC')
                     ->get();
@@ -134,19 +163,7 @@ class LendingController extends Controller
                         }
                     }
                     // ------------------------
-
                 }
-                else
-                {
-                    $_return= $request->returnfilter;
-                    $lendingdata = view_lending_data_all::select('*')
-                    ->where('return','LIKE',$_return)
-                    ->whereBetween($request->date_type, [$request->from_date, $request->to_date])
-                    ->whereIn('center_id', $center_array)
-                    ->orderBy('updated_at', 'DESC')
-                    ->get();
-                }
-
                 return datatables()->of($lendingdata)
                         ->addIndexColumn()
         

@@ -314,13 +314,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('rpt_lending_index', [ReportController::class, 'lending_index'])->name('rpt_lending_index');
     Route::get('rpt_survey_index', [ReportController::class, 'survey_index'])->name('rpt_survey_index');
     Route::get('rpt_support_index', [ReportController::class, 'support_index'])->name('rpt_support_index');
+
     // -------Reports-PDF
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
+    Route::POST('report_lending', [ReportController::class, 'report_lending'])->name('report_lending');
     Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');
     Route::POST('member_card_range', [ReportController::class, 'member_card_range'])->name('member_card_range');
 
      // -------Reports-Excel
      Route::POST('export_recource', [ReportController::class, 'export_recource'])->name('export_recource');
+     Route::POST('export_lending', [ReportController::class, 'export_lending'])->name('export_lending');
 
 });
 

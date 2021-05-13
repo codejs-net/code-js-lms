@@ -474,7 +474,7 @@
                             @endcan
                             @can('lending-report')
                             <li class="nav-item">
-                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
+                                <a href="{{ route('rpt_lending_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Lending Reports</p>
                                 </a>
