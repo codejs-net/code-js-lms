@@ -92,8 +92,12 @@ $dd_section="section".$lang;
                             <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
                             <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
                         </button>
+                        {{-- <button type="button" class="btn-excel btn btn-primary btn-sm elevation-2 mr-2" id="btn_export_lending">
+                            <span class="excel-icon"><i class="fa fa-file-excel-o"></i></span>
+                            <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; Excel
+                        </button> --}}
                 </form>
-                <form class="form-inline" action="{{ route('export_lending') }}" id="report_form" method="POST">
+                <form class="form-inline" action="{{ route('export_lending')}}" id="report_form" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="rpt_from" class="rpt_from">
                     <input type="hidden" name="rpt_to" class="rpt_to">
@@ -197,10 +201,62 @@ $('.btn-pdf').click(function() {
     $(this).find('.pdf-icon').hide();
     $(this).find('.loader').show();
 }); 
-$('.btn-excel').click(function() { 
+// $('.btn-excel').click(function() { 
+//     $(this).find('.excel-icon').hide();
+//     $(this).find('.loader').show();
+// }); 
+
+$(".btn-excel").mouseup(function() {
+    $(this).find('.excel-icon').show();
+    $(this).find('.loader').hide();
+});
+$(".btn-excel").mousedown(function() {
     $(this).find('.excel-icon').hide();
     $(this).find('.loader').show();
-}); 
+});
+
+
+// $('#btn_export_lending').click(function() { 
+//     var rpt_filter= $("input[name='returned']:checked").val()
+//     var rpt_from= $('#dte_from').val();
+//     var rpt_to= $('#dte_to').val();
+
+//     $.ajaxSetup({
+//         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+//     });
+//     $.ajax
+//     ({
+//         type: "GET",
+//         dataType : 'json',
+//         url: "{{route('export_lending')}}", 
+//         data: { 
+//             rpt_filter: rpt_filter,
+//             rpt_from: rpt_from,
+//             rpt_to:rpt_to
+//         },
+//         beforeSend: function(){
+//             $(this).find('.excel-icon').hide();
+//             $(this).find('.loader').show();
+//         },
+//         success:function(data){
+//             toastr.success('Export faild Plese try again')
+//         },
+//         error:function(data){
+//             toastr.error('Export faild Plese try again')
+//         },
+//         complete:function(data){
+//             $(this).find('.excel-icon').show();
+//             $(this).find('.loader').hide();
+//         }
+//     }).then((response) => {
+//     const url = window.URL.createObjectURL(new Blob([response.data]));
+//     const link = document.createElement('a');
+//     link.setAttribute('download', 'file.xlsx');
+//     document.body.appendChild(link);
+//     link.click();
+//     });
+
+//     });
 
 </script>
 

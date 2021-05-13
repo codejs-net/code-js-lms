@@ -31,10 +31,11 @@ use App\Models\view_lending_data;
 use App\Models\view_lending_data_all;
 use Carbon\Carbon;
 use Auth;
-
+use App\Exports\ResourceExport;
+use App\Exports\LendingExport;
 use Session;
 
-use App\Exports\ResourceExport;
+
 
 
 class ReportController extends Controller
@@ -212,7 +213,7 @@ class ReportController extends Controller
                 ->orderBy('updated_at', 'DESC')
                 ->get(); 
             }
-            else if($rpt_filter=="Non Return")
+            elseif($rpt_filter=="Non Return")
             {
                 $_return=0;
                 $lendingdata = view_lending_data_all::select('*')
@@ -222,7 +223,7 @@ class ReportController extends Controller
                 ->orderBy('updated_at', 'DESC')
                 ->get(); 
             }
-            else if($rpt_filter=="Return")
+            elseif($rpt_filter=="Return")
             {
                 $_return=1;
                 $lendingdata = view_lending_data_all::select('*')
@@ -232,7 +233,7 @@ class ReportController extends Controller
                 ->orderBy('updated_at', 'DESC')
                 ->get(); 
             }
-            else if($rpt_filter=="Issue")
+            elseif($rpt_filter=="Issue")
             {
                 $lendingdata = view_lending_data_all::select('*')
                 ->whereIn('center_id', $center_array)
@@ -243,12 +244,11 @@ class ReportController extends Controller
             elseif($rpt_filter=="Late")
             {
                 $_return=0;
-                $lendingdata=array();
+                $lendingdata_array=array();
                 $_lendingdata = view_lending_data_all::select('*')
                 ->where('return','LIKE',$_return)
                 ->whereIn('center_id', $center_array)
                 ->whereBetween('issue_date', [$rpt_from, $rpt_to])
-                ->whereIn('center_id', $center_array)
                 ->orderBy('updated_at', 'DESC')
                 ->get();
                 // ------------------------
@@ -260,9 +260,10 @@ class ReportController extends Controller
 
                     if($diff>$lending_period)
                     {
-                        array_push($lendingdata,$item);
+                        array_push($lendingdata_array,$item);
                     }
                 }
+                $lendingdata = collect($lendingdata_array);
                 // ------------------------
             }
             $pdf = PDF::loadView('reports.lending.rpt_lending',compact('lendingdata','rpt_from','rpt_to','rpt_filter'),[],
@@ -279,5 +280,19 @@ class ReportController extends Controller
         }
 
     }
+
+    public function export_lending(Request $request) 
+    {
+        try {
+            ini_set('memory_limit', '-1');
+            ini_set('max_execution_time', '1200');
+            return Excel::download(new lendingExport($request), 'lending.xlsx');
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('error','Report Export Fail.');
+        }
+
+    }
+
 //end lending Reports
 }

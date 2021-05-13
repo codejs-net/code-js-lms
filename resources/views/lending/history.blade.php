@@ -116,7 +116,7 @@ $address2="address2".$lang;
             <input type="hidden" name="rpt_from" class="rpt_from">
             <input type="hidden" name="rpt_to" class="rpt_to">
             <input type="hidden" name="rpt_filter" class="rpt_filter">
-            <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" target="_blank"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
+            <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" formtarget="_blank"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
         </form>
         <form class="form-inline pull-right" action="{{ route('export_lending') }}" id="export_form" method="POST">
         {{ csrf_field() }}

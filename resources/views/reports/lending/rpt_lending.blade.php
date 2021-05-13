@@ -55,16 +55,25 @@ $member_category="member_category".$lang;
       table{
             width: 100%;
             /* border:2px solid #021452; */
+            border-collapse: collapse;
+            border-spacing: 0;
+           
       }
       td{
             line-height: 18px;
-            border-spacing:unset;
-            height: 20px;
+            /* border-spacing:unset;
+            height: 20px; */
+            padding-top: 6px;
+            padding-bottom: 6px;
+            padding-left: 1px;
+            padding-right: 1px;
       }
      
       .thead th{
             background-color: #656ffd;
             color: #ffffff;
+            padding-top: 6px;
+            padding-bottom: 6px;
       }
       .row-1{
             background-color: #ffffff
