@@ -221,56 +221,62 @@ class ResourceController extends Controller
         $lang="_".$locale;
 
         $res=new resource;
-        $this->validate($request,[
-        'resoure_accession'     =>'required|max:100|min:5',
-        'resource_title'.$lang  =>'required',
-        'resoure_category'      =>'required',
-        'resource_price'        =>'required',
+        $validator = Validator::make($request->all(), [
+            'resoure_accession'     => 'required|max:100|min:5|unique:resources,accessionNo',
+            'resource_title'.$lang  =>'required',
+            'resoure_category'      =>'required',
+            'resource_price'        =>'required',
         ]);
 
-        $imageName ="default_book.jpg";
-        if($request->hasFile('resource_image')){
-            $imageName = $request->resoure_accession.'-'.time().'.'.$request->resource_image->extension();   
-            $request->resource_image->move(public_path('images/resources'), $imageName);
+        if ($validator->passes()) {
+
+            $imageName ="default_book.jpg";
+            if($request->hasFile('resource_image')){
+                $imageName = $request->resoure_accession.'-'.time().'.'.$request->resource_image->extension();   
+                $request->resource_image->move(public_path('images/resources'), $imageName);
+            }
+    
+            $res->accessionNo       =  $request->resoure_accession;
+            $res->standard_number   =  $request->resoure_isn;
+            $res->title_si          =  $request->resource_title_si;
+            $res->title_ta          =  $request->resource_title_ta;
+            $res->title_en          =  $request->resource_title_en;
+            $res->cretor_id         =  $request->resource_creator;
+            $res->category_id       =  $request->resoure_category;
+            $res->type_id           =  $request->resoure_type;
+            $res->dd_class_id       =  $request->resource_dd_class;
+            $res->dd_devision_id    =  $request->resource_dd_devision;
+            $res->dd_section_id     =  $request->resource_dd_section;
+            $res->ddc               =  $request->resource_ddc;
+            $res->center_id         =  $request->resource_center;
+            $res->language_id       =  $request->resource_language;
+            $res->publisher_id      =  $request->resource_publisher;
+            $res->purchase_date     =  $request->resource_purchase_date;
+            $res->edition           =  $request->resource_edition;
+            $res->price             =  $request->resource_price;
+            $res->publishyear       =  $request->resource_publishyear;
+            $res->phydetails        =  $request->resource_phydetails;
+            $res->note_si           =  $request->resource_note_si;
+            $res->note_ta           =  $request->resource_note_ta;
+            $res->note_en           =  $request->resource_note_en;
+            $res->status            =  "1";
+            $res->br_qr_code        =  "";
+            $res->image             =  $imageName;
+            $res->save();
+    
+            if (! $request->has('check_place')) {
+                $place=new resource_placement;
+                $place->resource_id     = $res->id;
+                $place->rack_id         = $request->place_rack;
+                $place->floor_id        = $request->place_floor;
+                $place->placement_index = $request->place_index;
+                $place->save();
+            }
+            return response()->json(['data' => "Success"]);
         }
 
-        $res->accessionNo       =  $request->resoure_accession;
-        $res->standard_number   =  $request->resoure_isn;
-        $res->title_si          =  $request->resource_title_si;
-        $res->title_ta          =  $request->resource_title_ta;
-        $res->title_en          =  $request->resource_title_en;
-        $res->cretor_id         =  $request->resource_creator;
-        $res->category_id       =  $request->resoure_category;
-        $res->type_id           =  $request->resoure_type;
-        $res->dd_class_id       =  $request->resource_dd_class;
-        $res->dd_devision_id    =  $request->resource_dd_devision;
-        $res->dd_section_id     =  $request->resource_dd_section;
-        $res->ddc               =  $request->resource_ddc;
-        $res->center_id         =  $request->resource_center;
-        $res->language_id       =  $request->resource_language;
-        $res->publisher_id      =  $request->resource_publisher;
-        $res->purchase_date     =  $request->resource_purchase_date;
-        $res->edition           =  $request->resource_edition;
-        $res->price             =  $request->resource_price;
-        $res->publishyear       =  $request->resource_publishyear;
-        $res->phydetails        =  $request->resource_phydetails;
-        $res->note_si           =  $request->resource_note_si;
-        $res->note_ta           =  $request->resource_note_ta;
-        $res->note_en           =  $request->resource_note_en;
-        $res->status            =  "1";
-        $res->br_qr_code        =  "";
-        $res->image             =  $imageName;
-        $res->save();
-
-        if (! $request->has('check_place')) {
-            $place=new resource_placement;
-            $place->resource_id     = $res->id;
-            $place->rack_id         = $request->place_rack;
-            $place->floor_id        = $request->place_floor;
-            $place->placement_index = $request->place_index;
-            $place->save();
-        }
-        return response()->json(['data' => "Success"]);
+    	return response()->json(['error'=>$validator->getMessageBag()->toArray()]);
+       
         
     }
 

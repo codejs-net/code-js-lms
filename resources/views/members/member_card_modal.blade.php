@@ -43,7 +43,7 @@
                 <div class="modal-footer">
                     
                         <div class="box-footer mt-2 clearfix pull-right">
-                            <button type="submit" class="btn btn-success btn-sm " id="genarate_card"><span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span> {{ __("Genarate")}}</button>
+                            <button type="submit" class="btn btn-success btn-sm " id="genarate_card" ><span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span> {{ __("Genarate")}}</button>
                             <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
                         </div>
                    

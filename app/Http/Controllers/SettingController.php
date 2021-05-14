@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\setting;
 use App\Models\theme;
+use App\Models\library;
 use Auth;
 use App\Models\User;
 use App\Models\lending_config;
 use Session;
+use File;
 
 class SettingController extends Controller
 {
@@ -36,7 +38,8 @@ class SettingController extends Controller
     }
     public function basic_setting()
     {
-        return view('settings.basic.index');
+        $library = library::first();
+        return view('settings.basic.index',compact('library'));
     }
 
     public function lending_setting()
@@ -185,5 +188,39 @@ class SettingController extends Controller
         $delault_limit->value=$request->default_limit;
         $delault_limit->save();
         return redirect()->route('lending_setting')->with('success','Default Lending Limit Apply successfully.');
+    }
+
+    public function update_library(Request $request)
+    {
+        $library = library::first();
+        $imageName =$library->image;
+        if($request->hasFile('image_library')){
+            
+            $imageName = time().'.'.$request->image_library->extension();   
+            $request->image_library->move(public_path('images'), $imageName);
+
+            $old_image = "images".$library->image;
+            if(File::exists($old_image)) {
+            File::delete($old_image);
+            }  
+        }
+       
+        $library->name_si       =$request->lib_name_si;
+        $library->name_ta       =$request->lib_name_ta;
+        $library->name_en       =$request->lib_name_en;
+        $library->address1_si   =$request->lib_address1_si;
+        $library->address1_ta   =$request->lib_address1_ta;
+        $library->address1_en   =$request->lib_address1_en;
+        $library->address2_si   =$request->lib_address2_si;
+        $library->address2_ta   =$request->lib_address2_ta;
+        $library->address2_en   =$request->lib_address2_en;
+        $library->telephone     =$request->telephone;
+        $library->fax           =$request->fax;
+        $library->email         =$request->lib_email;
+        $library->description   =$request->description;
+        $library->image         =$imageName;
+        $library->save();
+
+        return redirect()->route('home')->with('success','Library Details updated successfully.');
     }
 }

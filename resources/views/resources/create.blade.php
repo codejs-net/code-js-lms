@@ -110,7 +110,7 @@ $center="name".$lang;
                     <div class="form-group col-md-6">
                     <label for="isbn">ISBN/ISSN/ISMN</label>
                         <input type="text" class="form-control" id="resoure_isn" name="resoure_isn"  value="{{old('resoure_isn')}}"  placeholder="ISBN/ISSN/ISMN">
-                        <span class="text-danger">{{ $errors->first('isbn') }}</span>
+                        <span class="text-danger">{{ $errors->first('resoure_isn') }}</span>
                     </div>
                    
 
@@ -118,7 +118,7 @@ $center="name".$lang;
                        
                         <label for="accessionNo">Accession Number</label>
                         <input type="text" class="form-control" id="resoure_accession" name="resoure_accession" value="{{old('resoure_accession')}}" placeholder="Accession Number:" required>
-                        <span class="text-danger" >{{ $errors->first('accessionNo') }}</span>
+                        <span class="text-danger validator-error" id="resoure_accession_error">{{ $errors->first('resoure_accession') }}</span>
                     </div>
                     
                 </div>
@@ -462,13 +462,18 @@ $('#resource_save').on('submit', function(event){
            },
 
            success:function(data){
+            console.log(data.error);
+            if($.isEmptyObject(data.error)){
                 toastr.success('Resource Created Successfully')
                 $("#resource_save").trigger("reset");
                 $("#resource_save").removeClass( "was-validated" ).addClass( "needs-validation" );
                 $("#resource_creator").val('');
-                // $('#resource_creator option').prop('selected', function(){
-                // return this.defaultSelected;
-                // }).prop('disabled', false);
+                $(".validator-error").html('')
+            }
+            else{
+                toastr.warning('Validation Error Plese Check again');
+                $('#resoure_accession_error').html(data.error.resoure_accession);
+            }
            },
            error:function(data){
                toastr.error('Resource Created faild Plese try again')

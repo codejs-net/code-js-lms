@@ -76,6 +76,7 @@
       }
       .card-heading{
             padding-bottom: 15px;
+            color: dodgerblue;
       }
       h4{
             font-size:15px !important;
@@ -98,6 +99,7 @@ $lib_name="name".$lang;
 @endphp
 
 @foreach($mdata as $data)
+      <br>
       <div class="row">
             <div class="column-1">
                   <div class="row image">
@@ -110,8 +112,12 @@ $lib_name="name".$lang;
             <div class="column-2">
             <table class="tbl_card">
                   <tr class="card-heading">
+                        <td colspan="3" class="text-center"><h4 class=""><u>{{__("Member Card")}}</u></h4></td><br>
+                  </tr>
+                  <tr class="card-heading1">
                         <td colspan="3" class="text-left"><h4 class="">{{ $library->$lib_name}}</h4></td><br>
                   </tr>
+                 
                   <tr>
                         <td style="width: 30%"><b>{{__("Category")}}</b></td>
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
@@ -137,11 +143,11 @@ $lib_name="name".$lang;
                         <td style="width: 5%">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->mobile}}</td>
                   </tr>
-                  <tr>
+                  {{-- <tr>
                         <td style="width: 30%"><b>{{__("Register")}}</b></td>
                         <td style="width: 5%">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->regdate}}</td>
-                  </tr>
+                  </tr> --}}
             </table>
             </div>
       </div>

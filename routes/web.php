@@ -299,6 +299,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('notification_setting', [SettingController::class, 'notification_setting'])->name('notification_setting');
     Route::post('update_theme', [SettingController::class, 'update_theme'])->name('update_theme');
     Route::get('change_theme/{id}', [SettingController::class, 'change_theme'])->name('change_theme');
+    Route::post('update_library', [SettingController::class, 'update_library'])->name('update_library');
     Route::post('update_db_locale', [SettingController::class, 'update_db_locale'])->name('update_db_locale');
     Route::post('update_locale', [SettingController::class, 'update_locale'])->name('update_locale');
     Route::post('update_sms_option', [SettingController::class, 'update_sms_option'])->name('update_sms_option');

@@ -31,7 +31,7 @@ class MemberImport implements ToModel, WithHeadingRow
             'address2_en' => $row['address2_en'],
             'nic'         => $row['nic'],
             'mobile'      => $row['mobile'],
-            'birthday'    => $row['birthday'],
+            // 'birthday'    => $row['birthday'],
             'genderid'    => $row['genderid'],
             // 'description_si' => $row['description'],
             'image'       => $row['image'],

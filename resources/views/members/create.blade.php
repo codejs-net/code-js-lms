@@ -239,7 +239,7 @@ $gender="gender".$lang;
                 <div class="modal-footer">
                     
                     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    @can('data-import')
+                    @can('member-import')
                     <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
                     @endcan
                 </div>
