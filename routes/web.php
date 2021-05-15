@@ -43,7 +43,6 @@ use App\Http\Controllers\Member_guarantorController;
 Auth::routes();
 
 Route::get('lang/{locale}', [LocalizationController::class, 'index'])->name('lang');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('lmslogin', LoginController::class);
 
   
@@ -55,6 +54,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function() {
 
     // --------Home--------------------------------
+    Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('latast_lending', [HomeController::class, 'latast_lending'])->name('latast_lending');
     // --------Roles--------------------------------
     Route::resource('roles', RoleController::class);

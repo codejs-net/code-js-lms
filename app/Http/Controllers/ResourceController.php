@@ -423,8 +423,11 @@ class ResourceController extends Controller
             return back()->with('warning','Plese Select the Excel File');
         }
     }
-
     public function resource_catelog(Request $request) 
+    {
+        return view('resources.catelog');
+    }
+    public function resource_catelog1(Request $request) 
     {
         $resource_center=center::all();
         $categorydata=resource_category::all();

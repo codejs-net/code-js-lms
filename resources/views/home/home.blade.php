@@ -128,32 +128,32 @@ $member="member".$lang;
                         
                     <div class="row pl-2 ml-3 pr-2 js-dash-link">
                         
-                        <a href="" class="col-md-2 btn btn-block  mt-2 js-dash-link-btn elevation-2">
+                        <a href="{{ route('create_resource') }}" class="col-md-2 btn btn-block  mt-2 js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span> --}}
                             <span class="info-box-text pt-2">Add Resources</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
+                        <a href="{{ route('create_member') }}" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span> --}}
                             <span class="info-box-text">Add Members</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('resource_catelog') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span> --}}
                             <span class="info-box-text">Catalog</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('resource_catagory.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span> --}}
                             <span class="info-box-text">Supports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('issue.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span> --}}
                             <span class="info-box-text">Issue</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('return.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span> --}}
                             <span class="info-box-text">Return</span>
                         </a>
@@ -163,18 +163,18 @@ $member="member".$lang;
                             <span class="info-box-text">Receipt</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block   js-dash-link-btn elevation-2">
+                        <a href="{{ route('rpt_lending_index') }}" class="col-md-2 btn btn-block   js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span> --}}
-                            <span class="info-box-text">Reports</span>
+                            <span class="info-box-text">Lending Reports</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('staff.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span> --}}
                             <span class="info-box-text">Staff</span>
                         </a>
 
 
-                        <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
+                        <a href="{{ route('members.index') }}" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span> --}}
                             <span class="info-box-text">Members</span>
                         </a>
@@ -268,6 +268,7 @@ $(document).ready(function()
         url: "{{route('latast_lending')}}", 
         async: false,
         success:function(data){
+            console.log(data);
             for(var i=0;i<4;i++)
             {
                 op+= '<div class="card card-notify">';
@@ -289,7 +290,7 @@ $(document).ready(function()
                 op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
                 op+= '</i></button></div></div>';
                 op+= '<div class="card-body px-2 py-1">';
-                op+= data.issue[i].accessionNo+'-'+ data.return[j].{{$title}}+'&nbsp;{{trans('Return by') }} '+data.return[j].{{$member}};
+                op+= data.return[j].accessionNo+'-'+ data.return[j].{{$title}}+'&nbsp;{{trans('Return by') }} '+data.return[j].{{$member}};
                 op+= '</div></div>';               
            }
             

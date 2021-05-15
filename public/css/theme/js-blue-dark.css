@@ -1,5 +1,4 @@
 /* -----------navbar---------------------------------- */
-
 .js-nav-bg {
     background: #1d6af0;
     background: linear-gradient(90deg, rgba(28, 66, 235, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
@@ -386,9 +385,6 @@ tbody:before {
     background: #ffffff;
 }
 
-.js-bg {
-    background: #ffffff;
-}
 
 .js-roboto {
     font-family: 'Roboto', sans-serif;

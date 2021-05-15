@@ -46,64 +46,64 @@ class HomeController extends Controller
         {
             Session::put('locale', 'si');
         }
-        $test = Carbon::hasTestNow();
-        $today = Carbon::now()->isoFormat('YYYY-MM-DD');
-        
-        // dd($today);
-        $reso_count = resource::where('status',1)->count();
-        $mem_count = member::where('status',1)->count();
-        $issue_count = lending_detail::where('issue_date',$today)->count();
-        $return_count = lending_detail::where('return_date',$today)->count();
-        $income = receipt::where('receipt_date',$today)->sum('payment');
 
-// -----------summary chart--------------------------------
-        $issue_summary= array();
-        $return_summary= array();
-        // $thismonth = Carbon::now()->month();
-        $thisyear = Carbon::now()->isoFormat('YYYY');
-        for($i=1;$i<=12;$i++)
+        if(auth()->user()->can('dashboard'))
         {
-            $_issue = lending_detail::select('id')
-                ->whereYear('issue_date',$thisyear)
-                ->whereMonth('issue_date',$i)
-                ->count();
-            $_return = lending_detail::select('id')
-                ->where('return',1)
-                ->whereYear('return_date',$thisyear)
-                ->whereMonth('return_date',$i)
-                ->count();
-            array_push($issue_summary,$_issue);
-            array_push($return_summary,$_return);
-        }
-        $_issue_summary = implode(',',$issue_summary);
-        $_return_summary = implode(',',$return_summary);
-//----------end Summary Chart-----------------------------
-
-        return view('home.home')
-        ->with('rcount',$reso_count)
-        ->with('mcount',$mem_count)
-        ->with('rtncount',$return_count)
-        ->with('issucount',$issue_count)
-        ->with('income',$income)
-        ->with('i_summary',$_issue_summary)
-        ->with('r_summary',$_return_summary);
-
-        
+            $today = Carbon::now()->isoFormat('YYYY-MM-DD');
+            $reso_count = resource::where('status',1)->count();
+            $mem_count = member::where('status',1)->count();
+            $issue_count = lending_detail::where('issue_date',$today)->count();
+            $return_count = lending_detail::where('return_date',$today)->count();
+            $income = receipt::where('receipt_date',$today)->sum('payment');
+    
+            // -----------summary chart--------------------------------
+            $issue_summary= array();
+            $return_summary= array();
+            // $thismonth = Carbon::now()->month();
+            $thisyear = Carbon::now()->isoFormat('YYYY');
+            for($i=1;$i<=12;$i++)
+            {
+                $_issue = lending_detail::select('id')
+                    ->whereYear('issue_date',$thisyear)
+                    ->whereMonth('issue_date',$i)
+                    ->count();
+                $_return = lending_detail::select('id')
+                    ->where('return',1)
+                    ->whereYear('return_date',$thisyear)
+                    ->whereMonth('return_date',$i)
+                    ->count();
+                array_push($issue_summary,$_issue);
+                array_push($return_summary,$_return);
+            }
+            $_issue_summary = implode(',',$issue_summary);
+            $_return_summary = implode(',',$return_summary);
+            //----------end Summary Chart-----------------------------
+            return view('home.home')
+            ->with('rcount',$reso_count)
+            ->with('mcount',$mem_count)
+            ->with('rtncount',$return_count)
+            ->with('issucount',$issue_count)
+            ->with('income',$income)
+            ->with('i_summary',$_issue_summary)
+            ->with('r_summary',$_return_summary);
+        }     
+        else
+        {
+            return view('resources.catelog');
+        } 
     }
 
     public function latast_lending()
     {
         $latast_issue = view_lending_data::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
-        // ->orderBy('id', 'DESC')
-        ->offset(5)
-        ->limit(5)
+        ->orderBy('updated_at', 'DESC')
+        ->take(5)
         ->get();
 
         $latast_return = view_lending_data::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
         ->where('return',1)
-        // ->orderBy('id', 'DESC')
-        ->offset(5)
-        ->limit(5)
+        ->take(5)
+        ->orderBy('updated_at', 'DESC')
         ->get();
 
         return response()->json(['issue' => $latast_issue,'return' => $latast_return]);
