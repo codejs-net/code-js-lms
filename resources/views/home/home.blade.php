@@ -265,10 +265,11 @@ $(document).ready(function()
     $.ajax
     ({
         type: "GET",
+        dataType : 'json',
         url: "{{route('latast_lending')}}", 
-        async: false,
+
         success:function(data){
-            console.log(data);
+            // console.log(data);
             for(var i=0;i<4;i++)
             {
                 op+= '<div class="card card-notify">';
@@ -293,12 +294,12 @@ $(document).ready(function()
                 op+= data.return[j].accessionNo+'-'+ data.return[j].{{$title}}+'&nbsp;{{trans('Return by') }} '+data.return[j].{{$member}};
                 op+= '</div></div>';               
            }
-            
+           $("#notificetion").append(op);
         },
         error:function(data){
         }
     })
-    $("#notificetion").append(op);
+    
 });
 
 
