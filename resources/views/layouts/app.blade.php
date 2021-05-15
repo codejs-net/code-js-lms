@@ -167,7 +167,7 @@
         @include('partials.sidebar')
     </aside>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper  @yield('class')">
         <main role="main">
         @yield('content')
         </main>

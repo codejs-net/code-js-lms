@@ -66,13 +66,31 @@
       .tbl_card{
             width:100%;
             font-size:11px !important;
-            line-height:9px;
+            /* line-height:10px; */
             
            
       }
-      .tbl_card td{
+      /* .tbl_card td{
            height:0px !important;
-           vertical-align: top;
+           
+      } */
+      table{
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+           
+      }
+      td{
+            line-height: 10px;
+            vertical-align: top;
+            padding-bottom: 2px;
+          
+      }
+      .pb-2{
+            padding-bottom: 5px;
+      }
+      .pb-0{
+            padding-bottom: 5px;
       }
       .card-heading{
             padding-bottom: 15px;
@@ -121,7 +139,7 @@ $lib_name="name".$lang;
                   <tr>
                         <td style="width: 30%"><b>{{__("Category")}}</b></td>
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
-                        <td class="text-left">{{$data->$category}}</td>
+                        <td class="text-left pb-0">{{$data->$category}}</td>
                   </tr>
                   <tr>
                         <td style="width: 30%"><b>{{__("Name")}}</b></td>
@@ -131,16 +149,16 @@ $lib_name="name".$lang;
                   <tr>
                         <td style="width: 30%"><b>{{__("Address")}}</b></td>
                         <td style="width: 5%">&nbsp;:&nbsp;</td>
-                        <td class="text-left">{{$data->$address1}},{{$data->$address2}}</td>
+                        <td class="text-left pb-2">{{$data->$address1}},{{$data->$address2}}</td>
                   </tr>
                   <tr>
                         <td style="width: 30%"><b>{{__("NIC")}}</b></td>
-                        <td style="width: 5%">&nbsp;:&nbsp;</td>
+                        <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->nic}}</td>
                   </tr>
                   <tr>
                         <td style="width: 30%"><b>{{__("Mobile")}}</b></td>
-                        <td style="width: 5%">&nbsp;:&nbsp;</td>
+                        <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->mobile}}</td>
                   </tr>
                   {{-- <tr>
