@@ -54,17 +54,23 @@ $dd_section="section".$lang;
       </div> --}}
       <div id="gsearch" class="my-5">
         <center>
+            <form onSubmit="return false;"name="form_quick_search" id="form_quick_search" class="needs-validation"  novalidate>
+            {{ csrf_field() }}
             <div class="logo">
               <img alt="Google" src="{{ asset('img/library_logo.png') }}" class="img-catalog">
             </div>
             <div class="div_bar">
-              <input class="searchbar" type="text" id="txt_quick" name="txt_quick"  title="Search">
-              <a href="#"> <img class="voice" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Google_mic.svg/716px-Google_mic.svg.png" title="Search by Voice"></a>
+              <input class="searchbar" type="text" id="txt_quick" name="txt_quick"  title="Search" required>
+              <a id="start_speech" href="#"> 
+                  <img class="voice" src="{{ asset('img/mic.png') }}" id="mic-before">
+                  <img class="voice" src="{{ asset('img/mic1.png') }}" id="mic-after" style="display: none;">
+                </a>
             </div>
             <div class="buttons">
-              <button class="button" id="btn_quck_search" type="button">Library Search</button>
+              <button class="button" id="btn_quck_search" type="submit">Library Search</button>
               <button class="button" type="button">I'm Feeling Lucky</button>
              </div>
+            </form>
         </center>
     </div>
 </div>
@@ -76,14 +82,13 @@ $dd_section="section".$lang;
             <table  class="table m-auto" width="100%" cellspacing="0" id="resource_datatable">
                 <thead style="display: none;">
                     <tr class="">
-                        <th style="width:5%"></th>
+                        {{-- <th style="width:5%"></th> --}}
                         <th style="width:90%"></th>
                         <th style="width:5%"></th>
                        
                     </tr>
                 </thead>
                     <tbody>  
-                   
                     </tbody>
             </table>
         </div>
@@ -102,19 +107,52 @@ $dd_section="section".$lang;
 
 $(document).ready(function()
 {
-$(document.body).addClass('bg-white');
-
+    document.getElementById("txt_quick").focus();
 });
+var recognition = new webkitSpeechRecognition();
+// recognition.continuous = true;
+// recognition.interimResults = true;
+recognition.lang = "{{$locale}}";
 
+recognition.onresult = function(event) { 
+    // console.log('result');
+    
+    var saidText = "";
+    for (var i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+            saidText = event.results[i][0].transcript;
+        } else {
+            saidText += event.results[i][0].transcript;
+        }
+       
+    }
+   
+    document.getElementById('txt_quick').value = saidText;
+    var keyword=$("#txt_quick").val();
+    qucki_search(keyword);   
+    
+}
+
+$("#start_speech").click(function () {
+    $('#txt_quick').val('');
+    $('#resource_datatable').DataTable().clear().destroy();
+    $('#mic-before').hide();
+    $('#mic-after').show();
+    recognition.start();
+    $('#reso_data').show();
+    
+});
 
 function qucki_search(keyword)
 {
+    $('#mic-before').show();
+    $('#mic-after').hide(); 
+
     $('#resource_datatable').DataTable({
-        columnDefs: [
-        {"targets": [0],
-        "visible": false,
-        "searchable": false},
-        ],
+        // columnDefs: [
+        // {"targets": [0],
+        // "visible": false,},
+        // ],
         responsive: true,
         processing: true,
         serverSide: false,
@@ -133,14 +171,18 @@ function qucki_search(keyword)
     // pageLength: 15,
     
     columns:[
-        {data: "id",name: "ResourceID",orderable: true},
+        // {data: "id",name: "ResourceID",orderable: true},
         {data: "details",name: "details",orderable: false},
         {data: "action",name: "action",orderable: false}
     ],
-    "createdRow": function( row, data, dataIndex ) {
-        }
     });
 }
+// $('#txt_quick').on('input',function(e){
+//     $('#resource_datatable').DataTable().clear().destroy();
+//     var keyword=$("#txt_quick").val();
+//     $('#reso_data').show();
+//     qucki_search(keyword);
+// });
 
 $("#btn_quck_search").click(function () {
 

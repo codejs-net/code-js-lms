@@ -315,17 +315,20 @@ margin-top:200px;
   .searchbar{
     height:45px;
     border:none;
-    width:500px;
+    width:85%;
     font-size:16px;
     outline: none;
     
   }
   .voice{
-    height:20px;
+    width: 8%;
+    height:auto;
     position:relative;
-    top:5px;
-    left:10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    left:8px;
   }
+
   .buttons{
     margin-top:30px;
   }
