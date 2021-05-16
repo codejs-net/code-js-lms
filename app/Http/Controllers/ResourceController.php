@@ -440,7 +440,7 @@ class ResourceController extends Controller
         // $typedata=resource_type::all();
 
         if(request()->ajax())
-            {
+        {
         $catg="";$cent="";$type="";
 
         if($request->catdata=="All"){$catg="%";}

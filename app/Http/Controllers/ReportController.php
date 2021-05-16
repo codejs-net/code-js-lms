@@ -81,12 +81,7 @@ class ReportController extends Controller
         return view('reports.support_data.index');
        
     }
-    public function lending_index()
-    {
-        $today = Carbon::now()->isoFormat('YYYY-MM-DD');
-        return view('reports.lending.index')->with('today',$today);
-       
-    }
+    
     function report_recource(Request $request) {
        
         try {
@@ -185,6 +180,15 @@ class ReportController extends Controller
         return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Member Card.pdf');
     }
 //lending Reports
+    public function lending_index()
+    {
+        
+        $today = Carbon::now()->isoFormat('YYYY-MM-DD');
+        $memberdata=member::select('id','name_si','name_ta','name_en')->get();
+        return view('reports.lending.index')->with('today',$today)->with('memberdata',$memberdata);
+       
+    }
+
     function report_lending(Request $request) {
        
         try {
@@ -278,6 +282,85 @@ class ReportController extends Controller
         catch (\Exception $e) {
             return redirect()->back()->with('error','Report genarate Fail.');
         }
+
+    }
+
+    function report_lending_account(Request $request) {
+       
+        // try {
+            ini_set('max_execution_time', '1200');
+            ini_set("pcre.backtrack_limit", "90000000");
+            ini_set('memory_limit', '-1');
+
+            $rpt_member="";
+            $rpt_resource="";
+            $rpt_filter=$request->rpt_filter_account;
+
+            if($request->rpt_member=="All"){$rpt_member="%";}
+            else{ $rpt_member=$request->rpt_member;}
+
+            if($request->rpt_resource=="All"){$rpt_resource="%";}
+            else{ $rpt_resource=strtoupper($request->rpt_resource);}
+
+            $center_array= array();
+            $resource_center = center_allocation::where('staff_id', Auth::user()->detail_id)->with(['center'])->get();
+            foreach($resource_center as $value)
+            {array_push($center_array,$value->center->id);}
+
+            if($rpt_filter=="All")
+            {
+                $lendingdata = view_lending_data_all::select('*')
+                ->whereIn('center_id', $center_array)
+                ->where('member_id','LIKE',$rpt_member)
+                ->where('accessionNo','LIKE',$rpt_resource)
+                ->orderBy('updated_at', 'DESC')
+                ->get(); 
+            }
+           
+            elseif($rpt_filter=="Return")
+            {
+                $_return=1;
+                $lendingdata = view_lending_data_all::select('*')
+                ->where('return','LIKE',$_return)
+                ->whereIn('center_id', $center_array)
+                ->where('member_id','LIKE',$rpt_member)
+                ->where('accessionNo','LIKE',$rpt_resource)
+                ->orderBy('updated_at', 'DESC')
+                ->get(); 
+            }
+            elseif($rpt_filter=="Non Return")
+            {
+                $_return=0;
+                $lendingdata = view_lending_data_all::select('*')
+                ->where('return','LIKE',$_return)
+                ->whereIn('center_id', $center_array)
+                ->where('member_id','LIKE',$rpt_member)
+                ->where('accessionNo','LIKE',$rpt_resource)
+                ->orderBy('updated_at', 'DESC')
+                ->get(); 
+            }
+            elseif($rpt_filter=="Issue")
+            {
+                $lendingdata = view_lending_data_all::select('*')
+                ->whereIn('center_id', $center_array)
+                ->where('member_id','LIKE',$rpt_member)
+                ->where('accessionNo','LIKE',$rpt_resource)
+                ->orderBy('updated_at', 'DESC')
+                ->get(); 
+            }
+           
+            $pdf = PDF::loadView('reports.lending.rpt_lending_account',compact('lendingdata','rpt_member','rpt_resource','rpt_filter'),[],
+                [
+                'format' => 'A4',
+                'orientation' => 'P',
+                ]);
+           
+
+            return $pdf->stream($rpt_member.'_'.$rpt_resource.'_'.$rpt_filter.'_lending_account.pdf');
+        // }
+        // catch (\Exception $e) {
+        //     return redirect()->back()->with('error','Report genarate Fail.');
+        // }
 
     }
 
