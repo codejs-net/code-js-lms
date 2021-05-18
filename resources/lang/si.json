@@ -89,14 +89,26 @@
     "Profile":"",
     
     "--------------------footer-------------------------------":"",
-    
+    "Develop by":"මෘදුකාංග සංවර්ධනය",
     "--------------------dashbaoard---------------------------":"",
 
-    "code-js-descript":"Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets and allows Members digital means of discovery and reading.an interactive solution that allows Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets",
+    "code-js-descript":"Code-js LMS යනු පුස්තකාලයාධිපතිවරුන්ට සහ කාර්ය මණ්ඩලයට ඉන්වෙන්ටරි සහ මාධ්‍ය වත්කම් පිළිබඳ තත්‍ය කාලීනව තබා ගැනීමට ඉඩ සලසන අන්තර්ක්‍රියාකාරී විසඳුමක් වන අතර සාමාජිකයින්ට ඩිජිටල් සොයාගැනීම් සහ කියවීම් සඳහා ඉඩ ලබා දේ. Code-js LMS පුස්තකාලයාධිපතිවරුන්ට ඉඩ දෙන අන්තර්ක්‍රියාකාරී විසඳුමකි. සහ ඉන්වෙන්ටරි සහ මාධ්‍ය වත්කම් පිළිබඳ තත්‍ය කාලීනව තබා ගැනීමට කාර්ය මණ්ඩලය ",
     "Issue to":"බැහැර දීම්",
     "Return by":"ආපසු භාර දීම්",
     "Latest Resource Issue":"අවසාන බැහැර දීම්",
     "Latest Resource Return":"අවසාන ආපසු භාර දීම්",
+    "Total Resources":"",
+    "Total members":"",
+    "Issue-Today":"",
+    "Retund-Today":"",
+    "Income-today":"",
+    "Quick Links":"",
+    "Add Members":"",
+    "Catalog":"",
+    "Supports":"",
+    "Receipt":"",
+    "Transaction Summary":"",
+    "Centers :":"මධ්‍යස්ථාන : ",
     
     "--------------------comman table th----------------------":"",
     

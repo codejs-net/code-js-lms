@@ -425,7 +425,23 @@ class ResourceController extends Controller
     }
     public function resource_catelog(Request $request) 
     {
-        return view('resources.catelog');
+        $locale = session()->get('locale');
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        if ($db_setting->value == "0") {
+            $lang = "_" . $locale;
+        } else {
+            $lang = "_" . $db_setting->value;
+        }
+        Session::put('db_locale', $lang);
+        $center_name_array= array();
+        $center_names="name".$lang;
+        $resource_center = center_allocation::where('staff_id', Auth::user()->detail_id)->with(['center'])->get();
+        foreach($resource_center as $value)
+        {
+            array_push($center_name_array,$value->center->$center_names);
+        }
+        // dd($center_name_array);
+        return view('resources.catelog')->with('cent_name',$center_name_array);
     }
     public function resource_catelog1(Request $request) 
     {
@@ -573,17 +589,18 @@ class ResourceController extends Controller
                                 $card .='<span><b>Creator:</b> '.$data->name_si.','.$data->name_ta.','.$data->name_en.'</span><br>';
                                 $card .='<span><b>Publisher:</b> '.$data->publisher_si.','.$data->publisher_ta.','.$data->publisher_en.'</span><br>';
                                 $card .='<span><b>Language:</b> '.$data->language_si.','.$data->language_ta.','.$data->language_en.'</span><br>';
-                                $card .='<span><b>DDC Class:</b> '.$data->class_si.','.$data->class_si.','.$data->class_si.'</span><br>';
-                                $card .='<span><b>DDC Devision:</b> '.$data->devision_si.','.$data->devision_si.','.$data->devision_si.'</span><br>';
-                                $card .='<span><b>DDC Section:</b> '.$data->section_si.'-'.$data->section_si.','.$data->section_ta.','.$data->section_en.'</span><br>';
+                                $card .='<span><b>DDC Class:</b> '.$data->class_code.','.$data->class_si.','.$data->class_si.'</span><br>';
+                                $card .='<span><b>DDC Devision:</b> '.$data->devision_code.','.$data->devision_si.','.$data->devision_si.'</span><br>';
+                                $card .='<span><b>DDC Section:</b> '.$data->section_code.'-'.$data->section_si.','.$data->section_ta.','.$data->section_en.'</span><br>';
                                 $card .='<span><b>DDC: </b>'.$data->ddc.'</span><br>';
                                 $card .='<span><b>Price:</b> '.$data->price.'</span><br>';
                                 $card .='<span><b>Publish Year:</b> '.$data->publishyear.'</span><br>';
                                 $card .='<span><b>Edition:</b> '.$data->edition.'</span><br>';
                                 $card .='<span><b>Physical Detail:</b> '.$data->phydetails.'</span><br>';
                                 $card .='<span><b>Purchase Date:</b> '.$data->purchase_date.'</span><br>';
-                                $card .='<span><b>Rack No:</b> </span><br>';
-                                $card .='<span><b>Floor No:</b> </span><br>';
+                                $card .='<span><b>Rack No:</b>'.$data->rack_si.','.$data->rack_ta.','.$data->rack_en.'</span><br>';
+                                $card .='<span><b>Floor No:</b> '.$data->floor_si.','.$data->floor_ta.','.$data->floor_en.'</span><br>';
+                                $card .='<span><b>Placement Index:</b> '.$data->placement_index.'</span><br>';
                             $card .='</div>';
                         $card .='</div>';
                     $card .='</div>';

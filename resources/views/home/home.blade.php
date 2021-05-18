@@ -8,20 +8,30 @@
 @php
 $theme = session()->get('theme');
 $locale = session()->get('locale');
+$library = session()->get('library');
 $lang="_".$locale;
 $title="title".$lang;
 $member="member".$lang;
+$center_name="name".$lang;
+$lib_name="name".$lang;
+$lib_add1="address1".$lang;
+$lib_add2="address2".$lang;
 @endphp
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-               
                 <div class="col-12 col-sm-6 col-md-9 js-bg">
                     <div class="content-header pl-3 pb-1 mt-2">
                         <div class="box box-info">
                             <div class="box-header text-left ml-4 pl-3">
-                                <div class=" header js-dash-h"> <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Library Management System")}}</h5></div>
+                                <div class=" header js-dash-h">
+                                    <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Library Management System")}} -&nbsp;{{$library->$lib_name}}&nbsp;({{$library->$lib_add1}},&nbsp;{{$library->$lib_add2}})</h5>
+                                    <span><b>{{__('Centers :')}}</b> </span>
+                                    @foreach($cent_name as $center)
+                                        <span class="text-dark">{{$center}} ,&nbsp;</span>
+                                    @endforeach
+                                </div>
                                 <!-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> -->
                             </div>
                         </div>
@@ -48,7 +58,7 @@ $member="member".$lang;
                             <div class="small-box js-box-bg-1 elevation-5">
                                 <div class="inner js-box-text">
                                     <h3>{{$rcount}}</h3>
-                                    <p>Total Resources</p>
+                                    <p>{{__('Total Resources')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-star-o"></i>
@@ -62,7 +72,7 @@ $member="member".$lang;
                             <div class="small-box js-box-bg-2 elevation-5">
                                 <div class="inner js-box-text">
                                     <h3>{{$mcount}}</h3>
-                                    <p>Total members</p>
+                                    <p>{{__('Total members')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-user-o"></i>
@@ -77,7 +87,7 @@ $member="member".$lang;
                                 <div class="inner js-box-text">
                                     <h3>{{$issucount}}</h3>
         
-                                    <p>Issue-Today</p>
+                                    <p>{{__('Issue-Today')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-cart-arrow-down"></i>
@@ -92,7 +102,7 @@ $member="member".$lang;
                                 <div class="inner js-box-text">
                                     <h3>{{$rtncount}}</h3>
         
-                                    <p>Retund-Today</p>
+                                    <p>{{__('Retund-Today')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-shopping-bag"></i>
@@ -105,7 +115,7 @@ $member="member".$lang;
                                 <div class="inner js-box-text">
                                     <h3>Rs&nbsp;{{$income}}</h3>
         
-                                    <p>Income-today</p>
+                                    <p>{{__('Income-today')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-money"></i>
@@ -117,7 +127,7 @@ $member="member".$lang;
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-12">
                             <div class="box-header text-left ml-5 pl-3">
-                                <h6 class="info-box-icon"><u>Quick Links</u></h6>
+                                <h6 class="info-box-icon"><u>{{__('Quick Links')}}</u></h6>
                                 <!-- <h6 class="info-box-icon"><i class="fas fa-cog"></i>&nbsp;Quick Links</h6> -->
                             </div>
                             <!-- <hr> -->
@@ -128,53 +138,53 @@ $member="member".$lang;
                         
                         <a href="{{ route('create_resource') }}" class="col-md-2 btn btn-block  mt-2 js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span> --}}
-                            <span class="info-box-text pt-2">Add Resources</span>
+                            <span class="info-box-text pt-2">{{__('Add Resources')}}</span>
                         </a>
 
                         <a href="{{ route('create_member') }}" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span> --}}
-                            <span class="info-box-text">Add Members</span>
+                            <span class="info-box-text">{{__('Add Members')}}</span>
                         </a>
 
                         <a href="{{ route('resource_catelog') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span> --}}
-                            <span class="info-box-text">Catalog</span>
+                            <span class="info-box-text">{{__('Catalog')}}</span>
                         </a>
 
                         <a href="{{ route('resource_catagory.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span> --}}
-                            <span class="info-box-text">Supports</span>
+                            <span class="info-box-text">{{__('Supports')}}</span>
                         </a>
 
                         <a href="{{ route('issue.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span> --}}
-                            <span class="info-box-text">Issue</span>
+                            <span class="info-box-text">{{__('Issue')}}</span>
                         </a>
 
                         <a href="{{ route('return.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span> --}}
-                            <span class="info-box-text">Return</span>
+                            <span class="info-box-text">{{__('Return')}}</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span> --}}
-                            <span class="info-box-text">Receipt</span>
+                            <span class="info-box-text">{{__('Receipt')}}</span>
                         </a>
 
                         <a href="{{ route('rpt_lending_index') }}" class="col-md-2 btn btn-block   js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span> --}}
-                            <span class="info-box-text">Lending Reports</span>
+                            <span class="info-box-text">{{__('Lending Reports')}}</span>
                         </a>
 
                         <a href="{{ route('staff.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span> --}}
-                            <span class="info-box-text">Staff</span>
+                            <span class="info-box-text">{{__('Staff')}}</span>
                         </a>
 
 
                         <a href="{{ route('members.index') }}" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span> --}}
-                            <span class="info-box-text">Members</span>
+                            <span class="info-box-text">{{__('Members')}}</span>
                         </a>
                       
                        
@@ -184,7 +194,7 @@ $member="member".$lang;
                            
                             <div class="box-header text-left ml-5 pl-3">
                                 <!-- <h6 class="info-box-icon"><i class="fas fa-cog"></i>&nbsp;Transaction Summary</h6> -->
-                                <h6 class="info-box-icon"><u>Transaction Summary</u></h6>
+                                <h6 class="info-box-icon"><u>{{__('Transaction Summary')}}</u></h6>
                             </div>
                             <!-- <hr> -->
                         </div>

@@ -153,11 +153,7 @@
         height: auto;
         
     }
-    .img-catalog{
-        width: 22%;
-        height: auto;
-        text-align: center;
-    }
+   
     
     .toast-top-center {
         top: 20px;
@@ -318,15 +314,32 @@ margin-top:200px;
 }
 
 /* -------------------------------google search ----------------*/
+.img-catalog{
+    width: 22%;
+    height: auto;
+    text-align: center;
+}
+.img-catalog1{
+    width: 80%;
+    height: auto;
+    text-align: center;
+}
 .logo{
     margin-top:0;
     margin-bottom:20px;
   }
   .div_bar{
-    margin:0 auto;
+    margin:10px auto;
     width:575px;
     border-radius:30px;
     border:1px solid #dcdcdc;
+  }
+  .div_bar1{
+    margin:0 auto;
+    width:auto;
+    border-radius:30px;
+    border:1px solid #dcdcdc;
+    text-align: right;
   }
   .div_bar:hover{
     box-shadow: 1px 1px 8px 1px #dcdcdc;
@@ -336,9 +349,17 @@ margin-top:200px;
     outline:none;
   }
   .searchbar{
-    height:45px;
+    height:40px;
     border:none;
     width:85%;
+    font-size:16px;
+    outline: none;
+    
+  }
+  .searchbar1{
+    height:40px;
+    border:none;
+    width:82%;
     font-size:16px;
     outline: none;
     
@@ -351,9 +372,18 @@ margin-top:200px;
     padding-bottom: 3px;
     left:8px;
   }
+  .voice1{
+    width: auto;
+    height:50px;
+    position:relative;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    left:8px;
+  }
+
 
   .buttons{
-    margin-top:30px;
+    margin-top:0px;
   }
   .button{
     background-color: #f5f5f5;
@@ -361,7 +391,7 @@ margin-top:200px;
     color:#707070;
     font-size:15px;
     padding: 10px 20px;
-    margin:5px;
+    margin:2px;
     border-radius:4px;
     outline:none;
   }

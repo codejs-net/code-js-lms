@@ -4,7 +4,11 @@
 
 @php
 $locale = session()->get('locale');
+$library = session()->get('library');
 $lang="_".$locale;
+$lib_name="name".$lang;
+$lib_add1="address1".$lang;
+$lib_add2="address2".$lang;
 $category="category".$lang;
 $center="name".$lang;
 $publisher="publisher".$lang;
@@ -19,39 +23,51 @@ $dd_section="section".$lang;
 
 <section class="content">
     <div class="container-fluid">
-    {{-- <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-             Qucik Search
-            </button>
-          </h5>
-        </div>
-            <!-- ======================Quck Search================================== -->
-             <div class="js-catalog-box elevation-1">
-                <div class="row pb-2">   
-                    <div class="col-md-2 col-2 text-center">
-                        <img src="{{ asset('img/dashboard.png') }}" class="img-catalog" alt="Code-js">
+    <div class="row bg-white">
+        <div class="col-12">
+            <div class="content-header pl-2 pb-1 mt-2">
+                <div class="box box-info">
+                    <div class="box-header text-left ml-2 pl-1">
+                        <div class=" header js-dash-h">
+                            <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Library Management System")}} -&nbsp;{{$library->$lib_name}}&nbsp;({{$library->$lib_add1}},&nbsp;{{$library->$lib_add2}})</h5>
+                            <span>{{__('Centers :')}}
+                                @foreach($cent_name as $center)
+                                    <span class="text-dark">{{$center}} ,&nbsp;</span>
+                                @endforeach
+                            </span>
+                        </div>
                     </div>
-                    <div class="col-md-10 col-10">
-                        <form onSubmit="return false;"name="form_quick_search" id="form_quick_search" class="needs-validation"  novalidate>
-                            {{ csrf_field() }}
-                            <div class="form-group js-select-box mt-2">
-                                <span class="ml-3 " for="">Keywords</span>
-                                <div class="input-group ml-2 mr-2">
-                                    
-                                <input type="text" class="form-control mb-3 mt-2" id="txt_quick" name="txt_quick"  value=""  placeholder="Title/Creator/ISBN/ISSN/ISMN/Category/Type/Publisher/DDC/Edition/........"required>
-                                    <span>
-                                        <button type="submit" class="btn btn-sm btn-outline-success search-feild-btn elevation-2" id="btn_quck_search"><i class="fas fa-search"></i>&nbsp; Search</button>
-                                    </span>
-                                </div>
-                            </div>   
-                        </form>
-                    </div>
-                </div>  
+                </div>
             </div>
-            <!-- =================================================================== -->   
-      </div> --}}
+            <hr>
+        </div>
+    </div>
+    <div id="gsearch1" class="my-1" style="display: none;">
+            <form onSubmit="return false;"name="form_quick_search1" id="form_quick_search1" class="needs-validation"  novalidate>
+            {{ csrf_field() }}
+           <div class="row">
+            <div class="col-md-2 col-2">
+                <div class="logo text-center">
+                    <img alt="Google" src="{{ asset('img/library_logo.png') }}" class="img-catalog1">
+                </div>
+            </div>
+            <div class="col-md-10 col-10">
+                <div class="div_bar1 text-right">
+                    <center>
+                      <input class="searchbar1" type="text" id="txt_quick1" name="txt_quick1"  title="Search" required>
+                      <a id="start_speech1" class="" href="#"> 
+                          <img class="voice1" src="{{ asset('img/mic.png') }}" id="mic-before1">
+                          <img class="voice1" src="{{ asset('img/mic1.png') }}" id="mic-after1" style="display: none;">
+                        </a>
+                        <button class="btn rounded-circle bg-light mx-2" id="btn_quck_search1" type="submit"><i class="fa fa-search fa-lg"></i></button>
+                    </center>
+                </div>
+            </div>
+           </div>
+            </form>
+       
+    </div>
+    {{-- ----------------------------------------------------------------------- --}}
       <div id="gsearch" class="my-5">
         <center>
             <form onSubmit="return false;"name="form_quick_search" id="form_quick_search" class="needs-validation"  novalidate>
@@ -110,13 +126,46 @@ $(document).ready(function()
     document.getElementById("txt_quick").focus();
 });
 var recognition = new webkitSpeechRecognition();
+var recognition1 = new webkitSpeechRecognition();
 // recognition.continuous = true;
 // recognition.interimResults = true;
+
 recognition.lang = "{{$locale}}";
+recognition1.lang = "{{$locale}}";
 
 recognition.onresult = function(event) { 
-    // console.log('result');
-    
+    var saidText = "";
+    for (var i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+            saidText = event.results[i][0].transcript;
+        } else {
+            saidText += event.results[i][0].transcript;
+        }
+       
+    }
+    // if(!saidText==""){
+       
+        document.getElementById('txt_quick').value = saidText;
+        var keyword=$("#txt_quick").val();
+        $("#txt_quick1").val(keyword);
+        $('#gsearch1').show();
+        $('#gsearch').hide();
+        qucki_search(keyword);   
+    // }
+    // else{
+    //     toastr.info('Sorry Not Listning anything...');
+    // }  
+}
+recognition.onend = function() {
+    $('#mic-before').show();
+    $('#mic-after').hide();
+}
+recognition1.onend = function() {
+    $('#mic-before1').show();
+    $('#mic-after1').hide();
+}
+
+recognition1.onresult = function(event) { 
     var saidText = "";
     for (var i = event.resultIndex; i < event.results.length; i++) {
         if (event.results[i].isFinal) {
@@ -127,26 +176,33 @@ recognition.onresult = function(event) {
        
     }
    
-    document.getElementById('txt_quick').value = saidText;
-    var keyword=$("#txt_quick").val();
+    document.getElementById('txt_quick1').value = saidText;
+    var keyword=$("#txt_quick1").val();
     qucki_search(keyword);   
     
 }
 
 $("#start_speech").click(function () {
     $('#txt_quick').val('');
-    $('#resource_datatable').DataTable().clear().destroy();
     $('#mic-before').hide();
     $('#mic-after').show();
-    recognition.start();
-    $('#reso_data').show();
-    
+    $('#resource_datatable').DataTable().clear().destroy();
+    recognition.start();  
+
+});
+
+$("#start_speech1").click(function () {
+    $('#txt_quick1').val('');
+    $('#mic-before1').hide();
+    $('#mic-after1').show();
+    $('#resource_datatable').DataTable().clear().destroy();
+    recognition1.start();  
 });
 
 function qucki_search(keyword)
 {
-    $('#mic-before').show();
-    $('#mic-after').hide(); 
+
+    $('#reso_data').show();
 
     $('#resource_datatable').DataTable({
         // columnDefs: [
@@ -158,6 +214,7 @@ function qucki_search(keyword)
         serverSide: false,
         ordering: false,
         searching: false,
+        info:     false,
         
 
     ajax:{
@@ -188,14 +245,28 @@ $("#btn_quck_search").click(function () {
 
     // $('#resource_datatable').dataTable().fnDestroy();
     $('#resource_datatable').DataTable().clear().destroy();
-
     var keyword=$("#txt_quick").val();
-    $('#reso_data').show();
+    $("#txt_quick1").val(keyword);
+    $('#gsearch1').show();
+    $('#gsearch').hide();
     qucki_search(keyword);
 
-    $([document.documentElement, document.body]).animate({
-        scrollTop: $("#resource_datatable").offset().top
-    }, 1000);
+    // $([document.documentElement, document.body]).animate({
+    //     scrollTop: $("#resource_datatable").offset().top
+    // }, 1000);
+
+});
+
+$("#btn_quck_search1").click(function () {
+
+$('#resource_datatable').DataTable().clear().destroy();
+var keyword=$("#txt_quick1").val();
+// $('#reso_data').show();
+qucki_search(keyword);
+
+// $([document.documentElement, document.body]).animate({
+//     scrollTop: $("#resource_datatable").offset().top
+// }, 1000);
 
 });
 
