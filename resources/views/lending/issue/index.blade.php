@@ -55,7 +55,7 @@ $creator="name".$lang;
                     <input type="text" class="form-control elevation-1" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
                     <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
-                </div>  
+                </div>
             </div>
 
              <div class="col-md-6 col-sm-12 text-left p-3 mt-1 bg-white">

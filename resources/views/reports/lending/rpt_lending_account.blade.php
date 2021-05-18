@@ -117,7 +117,7 @@ $member_category="member_category".$lang;
       <table class="table">
             <tr>
                   <td style="text-align: left;" class="topic">{{__('Library Lending Account Report')}} - {{__($rpt_filter)}}</td>
-                  <td style="text-align: right;">( {{$rpt_member}} - {{$rpt_resource}} )</td>
+                  <td style="text-align: right;">{{($rpt_member == "%") ? trans('All') : $rpt_member}} -> {{($rpt_resource == "%") ? trans('All') : $rpt_resource}}</td>
             </tr>
       </table>
 </div>

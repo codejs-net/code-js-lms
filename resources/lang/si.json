@@ -1,16 +1,105 @@
 {
+  "--------------------comman---------------------------------":"",
+
+    "Library management System":"පුස්ථකාල කළමණාකරන පද්ධතිය",  
     "Library Management System" : "පුස්ථකාල කළමණාකරන පද්ධතිය",
-    "Add Books" : "පොත් ඇතුලත් කිරීම",
-    "This is basic example of how you use Laravel Localizations" : "Dies ist ein grundlegendes Beispiel für die Verwendung von Laravel-Lokalisierungen",
-    "Dashboard":"පාලක පුවරුව",
-    "Library":"පුස්තාකාලය",
+    "Library":"පුස්ථකාලය",
     "Books": "'පොත්",
-    "Search Books":"පොත් සොයන්න",
     "Detais":"විස්තර",
+    "Resources":"පුස්ථකාල සම්පත්",
+
+    "--------------------sidebar------------------------------":"",
+
+    "Dashboard":"පාලක පුවරුව",
+    "Resources Catelog":"පුස්ථකාල සම්පත් නාමාවලිය",
+    "Search Resources":"පුස්ථකාල සම්පත් සොයන්න",
+    "Add Resources":"",
+    "Lending":"",
+    "Issue Resources":"",
+    "Return Resources":"",
+    "Search Lending":"",
+    "Lending History":"",
+    "Members":"",
+    "Search Member":"",
+    "Add Member":"",
+    "Member Account":"",
+    "Support Data":"",
+    "Resources Support":"",
+    "Members Support":"",
+    "Staff Support":"",
+    "Library Suppor":"",
+    "Code Genarate":"",
+    "Genarate Codes":"",
+    "library Survay":"",
+    "Survey":"",
+    "History":"",
+    "Receipts":"",
+    "Staff":"",
+    "Add Staff":"",
+    "Search Staff":"",
+    "Centers":"",
+    "Search Center":"",
+    "Add Center":"",
+    "User Account":"",
+    "My Account":"",
+    "Staff Users":"",
+    "Member Users Account":"",
+    "Roles & Permisions":"",
+    "Activity Log":"",
+    "Search Log":"",
+    "Settings":"",
+    "Basic Settings":"",
+    "LMS Settings":"",
+    "Lending Settings":"",
+    "Notification Settings":"",
+    "Reports":"",
+    "Resource Reports":"",
+    "Member Reports":"",
+    "Lending Reports":"",
+    "Resource Support Data Reports":"",
+    "Member Support Data Reports":"",
+    "Staff Support Data Reports":"",
+    "Library Support Data Reports":"",
+    "Survey Reports":"",
+    "User Reports":"",
+    "Log Reports":"",
+    "Add Books" : "පොත් ඇතුලත් කිරීම",
     "Books Lending":"පොත් බැහැර දීම",
     "Issue Books":"පොත් නිකුත් කිරීම",
-    "Return Books":"පොත් නැවත භාරදීම",
+    "Return Books":"පොත් ආපසු භාරදීම",
+    "Search Books":"පොත් සොයන්න",
+    
+    "--------------------header-------------------------------":"",
 
+    "Home":"පුස්ථකාලය",
+    "Issue":"නිකුත් කිරීම",
+    "Return":"ආපසු භාරදීම",
+    "LMS Colour":"",
+    "LMS Blue dark":"",
+    "LMS Blue light":"",
+    "LMS Orange dark":"",
+    "LMS Orange light":"",
+    "LMS Green dark":"",
+    "LMS Green light":"",
+    "LMS Dark":"",
+    "LMS Light":"",
+    "Sinhala":"",
+    "Tamil":"",
+    "English":"",
+    "Profile":"",
+    
+    "--------------------footer-------------------------------":"",
+    
+    "--------------------dashbaoard---------------------------":"",
+
+    "code-js-descript":"Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets and allows Members digital means of discovery and reading.an interactive solution that allows Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets",
+    "Issue to":"බැහැර දීම්",
+    "Return by":"ආපසු භාර දීම්",
+    "Latest Resource Issue":"අවසාන බැහැර දීම්",
+    "Latest Resource Return":"අවසාන ආපසු භාර දීම්",
+    
+    "--------------------comman table th----------------------":"",
+    
     "StaffID":"අංකය",
     "Avatar":"ජායාරූපය",
     "Title":"උපසර්ගය",
@@ -26,13 +115,141 @@
     "Category":"කාණ්ඩය",
     "Address":"ලිපිනය",
     "Register":"ලියාපදිංචිය",
+    
+    "--------------------comman breadcrumb--------------------":"",
+    
+    "--------------------comman input labels------------------":"",
+    
+    "--------------------comman button------------------------":"",
+    
+    "--------------------comman placeholder-------------------":"",
+    
+    "--------------------comman error-------------------------":"",
+    
+    "--------------------comman toster massage----------------":"",
+    
+    "--------------------comman modal-------------------------":"",
+    
+    "--------------------resource index-----------------------":"",
+    
+    "--------------------resource Create----------------------":"",
+    
+    "--------------------resource edit------------------------":"",
+    
+    "--------------------resource catelog---------------------":"",
+    
+    "--------------------user index---------------------------":"",
+    
+    "--------------------user create--------------------------":"",
+    
+    "--------------------user edit----------------------------":"",
+    
+    "--------------------role index---------------------------":"",
+    
+    "--------------------role create--------------------------":"",
+    
+    "--------------------role show----------------------------":"",
+    
+    "--------------------member index-------------------------":"",
+
     "Member Card":"සාමාජික කාඩ්පත",
+    
+    "--------------------member create------------------------":"",
+    
+    "--------------------member edit--------------------------":"",
+    
+    "--------------------member show--------------------------":"",
+    
+    "--------------------support data-resource-category-------":"",
+    
+    "--------------------support data-resource-type-----------":"",
+    
+    "--------------------support data-resource-ddclass--------":"",
+    
+    "--------------------support data-resource-dddevisi-------":"",
+    
+    "--------------------support data-resource-ddsection------":"",
+    
+    "--------------------support data-resource-language-------":"",
+    
+    "--------------------support data-resource-publisher------":"",
+    
+    "--------------------support data-resource-creator--------":"",
+    
+    "--------------------support data-resource-donater--------":"",
+    
+    "--------------------support data-resource-rack-----------":"",
+    
+    "--------------------support data-resource-floor----------":"",
+    
+    "--------------------support data-member-category---------":"",
+    
+    "--------------------support data-member-gurantor---------":"",
+    
+    "--------------------support data-library-title-----------":"",
+    
+    "--------------------support data-library-gender----------":"",
+    
+    "--------------------support data-staff-designetion-------":"",
+    
+    "--------------------center index-------------------------":"",
+    
+    "--------------------center create------------------------":"",
+    
+    "--------------------center edit--------------------------":"",
+    
+    "--------------------center show--------------------------":"",
+    
+    "--------------------staff index--------------------------":"",
+    
+    "--------------------staff create-------------------------":"",
+    
+    "--------------------staff edit---------------------------":"",
+    
+    "--------------------staff show---------------------------":"",
+    
+    "--------------------settings-basic-----------------------":"",
+    
+    "--------------------settings-lms-------------------------":"",
+    
+    "--------------------settings-landing---------------------":"",
+    
+    "--------------------settings-notificetion----------------":"",  
+    
+    "--------------------lending index------------------------":"",
+    
+    "--------------------lendig history-----------------------":"",
+    
+    "--------------------issue--------------------------------":"",
+    
+    "--------------------return-------------------------------":"",
+    
+    "--------------------survey index-------------------------":"",
+    
+    "--------------------survey-------------------------------":"",
+    
+    "--------------------report-resource----------------------":"",
+    
+    "--------------------report-member------------------------":"",
+    
+    "--------------------report-lending-----------------------":"",
 
-    "Issue to":"බැහැර දීම්",
-    "Return by":"ආපසු භාර දීම්",
-    "Latest Resource Issue":"අවසාන බැහැර දීම්",
-    "Latest Resource Return":"අවසාන ආපසු භාර දීම්",
-
-    "Library Lending Report":"බැහැර දීමේ වාර්ථාව"
+    "Library Lending Report":"බැහැර දීමේ වාර්ථාව",
+    
+    "--------------------report-supportdata-resource----------":"",
+    
+    "--------------------report-supportdata-member------------":"",
+    
+    "--------------------report-supportdata-staff-------------":"",
+    
+    "--------------------report-supportdata-library-----------":"", 
+    
+    "--------------------receipt index------------------------":"",
+    
+    "--------------------receipt edit-------------------------":"",
+    
+    "--------------------activity log-------------------------":"",
+    
+    "--------------------code genarate------------------------":""
 
   }

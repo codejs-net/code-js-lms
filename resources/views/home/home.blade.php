@@ -21,7 +21,7 @@ $member="member".$lang;
                     <div class="content-header pl-3 pb-1 mt-2">
                         <div class="box box-info">
                             <div class="box-header text-left ml-4 pl-3">
-                                <div class=" header js-dash-h"> <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Public Library")}}&nbsp;-&nbsp;{{ __("Library Management System")}}</h5></div>
+                                <div class=" header js-dash-h"> <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Library Management System")}}</h5></div>
                                 <!-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> -->
                             </div>
                         </div>
@@ -35,9 +35,7 @@ $member="member".$lang;
                                     </div>
                                     <h4 class="text-left js-dashboard-side-text-heding font-weight-bold">Code-JS LMS</h4>
                                     <p class="js-dashboard-side-text col-md-10 mt-1">
-                                        Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets and allows Members digital means of discovery and reading.
-                                        an interactive solution that allows Code-JS LMS is an interactive solution that allows 
-                                        librarians and staff to keep real-time track of inventory and media assets
+                                        {{__('code-js-descript')}}
                                     </p>
                     
                             </div> 

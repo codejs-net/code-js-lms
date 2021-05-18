@@ -14,7 +14,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard
+                                {{__('Dashboard')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -22,7 +22,7 @@
                             <li class="nav-item">
                                 <a href="{{ url('/home') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Library</p>
+                                    <p>{{__('Library')}}</p>
                                 </a>
                             </li>
                             
@@ -34,7 +34,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-windows"></i>
                             <p>
-                                Resources
+                                {{__('Resources')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -43,7 +43,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('resource_catelog') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Resources Catelog</p>
+                                    <p>{{__('Resources Catelog')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -51,7 +51,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('resource.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Resources</p>
+                                    <p>{{__('Search Resources')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -59,7 +59,7 @@
                             <li class="nav-item">
                             <a href="{{ route('create_resource') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Resources</p>
+                                    <p>{{__('Add Resources')}}</p>
                                 </a>
                             </li> 
                             @endcan
@@ -71,7 +71,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>
-                                 Lending
+                                 {{__('Lending')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -80,7 +80,7 @@
                             <li class="nav-item">
                             <a href="{{ route('issue.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Issue Resources</p>
+                                    <p>{{__('Issue Resources')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -88,7 +88,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('return.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Return Resources</p>
+                                    <p>{{__('Return Resources')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -96,7 +96,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('lending.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Lending</p>
+                                    <p>{{__('Search Lending')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -104,7 +104,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('lending_history') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Lending History</p>
+                                    <p>{{__('Lending History')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -116,7 +116,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-address-card-o"></i>
                             <p>
-                               Members
+                               {{__('Members')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -125,7 +125,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('members.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Member</p>
+                                    <p>{{__('Search Member')}}</p>
                                 </a>
                             </li>
                 
@@ -133,7 +133,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('create_member') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Member</p>
+                                    <p>{{__('Add Member')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -141,7 +141,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('codes.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Member Account</p>
+                                    <p>{{__('Member Account')}}</p>
                                 </a>
                             </li>
                          
@@ -154,7 +154,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-laptop"></i>
                             <p>
-                                Support Data
+                                {{__('Support Data')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -163,7 +163,7 @@
                             <li class="nav-item">
                             <a href="{{ route('resource_catagory.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Resources Support</p>
+                                    <p>{{__('Resources Support')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -171,7 +171,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('member_catagory.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Members Support</p>
+                                    <p>{{__('Members Support')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -179,7 +179,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('designation.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Staff Support</p>
+                                    <p>{{__('Staff Support')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -187,7 +187,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('titles.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Library Support</p>
+                                    <p>{{__('Library Support')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -199,7 +199,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-barcode"></i>
                             <p>
-                                Code Genarate
+                                {{__('Code Genarate')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -208,7 +208,7 @@
                             <li class="nav-item">
                             <a href="{{ route('Barcoderange') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Genarate Codes</p>
+                                    <p>{{__('Genarate Codes')}}</p>
                                 </a>
                             </li>
                             
@@ -221,7 +221,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-check-square-o"></i>
                             <p>
-                            library Survay
+                            {{__('library Survay')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -230,14 +230,14 @@
                             <li class="nav-item">
                             <a href="{{ route('view_survey',0) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Survey</p>
+                                    <p>{{__('Survey')}}</p>
                                 </a>
                             </li>
                            
                             <li class="nav-item">
                                 <a href="{{ route('view_survey',1) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>History</p>
+                                    <p>{{__('History')}}</p>
                                 </a>
                             </li>
                             
@@ -250,7 +250,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-file-o"></i>
                             <p>
-                            Receipts
+                            {{__('Receipts')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -258,7 +258,7 @@
                             <li class="nav-item">
                             <a href="{{ route('view_survey',0) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Receipts</p>
+                                    <p>{{__('Receipts')}}</p>
                                 </a>
                             </li>
                             
@@ -272,7 +272,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
                             <p>
-                            Staff
+                            {{__('Staff')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -281,14 +281,14 @@
                             <li class="nav-item">
                             <a href="{{ route('staff.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Staff</p>
+                                    <p>{{__('Add Staff')}}</p>
                                 </a>
                             </li>
                             @endcan
                             <li class="nav-item">
                                 <a href="{{ route('staff.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Staff</p>
+                                    <p>{{__('Search Staff')}}</p>
                                 </a>
                             </li>
                             
@@ -302,7 +302,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-home"></i>
                             <p>
-                            Centers
+                            {{__('Centers')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -311,14 +311,14 @@
                             <li class="nav-item">
                                 <a href="{{ route('center.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Center</p>
+                                    <p>{{__('Search Center')}}</p>
                                 </a>
                             </li>
                             @can('center-create')
                             <li class="nav-item">
                                 <a href="{{ route('center.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Center</p>
+                                    <p>{{__('Add Center')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -330,7 +330,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-user-circle"></i>
                             <p>
-                                User Account
+                                {{__('User Account')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -339,7 +339,7 @@
                             <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>My Account</p>
+                                    <p>{{__('My Account')}}</p>
                                 </a>
                             </li>
                           
@@ -347,13 +347,13 @@
                             <li class="nav-item">
                             <a href="{{ route('staff_users') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Staff Users Account</p>
+                                    <p>{{__('Staff Users')}} Account</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                             <a href="{{ route('member_users') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Member Users Account</p>
+                                    <p>{{__('Member Users Account')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -364,7 +364,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-lock"></i>
                             <p>
-                            Roles & Permisions
+                            {{__('Roles & Permisions')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -373,7 +373,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('roles.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Roles & Permisions</p>
+                                    <p>{{__('Roles & Permisions')}}</p>
                                 </a>
                             </li>
  
@@ -386,7 +386,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-tasks"></i>
                             <p>
-                            Activity Log
+                            {{__('Activity Log')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -395,7 +395,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('roles.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Log</p>
+                                    <p>{{__('Search Log')}}</p>
                                 </a>
                             </li>
  
@@ -407,7 +407,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-cog"></i>
                             <p>
-                            Settings
+                            {{__('Settings')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -416,7 +416,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('basic_setting') }}" class="nav-link">
                                     <i class="fa fa-wrench nav-icon"></i>
-                                    <p>Basic Settings</p>
+                                    <p>{{__('Basic Settings')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -424,7 +424,7 @@
                             <li class="nav-item">
                             <a href="{{ route('lms_setting') }}" class="nav-link">
                                     <i class="fa fa-wrench nav-icon"></i>
-                                    <p>LMS Settings</p>
+                                    <p>{{__('LMS Settings')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -432,7 +432,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('lending_setting') }}" class="nav-link">
                                     <i class="fa fa-wrench nav-icon"></i>
-                                    <p>Lending Settings</p>
+                                    <p>{{__('Lending Settings')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -440,7 +440,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('notification_setting') }}" class="nav-link">
                                     <i class="fa fa-wrench nav-icon"></i>
-                                    <p>Notification Settings</p>
+                                    <p>{{__('Notification Settings')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -451,7 +451,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
-                                Reports
+                                {{__('Reports')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -460,7 +460,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_resource_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Resource Reports</p>
+                                    <p>{{__('Resource Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -468,7 +468,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_resource_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Member Reports</p>
+                                    <p>{{__('Member Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -476,7 +476,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_lending_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Lending Reports</p>
+                                    <p>{{__('Lending Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -484,7 +484,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_support_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Resource Support Data Reports</p>
+                                    <p>{{__('Resource Support Data Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -492,7 +492,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_support_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Member Support Data Reports</p>
+                                    <p>{{__('Member Support Data Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -500,7 +500,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_support_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Staff Support Data Reports</p>
+                                    <p>{{__('Staff Support Data Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -508,7 +508,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_support_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Library Support Data Reports</p>
+                                    <p>{{__('Library Support Data Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -516,7 +516,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('rpt_resource_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Survey Reports</p>
+                                    <p>{{__('Survey Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -524,7 +524,7 @@
                             <li class="nav-item">
                                 <a class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>User Reports</p>
+                                    <p>{{__('User Reports')}}</p>
                                 </a>
                             </li>
                             @endcan
@@ -532,7 +532,7 @@
                             <li class="nav-item">
                                 <a class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Log Reports</p>
+                                    <p>{{__('Log Reports')}}</p>
                                 </a>
                             </li>
                             @endcan

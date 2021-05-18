@@ -11,13 +11,13 @@
                 <a class="nav-link js-nav-text" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ url('/home') }}" class="nav-link js-nav-text"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Home</a>
+                <a href="{{ url('/home') }}" class="nav-link js-nav-text"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;{{__('Home')}}</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('issue.index') }}" class="nav-link js-nav-text"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;Issue</a>
+                <a href="{{ route('issue.index') }}" class="nav-link js-nav-text"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;{{__('Issue')}}</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('return.index') }}" class="nav-link js-nav-text"><i class="fa fa-level-down" aria-hidden="true"></i>&nbsp;Return</a>
+                <a href="{{ route('return.index') }}" class="nav-link js-nav-text"><i class="fa fa-level-down" aria-hidden="true"></i>&nbsp;{{__('Return')}}</a>
             </li>
             
             
@@ -29,15 +29,15 @@
                       <div class="dropdown pull-right">
                             <a type="button" class="dropdown-toggle mr-3" data-toggle="dropdown">{{__('Theme')}}</a>
                             <div class="dropdown-menu dropdown-menu-right dropdown_menu mt-3">
-                              <a class="dropdown-item" href="{{ route('change_theme','js-colour') }}">LMS Colour</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-blue-dark') }}">LMS Blue dark</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-blue-light') }}">LMS Blue light</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-orange-dark') }}">LMS Orange dark</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-orange-light') }}">LMS Orange light</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-green-dark') }}">LMS Green dark</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-green-light') }}">LMS Green light</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-dark') }}">LMS Dark</a>
-                              <a class="dropdown-item" href="{{ route('change_theme','js-light') }}">LMS Light</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-colour') }}">{{__('LMS Colour')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-blue-dark') }}">{{__('LMS Blue dark')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-blue-light') }}">{{__('LMS Blue light')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-orange-dark') }}">{{__('LMS Orange dark')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-orange-light') }}">{{__('LMS Orange light')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-green-dark') }}">{{__('LMS Green dark')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-green-light') }}">{{__('LMS Green light')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-dark') }}">{{__('LMS Dark')}}</a>
+                              <a class="dropdown-item" href="{{ route('change_theme','js-light') }}">{{__('LMS Light')}}</a>
                             </div>
                       </div>
                   </li>
@@ -59,9 +59,9 @@
                             
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown_menu mt-2">
-                              <a class="dropdown-item" href="lang/si">Sinhala</a>
-                              <a class="dropdown-item" href="lang/ta">Tamil</a>
-                              <a class="dropdown-item" href="lang/en">English</a>
+                              <a class="dropdown-item" href="lang/si">{{__('Sinhala')}}</a>
+                              <a class="dropdown-item" href="lang/ta">{{__('Tamil')}}</a>
+                              <a class="dropdown-item" href="lang/en">{{__('English')}}</a>
                             </div>
                       </div>
                   </li>
@@ -87,7 +87,7 @@
                           @endif
                              
                               <p>
-                                  <span class="text-dark"> Library management System</span>
+                                  <span class="text-dark"> {{__('Library management System')}}</span>
                                   @guest
                                           
                                   @else
@@ -112,7 +112,7 @@
                               @else
                               <div class="row">
                               <div class="col-md-6 "> 
-                              <a href="#" class="btn btn-default btn-sm">Profile</a>
+                              <a href="#" class="btn btn-default btn-sm">{{__('Profile')}}</a>
                               </div>
                               <div class="col-md-6 text-right">
                               <a class="btn btn-default btn-sm" href="{{ route('logout') }}"
