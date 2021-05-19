@@ -52,9 +52,11 @@ $dd_section="section".$lang;
                 </div>
             </div>
             <div class="col-md-10 col-10">
-                <div class="div_bar1 text-right">
+                <div class="div_bar1 pull-right">
                     <center>
-                      <input class="searchbar1" type="text" id="txt_quick1" name="txt_quick1"  title="Search" required>
+                      <input class="searchbar1 " type="text" id="txt_quick1" name="txt_quick1"  title="Search" required>
+                      <a class="mr-0" id="btn_clear" href="#"><i class="fa fa-times"></i></a>
+                      <span class="separeter">&nbsp;| &nbsp;</span>
                       <a id="start_speech1" class="" href="#"> 
                           <img class="voice1" src="{{ asset('img/mic.png') }}" id="mic-before1">
                           <img class="voice1" src="{{ asset('img/mic1.png') }}" id="mic-after1" style="display: none;">
@@ -83,8 +85,8 @@ $dd_section="section".$lang;
                 </a>
             </div>
             <div class="buttons">
-              <button class="button" id="btn_quck_search" type="submit">Library Search</button>
-              <button class="button" type="button">I'm Feeling Lucky</button>
+              <button class="button" id="btn_quck_search" type="submit">{{__('Library Search')}}</button>
+              <button class="button" type="button">{{__("I'm Feeling Lucky")}}</button>
              </div>
             </form>
         </center>
@@ -205,7 +207,6 @@ function qucki_search(keyword)
 {
 
     $('#reso_data').show();
-
     $('#resource_datatable').DataTable({
         // columnDefs: [
         // {"targets": [0],
@@ -264,13 +265,19 @@ $("#btn_quck_search1").click(function () {
 
 $('#resource_datatable').DataTable().clear().destroy();
 var keyword=$("#txt_quick1").val();
-// $('#reso_data').show();
 qucki_search(keyword);
 
 // $([document.documentElement, document.body]).animate({
 //     scrollTop: $("#resource_datatable").offset().top
 // }, 1000);
 
+});
+$("#btn_clear").click(function () {
+
+$('#resource_datatable').DataTable().clear().destroy();
+$("#txt_quick1").val('');
+$('#reso_data').hide();
+document.getElementById("txt_quick1").focus();
 });
 
 </script>

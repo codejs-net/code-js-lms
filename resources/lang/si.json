@@ -1,18 +1,18 @@
 {
   "--------------------comman---------------------------------":"",
 
-    "Library management System":"පුස්ථකාල කළමණාකරන පද්ධතිය",  
-    "Library Management System" : "පුස්ථකාල කළමණාකරන පද්ධතිය",
-    "Library":"පුස්ථකාලය",
+    "Library management System":"පුස්තකාල කළමණාකරන පද්ධතිය",  
+    "Library Management System" : "පුස්තකාල කළමණාකරන පද්ධතිය",
+    "Library":"පුස්තකාලය",
     "Books": "'පොත්",
     "Detais":"විස්තර",
-    "Resources":"පුස්ථකාල සම්පත්",
+    "Resources":"පුස්තකාල සම්පත්",
 
     "--------------------sidebar------------------------------":"",
 
     "Dashboard":"පාලක පුවරුව",
-    "Resources Catelog":"පුස්ථකාල සම්පත් නාමාවලිය",
-    "Search Resources":"පුස්ථකාල සම්පත් සොයන්න",
+    "Resources Catelog":"පුස්තකාල සම්පත් නාමාවලිය",
+    "Search Resources":"පුස්තකාල සම්පත් සොයන්න",
     "Add Resources":"",
     "Lending":"",
     "Issue Resources":"",
@@ -149,6 +149,9 @@
     "--------------------resource edit------------------------":"",
     
     "--------------------resource catelog---------------------":"",
+
+    "Library Search":"පුස්තකාලයේ සොයන්න",
+    "I'm Feeling Lucky":"",
     
     "--------------------user index---------------------------":"",
     

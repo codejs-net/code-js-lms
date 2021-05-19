@@ -142,7 +142,7 @@ $creator="name".$lang;
         <div id="print_lendding" style="text-align: center;">
             <div class="text-center"><u><h3>Issue Receipt</h3></u></div>
             </br>
-            
+            {{-- <p style="page-break-before: always"></p> --}}
                 <h5 >Member : <span id="print_member"></span></h5>
                 <h5 >Issue Date : <span id="print_issuedate"></span></h5>
                 <h5>Return Date :<span id="print_returndate"></span></h5>

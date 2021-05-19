@@ -320,7 +320,7 @@ margin-top:200px;
     text-align: center;
 }
 .img-catalog1{
-    width: 80%;
+    width: 70%;
     height: auto;
     text-align: center;
 }
@@ -336,7 +336,8 @@ margin-top:200px;
   }
   .div_bar1{
     margin:0 auto;
-    width:auto;
+    width:100%;
+    min-width: 500px;
     border-radius:30px;
     border:1px solid #dcdcdc;
     text-align: right;
@@ -359,7 +360,7 @@ margin-top:200px;
   .searchbar1{
     height:40px;
     border:none;
-    width:82%;
+    width:80%;
     font-size:16px;
     outline: none;
     
@@ -374,11 +375,10 @@ margin-top:200px;
   }
   .voice1{
     width: auto;
-    height:50px;
+    height:55px;
     position:relative;
     padding-top: 3px;
     padding-bottom: 3px;
-    left:8px;
   }
 
 
@@ -404,7 +404,18 @@ margin-top:200px;
     border:1px solid #4885ed;
     padding: 9px 19px;
   }
-  
+  .separeter{
+      font-size: 20px;
+      opacity: 0.3;
+      margin-right: 0;
+      padding-left: 5px;
+  }
+  #btn_clear{
+      font-size: 20px;
+      font-weight:lighter;
+      color: #5c7ff1;
+      padding-top: 3px;
+  }
   
 
 
