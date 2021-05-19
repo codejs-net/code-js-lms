@@ -92,7 +92,7 @@ $dd_section="section".$lang;
 </div>
 
 <div class="container-fluid" id="reso_data" style="display: none; overflow-x: 0;">
-    <hr>
+    {{-- <hr> --}}
     <div class="row m-auto"> 
         <div class="table-responsive">               
             <table  class="table m-auto" width="100%" cellspacing="0" id="resource_datatable">
@@ -183,6 +183,7 @@ recognition1.onresult = function(event) {
 }
 
 $("#start_speech").click(function () {
+    $('#reso_data').hide();
     $('#txt_quick').val('');
     $('#mic-before').hide();
     $('#mic-after').show();
@@ -192,6 +193,7 @@ $("#start_speech").click(function () {
 });
 
 $("#start_speech1").click(function () {
+    $('#reso_data').hide();
     $('#txt_quick1').val('');
     $('#mic-before1').hide();
     $('#mic-after1').show();
@@ -215,6 +217,7 @@ function qucki_search(keyword)
         ordering: false,
         searching: false,
         info:     false,
+        bLengthChange:false,
         
 
     ajax:{
