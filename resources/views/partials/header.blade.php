@@ -11,7 +11,7 @@
                 <a class="nav-link js-nav-text" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ url('/home') }}" class="nav-link js-nav-text"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;{{__('Home')}}</a>
+                <a href="{{ url('/home') }}" class="nav-link js-nav-text" data-toggle="tooltip" data-placement="bottom" title="Home"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;{{__('Home')}}</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{ route('issue.index') }}" class="nav-link js-nav-text"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;{{__('Issue')}}</a>

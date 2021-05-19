@@ -114,7 +114,6 @@
     
     "StaffID":"අංකය",
     "Avatar":"ජායාරූපය",
-    "Title":"උපසර්ගය",
     "Designation":"තනතුර",
     "Name":"නම",
     "Address1":"ලිපිනය1",
@@ -124,15 +123,32 @@
     "Gender":"ස්ත්‍රී පුරුෂ භාවය",
     "Status":"තත්වය",
     "Action":"ක්‍රියාවන්",
-    "Category":"කාණ්ඩය",
     "Address":"ලිපිනය",
     "Register":"ලියාපදිංචිය",
     
     "--------------------comman breadcrumb--------------------":"",
     
     "--------------------comman input labels------------------":"",
-    
+
+    "Title":"උපසර්ගය",
+    "Import":"",
+    "Category":"කාණ්ඩය",
+    "Type":"",
+    "Note":"",
+    "Choose here":"තෝරන්න",
+    "Title in sinhala":"නම සිංහල භාෂාවෙන්",
+    "Title in Tamil":"",
+    "Title in English":"",
+
     "--------------------comman button------------------------":"",
+
+    "Reset":"",
+    "Save":"",
+    "Close":"",
+    "Delete":"",
+    "PDF":"",
+    "Excel":"",
+    "Update":"",
     
     "--------------------comman placeholder-------------------":"",
     
@@ -141,13 +157,63 @@
     "--------------------comman toster massage----------------":"",
     
     "--------------------comman modal-------------------------":"",
+
+    "Choose Excel file":"",
+    "Import Data":"",
     
     "--------------------resource index-----------------------":"",
-    
+
+    "Center":"",
+    "Category :":"",
+    "All Categories":"",
+    "Center :":"",
+    "Resource ID":"",
+    "Resource":"",
+    "Accession No":"",
+    "DDC":"",
+    "Remove Library Resources":"",
+    "Are you sure Remove Resources":"",
+    "Import Resources":"",
+
     "--------------------resource Create----------------------":"",
+
+    "Resource Title":"නම",
+    "Resource Image":"",
+    "ISBN/ISSN/ISMN":"",
+    "Accession Number":"",
+    "Creator":"",
+    "Publisher":"",
+    "Language":"",
+    "Dewey Decimal Class":"",
+    "Dewey Decimal Devision":"",
+    "Dewey Decimal Section":"",
+    "Dewey Decimal Classificetion":"",
+    "Physical Details":"",
+    "Resource Center:":"",
+    "Set Resource Placement Later":"",
+    "Rack/Coupboard":"",
+    "Choose Rack/Coupboard":"",
+    "Floor":"",
+    "Choose Floor":"",
+    "Placement Index":"",
+    "Resource price":"",
+    "Purchase Date":"",
+    "Price":"",
+    "resource":"",
+    "Edition":"",
+    "Publication year":"",
+    "Physical":"",
+    "Note in Sinhala":"",
+    "Note in Tamil":"",
+    "Note in English":"",
+    "Set Resource Placement Late":"",
     
     "--------------------resource edit------------------------":"",
-    
+
+    "Change Status":"",
+    "Active":"",
+    "Remove":"",
+   
     "--------------------resource catelog---------------------":"",
 
     "Library Search":"පුස්තකාලයේ සොයන්න",

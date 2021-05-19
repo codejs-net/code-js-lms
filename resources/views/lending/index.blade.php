@@ -12,8 +12,8 @@ $member="member".$lang;
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Lending&nbsp;</a></li>
+    <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Lending&nbsp;</a></li>
     <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-search"></i>&nbsp;Search Lending</li>
 </ol>
 </nav>

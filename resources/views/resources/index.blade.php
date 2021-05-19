@@ -18,16 +18,16 @@ $dd_section="section".$lang;
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Resources&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-search"></i> Search Resources&nbsp;</a></li>
+    <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('resource.index') }}"><i class="fa fa-folder-open"></i> {{__('Resources')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-search"></i> {{__('Search Resources')}}&nbsp;</a></li>
 </ol>
-</nav>
+</nav>{{__('')}}
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
         <div class="col-md-6 col-sm-6 col-12 text-left"> 
-            <h5> <i class="fa fa-search ml-4 pl-2"> Search Resources</i></h5>
+            <h5> <i class="fa fa-search ml-4 pl-2"> {{__('Search Resources')}}</i></h5>
         </div>  
         <div class="col-md-6 col-sm-6 col-12 text-right pb-2">
             <form class="form-inline pull-right" action="{{ route('report_recource') }}" id="report_form" method="POST">
@@ -36,14 +36,14 @@ $dd_section="section".$lang;
                 <input type="hidden" name="select_cent" class="select_cent">
                 <input type="hidden" name="select_type" class="select_type">
                 <!-- <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a> -->
-                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</button>
+                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; {{__('PDF')}}</button>
             </form>
             <form class="form-inline pull-right" action="{{ route('export_recource') }}" id="export_form" method="POST">
             {{ csrf_field() }}
                 <input type="hidden" name="export_catg" class="select_catg">
                 <input type="hidden" name="export_cent" class="select_cent">
                 <input type="hidden" name="export_type" class="select_type">
-                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; Excel</button>
+                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; {{__('Excel')}}</button>
             </form>
             @can('data-import')
                 <!-- <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a> -->
@@ -58,9 +58,9 @@ $dd_section="section".$lang;
         <div class="col-md-2 col-sm-2 text-left">
             <div class="form-group js-select-box">
                 <div class="ml-2 mr-2">
-                    <span for="category">Category :</span>
+                    <span for="category">{{__('Category :')}}</span>
                     <select class="form-control form-control-sm mb-3"name="category" id="category" value="">
-                        <option value="All" selected>All Categories</option>
+                        <option value="All" selected>{{__('All Categories')}}</option>
                             @foreach($cat_data as $item)
                                 <option value="{{ $item->id }}" style="background-image:url(images/{{ $item->image}});">&nbsp;{{ $item->$category}}</option>
                             @endforeach
@@ -78,7 +78,7 @@ $dd_section="section".$lang;
         <div class="col-md-2 col-sm-2 text-left">
                 <div class="form-group js-select-box">
                 <div class="ml-2 mr-2">
-                <span for="category">Center :</span>
+                <span for="category">{{__('Center :')}}</span>
                     <select class="form-control form-control-sm mb-3"name="center" id="center" value="">
                         <!-- <option value="All" selected>All Centers</option> -->
                             @foreach($center_data as $item)
@@ -101,17 +101,17 @@ $dd_section="section".$lang;
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
-                            <th scope="col">Resource ID</th>
-                            <th scope="col">Resource</th>
-                            <th scope="col">Accession No</th>
+                            <th scope="col">{{__('Resource ID')}}</th>
+                            <th scope="col">{{__('Resource')}}</th>
+                            <th scope="col">{{__('Accession No')}}</th>
                             <!-- <th scope="col">ISBN/ISSN</th> -->
-                            <th scope="col"style="width: 20%">Title</th>
-                            <th scope="col"style="width: 15%">Creator</th>
-                            <th scope="col">DDC</th>
+                            <th scope="col"style="width: 20%">{{__('Resource Title')}}</th>
+                            <th scope="col"style="width: 15%">{{__('Creator')}}</th>
+                            <th scope="col">{{__('DDC')}}</th>
                             <!-- <th scope="col">Publisher</th> -->
                             <!-- <th scope="col">Price</th> -->
-                            <th scope="col">Status</th>
-                            <th scope="col"style="width: 10%">Action</th>
+                            <th scope="col">{{__('Status')}}</th>
+                            <th scope="col"style="width: 10%">{{__('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>  
@@ -133,7 +133,7 @@ $dd_section="section".$lang;
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Remove Library Resources</h5>
+                    <h5 class="modal-title" id="modaltitle">{{__('Remove Library Resources')}}</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -149,7 +149,7 @@ $dd_section="section".$lang;
                     <input type="hidden" id="delete_resource_id" name="delete_resource_id">
                     <div class="row form-group">
                         <div class="col-md-6">
-                            <h5 id="modallabel">Are you sure Remove Resources </h5>
+                            <h5 id="modallabel">{{__('Are you sure Remove Resources')}} </h5>
                         </div>
                         <div class="col-md-8">
                             <h5><label type="text"  id="delete_resource_name"></label></h5>
@@ -158,8 +158,8 @@ $dd_section="section".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> &nbsp; {{__('Delete')}}</button>
                 </div>
             </form>
            
@@ -174,7 +174,7 @@ $dd_section="section".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Import Resources</h5>
+                    <h5 class="modal-title" id="modaltitle">{{__('Import Resources')}}</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -190,7 +190,7 @@ $dd_section="section".$lang;
                 <div class="custom-file form-group text-center m-3">
                     <div class="col-md-10">
                         <input type="file" class="form-control-file custom-file-input" id="file" name="file" required>
-                        <label class="custom-file-label " for="customFile">Choose Excel file</label>
+                        <label class="custom-file-label " for="customFile">{{__('Choose Excel file')}}</label>
                     </div>
                     <div class="col-md-2">
                     @can('code-import')
@@ -201,8 +201,8 @@ $dd_section="section".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; {{__('Import Data')}}</button>
                 </div>
             </form>
            

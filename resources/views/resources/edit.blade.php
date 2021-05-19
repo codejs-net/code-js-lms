@@ -25,9 +25,9 @@ $center="name".$lang;
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Resources&nbsp;</a></li>
-    <li class="breadcrumb-item active" ><a><i class="fa fa-pencil"></i> Update Resources&nbsp;</a></li>
+    <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> {{__('Resources')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" ><a><i class="fa fa-pencil"></i> {{__('Update')}} Resources&nbsp;</a></li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
@@ -59,15 +59,15 @@ $center="name".$lang;
                     <div class="col-md-10 col-12">
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label for="image">Resource Image</label>
+                                <label for="image">{{__('Resource Image')}}</label>
                                 <div class="col-md-11 col-12"><input type="file" id="image_update" name="image_update" class="form-control-file bg-white p-1 elevation-1"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
-                                <label for="book_category" class="">Category</label>
+                                <label for="book_category" class="">{{__('Category')}}</label>
                                 <select class="form-control elevation-1" id="resoure_category" name="resoure_category" value="{{old('resoure_category')}}"required>
-                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                                 @foreach($cat_data as $item)
                                     <option value="{{ $item->id }}">{{ $item->$category}}</option>
                                 @endforeach
@@ -80,12 +80,12 @@ $center="name".$lang;
                             </div>
         
                             <div class="form-group col-md-5">
-                                <label for="language">Type &nbsp;
+                                <label for="language">{{__('Type')}} &nbsp;
                                     <span id="loader_type" style="display:none"><i class="fa fa-spinner fa-spin fa-md"></i></span>
                                 </label>
                                 <div class="input-group">
                                     <select class="form-control elevation-1" id="resoure_type" name="resoure_type" value="{{old('resoure_type')}}"required>
-                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                                     </select>
                                    
                                     <span class="text-danger">{{ $errors->first('language') }}</span>
@@ -105,16 +105,16 @@ $center="name".$lang;
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
-                    <label for="isbn">ISBN/ISSN/ISMN</label>
-                        <input type="text" class="form-control" id="resoure_isn" name="resoure_isn"  value="{{old('resoure_isn')}}"  placeholder="ISBN/ISSN/ISMN">
+                    <label for="isbn">{{__('ISBN/ISSN/ISMN')}}</label>
+                        <input type="text" class="form-control" id="resoure_isn" name="resoure_isn"  value="{{old('resoure_isn')}}"  placeholder="{{__('ISBN/ISSN/ISMN')}}">
                         <span class="text-danger">{{ $errors->first('isbn') }}</span>
                     </div>
                    
 
                     <div class="form-group col-md-6">
                        
-                        <label for="accessionNo">Accession Number</label>
-                        <input type="text" class="form-control" id="resoure_accession" name="resoure_accession" value="{{old('resoure_accession')}}" placeholder="Accession Number:" required>
+                        <label for="accessionNo">{{__('Accession Number')}}</label>
+                        <input type="text" class="form-control" id="resoure_accession" name="resoure_accession" value="{{old('resoure_accession')}}" placeholder="{{__('Accession Number')}}:" required>
                         <span class="text-danger" >{{ $errors->first('accessionNo') }}</span>
                     </div>
                     
@@ -124,14 +124,14 @@ $center="name".$lang;
                 <div class="form-row">
                     
                     <div class="form-group col-md-12">
-                        <label for="book_title">Title</label>
-                        <input type="text" class="form-control mb-1" id="resource_title_si" name="resource_title_si" value="{{old('book_title_si')}}" placeholder="Title in sinhala" >
-                        <input type="text" class="form-control mb-1" id="resource_title_ta" name="resource_title_ta" value="{{old('book_title_ta')}}" placeholder="Title in Tamil" >
-                        <input type="text" class="form-control mb-1" id="resource_title_en" name="resource_title_en" value="{{old('book_title_en')}}" placeholder="Title in English" >
+                        <label for="book_title">{{__('ResourceTitle')}}</label>
+                        <input type="text" class="form-control mb-1" id="resource_title_si" name="resource_title_si" value="{{old('book_title_si')}}" placeholder="{{__('Title in sinhala')}}" >
+                        <input type="text" class="form-control mb-1" id="resource_title_ta" name="resource_title_ta" value="{{old('book_title_ta')}}" placeholder="{{__('Title in Tamil')}}" >
+                        <input type="text" class="form-control mb-1" id="resource_title_en" name="resource_title_en" value="{{old('book_title_en')}}" placeholder="{{__('Title in English')}}" >
                         <span class="text-danger">{{ $errors->first('book_title') }}</span>
                     </div>
                     <div class="form-group col-md-11">
-                        <label for="authors">Creator</label>
+                        <label for="authors">{{__('Creator')}}</label>
                             <select class="form-control" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}"required>
                                 <option value="" selected disabled>Choose here</option>
                                 @foreach($creator_data as $item)
@@ -151,9 +151,9 @@ $center="name".$lang;
                 <div class="form-row">
 
                 <div class="form-group col-md-5">
-                        <label for="publisher">Publisher</label>
+                        <label for="publisher">{{__('Publisher')}}</label>
                         <select class="form-control" id="resource_publisher" name="resource_publisher" value="{{old('resource_publisher')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                         @foreach($pub_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$publisher}}</option>
                             @endforeach
@@ -167,9 +167,9 @@ $center="name".$lang;
                     </div>
 
                     <div class="form-group col-md-5">
-                        <label for="language">Language</label>
+                        <label for="language">{{__('Language')}}</label>
                         <select class="form-control" id="resource_language" name="resource_language" value="{{old('resource_language')}}"required>
-                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                         @foreach($lang_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$language }}</option>
                             @endforeach
@@ -187,9 +187,9 @@ $center="name".$lang;
                 <div class="form-row border border-secondary bg-light">
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
-                            <label for="dewey_decimal">Dewey Decimal Class</label>
+                            <label for="dewey_decimal">{{__('Dewey Decimal Class')}}</label>
                             <select class="form-control" id="resource_dd_class" name="resource_dd_class" value="{{old('resource_dd_class')}}">
-                            <option value="" selected disabled hidden>Choose here</option>
+                            <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                             @foreach($dd_class_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->class_code}}-{{ $item->$dd_class}}</option>
                             @endforeach
@@ -199,30 +199,30 @@ $center="name".$lang;
 
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
-                            <label for="dewey_decimal">Dewey Decimal Devision &nbsp;
+                            <label for="dewey_decimal">{{__('Dewey Decimal Devision')}} &nbsp;
                                 <span id="loader_dd_devision" style="display:none"><i class="fa fa-spinner fa-spin fa-md"></i></span>
                             </label>
                             <select class="form-control" id="resource_dd_devision" name="resource_dd_devision" value="{{old('resource_dd_devision')}}">
-                            <option value="" selected disabled hidden>Choose here</option>
+                            <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
                     </div>
 
                     <!-- -------------------------------------------- -->
                     <div class="form-group col-md-3">
-                            <label for="dewey_decimal">Dewey Decimal Section &nbsp;
+                            <label for="dewey_decimal">{{__('Dewey Decimal Section')}} &nbsp;
                                 <span id="loader_dd_section" style="display:none"><i class="fa fa-spinner fa-spin fa-md"></i></span>
                             </label>
                             <select class="form-control" id="resource_dd_section" name="resource_dd_section" value="{{old('resource_dd_section')}}">
-                            <option value="" selected disabled hidden>Choose here</option>
+                            <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                             </select>
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
                     </div>
 
                      <!-- -------------------------------------------- -->
                      <div class="form-group col-md-3">
-                            <label for="dewey_decimal">Dewey Decimal Classificetion</label>
-                            <input type="text" class="form-control" id="resource_ddc" name="resource_ddc" value="{{old('resource_ddc')}}" placeholder="DDC:">
+                            <label for="dewey_decimal">{{__('Dewey Decimal Classificetion')}}</label>
+                            <input type="text" class="form-control" id="resource_ddc" name="resource_ddc" value="{{old('resource_ddc')}}" placeholder="{{__('DDC')}}:">
                             <span class="text-danger">{{ $errors->first('ddecimal') }}</span>
                     </div>
                     
@@ -232,21 +232,21 @@ $center="name".$lang;
                 <div class="form-row">
                 
                     <div class="form-group col-md-3">
-                        <label for="purchase_date" >Purchase Date</label>
+                        <label for="purchase_date" >{{__('Purchase Date')}}</label>
                         <input class="form-control" type="date" name="resource_purchase_date" value="{{old('resource_purchase_date')}}" id="resource_purchase_date"required>
                         <span class="text-danger">{{ $errors->first('purchase_date') }}</span>
                     </div>
 
                      <div class="form-group col-md-3">
-                        <label for="price">Price</label>
-                        <input type="value" class="form-control" name="resource_price" id="resource_price"  value="{{old('resource_price')}}" placeholder="resource_price:"required>
+                        <label for="price">{{__('Price')}}</label>
+                        <input type="value" class="form-control" name="resource_price" id="resource_price"  value="{{old('resource_price')}}" placeholder="{{__('resource')}}_price:"required>
                         <span class="text-danger">{{ $errors->first('price') }}</span>
                     </div>
 
                    <div class="form-group col-md-3">
-                        <label for="edition">Edition</label>
+                        <label for="edition">{{__('Edition')}}</label>
                         <select class="form-control" id="resource_edition" name="resource_edition">
-                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="" selected disabled hidden>{{__('Choose here')}}</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -257,7 +257,7 @@ $center="name".$lang;
                     </div>
 
                      <div class="form-group col-md-3">
-                        <label for="publishyear">Publication year</label>
+                        <label for="publishyear">{{__('Publication year')}}</label>
                         <input class="form-control" type="year" name="resource_publishyear"value="{{old('resource_publishyear')}}" id="resource_publishyear">
                         <span class="text-danger">{{ $errors->first('publishyear') }}</span>
                     </div>
@@ -266,16 +266,16 @@ $center="name".$lang;
                  <hr>
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="phy_details">Physical Details</label>
-                        <input type="text" class="form-control" name="resource_phydetails" id="resource_phydetails" value="{{old('resource_phydetails')}}" placeholder="Physical Details">
+                        <label for="phy_details">{{__('Physical Details')}}</label>
+                        <input type="text" class="form-control" name="resource_phydetails" id="resource_phydetails" value="{{old('resource_phydetails')}}" placeholder="{{__('Physical')}} Details">
                         <span class="text-danger">{{ $errors->first('phydetails') }}</span>
                     </div>
                     <!-- ------------------------ -->
                     <div class="form-group col-md-9">
-                        <label for="note">Note</label>
-                        <textarea class="form-control mb-1" id="resource_note_si" name="resource_note_si" placeholder="Note in Sinhala" value="{{old('resource_note_si')}}" rows="1"></textarea>
-                        <textarea class="form-control mb-1" id="resource_note_ta" name="resource_note_ta" placeholder="Note in Tamil" value="{{old('resource_note_ta')}}" rows="1"></textarea>
-                        <textarea class="form-control mb-1" id="resource_note_en" name="resource_note_en" placeholder="Note in English" value="{{old('resource_note_en')}}" rows="1"></textarea>
+                        <label for="note">{{__('Note')}}</label>
+                        <textarea class="form-control mb-1" id="resource_note_si" name="resource_note_si" placeholder="{{__('Note in Sinhala')}}" value="{{old('resource_note_si')}}" rows="1"></textarea>
+                        <textarea class="form-control mb-1" id="resource_note_ta" name="resource_note_ta" placeholder="{{__('Note in Tamil')}}" value="{{old('resource_note_ta')}}" rows="1"></textarea>
+                        <textarea class="form-control mb-1" id="resource_note_en" name="resource_note_en" placeholder="{{__('Note in English')}}" value="{{old('resource_note_en')}}" rows="1"></textarea>
                         <span class="text-danger">{{ $errors->first('note') }}</span>
                     </div>
                 </div>
@@ -283,15 +283,15 @@ $center="name".$lang;
 
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" value="" id="check_place" name="check_place">
-                    <label class="form-check-label" for="check_place">Set Resource Placement Later</label>
+                    <label class="form-check-label" for="check_place">{{__('Set Resource Placement Late')}}r</label>
                 </div>
                 <div class="form-row border border-secondary bg-light" id="resoure_placement_div">
                
                     <!-- -------------------------------------------- -->
                     <div class="form-group col">
-                            <label for="place_rack">Rack/Coupboard</label>
+                            <label for="place_rack">{{__('Rack/Coupboard')}}</label>
                             <select class="form-control" id="place_rack" name="place_rack" value="{{old('place_rack')}}"required>
-                            <option value="" selected disabled hidden>Choose Rack/Coupboard</option>
+                            <option value="" selected disabled hidden>{{__('Choose Rack/Coupboard')}}</option>
                             @foreach($rdata as $item)
                                 <option value="{{ $item->id }}">{{ $item->$rack}}</option>
                             @endforeach
@@ -301,10 +301,10 @@ $center="name".$lang;
 
                     <!-- -------------------------------------------- -->
                     <div class="form-group col">
-                            <label for="place_floor">Floor &nbsp;<span id="loader_floor" style="display:none"><i class="fa fa-spinner fa-spin"></i></span></label>
+                            <label for="place_floor">{{__('Floor')}} &nbsp;<span id="loader_floor" style="display:none"><i class="fa fa-spinner fa-spin"></i></span></label>
                             <div class="input-group">
                                 <select class="form-control" id="place_floor" name="place_floor" value="{{old('place_floor')}}"required>
-                                <option value="" selected disabled hidden>Choose Floor</option>
+                                <option value="" selected disabled hidden>{{__('Choose Floor')}}</option>
                                 </select>
                             </div>
                             <span class="text-danger">{{ $errors->first('place_floor') }}</span>
@@ -312,7 +312,7 @@ $center="name".$lang;
 
                      <!-- -------------------------------------------- -->
                      <div class="form-group col-md-3">
-                            <label for="place_index">Placement Index</label>
+                            <label for="place_index">{{__('Placement Index')}}</label>
                             <input type="text" class="form-control" id="place_index" name="place_index" value="{{old('place_index')}}" placeholder="Placement index" required>
                             <span class="text-danger">{{ $errors->first('place_index') }}</span>
                     </div>
@@ -323,19 +323,19 @@ $center="name".$lang;
 
                 <div class="form-row border border-secondary bg-light">
                     <div class="form-group col-md-3 col-3 p-2 mt-2">
-                        <label for="status">Change Status</label><br>
+                        <label for="status">{{__('Change Status')}}</label><br>
                        <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="status" id="status" value="1">Active
+                                <input type="radio" class="form-check-input" name="status" id="status" value="1">{{__('Active')}}
                             </label> &nbsp;
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="status" id="status" value="0">Remove
+                                <input type="radio" class="form-check-input" name="status" id="status" value="0">{{__('Remove')}}
                             </label> &nbsp;
                        </div>
                        <span class="text-danger">{{ $errors->first('status') }}</span>
                    </div>
                    <div class="form-group col-md-9 col-9 p-2 mt-2">
-                    <label for="note">Center:</label>
+                    <label for="note">{{__('Center')}}:</label>
                         <select class="form-control form-control-sm mb-3"name="resource_center" id="resource_center" value="">
                                 @foreach($center_data as $item)
                                     <option value="{{ $item->center_id }}">{{ $item->center->$center}}</option>
@@ -347,10 +347,10 @@ $center="name".$lang;
                <hr>
             <div class="box-footer clearfix pull-right">
                 <button type="button" class="btn btn-sm btn-secondary  elevation-2" id="reset_resource">
-                <i class="fa fa-times"></i> Reset</button>
+                <i class="fa fa-times"></i> {{__('Reset')}}</button>
                 &nbsp; &nbsp;
                 <button type="submit" class="btn btn-sm btn-success elevation-2" value="Save" id="update_resource" >
-                <i class="fa fa-floppy-o"></i> Update</button>
+                <i class="fa fa-floppy-o"></i> {{__('Update')}}</button>
             </div>   
             </form>
                         
