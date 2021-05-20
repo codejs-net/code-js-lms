@@ -9,6 +9,7 @@ use App\Models\member_guarantor;
 use App\Models\title;
 use App\Models\gender;
 use App\Http\Controllers\SoapController;
+use App\Http\Controllers\MailController;
 use App\Imports\MemberImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -184,6 +185,13 @@ class MemberController extends Controller
             {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
         } 
 
+        // --------------------email-----------------------------
+        $MailController = new MailController;
+        $MailController->send_email(
+            "shanuka.pvt@gmail.com",
+            "Member Registretion1",
+            "Shanuka Alahakoon",
+            "Welcom To the Public Library");
         return response()->json(['data' => "Success"]);
         
     }

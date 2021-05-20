@@ -328,6 +328,11 @@ Route::group(['middleware' => ['auth']], function() {
      Route::POST('export_recource', [ReportController::class, 'export_recource'])->name('export_recource');
      Route::POST('export_lending', [ReportController::class, 'export_lending'])->name('export_lending');
 
+    //  ---------Email-------------
+    Route::get('sendbasicemail', [MailController::class, 'basic_email'])->name('sendbasicemail');
+    Route::get('sendhtmlemail', [MailController::class, 'html_email'])->name('sendhtmlemail');
+    Route::get('sendattachmentemail', [MailController::class, 'attachment_email'])->name('sendattachmentemail');
+
 });
 
 Route::get('/sms', [SoapController::class, 'msg_test'])->name('msg_test');

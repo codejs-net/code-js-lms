@@ -13,6 +13,7 @@ use App\Models\lending_config;
 use App\Models\view_lending_data;
 use App\Models\center_allocation;
 use App\Http\Controllers\SoapController;
+use App\Http\Controllers\MailController;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -325,6 +326,8 @@ class IssueController extends Controller
         } 
         
         //-----------------------End SMS Alert----------------------
+        // -----------------------Email----------------------------
+       
 
         return response()->json(['lend_id' => $lend->id,'return_date' => $returndate]);
     }
