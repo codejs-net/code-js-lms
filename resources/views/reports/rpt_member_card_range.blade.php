@@ -94,12 +94,14 @@
       }
       .card-heading{
             padding-bottom: 15px;
-            color: dodgerblue;
       }
       h4{
             font-size:15px !important;
             padding-bottom:10px;
 
+      }
+      .card-name{
+            color: #272c66;
       }
 
       </style>
@@ -130,7 +132,7 @@ $lib_name="name".$lang;
             <div class="column-2">
             <table class="tbl_card">
                   <tr class="card-heading">
-                        <td colspan="3" class="text-center"><h4 class=""><u>{{__("Member Card")}}</u></h4></td><br>
+                        <td colspan="3" class="text-center"><h4 class="card-name"><u>{{__("Member Card")}} &nbsp;-{{$data->id}}</u></h4></td><br>
                   </tr>
                   <tr class="card-heading1">
                         <td colspan="3" class="text-left"><h4 class="">{{ $library->$lib_name}}</h4></td><br>
@@ -149,7 +151,7 @@ $lib_name="name".$lang;
                   <tr>
                         <td style="width: 30%"><b>{{__("Address")}}</b></td>
                         <td style="width: 5%">&nbsp;:&nbsp;</td>
-                        <td class="text-left pb-2">{{$data->$address1}},{{$data->$address2}}</td>
+                        <td class="text-left pb-2">{{$data->$address1}},&nbsp;{{$data->$address2}}</td>
                   </tr>
                   <tr>
                         <td style="width: 30%"><b>{{__("NIC")}}</b></td>

@@ -148,8 +148,17 @@ $gender="gender".$lang;
                 </div>
             </div>
             <div class="form-group">
+                <div class="col-12 col-md-12">
+                    <label for="email">Email : </label>
+                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="{{old('email')}}">
+                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="descrip">Description :</label>
-                <textarea class="form-control" rows="3" id="comment" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
+                <input type="text" class="form-control mb-1" name="description_si" id="description_si" placeholder="Description Sinhala" value="{{old('description_si')}}"> 
+                <input type="text" class="form-control mb-1" name="description_ta" id="description_ta" placeholder="Description Tamil" value="{{old('description_ta')}}"> 
+                <input type="text" class="form-control mb-1" name="description_en" id="description_en" placeholder="Description English" value="{{old('description_en')}}"> 
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
             <div class=" row form-group">

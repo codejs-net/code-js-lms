@@ -50,6 +50,8 @@ class CreateMembersTable extends Migration
             $table->string('Workplace_ta')->nullable();
             $table->string('Workplace_en')->nullable();
 
+            $table->string('email')->unique()->nullable();
+
             $table->string('description_si')->nullable();
             $table->string('description_ta')->nullable();
             $table->string('description_en')->nullable();

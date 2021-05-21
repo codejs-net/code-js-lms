@@ -117,8 +117,11 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        $locale = session()->get('locale');
-        $lang="_".$locale;
+        // $locale = session()->get('locale');
+        // $lang="_".$locale;
+        $lang = session()->get('db_locale');
+        $lib_name = "name" . $lang;
+        $mem_name="name".$lang;
 
         $mbr=new member;
         $this->validate($request,[
@@ -156,9 +159,10 @@ class MemberController extends Controller
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
         $mbr->genderid=$request->gender;
-        $mbr->description_si=$request->Description;
-        $mbr->description_ta=$request->Description;
-        $mbr->description_en=$request->Description;
+        $mbr->email=$request->email;
+        $mbr->description_si=$request->description_si;
+        $mbr->description_ta=$request->description_ta;
+        $mbr->description_en=$request->description_en;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
@@ -169,29 +173,34 @@ class MemberController extends Controller
         $SoapController =new SoapController;
         $mobile_no=$request->Mobile;
         $library = session()->get('library');
-        
-        if ($lang == "_si") {
-            $message_text=$library->name_si." වෙත සාදරයෙන් පිළිගනිමු."."\r\n"."සාමාජික අංකය :".$mbr->id."\r\n"."නම : ".$request->name_si."\r\n"."ස්තූතියි..!";
-        } elseif ($lang == "_en") {
-            $message_text="Welcome to the.".$library->name_en."\r\n"."Member ID :".$mbr->id."\r\n"."Name : ".$request->name_en."\r\n"."Thankyou..!";
-        } else {
-            $message_text=$library->name_ta." வரவேற்கிறோம்."."\r\n"."உறுப்பினர் அடையாள :".$mbr->id."\r\n"."பெயர் : ".$request->name_ta."\r\n"."நன்றி..!";
+        if (!empty($library)) {
+            $library_name = $library->$lib_name;
         }
 
-        $setting_sms_send = setting::where('setting', 'sms_member_create')->first();
-        if ($setting_sms_send->value == "1") 
+        $member_name=$mbr->$mem_name;
+        $message_text = $library_name ."-".trans('Welcome')."\r\n \r\n".trans('Member ID')."-". $mbr->id . "\r\n" .trans('Member Name')."- ".$member_name. "\r\n" . trans('Thank You!');
+        // $email_body = $library_name ."-".trans('Welcome').'<br>'.trans('Member ID')."-". $mbr->id . '<br>'.trans('Member Name')."- ".$member_name. '<br>'.trans('Thank You!');
+        if($SoapController->is_connected()==true)
         {
-            if($SoapController->is_connected()==true)
-            {$SoapController->multilang_msg_Send($mobile_no, $message_text);} 
-        } 
+            $setting_sms_send = setting::where('setting', 'sms_member_create')->first();
+            if ($setting_sms_send->value == "1") 
+            {
+               
+                $SoapController->multilang_msg_Send($mobile_no, $message_text);
+            } 
 
-        // --------------------email-----------------------------
-        $MailController = new MailController;
-        $MailController->send_email(
-            "shanuka.pvt@gmail.com",
-            "Member Registretion1",
-            "Shanuka Alahakoon",
-            "Welcom To the Public Library");
+            $setting_email_send = setting::where('setting', 'email_member_create')->first();
+            if ($setting_email_send->value == "1" && $request->email !="") 
+            {
+                $MailController = new MailController;
+                $MailController->send_email(
+                    $mbr->email,
+                    trans('Member Registretion'),
+                    $member_name,
+                    $message_text);
+            } 
+        }
+       
         return response()->json(['data' => "Success"]);
         
     }
@@ -288,9 +297,10 @@ class MemberController extends Controller
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
         $mbr->genderid=$request->gender;
-        $mbr->description_si=$request->Description;
-        $mbr->description_ta=$request->Description;
-        $mbr->description_en=$request->Description;
+        $mbr->email=$request->email;
+        $mbr->description_si=$request->description_si;
+        $mbr->description_ta=$request->description_ta;
+        $mbr->description_en=$request->description_en;
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
