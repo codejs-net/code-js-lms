@@ -448,10 +448,10 @@
                     </li>
 
                     {{-- backup --}}
-                    @can('activity-log')
+                    @can('backup')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-tasks"></i>
+                            <i class="nav-icon fa fa-database"></i>
                             <p>
                             {{__('Backup & Restore')}}
                                 <i class="right fas fa-angle-left"></i>

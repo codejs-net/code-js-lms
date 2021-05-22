@@ -125,6 +125,9 @@ class PermissionSeeder extends Seeder
             ['name'=>'code-genarate','category'=>'Code Genarate'],
 
             ['name'=>'dashboard','category'=>'Dashboard'],
+
+            ['name'=>'backup','category'=>'backup'],
+            ['name'=>'restore','category'=>'backup'],
             
         ];
         // Permission::create([$rows_Permission]);

@@ -19,6 +19,7 @@ use Artisan;
 use system;
 use Auth;
 
+
 class HomeController extends Controller
 {
     /**
@@ -138,8 +139,7 @@ class HomeController extends Controller
     public function backup_db()
     {
         // Artisan::call('backup:run --only-db');
-        Artisan::call('backup:run',['--only-db' => true]);
-        // Artisan::queue('backup:run', ['--only-db' => true]);
+       $backup= Artisan::call('backup:run',['--only-db' => true]);
         return redirect()->back()->with('success','DB Dump created successfully.');
     }
 
