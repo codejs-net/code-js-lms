@@ -123,6 +123,12 @@ class SettingSeeder extends Seeder
         'category'=>'7',
         'value'=>'lending Periode end Plese Return Resources. Thank you!',
         'detail'=>'Reminder massage for sms and email'
+        ],
+        [  
+        'setting'=>'email_backup',
+        'category'=>'8',
+        'value'=>'1',
+        'detail'=>'Send backup zip file with email on create backup'
         ]
        
     ];

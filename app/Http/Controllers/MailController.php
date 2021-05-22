@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Mail;
 use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
+use App\Mail\Send_Backup_Mail;
 // use App\Http\Requests;
 
 class MailController extends Controller
@@ -18,6 +19,14 @@ class MailController extends Controller
         ];
         Mail::to($to)->send(new SendMail($details));
      }
+
+     public function send_backup_email($to,$subject,$body) {
+      $details = [
+          'body'      => $body,
+          'subject'   => $subject
+      ];
+      Mail::to($to)->send(new Send_Backup_Mail($details));
+   }
 
 
      public function html_email() {
