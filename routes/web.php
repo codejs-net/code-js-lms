@@ -320,6 +320,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     // -------Reports-PDF
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
+    Route::POST('report_recource_filter', [ReportController::class, 'report_recource_filter'])->name('report_recource_filter');
     Route::POST('report_lending', [ReportController::class, 'report_lending'])->name('report_lending');
     Route::POST('report_lending_account', [ReportController::class, 'report_lending_account'])->name('report_lending_account');
     Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');

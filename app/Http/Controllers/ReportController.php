@@ -89,11 +89,30 @@ class ReportController extends Controller
             ini_set("pcre.backtrack_limit", "90000000");
             ini_set('memory_limit', '-1');
 
+            $locale = session()->get('locale');
+            $db_setting = setting::where('setting', 'locale_db')->first();
+            if ($db_setting->value == "0") {
+                $lang = "_" . $locale;
+            } else {
+                $lang = "_" . $db_setting->value;
+            }
+            $center_array= array();
+            $center_name_array= array();
+            $center_names="name".$lang;
+            $resource_center = center_allocation::where('staff_id', Auth::user()->detail_id)->with(['center'])->get();
+            foreach($resource_center as $value)
+            {
+                array_push($center_array,$value->center->id);
+                array_push($center_name_array,$value->center->$center_names);
+            }
+            $rpt_from=$request->resource_from;
+            $rpt_to=$request->resource_to;
             $resouredata = view_resource_data::select('*')
             ->whereBetween('id', [$request->resource_from, $request->resource_to])
+            ->whereIn('center_id', $center_array)
             ->get();
             
-            $pdf = PDF::loadView('reports.rpt_resource',compact('resouredata'),[],
+            $pdf = PDF::loadView('reports.resources.rpt_resource',compact('resouredata','rpt_from','rpt_to','center_name_array'),[],
                 [
                 'format' => 'A4',
                 'orientation' => 'L',
@@ -108,31 +127,53 @@ class ReportController extends Controller
 
 
     }
-    function report_recource1(Request $request) {
+    function report_recource_filter(Request $request) {
+        
         try {
         ini_set('max_execution_time', '1200');
         ini_set("pcre.backtrack_limit", "90000000");
 
-        $catg="";$cent="";$type="";
+        $locale = session()->get('locale');
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        if ($db_setting->value == "0") {
+            $lang = "_" . $locale;
+        } else {
+            $lang = "_" . $db_setting->value;
+        }
+        $rpt_center="name".$lang;
+        $rpt_category="category".$lang;
+        $rpt_type="type".$lang;
 
-        if($request->catdata=="All"){$catg="%";}
-        else{$catg= $request->select_catg;}
+        $catg="%";
+        $type="%";
+        $cent= $request->select_cent;
 
-        if($request->centerdata=="All"){$cent="%";}
-        else{$cent= $request->select_cent;}
+        $rpt_catg="All";
+        $rpt_typ="All";
+        $rpt_cent = (center::select($rpt_center)->where('id',$request->select_cent)->first())->$rpt_center;
+        // dd($rpt_cent);
 
-        if($request->typedata=="All"){$type="%";}
-        else{$type= $request->select_type;}
+        if($request->select_catg!="All")
+        {
+            $catg= $request->select_catg;
+            $rpt_catg = (resource_category::select($rpt_category)->where('id',$request->select_catg)->first())->$rpt_category;
+        }
 
+        if($request->select_type!="All")
+        {
+            $type= $request->select_type;
+            $rpt_typ = (resource_type::select($rpt_type)->where('id',$request->select_type)->first())->$rpt_type;
+        }
+
+       
         $resouredata = view_resource_data::select('*')
-        ->where('category_id','LIKE',$catg)
-        ->where('center_id','LIKE',$cent)
-        ->where('type_id','LIKE',$type)
-        ->get()
-        ->chunk(600);
+                ->where('category_id','LIKE',$catg)
+                ->where('center_id',$cent)
+                ->where('type_id','LIKE',$type)
+                ->get();
+                // ->chunk(600);
 
-        // dd($resouredata[0][0]);
-        $pdf = PDF::loadView('reports.rpt_resource',compact('resouredata'),[],
+        $pdf = PDF::loadView('reports.resources.rpt_resource_filter',compact('resouredata','rpt_cent','rpt_catg','rpt_typ'),[],
             [
             'format' => 'A4',
             'orientation' => 'L',
@@ -200,7 +241,6 @@ class ReportController extends Controller
             $_return="";
             $rpt_from=$request->rpt_from;
             $rpt_to=$request->rpt_to;
-            $rpt_from=$request->rpt_from;
             $rpt_filter=$request->rpt_filter;
             $center_array= array();
             $resource_center = center_allocation::where('staff_id', Auth::user()->detail_id)->with(['center'])->get();

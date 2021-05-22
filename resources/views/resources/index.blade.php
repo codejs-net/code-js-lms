@@ -30,7 +30,7 @@ $dd_section="section".$lang;
             <h5> <i class="fa fa-search ml-4 pl-2"> {{__('Search Resources')}}</i></h5>
         </div>  
         <div class="col-md-6 col-sm-6 col-12 text-right pb-2">
-            <form class="form-inline pull-right" action="{{ route('report_recource') }}" id="report_form" method="POST">
+            <form class="form-inline pull-right" action="{{ route('report_recource_filter') }}" id="report_form" method="POST">
             {{ csrf_field() }}
                 <input type="hidden" name="select_catg" class="select_catg">
                 <input type="hidden" name="select_cent" class="select_cent">
@@ -225,9 +225,13 @@ $(document).ready(function()
 {
 load_type("All");
 
-var catdata=$("#category").val();
 var centerdata=$("#center").val();
+$("#category").val("All");
 var typedata="All";
+var catdata="All"
+$(".select_cent").val(centerdata);
+$(".select_catg").val(catdata);
+$(".select_type").val(typedata);
 load_datatable(catdata,centerdata,typedata);
 
 // start resource delete function
@@ -282,7 +286,11 @@ $("#category").change(function () {
     var centerdata=$("#center").val();
     var typedata="All";
     load_type(catdata);  
+
+    $(".select_cent").val(centerdata);
     $(".select_catg").val(catdata);
+    $(".select_type").val(typedata);
+
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 });
@@ -291,7 +299,11 @@ $("#center").change(function () {
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata="All";
+
     $(".select_cent").val(centerdata);
+    $(".select_catg").val(catdata);
+    $(".select_type").val(typedata);
+
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 });
@@ -301,7 +313,11 @@ $(document).on("click", ".btntype", function(){
     var catdata=$("#category").val();
     var centerdata=$("#center").val();
     var typedata=$(this).val();
-    $(".select_type").val($(this).val());
+
+    $(".select_cent").val(centerdata);
+    $(".select_catg").val(catdata);
+    $(".select_type").val(typedata);
+
     $('#resource_datatable').DataTable().clear().destroy();
     load_datatable(catdata,centerdata,typedata);
 
