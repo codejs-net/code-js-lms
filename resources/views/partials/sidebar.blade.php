@@ -446,6 +446,29 @@
                             @endcan
                         </ul>
                     </li>
+
+                    {{-- backup --}}
+                    @can('activity-log')
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-tasks"></i>
+                            <p>
+                            {{__('Backup & Restore')}}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('backup_db') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Backup DataBase')}}</p>
+                                </a>
+                            </li>
+ 
+                        </ul>
+                    </li>
+                    @endcan
                    
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">

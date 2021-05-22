@@ -15,6 +15,7 @@ use App\Models\view_lending_data_all;
 use App\Models\center_allocation;
 use App\Models\setting;
 use Carbon\Carbon;
+use Artisan;
 use system;
 use Auth;
 
@@ -132,6 +133,14 @@ class HomeController extends Controller
         ->get();
 
         return response()->json(['issue' => $latast_issue,'return' => $latast_return]);
+    }
+
+    public function backup_db()
+    {
+        // Artisan::call('backup:run --only-db');
+        Artisan::call('backup:run',['--only-db' => true]);
+        // Artisan::queue('backup:run', ['--only-db' => true]);
+        return redirect()->back()->with('success','DB Dump created successfully.');
     }
 
 }

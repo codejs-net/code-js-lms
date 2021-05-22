@@ -21,6 +21,12 @@
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
     }
+    #preview{
+        height:300px;
+    }
+    #cam-box{
+        transform:rotateY(180deg);
+    }
     .main-content{
         padding-left: 10px;
         padding-right: 10px;
@@ -36,7 +42,7 @@
         position: absolute;
         overflow: hidden;
     }
-    
+   
     @keyframes growDown {
         0% {
             transform: scaleY(0)

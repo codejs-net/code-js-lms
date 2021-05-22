@@ -24,6 +24,7 @@
         "nesbot/carbon": "^2.44",
         "niklasravnsborg/laravel-pdf": "^4.0",
         "spatie/laravel-activitylog": "^3.17",
+        "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^3.17",
         "techlab/smartwizard": "^5.1",
         "yajra/laravel-datatables-oracle": "^9.15"

@@ -56,6 +56,11 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
+            'dump' => [
+                'dump_binary_path' =>env('Dump_binary_path'), //--- linux--- /usr/bin/mysqldump
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ], 
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
@@ -143,5 +148,6 @@ return [
         ],
 
     ],
+    // 'dump_command_path' =>'C:\backup',
 
 ];

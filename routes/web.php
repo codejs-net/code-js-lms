@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
     // --------Home--------------------------------
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('latast_lending', [HomeController::class, 'latast_lending'])->name('latast_lending');
+    Route::get('backup_db', [HomeController::class, 'backup_db'])->name('backup_db');
     // --------Roles--------------------------------
     Route::resource('roles', RoleController::class);
     Route::post('delete_roles', [RoleController::class, 'delete'])->name('delete_roles');

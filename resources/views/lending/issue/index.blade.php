@@ -33,6 +33,11 @@ $creator="name".$lang;
     <div class="row text-center mb-2">
         <div class="col-md-12 col-sm-12 text-center"> 
             <h5> <i class="fa fa-shopping-cart">&nbsp;Resources Lending</i></h5>
+             {{-- --------webcam --}}
+             {{-- <div id="cam-box">
+                <video id="preview"></video>
+             </div> --}}
+             {{-- -------------- --}}
         </div> 
 
     </div>
@@ -48,6 +53,7 @@ $creator="name".$lang;
     <div class="main-content">
         <div class="row elevation-1">
             <div class="col-md-3 col-sm-12 text-left mt-1 p-3  js-rightbar-bg">
+                
               <div class="input-group">
                   <div class="input-group-prepend">
                      <span class="input-group-addon elevation-1"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
@@ -172,7 +178,7 @@ $creator="name".$lang;
 <br>                    
 @endsection
 @section('script')
-
+{{-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> --}}
     <script>
     $(document).ready(function() {
 
@@ -201,7 +207,23 @@ $creator="name".$lang;
             document.getElementById("resource_details").focus();
         })
 
+       
+
     });
+// -------------------webcam----------------------------
+    //  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    //   scanner.addListener('scan', function (content) {
+    //     alert(content);
+    //   });
+    //   Instascan.Camera.getCameras().then(function (cameras) {
+    //     if (cameras.length > 0) {
+    //      scanner.start(cameras[0]);
+    //     } else {
+    //      console.error('No cameras found.');
+    //     }
+    //   }).catch(function (e) {
+    //     console.error(e);
+    //   });
 // ----------------------------------------------------------------------------
 
         $('#addbarrowmember').on("click",function(){
