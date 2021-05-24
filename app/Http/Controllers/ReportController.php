@@ -20,6 +20,7 @@ use App\Models\center;
 use App\Models\library;
 use App\Models\setting;
 use App\Models\member;
+use App\Models\User;
 use App\Models\lending_detail;
 use App\Models\lending_issue;
 use App\Models\lending_return;
@@ -56,7 +57,6 @@ class ReportController extends Controller
 
     public function resource_index()
     {
-        $resource_center=center::all();
         $categorydata=resource_category::all();
         $languagedata=resource_language::all();
         $publisherdata=resource_publisher::all();
@@ -64,6 +64,8 @@ class ReportController extends Controller
         $dd_classdata=resource_dd_class::all();
         $dd_devisiondata=resource_dd_division::all();
         $dd_sectiondata=resource_dd_section::all();
+        $resource_center = center_allocation::where('staff_id',  Auth::user()->detail_id)->with(['staff','center'])
+        ->get();
         
         return view('reports.resources.index')
         ->with('cat_data',$categorydata)
@@ -186,6 +188,101 @@ class ReportController extends Controller
 
 
     }
+
+    function report_recource_filter_all(Request $request) {
+        // dd($request->select_catg);
+        try {
+        ini_set('max_execution_time', '1200');
+        ini_set("pcre.backtrack_limit", "90000000");
+        ini_set('memory_limit', '-1');
+
+        $locale = session()->get('locale');
+        $db_setting = setting::where('setting', 'locale_db')->first();
+        $lang=($db_setting->value == "0")?("_" . $locale):("_" . $db_setting->value);
+        $_category="category".$lang;
+        $_type="type".$lang;
+        $_creator="name".$lang;
+        $_publisher="publisher".$lang;
+        $_ddclass="class".$lang;
+        $_dddevision="devision".$lang;
+        $_ddsection="section".$lang;
+        $_center="name".$lang;
+
+        $center_array= array();
+        $resource_center = center_allocation::where('staff_id',  Auth::user()->detail_id)->get();
+        foreach($resource_center as $value)
+        {
+            array_push($center_array,$value->center->id);
+        }
+        
+        $rpt_center=trans('All');$rpt_category=trans('All');$rpt_type=trans('All');$rpt_creator=trans('All');$rpt_publisher=trans('All');$rpt_ddclass=trans('All');$rpt_dddevision=trans('All');$rpt_ddsection=trans('All');
+        $catg="%";$type="%";$creator="%";$publisher="%";$ddclass="%";$dddevision="%";$ddsection="%";$center=$center_array;
+
+        
+        
+        if($request->select_catg!="All")
+        {
+            $catg= $request->select_catg;
+            $rpt_category = (resource_category::select($_category)->where('id',$request->select_catg)->first())->$_category;
+        }
+        if($request->select_type!="All")
+        {
+            $type= $request->select_type;
+            $rpt_type = (resource_type::select($_type)->where('id',$request->select_type)->first())->$_type;
+        }
+        if($request->select_creator!="All")
+        {
+            $creator= $request->select_creator;
+            $rpt_creator = (resource_creator::select($_creator)->where('id',$request->select_creator)->first())->$_creator;
+        }
+        if($request->select_publisher!="All")
+        {
+            $publisher= $request->select_publisher;
+            $rpt_publisher = (resource_publisher::select($_publisher)->where('id',$request->select_publisher)->first())->$_publisher;
+        }
+        if($request->select_ddclass!="All")
+        {
+            $ddclass= $request->select_ddclass;
+            $rpt_ddclass = (resource_dd_class::select($_ddclass)->where('id',$request->select_ddclass)->first())->$_ddclass;
+        }
+        if($request->select_dddevision!="All")
+        {
+            $dddevision= $request->select_dddevision;
+            $rpt_dddevision = (resource_dd_division::select($_dddevision)->where('id',$request->select_dddevision)->first())->$_dddevision;
+        }
+        if($request->select_ddsection!="All")
+        {
+            $ddsection= $request->select_ddsection;
+            $rpt_ddsection = (resource_dd_section::select($_ddsection)->where('id',$request->select_ddsection)->first())->$_ddsection;
+        }
+        if($request->select_cent!="All")
+        {
+            $center_change[0]=$request->select_cent;
+            $center= $center_change;
+            $rpt_center = (center::select($_center)->where('id',$request->select_cent)->first())->$_center;
+        }
+
+        $resouredata = view_resource_data::select('*')
+                ->where('category_id','LIKE',$catg)
+                ->whereIn('center_id',$center)
+                ->where('type_id','LIKE',$type)
+                ->get();
+                // ->chunk(600);
+
+        $pdf = PDF::loadView('reports.resources.rpt_resource_filter_all',compact('resouredata','rpt_center','rpt_category','rpt_type','rpt_creator','rpt_publisher','rpt_ddclass','rpt_dddevision','rpt_ddsection'),[],
+            [
+            'format' => 'A4',
+            'orientation' => 'L',
+            ]);
+        return $pdf->stream('resource_filter.pdf');
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('error','Report genarate Fail.');
+        }
+
+
+    }
+
     public function export_recource(Request $request) 
     {
         ini_set('memory_limit', '-1');

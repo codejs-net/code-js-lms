@@ -110,7 +110,7 @@ $dd_section="section".$lang;
                                 <select class="form-control form-control-sm mb-3"name="center" id="center" value="">
                                     <option value="All" selected>All Centers</option>
                                         @foreach($center_data as $item)
-                                            <option value="{{ $item->id }}">&nbsp;{{ $item->$center}}</option>
+                                            <option value="{{ $item->center_id }}">&nbsp;{{ $item->center->$center}}</option>
                                         @endforeach
                                 </select> 
                             </div>
@@ -163,7 +163,7 @@ $dd_section="section".$lang;
                 
                         <span for="publisher">Publisher</span>
                         <select class="form-control mb-3" id="resource_publisher" name="resource_publisher" value="{{old('resource_publisher')}}"required>
-                        <option value="" selected>All Publishers</option>
+                        <option value="All" selected>All Publishers</option>
                         @foreach($publisher_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$publisher}}</option>
                             @endforeach
@@ -177,7 +177,7 @@ $dd_section="section".$lang;
                     <div class="ml-2 mr-2 pb-3">
                         <span for="authors">Creator</span>
                         <select class="form-control" id="resource_creator" name="resource_creator" value=""required>
-                            <option value="" class="" selected>All Creators</option>
+                            <option value="All" class="" selected>All Creators</option>
                             @foreach($creator_data as $item)
                                     <option value="{{ $item->id }}">{{ $item->$creator}}</option>
                             @endforeach
@@ -202,7 +202,7 @@ $dd_section="section".$lang;
                 <div class="ml-2 mr-2">
                         <span for="dewey_decimal">Dewey Decimal Class</span>
                         <select class="form-control mb-3" id="resource_dd_class" name="resource_dd_class" required>
-                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="All" selected>Choose here</option>
                         @foreach($ddclass_data as $item)
                             <option value="{{ $item->id }}">{{ $item->$dd_class}}</option>
                         @endforeach
@@ -217,7 +217,7 @@ $dd_section="section".$lang;
                 <div class="ml-2 mr-2">
                         <span for="dewey_decimal">Dewey Decimal Devision</span>
                         <select class="form-control mb-3" id="resource_dd_devision" name="resource_dd_devision" required>
-                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="All" selected>Choose here</option>
                         @foreach($dddevision_data as $item)
                             <option value="{{ $item->id }}">{{ $item->$dd_devision}}</option>
                         @endforeach
@@ -232,7 +232,7 @@ $dd_section="section".$lang;
                 <div class="ml-2 mr-2">
                         <span for="dewey_decimal">Dewey Decimal Section</span>
                         <select class="form-control mb-3" id="resource_dd_section" name="resource_dd_section" required>
-                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="All" selected>Choose here</option>
                         @foreach($ddsection_data as $item)
                             <option value="{{ $item->id }}">{{ $item->section_code}}-{{ $item->$dd_section}}</option>
                         @endforeach
@@ -252,8 +252,36 @@ $dd_section="section".$lang;
         <div class="elevation-2 card1">
              <h5>Filterd Resources</h5>
              <p class="small">Filterd Resources Report in LMS. You can filter resource Center wise, Type wise, creator wise, Publisher wise or Dewy Decimal wise. click Download PDF or Excel to genarate report</p>
-             <a href="" class="btn btn-secondary btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-             <a href="" class="btn btn-primary btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
+             <form class="form-inline pull-left" action="{{ route('report_recource_filter_all') }}" id="report_filter_form" method="POST">
+                {{ csrf_field() }}
+                <input type="hidden" name="select_catg" class="select_catg">
+                <input type="hidden" name="select_cent" class="select_cent">
+                <input type="hidden" name="select_type" class="select_type">
+                <input type="hidden" name="select_creator" class="select_creator">
+                <input type="hidden" name="select_publisher" class="select_publisher">
+                <input type="hidden" name="select_ddclass" class="select_ddclass">
+                <input type="hidden" name="select_dddevision" class="select_dddevision">
+                <input type="hidden" name="select_ddsection" class="select_ddsection">
+                    <button type="submit" class="btn-pdf btn btn-secondary btn-sm elevation-2 mr-2">
+                        <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
+                        <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
+                    </button>
+            </form>
+            <form class="form-inline" action="{{ route('export_recource_filter_all') }}" id="export_filter_form" method="POST">
+                {{ csrf_field() }}
+                <input type="hidden" name="select_catg" class="select_catg">
+                <input type="hidden" name="select_cent" class="select_cent">
+                <input type="hidden" name="select_type" class="select_type">
+                <input type="hidden" name="select_creator" class="select_creator">
+                <input type="hidden" name="select_publisher" class="select_publisher">
+                <input type="hidden" name="select_ddclass" class="select_ddclass">
+                <input type="hidden" name="select_dddevision" class="select_dddevision">
+                <input type="hidden" name="select_ddsection" class="select_ddsection">
+                    <button type="submit" class="btn-excel btn btn-primary btn-sm elevation-2 mr-2">
+                        <span class="excel-icon"><i class="fa fa-file-excel-o"></i></span>
+                        <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; Excel
+                    </button>
+            </form>
         </div>
      </div>
     </div> 
@@ -270,8 +298,20 @@ $dd_section="section".$lang;
        <div class="elevation-2 card1 ">
             <h5>Removed Resources</h5>
             <p class="small">Removed Resources Report in Library management system. Download PDF or Excel</p>
-            <a href="" class="btn btn-secondary btn-sm elevation-2 mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; PDF</a>
-            <a href="" class="btn btn-primary btn-sm elevation-2 mr-2"><i class="fa fa-file-excel-o"></i>&nbsp; Excel</a>
+            <form class="form-inline pull-left" action="{{ route('report_recource_filter_all') }}" id="report_form" method="POST">
+                {{ csrf_field() }}
+                    <button type="submit" class="btn-pdf btn btn-secondary btn-sm elevation-2 mr-2">
+                        <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
+                        <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
+                    </button>
+            </form>
+            <form class="form-inline" action="{{ route('export_recource_filter_all') }}" id="report_form" method="POST">
+                {{ csrf_field() }}
+                    <button type="submit" class="btn-excel btn btn-primary btn-sm elevation-2 mr-2">
+                        <span class="excel-icon"><i class="fa fa-file-excel-o"></i></span>
+                        <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; Excel
+                    </button>
+            </form>
            
        </div>
     </div>
@@ -317,6 +357,7 @@ $dd_section="section".$lang;
 
 $(document).ready(function()
 {
+
     load_type("All");
 
     $('#resource_creator').select2({
@@ -333,11 +374,27 @@ $(document).ready(function()
         $('.resource_to').val($('#txt_end').val()); 
     });
 
+    $('.select_type').val("All");
 });
 
 $('.filter_section').click(function() { 
     $(this).find('i').toggleClass('fa fa-plus fa fa-minus'); 
 }); 
+
+$("#report_filter_form").submit(function(){
+    $('.select_catg').val( $('#category').val());
+    $('.select_cent').val( $('#center').val());
+    $('.select_creator').val( $('#resource_creator').val());
+    $('.select_publisher').val( $('#resource_publisher').val());
+    $('.select_ddclass').val( $('#resource_dd_class').val());
+    $('.select_dddevision').val( $('#resource_dd_devision').val());
+    $('.select_ddsection').val( $('#resource_dd_section').val());
+});
+
+$(document).on("click", ".btntype", function(){
+    $(".select_type").val($(this).val());
+});
+
 function load_type(cdta)
 {
         op="";
@@ -350,6 +407,9 @@ function load_type(cdta)
             dataType : 'json',
             url: "{{route('load_resource_type')}}", 
             data: { cdta: cdta, },
+            beforeSend: function(){
+                $("#type_bar").html('<span class="spinner-border spinner-border-sm mb-1" role="status" aria-hidden="true"></span><span>&nbsp;Loading....</span>');
+                },
             success:function(data){
                 op+='<button type="button" value="All" class="btn btn-white  elevation-2 btntype"><img class="typ-icon" src="images/all_type.png"><br>{{trans('All')}}&nbsp;</button>';
                 for(var i=0;i<data.length;i++)
@@ -370,6 +430,11 @@ function load_type(cdta)
         })
         // --------------------------------------------------------
 }
+
+$("#category").change(function () {
+    load_type($("#category").val());  
+});
+
 $('.btn-pdf').click(function() { 
     $(this).find('.pdf-icon').hide();
     $(this).find('.loader').show();

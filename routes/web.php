@@ -321,6 +321,7 @@ Route::group(['middleware' => ['auth']], function() {
     // -------Reports-PDF
     Route::POST('report_recource', [ReportController::class, 'report_recource'])->name('report_recource');
     Route::POST('report_recource_filter', [ReportController::class, 'report_recource_filter'])->name('report_recource_filter');
+    Route::POST('report_recource_filter_all', [ReportController::class, 'report_recource_filter_all'])->name('report_recource_filter_all');
     Route::POST('report_lending', [ReportController::class, 'report_lending'])->name('report_lending');
     Route::POST('report_lending_account', [ReportController::class, 'report_lending_account'])->name('report_lending_account');
     Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');
@@ -328,6 +329,8 @@ Route::group(['middleware' => ['auth']], function() {
 
      // -------Reports-Excel
      Route::POST('export_recource', [ReportController::class, 'export_recource'])->name('export_recource');
+     Route::POST('export_recource_filter', [ReportController::class, 'export_recource_filter'])->name('export_recource_filter');
+     Route::POST('export_recource_filter_all', [ReportController::class, 'export_recource_filter_all'])->name('export_recource_filter_all');
      Route::POST('export_lending', [ReportController::class, 'export_lending'])->name('export_lending');
 
     //  ---------Email-------------

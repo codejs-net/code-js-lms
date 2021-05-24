@@ -276,9 +276,6 @@ border: #121313 solid 1px !important;
    
   }
   .js-select-box:hover{
-    border-radius: 5px;
-    height: 70px;
-    color: #2c78e9;
     border: #0f0f0f solid 1px;
     /* background: #039BE5; */
   }

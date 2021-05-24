@@ -96,3 +96,14 @@ function printDiv1()
         @endif
     @endforeach 
 @endhasrole
+
+<!-- ----------------------------------------------- -->
+
+$catg= ($request->select_catg!="All")?$request->select_catg:"%";
+$type= ($request->select_type!="All")?$request->select_type:"%";
+$creator= ($request->select_creator!="All")?$request->select_creator:"%";
+$publisher= ($request->select_publisher!="All")?$request->select_publisher:"%";
+$ddclass= ($request->select_ddclass!="All")?$request->select_ddclass:"%";
+$dddevision= ($request->select_dddevision!="All")?$request->select_dddevision:"%";
+$ddsection= ($request->select_ddsection!="All")?$request->select_ddsection:"%";
+$center= ($request->select_cent!="All")?$request->select_cent:$center_array;
