@@ -10,7 +10,7 @@ return [
 	'creator'               => 'Code-js',
 	'display_mode'          => 'fullpage',
 	'margin_header'        	=> 10,
-	'margin_footer'        	=> 10,
+	'margin_footer'        	=> 5,
 	'tempDir'               => base_path('../temp/'),
 	'font_path' => base_path('resources/fonts/'),
 	'font_data' => [

@@ -238,9 +238,9 @@ class ResourceController extends Controller
     
             $res->accessionNo       =  $request->resoure_accession;
             $res->standard_number   =  $request->resoure_isn;
-            $res->title_si          =  $request->resource_title_si;
-            $res->title_ta          =  $request->resource_title_ta;
-            $res->title_en          =  $request->resource_title_en;
+            $res->title_si          =  ($request->resource_title_si==null)?'':$request->resource_title_si;
+            $res->title_ta          =  ($request->resource_title_ta==null)?'':$request->resource_title_ta;
+            $res->title_en          =  ($request->resource_title_en==null)?'':$request->resource_title_en;
             $res->cretor_id         =  $request->resource_creator;
             $res->category_id       =  $request->resoure_category;
             $res->type_id           =  $request->resoure_type;
@@ -354,9 +354,9 @@ class ResourceController extends Controller
 
         $res->accessionNo       =  $request->resoure_accession;
         $res->standard_number   =  $request->resoure_isn;
-        $res->title_si          =  $request->resource_title_si;
-        $res->title_ta          =  $request->resource_title_ta;
-        $res->title_en          =  $request->resource_title_en;
+        $res->title_si          =  ($request->resource_title_si==null)?'':$request->resource_title_si;
+        $res->title_ta          =  ($request->resource_title_ta==null)?'':$request->resource_title_ta;
+        $res->title_en          =  ($request->resource_title_en==null)?'':$request->resource_title_en;
         $res->cretor_id         =  $request->resource_creator;
         $res->category_id       =  $request->resoure_category;
         $res->type_id           =  $request->resoure_type;

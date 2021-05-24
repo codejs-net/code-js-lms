@@ -28,6 +28,7 @@ use App\Models\lending_config;
 use App\Models\center_allocation;
 use App\Models\view_member_data;
 use App\Models\view_resource_data;
+use App\Models\view_resource_data_all;
 use App\Models\view_lending_data;
 use App\Models\view_lending_data_all;
 use Carbon\Carbon;
@@ -191,7 +192,7 @@ class ReportController extends Controller
 
     function report_recource_filter_all(Request $request) {
         // dd($request->select_catg);
-        try {
+        // try {
         ini_set('max_execution_time', '1200');
         ini_set("pcre.backtrack_limit", "90000000");
         ini_set('memory_limit', '-1');
@@ -262,10 +263,15 @@ class ReportController extends Controller
             $rpt_center = (center::select($_center)->where('id',$request->select_cent)->first())->$_center;
         }
 
-        $resouredata = view_resource_data::select('*')
+        $resouredata = view_resource_data_all::select('*')
                 ->where('category_id','LIKE',$catg)
-                ->whereIn('center_id',$center)
                 ->where('type_id','LIKE',$type)
+                ->where('cretor_id','LIKE',$creator)
+                ->where('publisher_id','LIKE',$publisher)
+                // ->where('dd_class_id','LIKE',$ddclass)
+                // ->where('dd_devision_id','LIKE',$dddevision)
+                // ->where('dd_section_id','LIKE',$ddsection)
+                ->whereIn('center_id',$center)
                 ->get();
                 // ->chunk(600);
 
@@ -275,10 +281,10 @@ class ReportController extends Controller
             'orientation' => 'L',
             ]);
         return $pdf->stream('resource_filter.pdf');
-        }
-        catch (\Exception $e) {
-            return redirect()->back()->with('error','Report genarate Fail.');
-        }
+        // }
+        // catch (\Exception $e) {
+        //     return redirect()->back()->with('error','Report genarate Fail.');
+        // }
 
 
     }

@@ -42,7 +42,7 @@ $dd_section="section".$lang;
             margin-top:70px;
             margin-left:90px;
             margin-right:50px;
-            margin-bottom:30px; 
+            margin-bottom:50px; 
             header: page-header;
             footer: page-footer;
       }
@@ -62,7 +62,7 @@ $dd_section="section".$lang;
             border-spacing: 0;
            
       }
-      td{
+      .tbl-data td{
             line-height: 18px;
             /* border-spacing:unset;
             height: 20px; */
@@ -70,6 +70,9 @@ $dd_section="section".$lang;
             padding-bottom: 6px;
             padding-left: 1px;
             padding-right: 1px;
+      }
+      .tbl-topic tr{
+            line-height: 10px;
       }
      
       .thead th{
@@ -116,15 +119,18 @@ $dd_section="section".$lang;
       Page:{PAGENO}
 </htmlpagefooter>
 
-<table class="table">
-      <tr>
-            <td style="text-align: left;" class="topic">{{__('Library Resource Report')}}</td>
-            <td style="text-align: left;" class="topic">{{$rpt_center}}</td>
-            <td style="text-align: right;">({{$rpt_category}}/{{$rpt_type}} )</td>
-      </tr>
+<table class="table tbl-topic">
+      <tr><td class="topic" style="width: 15%"><span>{{__('Report Title')}}</span></td><td style="width: 5%">:</td><td>{{__('Library Resource Report')}}</td></tr>
+      <tr><td><span>{{__('Category')}}</span></td><td>:</td><td>{{$rpt_category}}/{{$rpt_type}}</td></tr>
+      <tr><td><span>{{__('Creator/Author')}}</span></td><td>:</td><td>{{$rpt_creator}}</td></tr>
+      <tr><td><span>{{__('Publisher')}}</span></td><td>:</td><td>{{$rpt_publisher}}</td></tr>
+      <tr><td><span>{{__('DD Class')}}</span></td><td>:</td><td>{{$rpt_ddclass}}</td></tr>
+      <tr><td><span>{{__('DD Devision')}}</span></td><td>:</td><td>{{$rpt_dddevision}}</td></tr>
+      <tr><td><span>{{__('DD Section')}}</span></td><td>:</td><td>{{$rpt_ddsection}}</td></tr>
+
 </table>
 
-<table class="table table-bordered">
+<table class="table table-bordered tbl-data">
       <thead class="thead">
             <tr>
                   <th>No</th>

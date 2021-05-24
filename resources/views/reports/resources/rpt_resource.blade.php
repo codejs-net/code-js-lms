@@ -42,7 +42,7 @@ $dd_section="section".$lang;
             margin-top:70px;
             margin-left:90px;
             margin-right:50px;
-            margin-bottom:30px; 
+            margin-bottom:50px; 
             header: page-header;
             footer: page-footer;
       }
@@ -112,9 +112,7 @@ $dd_section="section".$lang;
       <div class="header text-center"><h3>{{$library_name}}</h3></div> 
 </htmlpageheader>
 
-<htmlpagefooter name="page-footer">
-      Page:{PAGENO}
-</htmlpagefooter>
+
 
 <table class="table">
       <tr>
@@ -153,7 +151,10 @@ $dd_section="section".$lang;
             </tr>
 	    @endforeach
     </table>
-   
+
+<htmlpagefooter name="page-footer">
+      Page:{PAGENO}
+</htmlpagefooter>
 </body>
 
 </html>

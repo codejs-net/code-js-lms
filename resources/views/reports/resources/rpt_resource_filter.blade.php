@@ -42,7 +42,7 @@ $dd_section="section".$lang;
             margin-top:70px;
             margin-left:90px;
             margin-right:50px;
-            margin-bottom:30px; 
+            margin-bottom:50px; 
             header: page-header;
             footer: page-footer;
       }
