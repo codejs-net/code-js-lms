@@ -96,6 +96,12 @@ $dd_section="section".$lang;
      <div class="row js-border-radius-2 m-2">
         <div class="col-md-9 col-9">
         <span for="" class="ml-3 mt-1">Filter By</span>
+       {{-- ------------- --}}
+       <span id="ftag"></span>
+        {{-- <span class="badge badge-pill badge-info tag">Center
+            <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+        </span> --}}
+        {{-- ------------- --}}
         <div class="col-md-12 p-3">
         <div class="js-filter-box elevation-2">
             <div class="col ml-3">
@@ -105,9 +111,9 @@ $dd_section="section".$lang;
                 <div class="row mt-3 pl-3">
                     <div class="col-md-12 col-12">
                         <div class="form-group js-select-box ">
-                            <div class="ml-2 mr-2">
-                                <span for="category">Center :</span>
-                                <select class="form-control form-control-sm mb-3"name="center" id="center" value="">
+                            <div class="ml-2 mr-2 fdiv">
+                                <span for="category" class="fname">Center</span>
+                                <select class="form-control form-control-sm mb-3 filter"name="center" id="center" value="">
                                     <option value="All" selected>All Centers</option>
                                         @foreach($center_data as $item)
                                             <option value="{{ $item->center_id }}">&nbsp;{{ $item->center->$center}}</option>
@@ -129,9 +135,9 @@ $dd_section="section".$lang;
         <div class="row mt-1 pl-3">
             <div class="col-md-3 col-sm-3 text-left">
                 <div class="form-group js-select-box">
-                    <div class="ml-2 mr-2">
-                        <span for="category">Category :</span>
-                        <select class="form-control form-control-sm mb-3"name="category" id="category" value="">
+                    <div class="ml-2 mr-2 fdiv">
+                        <span for="category" class="fname">Category</span>
+                        <select class="form-control form-control-sm mb-3 filter"name="category" id="category" value="">
                             <option value="All" selected>All Categories</option>
                                 @foreach($cat_data as $item)
                                     <option value="{{ $item->id }}" style="background-image:url(images/{{ $item->image}});">&nbsp;{{ $item->$category}}</option>
@@ -159,10 +165,10 @@ $dd_section="section".$lang;
 
             <div class="col-md-6">
                 <div class="form-group js-select-box ">
-                    <div class="ml-2 mr-2">
+                    <div class="ml-2 mr-2 fdiv">
                 
-                        <span for="publisher">Publisher</span>
-                        <select class="form-control mb-3" id="resource_publisher" name="resource_publisher" value="{{old('resource_publisher')}}"required>
+                        <span for="publisher" class="fname">Publisher</span>
+                        <select class="form-control mb-3 filter" id="resource_publisher" name="resource_publisher" value="{{old('resource_publisher')}}"required>
                         <option value="All" selected>All Publishers</option>
                         @foreach($publisher_data as $item)
                                 <option value="{{ $item->id }}">{{ $item->$publisher}}</option>
@@ -174,9 +180,9 @@ $dd_section="section".$lang;
 
             <div class="col-md-6">
                 <div class="form-group js-select-box ">
-                    <div class="ml-2 mr-2 pb-3">
-                        <span for="authors">Creator</span>
-                        <select class="form-control" id="resource_creator" name="resource_creator" value=""required>
+                    <div class="ml-2 mr-2 pb-3 fdiv">
+                        <span for="authors" class="fname">Creator</span>
+                        <select class="form-control filter" id="resource_creator" name="resource_creator" value=""required>
                             <option value="All" class="" selected>All Creators</option>
                             @foreach($creator_data as $item)
                                     <option value="{{ $item->id }}">{{ $item->$creator}}</option>
@@ -199,10 +205,10 @@ $dd_section="section".$lang;
                 <!-- -------------------------------------------- -->
                 <div class="col-md-4">
                 <div class="form-group js-select-box ">
-                <div class="ml-2 mr-2">
-                        <span for="dewey_decimal">Dewey Decimal Class</span>
-                        <select class="form-control mb-3" id="resource_dd_class" name="resource_dd_class" required>
-                        <option value="All" selected>Choose here</option>
+                <div class="ml-2 mr-2 fdiv">
+                        <span for="dewey_decimal" class="fname">Dewey Decimal Class</span>
+                        <select class="form-control mb-3 filter" id="resource_dd_class" name="resource_dd_class" required>
+                        <option value="All" selected>All</option>
                         @foreach($ddclass_data as $item)
                             <option value="{{ $item->id }}">{{ $item->$dd_class}}</option>
                         @endforeach
@@ -214,10 +220,10 @@ $dd_section="section".$lang;
                 <!-- -------------------------------------------- -->
                 <div class="col-md-4">
                 <div class="form-group js-select-box">
-                <div class="ml-2 mr-2">
-                        <span for="dewey_decimal">Dewey Decimal Devision</span>
-                        <select class="form-control mb-3" id="resource_dd_devision" name="resource_dd_devision" required>
-                        <option value="All" selected>Choose here</option>
+                <div class="ml-2 mr-2 fdiv">
+                        <span for="dewey_decimal" class="fname">Dewey Decimal Devision</span>
+                        <select class="form-control mb-3 filter" id="resource_dd_devision" name="resource_dd_devision" required>
+                        <option value="All" selected>All</option>
                         @foreach($dddevision_data as $item)
                             <option value="{{ $item->id }}">{{ $item->$dd_devision}}</option>
                         @endforeach
@@ -229,10 +235,10 @@ $dd_section="section".$lang;
                 <!-- -------------------------------------------- -->
                 <div class="col-md-4">
                 <div class="form-group js-select-box">
-                <div class="ml-2 mr-2">
-                        <span for="dewey_decimal">Dewey Decimal Section</span>
-                        <select class="form-control mb-3" id="resource_dd_section" name="resource_dd_section" required>
-                        <option value="All" selected>Choose here</option>
+                <div class="ml-2 mr-2 fdiv">
+                        <span for="dewey_decimal" class="fname">Dewey Decimal Section</span>
+                        <select class="form-control mb-3 filter" id="resource_dd_section" name="resource_dd_section" required>
+                        <option value="All" selected>All</option>
                         @foreach($ddsection_data as $item)
                             <option value="{{ $item->id }}">{{ $item->section_code}}-{{ $item->$dd_section}}</option>
                         @endforeach
@@ -375,6 +381,16 @@ $(document).ready(function()
     });
 
     $('.select_type').val("All");
+
+    $('#resource_creator').on('select2:select', function (e) {
+        var op='';
+        var filter_tag= 'Creator';
+        op+='<span class="badge badge-pill badge-info mx-1 tag">';
+        op+= filter_tag;
+        op+='<button type="button" class="close" value="'+filter_tag+'"><span aria-hidden="true">&times;</span></button>';
+        op+='</span>';
+        $('#ftag').append(op);
+    });
 });
 
 $('.filter_section').click(function() { 
@@ -393,7 +409,43 @@ $("#report_filter_form").submit(function(){
 
 $(document).on("click", ".btntype", function(){
     $(".select_type").val($(this).val());
+    var op='';
+    var filter_tag= 'Type';
+    op+='<span class="badge badge-pill badge-info mx-1 tag">';
+    op+= filter_tag;
+    op+='<button type="button" class="close" value="'+filter_tag+'"><span aria-hidden="true">&times;</span></button>';
+    op+='</span>';
+    $('#ftag').append(op);
+
 });
+
+$(document).on("click", ".close", function(){
+   var fcolse= $(this).closest('button').val();
+//    var fcolse= $(this).parents().eq(0);
+if(fcolse=="Center"){$('#center').val('All');}
+if(fcolse=="Category"){$('#category').val('All');}
+if(fcolse=="Publisher"){$('#resource_publisher').val('All');}
+if(fcolse=="Creator"){$('#resource_creator').val('All');}
+if(fcolse=="Dewey Decimal Class"){$('#resource_dd_class').val('All');}
+if(fcolse=="Dewey Decimal Devision"){$('#resource_dd_devision').val('All');}
+if(fcolse=="Dewey Decimal Section"){$('#resource_dd_section').val('All');}
+
+
+
+$(this).closest('.tag').fadeOut();
+});
+
+$(".filter").change(function () {
+    var op='';
+    var filter_tag= $(this).closest('.fdiv').find('.fname').html();
+    op+='<span class="badge badge-pill badge-info mx-1 tag">';
+    op+= filter_tag;
+    op+='<button type="button" class="close" value="'+filter_tag+'"><span aria-hidden="true">&times;</span></button>';
+    op+='</span>';
+    $('#ftag').append(op);
+
+});
+
 
 function load_type(cdta)
 {
