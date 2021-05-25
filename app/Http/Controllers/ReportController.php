@@ -191,7 +191,6 @@ class ReportController extends Controller
     }
 
     function report_recource_filter_all(Request $request) {
-        // dd($request->select_catg);
         // try {
         ini_set('max_execution_time', '1200');
         ini_set("pcre.backtrack_limit", "90000000");
@@ -219,7 +218,6 @@ class ReportController extends Controller
         $rpt_center=trans('All');$rpt_category=trans('All');$rpt_type=trans('All');$rpt_creator=trans('All');$rpt_publisher=trans('All');$rpt_ddclass=trans('All');$rpt_dddevision=trans('All');$rpt_ddsection=trans('All');
         $catg="%";$type="%";$creator="%";$publisher="%";$ddclass="%";$dddevision="%";$ddsection="%";$center=$center_array;
 
-        
         
         if($request->select_catg!="All")
         {
@@ -280,7 +278,7 @@ class ReportController extends Controller
             'format' => 'A4',
             'orientation' => 'L',
             ]);
-        return $pdf->stream('resource_filter.pdf');
+        return $pdf->download('resource_filter.pdf');
         // }
         // catch (\Exception $e) {
         //     return redirect()->back()->with('error','Report genarate Fail.');

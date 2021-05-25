@@ -360,12 +360,12 @@ $dd_section="section".$lang;
 @endsection
 @section('script')
 <script>
-
+ var tag_array=[];
 $(document).ready(function()
 {
 
     load_type("All");
-
+   
     $('#resource_creator').select2({
         theme: 'bootstrap4',
     });
@@ -383,14 +383,10 @@ $(document).ready(function()
     $('.select_type').val("All");
 
     $('#resource_creator').on('select2:select', function (e) {
-        var op='';
         var filter_tag= 'Creator';
-        op+='<span class="badge badge-pill badge-info mx-1 tag">';
-        op+= filter_tag;
-        op+='<button type="button" class="close" value="'+filter_tag+'"><span aria-hidden="true">&times;</span></button>';
-        op+='</span>';
-        $('#ftag').append(op);
+        filtertag(filter_tag);
     });
+   
 });
 
 $('.filter_section').click(function() { 
@@ -409,41 +405,46 @@ $("#report_filter_form").submit(function(){
 
 $(document).on("click", ".btntype", function(){
     $(".select_type").val($(this).val());
-    var op='';
     var filter_tag= 'Type';
-    op+='<span class="badge badge-pill badge-info mx-1 tag">';
-    op+= filter_tag;
-    op+='<button type="button" class="close" value="'+filter_tag+'"><span aria-hidden="true">&times;</span></button>';
-    op+='</span>';
-    $('#ftag').append(op);
-
+    filtertag(filter_tag);
 });
 
 $(document).on("click", ".close", function(){
    var fcolse= $(this).closest('button').val();
 //    var fcolse= $(this).parents().eq(0);
-if(fcolse=="Center"){$('#center').val('All');}
-if(fcolse=="Category"){$('#category').val('All');}
-if(fcolse=="Publisher"){$('#resource_publisher').val('All');}
-if(fcolse=="Creator"){$('#resource_creator').val('All');}
-if(fcolse=="Dewey Decimal Class"){$('#resource_dd_class').val('All');}
-if(fcolse=="Dewey Decimal Devision"){$('#resource_dd_devision').val('All');}
-if(fcolse=="Dewey Decimal Section"){$('#resource_dd_section').val('All');}
+    if(fcolse=="Center"){$('#center').val('All');}
+    if(fcolse=="Category"){$('#category').val('All');}
+    if(fcolse=="Publisher"){$('#resource_publisher').val('All');}
+    if(fcolse=="Creator"){$('#resource_creator').val('All').trigger('change');}
+    if(fcolse=="Dewey Decimal Class"){$('#resource_dd_class').val('All');}
+    if(fcolse=="Dewey Decimal Devision"){$('#resource_dd_devision').val('All');}
+    if(fcolse=="Dewey Decimal Section"){$('#resource_dd_section').val('All');}
+    if(fcolse=="Type"){$('.select_type').val('All');}
 
-
-
-$(this).closest('.tag').fadeOut();
+    $(this).closest('.tag').fadeOut();
 });
 
-$(".filter").change(function () {
-    var op='';
-    var filter_tag= $(this).closest('.fdiv').find('.fname').html();
-    op+='<span class="badge badge-pill badge-info mx-1 tag">';
-    op+= filter_tag;
-    op+='<button type="button" class="close" value="'+filter_tag+'"><span aria-hidden="true">&times;</span></button>';
-    op+='</span>';
-    $('#ftag').append(op);
+function filtertag(filter_tag){
+    var tag_excist=false;
+    for (i = 0; i < tag_array.length; i++)
+    {
+        if(filter_tag==tag_array[i]){tag_excist=true;}
+    }
+    if(tag_excist==false)
+    {
+        var op='';
+        op+='<span class="badge badge-pill badge-info mx-1 tag">';
+        op+= filter_tag;
+        op+='<button type="button" class="close" value="'+filter_tag+'"><span aria-hidden="true">&times;</span></button>';
+        op+='</span>';
+        $('#ftag').append(op);
+        tag_array.push(filter_tag);
+    }
+}
 
+$(".filter").change(function () {
+    var filter_tag= $(this).closest('.fdiv').find('.fname').html();
+    filtertag(filter_tag);
 });
 
 
@@ -490,6 +491,20 @@ $("#category").change(function () {
 $('.btn-pdf').click(function() { 
     $(this).find('.pdf-icon').hide();
     $(this).find('.loader').show();
+     // -------
+    //  try {
+    //     response.setContentType("application/pdf");
+    //     response.setContentLength(bytes.length);
+    //     ServletOutputStream ouputStream = response.getOutputStream();
+    //     ouputStream.write(bytes, 0, bytes.length);
+    //     ouputStream.flush();
+    //     ouputStream.close();
+    //     alert("ok");
+    //     } catch (Exception e) {
+    //         // logger.error("PDF " + fileName + " error: " + e.getMessage());
+    //         throw e;
+    //     }
+    // -------
 }); 
 $('.btn-excel').click(function() { 
     $(this).find('.excel-icon').hide();
