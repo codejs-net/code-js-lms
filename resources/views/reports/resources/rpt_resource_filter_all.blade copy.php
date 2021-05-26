@@ -119,7 +119,7 @@ $dd_section="section".$lang;
       Page:{PAGENO}
 </htmlpagefooter>
 
-{{-- <table class="table tbl-topic">
+<table class="table tbl-topic">
       <tr><td class="topic" style="width: 15%"><span>{{__('Report Title')}}</span></td><td style="width: 5%">:</td><td>{{__('Library Resource Report')}}</td></tr>
       <tr><td><span>{{__('Center')}}</span></td><td>:</td><td>{{$rpt_center}}</td></tr>
       <tr><td><span>{{__('Category')}}</span></td><td>:</td><td>{{$rpt_category}}/{{$rpt_type}}</td></tr>
@@ -128,7 +128,7 @@ $dd_section="section".$lang;
       <tr><td><span>{{__('DD Class')}}</span></td><td>:</td><td>{{$rpt_ddclass}}</td></tr>
       <tr><td><span>{{__('DD Devision')}}</span></td><td>:</td><td>{{$rpt_dddevision}}</td></tr>
       <tr><td><span>{{__('DD Section')}}</span></td><td>:</td><td>{{$rpt_ddsection}}</td></tr>
-</table> --}}
+</table>
 
 <table class="table table-bordered tbl-data">
       <thead class="thead">

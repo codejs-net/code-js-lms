@@ -275,22 +275,22 @@ class ReportController extends Controller
                     ->whereIn('center_id',$center)
                     ->get();
                     // ->chunk(600);
-            // $rptcollection = new Collection;
-            
-            // $rptcollection->add($resouredata);
-            view()->share('resouredata', $resouredata);
-            // error_log($rptcollection);
+
+            view()->share(['resouredata'=> $resouredata,
+                            'rpt_center'=> $rpt_center,
+                            'rpt_category'=> $rpt_center,
+                            'rpt_type'=> $rpt_type,
+                            'rpt_creator'=> $rpt_creator,
+                            'rpt_publisher'=> $rpt_publisher,
+                            'rpt_ddclass'=> $rpt_ddclass,
+                            'rpt_dddevision'=> $rpt_dddevision,
+                            'rpt_ddsection'=> $rpt_ddsection
+                            ]);
             $pdf = PDF::loadView('reports.resources.rpt_resource_filter_all',[],
                 [
                 'format' => 'A4',
                 'orientation' => 'L',
                 ]);
-            // $pdf = PDF::loadView('reports.resources.rpt_resource_filter_all',compact('resouredata','rpt_center','rpt_category','rpt_type','rpt_creator','rpt_publisher','rpt_ddclass','rpt_dddevision','rpt_ddsection'),[],
-            // [
-            // 'format' => 'A4',
-            // 'orientation' => 'L',
-            // ]);
-            
             return $pdf->download('resource_filter.pdf');
         // }
         // catch (\Exception $e) {

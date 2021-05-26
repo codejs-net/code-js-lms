@@ -71,7 +71,7 @@ $dd_section="section".$lang;
                             <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
                         </button>
                 </form>
-                <form class="form-inline" action="{{ route('export_recource') }}" id="report_form" method="POST">
+                <form class="form-inline" action="{{ route('export_recource') }}" id="export_form" method="POST">
                     {{ csrf_field() }}
                         <input type="hidden" name="resource_from" class="resource_from">
                         <input type="hidden" name="resource_to" class="resource_to">
@@ -258,10 +258,6 @@ $dd_section="section".$lang;
         <div class="elevation-2 card1">
              <h5>Filterd Resources</h5>
              <p class="small">Filterd Resources Report in LMS. You can filter resource Center wise, Type wise, creator wise, Publisher wise or Dewy Decimal wise. click Download PDF or Excel to genarate report</p>
-             {{-- <button type="button" id="rpt_filter_all" class="btn-pdf btn btn-secondary btn-sm elevation-2 mr-2">
-                <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
-                <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
-            </button> --}}
              <form class="form-inline pull-left" action="{{ route('report_recource_filter_all') }}" id="report_filter_form" name="report_filter_form" method="POST">
                 {{ csrf_field() }}
                 <input type="hidden" name="select_catg" class="select_catg">
@@ -308,14 +304,14 @@ $dd_section="section".$lang;
        <div class="elevation-2 card1 ">
             <h5>Removed Resources</h5>
             <p class="small">Removed Resources Report in Library management system. Download PDF or Excel</p>
-            <form class="form-inline pull-left" action="{{ route('report_recource_filter_all') }}" id="report_form" method="POST">
+            <form class="form-inline pull-left" action="{{ route('report_recource_filter_all') }}" id="report_remove_form" method="POST">
                 {{ csrf_field() }}
                     <button type="submit" class="btn-pdf btn btn-secondary btn-sm elevation-2 mr-2">
                         <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
                         <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
                     </button>
             </form>
-            <form class="form-inline" action="{{ route('export_recource_filter_all') }}" id="report_form" method="POST">
+            <form class="form-inline" action="{{ route('export_recource_filter_all') }}" id="export_remove_form" method="POST">
                 {{ csrf_field() }}
                     <button type="submit" class="btn-excel btn btn-primary btn-sm elevation-2 mr-2">
                         <span class="excel-icon"><i class="fa fa-file-excel-o"></i></span>
@@ -484,23 +480,10 @@ $("#category").change(function () {
 });
 
 $('.btn-pdf').click(function() { 
-    $(this).find('.pdf-icon').hide();
-    $(this).find('.loader').show();
-     // -------
-    //  try {
-    //     response.setContentType("application/pdf");
-    //     response.setContentLength(bytes.length);
-    //     ServletOutputStream ouputStream = response.getOutputStream();
-    //     ouputStream.write(bytes, 0, bytes.length);
-    //     ouputStream.flush();
-    //     ouputStream.close();
-    //     alert("ok");
-    //     } catch (Exception e) {
-    //         // logger.error("PDF " + fileName + " error: " + e.getMessage());
-    //         throw e;
-    //     }
-    // -------
+    // $(this).find('.pdf-icon').hide();
+    // $(this).find('.loader').show();
 }); 
+
 $('.btn-excel').click(function() { 
     $(this).find('.excel-icon').hide();
     $(this).find('.loader').show();
@@ -522,41 +505,22 @@ $("#report_filter_form").submit(function(event){
     $('.select_dddevision').val( $('#resource_dd_devision').val());
     $('.select_ddsection').val( $('#resource_dd_section').val());
 
-    // var select_catg= $('#category').val();
-    // var select_type= $('.select_type').val();
-    // var select_cent= $('#center').val();
-    // var select_creator= $('#resource_creator').val();
-    // var select_publisher= $('#resource_publisher').val();
-    // var select_ddclass= $('#resource_dd_class').val();
-    // var select_dddevision= $('#resource_dd_devision').val();
-    // var select_ddsection= $('#resource_dd_section').val();
-
     event.preventDefault();
     var formData = new FormData(this);
-    // $.ajaxSetup({
-    //     headers: {
-    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     }
-    // });
+  
     $.ajax({
         cache: false,
         type: 'POST',
         contentType: false,
         processData: false,
         url:  "{{route('report_recource_filter_all')}}", 
-        // data:{
-        //     select_catg: select_catg,
-        //     select_type: select_type,
-        //     select_cent: select_cent,
-        //     select_creator:select_creator,
-        //     select_publisher:select_publisher,
-        //     select_ddclass: select_ddclass,
-        //     select_dddevision:select_dddevision,
-        //     select_ddsection:select_ddsection
-        //     },
         data:formData,
         xhrFields: {
             responseType: 'blob'
+        },
+        beforeSend: function(){
+            $('#report_filter_form').find('.pdf-icon').hide();
+            $('#report_filter_form').find('.loader').show();
         },
         success: function (response, status, xhr) {
             var filename = "";                   
@@ -603,6 +567,10 @@ $("#report_filter_form").submit(function(event){
         },
         error: function(blob){
             console.log(blob);
+        },
+        complete:function(data){
+            $('#report_filter_form').find('.pdf-icon').show();
+            $('#report_filter_form').find('.loader').hide();
         }
     });
 
