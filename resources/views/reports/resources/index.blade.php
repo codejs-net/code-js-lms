@@ -258,7 +258,11 @@ $dd_section="section".$lang;
         <div class="elevation-2 card1">
              <h5>Filterd Resources</h5>
              <p class="small">Filterd Resources Report in LMS. You can filter resource Center wise, Type wise, creator wise, Publisher wise or Dewy Decimal wise. click Download PDF or Excel to genarate report</p>
-             <form class="form-inline pull-left" action="{{ route('report_recource_filter_all') }}" id="report_filter_form" method="POST">
+             {{-- <button type="button" id="rpt_filter_all" class="btn-pdf btn btn-secondary btn-sm elevation-2 mr-2">
+                <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
+                <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
+            </button> --}}
+             <form class="form-inline pull-left" action="{{ route('report_recource_filter_all') }}" id="report_filter_form" name="report_filter_form" method="POST">
                 {{ csrf_field() }}
                 <input type="hidden" name="select_catg" class="select_catg">
                 <input type="hidden" name="select_cent" class="select_cent">
@@ -393,15 +397,6 @@ $('.filter_section').click(function() {
     $(this).find('i').toggleClass('fa fa-plus fa fa-minus'); 
 }); 
 
-$("#report_filter_form").submit(function(){
-    $('.select_catg').val( $('#category').val());
-    $('.select_cent').val( $('#center').val());
-    $('.select_creator').val( $('#resource_creator').val());
-    $('.select_publisher').val( $('#resource_publisher').val());
-    $('.select_ddclass').val( $('#resource_dd_class').val());
-    $('.select_dddevision').val( $('#resource_dd_devision').val());
-    $('.select_ddsection').val( $('#resource_dd_section').val());
-});
 
 $(document).on("click", ".btntype", function(){
     $(".select_type").val($(this).val());
@@ -510,6 +505,116 @@ $('.btn-excel').click(function() {
     $(this).find('.excel-icon').hide();
     $(this).find('.loader').show();
 }); 
+
+function downloadFile(response) {
+  var blob = new Blob([response], {type: 'application/pdf'})
+  var url = URL.createObjectURL(blob);
+  location.assign(url);
+} 
+
+$("#report_filter_form").submit(function(event){
+    
+    $('.select_catg').val( $('#category').val());
+    $('.select_cent').val( $('#center').val());
+    $('.select_creator').val( $('#resource_creator').val());
+    $('.select_publisher').val( $('#resource_publisher').val());
+    $('.select_ddclass').val( $('#resource_dd_class').val());
+    $('.select_dddevision').val( $('#resource_dd_devision').val());
+    $('.select_ddsection').val( $('#resource_dd_section').val());
+
+    // var select_catg= $('#category').val();
+    // var select_type= $('.select_type').val();
+    // var select_cent= $('#center').val();
+    // var select_creator= $('#resource_creator').val();
+    // var select_publisher= $('#resource_publisher').val();
+    // var select_ddclass= $('#resource_dd_class').val();
+    // var select_dddevision= $('#resource_dd_devision').val();
+    // var select_ddsection= $('#resource_dd_section').val();
+
+    event.preventDefault();
+    var formData = new FormData(this);
+    // $.ajaxSetup({
+    //     headers: {
+    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     }
+    // });
+    $.ajax({
+        cache: false,
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        url:  "{{route('report_recource_filter_all')}}", 
+        // data:{
+        //     select_catg: select_catg,
+        //     select_type: select_type,
+        //     select_cent: select_cent,
+        //     select_creator:select_creator,
+        //     select_publisher:select_publisher,
+        //     select_ddclass: select_ddclass,
+        //     select_dddevision:select_dddevision,
+        //     select_ddsection:select_ddsection
+        //     },
+        data:formData,
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (response, status, xhr) {
+            var filename = "";                   
+            var disposition = xhr.getResponseHeader('Content-Disposition');
+
+                if (disposition) {
+                var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                var matches = filenameRegex.exec(disposition);
+                if (matches !== null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+            } 
+            var linkelem = document.createElement('a');
+            try {
+                var blob = new Blob([response], { type: 'application/octet-stream' });                        
+
+                if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    //   IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+                    window.navigator.msSaveBlob(blob, filename);
+                } else {
+                    var URL = window.URL || window.webkitURL;
+                    var downloadUrl = URL.createObjectURL(blob);
+
+                    if (filename) { 
+                        // use HTML5 a[download] attribute to specify filename
+                        var a = document.createElement("a");
+
+                        // safari doesn't support this yet
+                        if (typeof a.download === 'undefined') {
+                            window.location = downloadUrl;
+                        } else {
+                            a.href = downloadUrl;
+                            a.download = filename;
+                            document.body.appendChild(a);
+                            a.target = "_blank";
+                            a.click();
+                        }
+                    } else {
+                        window.location = downloadUrl;
+                    }
+                }   
+
+                } catch (ex) {
+                    console.log(ex);
+                } 
+        },
+        error: function(blob){
+            console.log(blob);
+        }
+    });
+
+
+});
+
+
+$(".download-pdf").click(function(){
+
+    var data = '';
+   
+});
 
 </script>
 

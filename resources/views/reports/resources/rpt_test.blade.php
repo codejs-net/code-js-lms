@@ -120,6 +120,7 @@ $dd_section="section".$lang;
 </htmlpagefooter>
 
 
+
 <table class="table table-bordered tbl-data">
       <thead class="thead">
             <tr>
@@ -133,17 +134,16 @@ $dd_section="section".$lang;
               </tr>
       </thead>
         
-	    @foreach($resouredata as $value)
             <tr>
-                  <td>{{ $value->id}}</td>
-                  <td>{{ $value->accessionNo}}</td>
-                  <td>{{ $value->$type}}</td>
-                  <td>{{ $value->$title}}</td>
-                  <td>{{ $value->$creator}}</td>  
-                  <td>{{ $value->$publisher}}</td>  
-                  <td>{{ $value->ddc}}</td>
+                  <td>1</td>
+                  <td>ffff</td>
+                  <td>ggg</td>
+                  <td>fff</td>
+                  <td>fff</td>  
+                  <td>ghhh</td>  
+                  <td>555</td>
             </tr>
-	    @endforeach
+
     </table>
    
 </body>
