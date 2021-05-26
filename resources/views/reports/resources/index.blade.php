@@ -518,6 +518,7 @@ $("#report_filter_form").submit(function(event){
         xhrFields: {
             responseType: 'blob'
         },
+        
         beforeSend: function(){
             $('#report_filter_form').find('.pdf-icon').hide();
             $('#report_filter_form').find('.loader').show();
@@ -566,7 +567,7 @@ $("#report_filter_form").submit(function(event){
                 } 
         },
         error: function(blob){
-            console.log(blob);
+            // console.log(blob);
         },
         complete:function(data){
             $('#report_filter_form').find('.pdf-icon').show();

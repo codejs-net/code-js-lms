@@ -130,11 +130,36 @@ $creator="name".$lang;
    <div class="row">
         <div class="col-md-10 col-sm-8 col-8 text-left">
             <label class="ml-2" for="report" >Survey Reports:  </label><br>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;All Resources</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;Checked Resources</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;Checked Resources with Suggetion</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;UnChecked Resources</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;lend Resources</i></a>
+            <div class="row ml-2">
+                <div class="col input-group border border-secondary">
+                    <div class=" py-1 px-2 mr-2">
+                        <div class="form-check form-check-inline text-primary" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp;All&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="All" checked >
+                        </div>
+                        <div class="form-check form-check-inline text-primary" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp;Checked&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="1" >
+                        </div>
+                        <div class="form-check form-check-inline text-info" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp;Non Checked&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="0" >
+                        </div>
+                        <div class="form-check form-check-inline text-success" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp; Suggested&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="Suggested" >
+                        </div>
+                    </div>
+                </div>
+                <diV class="col">
+                    <form class="form-inline pull-left" action="{{ route('export_survey_temp') }}" id="export_survey_temp_form" name="export_survey_temp_form" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="survey_id" class="survey_id" value="{{$sdata->id}}">
+                        <input type="hidden" name="export_type" class="export_type">
+                        <button type="submit" class="btn btn-outline-success btn-sm ml-2  elevation-2"><i class="fa fa-file-excel-o">&nbsp;&nbsp;Report</i></button>
+                    </form>
+                </diV>
+            </div>
         </div>
         <div class="col-md-2 col-sm-4 col-4">
            <div class="pull-right">
@@ -361,8 +386,6 @@ $('#resource_uncheck').on("click",function(){
 });
 // ------------------------------------------------------------------------
 
-
-
 // -------------------------finalize Survey----------------------------------
 $("#finalize").click(function () {
     var bar = $('.bar');
@@ -526,6 +549,11 @@ $("#same_resource_table").on('click', '.uncheck_resos', function () {
         // -------------------------------------------------------------
         
     });
+
+// ----report---------
+$("#export_survey_temp_form").submit(function(){
+    $('.export_type').val($("input[name='export_type']:checked").val());
+});
 
 </script>
 

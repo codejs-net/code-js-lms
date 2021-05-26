@@ -27,6 +27,11 @@ use App\Models\lending_issue;
 use App\Models\lending_return;
 use App\Models\lending_config;
 use App\Models\center_allocation;
+use App\Models\survey;
+use App\Models\survey_suggestion;
+use App\Models\survey_detail_temp; 
+use App\Models\survey_detail; 
+use App\Models\view_survey;
 use App\Models\view_member_data;
 use App\Models\view_resource_data;
 use App\Models\view_resource_data_all;
@@ -36,6 +41,7 @@ use Carbon\Carbon;
 use Auth;
 use App\Exports\ResourceExport;
 use App\Exports\LendingExport;
+use App\Exports\Survey_tempExport;
 use Session;
 
 
@@ -532,4 +538,19 @@ class ReportController extends Controller
     }
 
 //end lending Reports
+
+//Start Survey Reports
+    public function export_survey_temp(Request $request) 
+    {
+        // try {
+            ini_set('memory_limit', '-1');
+            ini_set('max_execution_time', '1200');
+            return Excel::download(new Survey_tempExport($request), 'Survey.xlsx');
+        // }
+        // catch (\Exception $e) {
+        //     return redirect()->back()->with('error','Report Export Fail.');
+        // }
+
+    }
+
 }
