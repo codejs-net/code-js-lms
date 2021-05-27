@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Support\Facades\DB;
 use App\Models\survey;
+use App\Models\lending_detail;
 use App\Models\survey_suggestion;
 use App\Models\survey_detail_temp; 
 use App\Models\view_survey;
@@ -27,47 +28,64 @@ class Survey_tempExport implements FromCollection, WithHeadings, ShouldAutoSize,
     */
     public function collection()
     {
-        $survey_id="";$export_type="";$surveydata="";
+        $survey_id="";$export_type="";$surveydata=[];
 
         $survey_id= $this->request->survey_id;
 
         if($this->request->export_type=="All"){$export_type="%";}
         else{$export_type= $this->request->export_type;}
 
-        if( $this->request->export_type !="Suggested")
+        if( $this->request->export_type =="Lend")
         {
-            $surveydata = view_survey::select(
-                'id',
-                'survey_id',
-                'accessionNo',
-                'standard_number',
-                'title_si',
-                'title_ta',
-                'title_en',
-                'category_si',
-                'category_ta',
-                'category_en',
-                'type_si',
-                'type_ta',
-                'type_en',
-                'name_si',
-                'name_ta',
-                'name_en',
-                'price',
-                'phydetails',
-                'center_si',
-                'center_ta',
-                'center_en',
-                'survey',
-                'suggestion_si',
-                'suggestion_ta',
-                'suggestion_en'
-            )
+            $sdata = view_survey::select('*')
             ->where('survey_id',$survey_id)
-            ->where('survey','LIKE',$export_type)
+            ->where('survey',0)
             ->get();
+            foreach ($sdata as $value) 
+            {
+               
+                $lend = lending_detail::select('id')
+                ->where('resource_id', $value->resource_id)
+                ->Where('return', 0)
+                ->first();
+                if($lend) 
+                {
+                    $lend_reso = [
+                        'id'   => $value->id,
+                        'survey_id' => $value->survey_id,
+                        'accessionNo' => $value->accessionNo,
+                        'standard_number' => $value->standard_number,
+                        'title_si' => $value->title_si,
+                        'title_ta' => $value->title_ta,
+                        'title_en' => $value->title_en,
+                        'category_si' => $value->category_si,
+                        'category_ta' => $value->category_ta,
+                        'category_en' => $value->category_en,
+                        'type_si' => $value->type_si,
+                        'type_ta' => $value->type_ta,
+                        'type_en' => $value->type_en,
+                        'name_si' => $value->name_si,
+                        'name_ta' => $value->name_ta,
+                        'name_en' => $value->name_en,
+                        'price' => $value->price,
+                        'phydetails' => $value->phydetails,
+                        'center_si' => $value->center_si,
+                        'center_ta' => $value->center_ta,
+                        'center_en' => $value->center_en,
+                        'survey' => $value->survey,
+                        'suggestion_si' => $value->suggestion_si,
+                        'suggestion_ta' => $value->suggestion_ta,
+                        'suggestion_en' => $value->suggestion_en,
+    
+                        ];
+                        $insert_data[] = $lend_reso;
+                }
+                
+            }
+            $surveydata = collect($insert_data);
+
         }
-        else
+        elseif( $this->request->export_type =="Suggested")
         {
             $surveydata = view_survey::select(
                 'id',
@@ -99,6 +117,39 @@ class Survey_tempExport implements FromCollection, WithHeadings, ShouldAutoSize,
             ->where('survey_id',$survey_id)
             ->where('survey',1)
             ->whereNotNull('suggestion_id')
+            ->get();
+        }
+       else
+        {
+            $surveydata = view_survey::select(
+                'id',
+                'survey_id',
+                'accessionNo',
+                'standard_number',
+                'title_si',
+                'title_ta',
+                'title_en',
+                'category_si',
+                'category_ta',
+                'category_en',
+                'type_si',
+                'type_ta',
+                'type_en',
+                'name_si',
+                'name_ta',
+                'name_en',
+                'price',
+                'phydetails',
+                'center_si',
+                'center_ta',
+                'center_en',
+                'survey',
+                'suggestion_si',
+                'suggestion_ta',
+                'suggestion_en'
+            )
+            ->where('survey_id',$survey_id)
+            ->where('survey','LIKE',$export_type)
             ->get();
         }
        

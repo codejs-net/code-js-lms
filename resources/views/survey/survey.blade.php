@@ -131,7 +131,7 @@ $creator="name".$lang;
         <div class="col-md-10 col-sm-8 col-8 text-left">
             <label class="ml-2" for="report" >Survey Reports:  </label><br>
             <div class="row ml-2">
-                <div class="col input-group border border-secondary">
+                <div class="col-10 input-group border border-secondary">
                     <div class=" py-1 px-2 mr-2">
                         <div class="form-check form-check-inline text-primary" >
                             <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp;All&nbsp;</label>
@@ -149,9 +149,13 @@ $creator="name".$lang;
                             <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp; Suggested&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="export_type" value="Suggested" >
                         </div>
+                        <div class="form-check form-check-inline text-danger" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp; Non Return&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="Lend" >
+                        </div>
                     </div>
                 </div>
-                <diV class="col">
+                <diV class="col-2">
                     <form class="form-inline pull-left" action="{{ route('export_survey_temp') }}" id="export_survey_temp_form" name="export_survey_temp_form" method="POST">
                         {{ csrf_field() }}
                         <input type="hidden" name="survey_id" class="survey_id" value="{{$sdata->id}}">
