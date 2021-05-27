@@ -290,6 +290,7 @@ $(document).ready(function()
                 op+= data.issue[i].accessionNo+'-'+data.issue[i].{{$title}}+'&nbsp;{{trans('Issue to') }} '+data.issue[i].{{$member}};
                 op+= '</div></div>';                  
             }
+            op+= '<div class="notification-separate"></div>';   
            for(var j=0;j<4;j++)
            {
                 op+= '<div class="card card-notify">';

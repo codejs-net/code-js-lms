@@ -123,7 +123,7 @@ class HomeController extends Controller
     public function latast_lending()
     {
         $latast_issue = view_lending_data::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
-        ->orderBy('updated_at', 'DESC')
+        ->orderBy('created_at', 'DESC')
         ->take(5)
         ->get();
 

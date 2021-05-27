@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class survey_suggestion extends Model
 {
     use HasFactory;
+    protected $table="survey_suggestions";
+    protected $fillable = ['suggestion_si','suggestion_ta','suggestion_en'];
 }

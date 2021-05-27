@@ -38,9 +38,15 @@ class CreateResourceViewAll extends Migration
                         resource_types.type_si,
                         resource_types.type_ta,
                         resource_types.type_en,
-                        resource_creators.name_si,
-                        resource_creators.name_ta,
-                        resource_creators.name_en,
+                        creator1.name_si,
+                        creator1.name_ta,
+                        creator1.name_en,
+                        creator2.name_si AS name2_si,
+                        creator2.name_ta AS name2_ta,
+                        creator2.name_en AS name2_en,
+                        creator3.name_si AS name3_si,
+                        creator3.name_ta AS name3_ta,
+                        creator3.name_en AS name3_en,
                         resource_publishers.publisher_si,
                         resource_publishers.publisher_ta,
                         resource_publishers.publisher_en,
@@ -72,18 +78,20 @@ class CreateResourceViewAll extends Migration
                         resource_floors.floor_ta,
                         resource_floors.floor_en
                 FROM    resources 
-            LEFT JOIN   resource_categories     ON resources.category_id        = resource_categories.id
-            LEFT JOIN   resource_types          ON resources.type_id            = resource_types.id
-            LEFT JOIN   resource_creators       ON resources.cretor_id          = resource_creators.id
-            LEFT JOIN   resource_publishers     ON resources.publisher_id       = resource_publishers.id
-            LEFT JOIN   centers                 ON resources.center_id          = centers.id
-            LEFT JOIN   resource_languages      ON resources.language_id        = resource_languages.id
-            LEFT JOIN   resource_dd_classes     ON resources.dd_class_id        = resource_dd_classes.id
-            LEFT JOIN   resource_dd_divisions   ON resources.dd_devision_id     = resource_dd_divisions.id
-            LEFT JOIN   resource_dd_sections    ON resources.dd_section_id      = resource_dd_sections.id
-            LEFT JOIN   resource_placements     ON resources.id                 = resource_placements.resource_id
-            LEFT JOIN   resource_racks          ON resource_placements.rack_id  = resource_racks.id
-            LEFT JOIN   resource_floors         ON resource_placements.floor_id = resource_floors.id
+            LEFT JOIN   resource_categories     ON resources.category_id            = resource_categories.id
+            LEFT JOIN   resource_types          ON resources.type_id                = resource_types.id
+            LEFT JOIN   resource_creators   AS creator1  ON resources.cretor_id     = creator1.id 
+            LEFT JOIN   resource_creators   AS creator2  ON resources.cretor2_id    = creator2.id
+            LEFT JOIN   resource_creators   AS creator3  ON resources.cretor3_id    = creator3.id
+            LEFT JOIN   resource_publishers     ON resources.publisher_id           = resource_publishers.id
+            LEFT JOIN   centers                 ON resources.center_id              = centers.id
+            LEFT JOIN   resource_languages      ON resources.language_id            = resource_languages.id
+            LEFT JOIN   resource_dd_classes     ON resources.dd_class_id            = resource_dd_classes.id
+            LEFT JOIN   resource_dd_divisions   ON resources.dd_devision_id         = resource_dd_divisions.id
+            LEFT JOIN   resource_dd_sections    ON resources.dd_section_id          = resource_dd_sections.id
+            LEFT JOIN   resource_placements     ON resources.id                     = resource_placements.resource_id
+            LEFT JOIN   resource_racks          ON resource_placements.rack_id      = resource_racks.id
+            LEFT JOIN   resource_floors         ON resource_placements.floor_id     = resource_floors.id
         SQL;
     }
 

@@ -72,6 +72,12 @@ class PermissionSeeder extends Seeder
             ['name'=>'resource_support_data-delete','category'=>'Support Data'],
             ['name'=>'resource_support_data-import','category'=>'Support Data'],
 
+            ['name'=>'survey_support_data-list','category'=>'Support Data'],
+            ['name'=>'survey_support_data-create','category'=>'Support Data'],
+            ['name'=>'survey_support_data-edit','category'=>'Support Data'],
+            ['name'=>'survey_support_data-delete','category'=>'Support Data'],
+            ['name'=>'survey_support_data-import','category'=>'Support Data'],
+
             ['name'=>'survey-list','category'=>'Survey'],
             ['name'=>'survey-create','category'=>'Survey'],
             ['name'=>'survey-edit','category'=>'Survey'],

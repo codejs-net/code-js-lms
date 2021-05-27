@@ -15,9 +15,9 @@ class CreateSurveySuggestionsTable extends Migration
     {
         Schema::create('survey_suggestions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('suggestion_si');
-            $table->string('suggestion_ta');
-            $table->string('suggestion_en');
+            $table->string('suggestion_si')->nullable();
+            $table->string('suggestion_ta')->nullable();
+            $table->string('suggestion_en')->nullable();
             $table->timestamps();
         });
     }

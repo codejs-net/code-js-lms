@@ -25,6 +25,12 @@ class CreateResourcesTable extends Migration
             $table->integer('cretor_id')->unsigned()->nullable();
             $table->foreign('cretor_id')->references('id')->on('resource_creators');
 
+            $table->integer('cretor2_id')->unsigned()->nullable();
+            $table->foreign('cretor2_id')->references('id')->on('resource_creators');
+
+            $table->integer('cretor3_id')->unsigned()->nullable();
+            $table->foreign('cretor3_id')->references('id')->on('resource_creators');
+
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('resource_categories');
 

@@ -542,14 +542,14 @@ class ReportController extends Controller
 //Start Survey Reports
     public function export_survey_temp(Request $request) 
     {
-        // try {
+        try {
             ini_set('memory_limit', '-1');
             ini_set('max_execution_time', '1200');
             return Excel::download(new Survey_tempExport($request), 'Survey.xlsx');
-        // }
-        // catch (\Exception $e) {
-        //     return redirect()->back()->with('error','Report Export Fail.');
-        // }
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('error','Report Export Fail.');
+        }
 
     }
 

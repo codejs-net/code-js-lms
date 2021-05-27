@@ -191,6 +191,14 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('survey_support_data-list')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('survey_suggestion.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Survey Support')}}</p>
+                                </a>
+                            </li>
+                            @endcan
                         </ul>
                     </li>
                     <!-- Codes -->

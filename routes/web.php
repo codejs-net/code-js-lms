@@ -19,6 +19,7 @@ use App\Http\Controllers\Resource_langController;
 use App\Http\Controllers\Resource_rackController;
 use App\Http\Controllers\Resource_floorController;
 use App\Http\Controllers\Resource_PublisherController;
+use App\Http\Controllers\Survey_suggestion_Controller;
 use App\Http\Controllers\SoapController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\LocalizationController;
@@ -180,6 +181,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     // --------Resource support/Donate--------------------------------
     Route::resource('resource_dd_donate', Resource_donateController::class);
+
+    // --------Survey support/suggestion--------------------------------
+    Route::resource('survey_suggestion', Survey_suggestion_Controller::class);
+    Route::post('update_survey_suggestion', [Survey_suggestion_Controller::class, 'update_detail'])->name('update_survey_suggestion');
+    Route::post('delete_survey_suggestion', [Survey_suggestion_Controller::class, 'delete'])->name('delete_survey_suggestion');
+    Route::post('import_survey_suggestion', [Survey_suggestion_Controller::class, 'import'])->name('import_survey_suggestion');
 
     //----------------------Lending----------------------------------
     Route::resource('lending', LendingController::class);

@@ -108,9 +108,9 @@ $category="category".$lang;
                      </div>
                  </div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset1"><i class="fa fa-times"></i> &nbsp;Clear</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous1" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_next" id="btn_next1" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset1"><i class="fa fa-times"></i> &nbsp;Clear</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous1" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_next" id="btn_next1" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
                 </div>   
             </form>
             <br><br>          
@@ -216,9 +216,9 @@ $category="category".$lang;
             </div>
             
             <div class="pull-right">
-                <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset2"><i class="fa fa-times"></i> &nbsp;Clear</button>
-                <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous2" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                <button type="button" class="btn btn-primary btn-md mr-2 btn_next" id="btn_next2" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
+                <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset2"><i class="fa fa-times"></i> &nbsp;Clear</button>
+                <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous2" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                <button type="button" class="btn btn-primary btn-sm mr-2 btn_next" id="btn_next2" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
             </div>   
             </form>
             <br><br>          
@@ -271,9 +271,9 @@ $category="category".$lang;
             </div>
 
                 <div class="pull-right">
-                    <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset3"><i class="fa fa-times"></i> &nbsp;Clear</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous3" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_next" id="btn_next3" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset3"><i class="fa fa-times"></i> &nbsp;Clear</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous3" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_next" id="btn_next3" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
                 </div>   
             </form>
             <br><br>          
@@ -320,9 +320,9 @@ $category="category".$lang;
                 </div>
 
                 <div class="pull-right">
-                    <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset_form"><i class="fa fa-window-restore"></i> &nbsp;Reset</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous4" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                    <button type="button" class="btn btn-success btn-md mr-2 toastrDefaultError toastsDefaultSuccess btn_submit" id="btn_submit" ><i class="fa fa-check"></i> &nbsp;Submit</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset_form"><i class="fa fa-window-restore"></i> &nbsp;Reset</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous4" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                    <button type="button" class="btn btn-success btn-sm mr-2 toastrDefaultError toastsDefaultSuccess btn_submit" id="btn_submit" ><i class="fa fa-check"></i> &nbsp;Submit</button>
                 </div>   
             </form>
             <br><br>          
