@@ -317,16 +317,23 @@ class ResourceController extends Controller
 
     public function edit($id)
     {
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+        $creator="name".$lang;
 
         $resouredata = resource::find($id);
         $categorydata=resource_category::all();
         $languagedata=resource_language::all();
         $publisherdata=resource_publisher::all();
-        $creatordata=resource_creator::all();
         $dd_classdata=resource_dd_class::all();
         $rackdata=resource_rack::all();
         $titledata=title::all();
         $genderdata=gender::all();
+
+        $cdata=resource_creator::select('id',$creator.' AS text')
+        ->whereIn('id',[ $resouredata->cretor_id, $resouredata->cretor2_id, $resouredata->cretor3_id])
+        ->get()
+        ->toArray();
 
         $loguser = User::where('id', Auth::user()->id)->first();
         $centerdata = center_allocation::where('staff_id', $loguser->detail_id)
@@ -336,13 +343,13 @@ class ResourceController extends Controller
         ->with(['rack','floor'])
         ->first();
 
-        // dd($placedata);
+        // dd($cdata);
         return view('resources.edit')
         ->with('cat_data',$categorydata)
         ->with('resouredata',$resouredata)
         ->with('lang_data',$languagedata)
         ->with('pub_data',$publisherdata)
-        ->with('creator_data',$creatordata)
+        ->with('creator_data',$cdata)
         ->with('tdata',$titledata)
         ->with('gedata',$genderdata)
         ->with('center_data',$centerdata)

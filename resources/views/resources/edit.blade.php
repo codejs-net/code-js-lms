@@ -132,11 +132,8 @@ $center="name".$lang;
                     </div>
                     <div class="form-group col-md-11">
                         <label for="authors">{{__('Creator')}}</label>
-                            <select class="form-control" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}"required>
+                            <select class="form-control" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}">
                                 <option value="" selected disabled>Choose here</option>
-                                @foreach($creator_data as $item)
-                                        <option value="{{ $item->id }}">{{ $item->$creator}}</option>
-                                @endforeach
                             </select>
                         <span class="text-danger">{{ $errors->first('authors') }}</span>
                     </div>
@@ -144,8 +141,12 @@ $center="name".$lang;
                         <label>&nbsp;</label></br>
                         <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#creator_create"><i class="fa fa-plus"></i></button>
                     </div>
-
-                    
+                </div>
+                <div class="row ml-2">
+                    <input type="hidden" name="creator1" id="creator1">
+                    <input type="hidden" name="creator2" id="creator2">
+                    <input type="hidden" name="creator3" id="creator3">
+                    <span id="crlist"></span>
                 </div>
                 <hr>
                 <div class="form-row">
@@ -367,15 +368,41 @@ $center="name".$lang;
 
 @section('script')
 <script>
-$("#book_aNo").change(function(){
-    $("#code_view_bq").html("");
-    var assenNO = $("#book_aNo").val();
-    $("#code_view_bq").html(' <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('code-js', 'C128',1,60,array(0,0,0), true)}}" alt="barcode" />');
-   
-  });
+
+var creator_list=[];
+function creator_select2()
+  {
+    $("#resource_creator").select2({
+        theme: 'bootstrap4',
+        placeholder: 'search',
+
+        ajax: {
+            url: "{{route('load_creator')}}",
+            type: "get",
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    term: params.term,
+                    page: params.page || 1,
+                };
+            },
+            processResults: function(data, params) {
+                return {
+                results: data.results,
+                pagination: { 
+                    more: true
+                    }
+                };
+            }, 
+            cache: true,           
+            },
+        });
+
+    }
 
 $(document).ready(function()
 {
+    creator_select2();
 
     $('#resoure_category').val("{{$resouredata->category_id}}");
     $('#resource_dd_class').val("{{$resouredata->dd_class_id}}");
@@ -403,7 +430,12 @@ $(document).ready(function()
     $('#resource_title_si').val("{{$resouredata->title_si}}");
     $('#resource_title_ta').val("{{$resouredata->title_ta}}");
     $('#resource_title_en').val("{{$resouredata->title_en}}");
-    $('#resource_creator').val("{{$resouredata->cretor_id}}");
+
+    $('#creator1').val("{{$resouredata->cretor_id}}");
+    $('#creator2').val("{{$resouredata->cretor2_id}}");
+    $('#creator3').val("{{$resouredata->cretor3_id}}");
+    $('#resource_creator').val("{{$resouredata->cretor_id}}").trigger('change');
+
     $('#resource_publisher').val("{{$resouredata->publisher_id}}");
     $('#resource_language').val("{{$resouredata->language_id}}");
     $('#resource_ddc').val("{{$resouredata->ddc}}");
@@ -418,9 +450,15 @@ $(document).ready(function()
     $('#resource_note_en').val("{{$resouredata->note_en}}");
     $('#resource_center').val("{{$resouredata->center_id}}");
 
-    $('#resource_creator').select2({
-    theme: 'bootstrap4',
-    });
+    var cdata = @json($creator_data);
+    cdata_length=cdata.length;
+    for (i = 0; i < cdata_length; i++)
+    {
+        cid=cdata[i].id;
+        cname=cdata[i].text;
+        select_creator(cid.toString(),cname.toString());   
+    }
+    
 
     @if($locale=="si")
     $("#resource_title_si").prop('required',true);
@@ -451,6 +489,85 @@ $(document).ready(function()
         @endif
     });
 
+    $('#resource_creator').on('select2:select', function (e) {
+        var cid= $('#resource_creator :selected').val();
+        var cname= $('#resource_creator :selected').text();
+        select_creator(cid,cname);
+    });
+
+    $('#resource_creator').val(creator_list[creator_list.length-1]);
+    $('#resource_creator').val(creator_list[creator_list.length-1]).trigger("change");
+  
+});
+
+// $(window).on('load', function(){
+//     console.log(creator_list);
+   
+//     $('#resource_creator').val(creator_list[creator_list.length-1]).trigger('change');
+// });
+
+function select_creator(cid,cname){
+        var excist=false;
+        var list_length=creator_list.length;
+        if(list_length<3){
+            for (i = 0; i < list_length; i++)
+            {
+                if(cid==creator_list[i]){excist=true;}
+            }
+            if(excist==false)
+            {
+                var op='';
+                op+='<span class="badge badge-pill badge-primary mx-1 select-list">';
+                op+= cname;
+                op+='<button type="button" class="close" value="'+cid+'"><span aria-hidden="true">&times;</span></button>';
+                op+='</span>';
+                $('#crlist').append(op);
+                creator_list.push(cid);
+                // console.log(creator_list);
+            }
+        }
+        else if(list_length>=3)
+        {
+            var op='';
+            var cid='more';
+            op+='<span class="badge badge-pill text-primary mx-1 select-list list-more">';
+            op+= '{{trans("more...")}}';
+            op+='<button type="button" class="close" value="'+cid+'"><span aria-hidden="true">&times;</span></button>';
+            op+='</span>';
+            $('#crlist').append(op);
+            creator_list.push(cid);
+            $('#resource_creator').val('').trigger('change');
+            $('#resource_creator').prop('disabled', true);
+        }
+      
+}
+
+$(document).on("click", ".close", function()
+{
+    var cid= $(this).val();
+    var more=false;
+    var list_length=creator_list.length;
+    for (i = 0; i < list_length; i++)
+    {
+        if('more'==creator_list[i])
+        { 
+            creator_list.splice( $.inArray('more', creator_list), 1 );
+        }
+    }
+
+    for (i = 0; i < list_length; i++)
+    {
+        if(cid==creator_list[i])
+        {
+            creator_list.splice( $.inArray(cid, creator_list), 1 ); 
+            
+        }
+    }
+    $('#resource_creator').val(creator_list[creator_list.length-1]).trigger('change');
+    $('#resource_creator').prop('disabled', false);
+    
+    $(this).closest('.select-list').fadeOut();
+    $('.list-more').fadeOut();
 });
 
 //--------------------------creator create-----------------------------
@@ -499,6 +616,7 @@ $('#creator_form').on('submit', function(event){
 
 
 $('#btn_newpublisher').on('click', function() {
+
     $("#modal_feild").html("Publisher")
     $("#modal_route").val("{{route('resource_publisher.store')}}")
     $("#inputname").val("#resource_publisher")
@@ -555,6 +673,7 @@ $('#modal_form').on('submit', function(event){
 
 $("#check_place").change(function(){
     // $("#resoure_placement_div").toggle();
+   
     if($("#check_place").prop("checked") == true)
     {
         $("#place_rack").prop('required',false);
