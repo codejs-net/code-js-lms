@@ -121,6 +121,7 @@ $center="name".$lang;
                         <label for="accessionNo">{{__('Accession Number')}}</label>
                         <input type="text" class="form-control" id="resoure_accession" name="resoure_accession" value="{{old('resoure_accession')}}" placeholder="Accession Number:" required>
                         <span class="text-danger validator-error" id="resoure_accession_error">{{ $errors->first('resoure_accession') }}</span>
+                        <span id="code_view_bq"></span>
                     </div>
                     
                 </div>
@@ -342,7 +343,9 @@ $center="name".$lang;
                 <i class="fa fa-times"></i> {{__('Reset')}}</button>
                 &nbsp; &nbsp;
                 <button type="submit" class="btn btn-sm btn-success" value="Save" id="save_resource" >
-                <i class="fa fa-floppy-o"></i> {{__('Save')}}</button>
+                    <span class="loader-before"><i class="fa fa-floppy-o"></i></span>
+                    <span class="spinner-border spinner-border-sm text-white loader-after" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; {{__('Save')}}
+                </button>
             </div>   
             </form>
                         
@@ -401,61 +404,46 @@ $center="name".$lang;
 
 @section('script')
 <script>
-$("#book_aNo").change(function(){
-    $("#code_view_bq").html("");
-    var assenNO = $("#book_aNo").val();
-    $("#code_view_bq").html(' <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('code-js', 'C128',1,60,array(0,0,0), true)}}" alt="barcode" />');
+// $("#resoure_accession").change(function(){
+//     $("#code_view_bq").html("");
+//     var assenNO = $("#resoure_accession").val();
+//     $("#code_view_bq").html(' <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('+assenNO+', 'C128',1,60,array(0,0,0), true)}}" alt="barcode" />');
    
-  });
+//   });
   var creator_list=[];
-  
- 
-
-  function load_creator()
+  function creator_select2()
   {
-    $.ajax
-    ({
-        url: "{{route('load_creator')}}",
-        type: "get",
-        dataType: 'json',
-        async:false,
-        success: function (data) {
-            creator_list=data;
-        },
-        cache: true
-    })
-    // console.log(creator_list);
-    return creator_list;
-  }
+    $("#resource_creator").select2({
+        theme: 'bootstrap4',
+        placeholder: 'search',
 
-  $(document).ready(function()
-    {
-        $("#resource_creator").select2({
-            theme: 'bootstrap4',
-            placeholder: 'search',
-            
-            ajax: {
-                url: "{{route('load_creator')}}",
-                type: "get",
-                dataType: 'json',
-                data: function (params) {
-                    return {
-                        term: params.term,
-                        page: params.page || 1,
-                    };
-                },
-                processResults: function(data, params) {
-                    return {
-                    results: data.results,
-                    pagination: { 
-                        more: true
-                        }
-                    };
-                }, 
-                cache: true,           
+        ajax: {
+            url: "{{route('load_creator')}}",
+            type: "get",
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    term: params.term,
+                    page: params.page || 1,
+                };
+            },
+            processResults: function(data, params) {
+                return {
+                results: data.results,
+                pagination: { 
+                    more: true
+                    }
+                };
+            }, 
+            cache: true,           
             },
         });
 
+    }
+
+  $(document).ready(function()
+    {
+        creator_select2();
         
         @if($locale=="si")
         $("#resource_title_si").prop('required',true);
@@ -464,12 +452,6 @@ $("#book_aNo").change(function(){
         @elseif($locale=="en")
         $("#resource_title_en").prop('required',true);
         @endif
-
-        // $('#resource_creator').select2({
-        // theme: 'bootstrap4',
-        // });
-
-        
 
         $('#creator_create').on('show.bs.modal', function (event) {
        
@@ -544,7 +526,9 @@ $("#book_aNo").change(function(){
         for (i = 0; i < list_length; i++)
         {
             if('more'==creator_list[i])
-            { creator_list.splice( $.inArray('more', creator_list), 1 );}
+            { 
+                creator_list.splice( $.inArray('more', creator_list), 1 );
+            }
         }
     
         for (i = 0; i < list_length; i++)
@@ -552,17 +536,23 @@ $("#book_aNo").change(function(){
             if(cid==creator_list[i])
             {
                 creator_list.splice( $.inArray(cid, creator_list), 1 ); 
+               
             }
         }
-        
+        $('#resource_creator').val(creator_list[creator_list.length-1]).trigger('change');
         $('#resource_creator').prop('disabled', false);
-        $('#resource_creator').val('').trigger('change');
+      
         $(this).closest('.select-list').fadeOut();
         $('.list-more').fadeOut();
     });
 // -------------------------save resource----------------------------------
     $('#resource_save').on('submit', function(event){
         event.preventDefault();
+      
+        $('#creator1').val((creator_list[0])?creator_list[0]:null);
+        $('#creator2').val((creator_list[1])?creator_list[1]:null);
+        $('#creator3').val((creator_list[2])?creator_list[2]:null);
+
         var formData = new FormData(this);
         $.ajax
         ({
@@ -575,7 +565,8 @@ $("#book_aNo").change(function(){
                 processData: false,
 
             beforeSend: function(){
-                //    $("#loader").show();
+                   $(".loader-before").hide();
+                   $(".loader-after").show();
             },
 
             success:function(data){
@@ -596,7 +587,8 @@ $("#book_aNo").change(function(){
                 toastr.error('Resource Created faild Plese try again')
             },
             complete:function(data){
-                //    $("#loader").hide();
+                $(".loader-before").show();
+                $(".loader-after").hide();
             }
         })
         

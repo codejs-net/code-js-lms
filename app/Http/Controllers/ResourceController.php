@@ -159,33 +159,16 @@ class ResourceController extends Controller
         $creator="name".$lang;
 
         $page= $request->page;
-        $resultCount = 10;  
+        $resultCount = 100;  
         $end = ($page - 1) * $resultCount;       
         $start = $end + $resultCount;
 
-
-        // $cdata=resource_creator::select('id',$creator.' AS text')
-        // ->where( $creator,'LIKE','%'.$request->term.'%')
-        // ->skip($end)
-        // ->take($resultCount)
-        // ->get();
-
-         $cdata=resource_creator::select('id',$creator.' AS text')
+        $cdata=resource_creator::select('id',$creator.' AS text')
         ->where( $creator,'LIKE','%'.$request->term.'%')
         ->skip($end)->take($resultCount)
         ->get();
 
         $count = $cdata->count();
-        // $endCount = $offset + $resultCount;
-        // $morePages = $endCount > $count;
-
-        // $results = array(
-        //     "results" => $cdata,
-        //     "pagination" => array(
-        //       "more" => $morePages
-        //     )
-        //   );
-
         $results = array(
             "results" => $cdata,
             "total_count" => $count
@@ -284,7 +267,9 @@ class ResourceController extends Controller
             $res->title_si          =  ($request->resource_title_si==null)?'':$request->resource_title_si;
             $res->title_ta          =  ($request->resource_title_ta==null)?'':$request->resource_title_ta;
             $res->title_en          =  ($request->resource_title_en==null)?'':$request->resource_title_en;
-            $res->cretor_id         =  $request->resource_creator;
+            $res->cretor_id         =  $request->creator1;
+            $res->cretor2_id        =  $request->creator2;
+            $res->cretor3_id        =  $request->creator3;
             $res->category_id       =  $request->resoure_category;
             $res->type_id           =  $request->resoure_type;
             $res->dd_class_id       =  $request->resource_dd_class;
