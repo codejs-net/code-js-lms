@@ -19,6 +19,8 @@ $title="title".$lang;
 $gender="gender".$lang;
 $rack="rack".$lang;
 $center="name".$lang;
+// $creator_array=$creatr_data->toArray();
+// $creator_array = json_decode($creatr_data, true);
 
 @endphp
 
@@ -137,18 +139,20 @@ $center="name".$lang;
                         <label for="authors">{{__('Creator')}}</label>
                             <select class="form-control" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}"required>
                                 <option value="" selected disabled>{{__('Choose here')}}</option>
-                                @foreach($creator_data as $item)
-                                        <option value="{{ $item->id }}">{{ $item->$creator}}</option>
-                                @endforeach
+                               
                             </select>
                         <span class="text-danger">{{ $errors->first('authors') }}</span>
                     </div>
                     <div class="form-group col-md-1">
                         <label>&nbsp;</label></br>
                         <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#creator_create"><i class="fa fa-plus"></i></button>
-                    </div>
-
-                    
+                    </div> 
+                </div>
+                <div class="row ml-2">
+                    <input type="hidden" name="creator1" id="creator1">
+                    <input type="hidden" name="creator2" id="creator2">
+                    <input type="hidden" name="creator3" id="creator3">
+                    <span id="crlist"></span>
                 </div>
                 <hr>
                 <div class="form-row">
@@ -403,9 +407,55 @@ $("#book_aNo").change(function(){
     $("#code_view_bq").html(' <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('code-js', 'C128',1,60,array(0,0,0), true)}}" alt="barcode" />');
    
   });
+  var creator_list=[];
+  
+ 
+
+  function load_creator()
+  {
+    $.ajax
+    ({
+        url: "{{route('load_creator')}}",
+        type: "get",
+        dataType: 'json',
+        async:false,
+        success: function (data) {
+            creator_list=data;
+        },
+        cache: true
+    })
+    // console.log(creator_list);
+    return creator_list;
+  }
 
   $(document).ready(function()
     {
+        $("#resource_creator").select2({
+            theme: 'bootstrap4',
+            placeholder: 'search',
+            
+            ajax: {
+                url: "{{route('load_creator')}}",
+                type: "get",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        term: params.term,
+                        page: params.page || 1,
+                    };
+                },
+                processResults: function(data, params) {
+                    return {
+                    results: data.results,
+                    pagination: { 
+                        more: true
+                        }
+                    };
+                }, 
+                cache: true,           
+            },
+        });
+
         
         @if($locale=="si")
         $("#resource_title_si").prop('required',true);
@@ -415,9 +465,11 @@ $("#book_aNo").change(function(){
         $("#resource_title_en").prop('required',true);
         @endif
 
-        $('#resource_creator').select2({
-        theme: 'bootstrap4',
-        });
+        // $('#resource_creator').select2({
+        // theme: 'bootstrap4',
+        // });
+
+        
 
         $('#creator_create').on('show.bs.modal', function (event) {
        
@@ -441,49 +493,114 @@ $("#book_aNo").change(function(){
             @endif
         });
 
+        $('#resource_creator').on('select2:select', function (e) {
+            var cid= $('#resource_creator :selected').val();
+            var cname= $('#resource_creator :selected').text();
+            select_creator(cid,cname);
+        });
+
     });
 
+    function select_creator(cid,cname){
+        var excist=false;
+        var list_length=creator_list.length;
+        if(list_length<3){
+            for (i = 0; i < list_length; i++)
+            {
+                if(cid==creator_list[i]){excist=true;}
+            }
+            if(excist==false)
+            {
+                var op='';
+                op+='<span class="badge badge-pill badge-primary mx-1 select-list">';
+                op+= cname;
+                op+='<button type="button" class="close" value="'+cid+'"><span aria-hidden="true">&times;</span></button>';
+                op+='</span>';
+                $('#crlist').append(op);
+                creator_list.push(cid);
+            }
+        }
+        else if(list_length>=3)
+        {
+            var op='';
+            var cid='more';
+            op+='<span class="badge badge-pill text-primary mx-1 select-list list-more">';
+            op+= '{{trans("more...")}}';
+            op+='<button type="button" class="close" value="'+cid+'"><span aria-hidden="true">&times;</span></button>';
+            op+='</span>';
+            $('#crlist').append(op);
+            creator_list.push(cid);
+            $('#resource_creator').val('').trigger('change');
+            $('#resource_creator').prop('disabled', true);
+        }
+      
+    }
+
+    $(document).on("click", ".close", function()
+    {
+        var cid= $(this).val();
+        var more=false;
+        var list_length=creator_list.length;
+        for (i = 0; i < list_length; i++)
+        {
+            if('more'==creator_list[i])
+            { creator_list.splice( $.inArray('more', creator_list), 1 );}
+        }
+    
+        for (i = 0; i < list_length; i++)
+        {
+            if(cid==creator_list[i])
+            {
+                creator_list.splice( $.inArray(cid, creator_list), 1 ); 
+            }
+        }
+        
+        $('#resource_creator').prop('disabled', false);
+        $('#resource_creator').val('').trigger('change');
+        $(this).closest('.select-list').fadeOut();
+        $('.list-more').fadeOut();
+    });
 // -------------------------save resource----------------------------------
-$('#resource_save').on('submit', function(event){
-    event.preventDefault();
-    var formData = new FormData(this);
-    $.ajax
-       ({
-            type: "POST",
-            dataType : 'json',
-            url: "{{ route('resource.store') }}", 
-            data: formData,
-            contentType: false,
-            cache: false,
-            processData: false,
+    $('#resource_save').on('submit', function(event){
+        event.preventDefault();
+        var formData = new FormData(this);
+        $.ajax
+        ({
+                type: "POST",
+                dataType : 'json',
+                url: "{{ route('resource.store') }}", 
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
 
-           beforeSend: function(){
-            //    $("#loader").show();
-           },
+            beforeSend: function(){
+                //    $("#loader").show();
+            },
 
-           success:function(data){
-            console.log(data.error);
-            if($.isEmptyObject(data.error)){
-                toastr.success('Resource Created Successfully')
-                $("#resource_save").trigger("reset");
-                $("#resource_save").removeClass( "was-validated" ).addClass( "needs-validation" );
-                $("#resource_creator").val('');
-                $(".validator-error").html('')
+            success:function(data){
+                console.log(data.error);
+                if($.isEmptyObject(data.error)){
+                    toastr.success('Resource Created Successfully')
+                    $("#resource_save").trigger("reset");
+                    $("#resource_save").removeClass( "was-validated" ).addClass( "needs-validation" );
+                    $("#resource_creator").val('');
+                    $(".validator-error").html('')
+                }
+                else{
+                    toastr.warning('Validation Error Plese Check again');
+                    $('#resoure_accession_error').html(data.error.resoure_accession);
+                }
+            },
+            error:function(data){
+                toastr.error('Resource Created faild Plese try again')
+            },
+            complete:function(data){
+                //    $("#loader").hide();
             }
-            else{
-                toastr.warning('Validation Error Plese Check again');
-                $('#resoure_accession_error').html(data.error.resoure_accession);
-            }
-           },
-           error:function(data){
-               toastr.error('Resource Created faild Plese try again')
-           },
-           complete:function(data){
-            //    $("#loader").hide();
-           }
-       })
-       
-});
+        })
+        
+    });
 //--------------------------end resource Save--------------------------
 
 //--------------------------creator create-----------------------------
@@ -504,6 +621,7 @@ $('#creator_form').on('submit', function(event){
         },
         success:function(data){
             toastr.info('Creator Added Successfully')
+            op+='<option value="" selected disabled>{{trans('Choose here')}}</option>';
             for(var i=0;i<data.data.length;i++)
             {
                 op+='<option value="'+data.data[i].id+'">'+ 
@@ -517,6 +635,9 @@ $('#creator_form').on('submit', function(event){
             .empty()
             .append(op)
             .val(data.dataid);
+            var cid= $('#resource_creator :selected').val();
+            var cname= $('#resource_creator :selected').text();
+            select_creator(cid,cname);
             $("#creator_form").trigger("reset");
             $('#creator_create').modal('hide');
         },

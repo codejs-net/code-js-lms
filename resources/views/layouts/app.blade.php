@@ -49,6 +49,10 @@
     <!-- select2 -->
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2-bootstrap4.min.css') }}">
+
+    {{-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" /> --}}
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     {{-- <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet"> --}}
@@ -208,7 +212,10 @@
 
     <!-- select2 -->
     <script src="{{ asset('plugins/select2/js/select2.min.js') }}"defer></script>
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"defer></script>
     
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.js"defer></script> --}}
     <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)
     </script> -->

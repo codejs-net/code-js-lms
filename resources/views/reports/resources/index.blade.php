@@ -98,9 +98,7 @@ $dd_section="section".$lang;
         <span for="" class="ml-3 mt-1">Filter By</span>
        {{-- ------------- --}}
        <span id="ftag"></span>
-        {{-- <span class="badge badge-pill badge-info tag">Center
-            <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
-        </span> --}}
+      
         {{-- ------------- --}}
         <div class="col-md-12 p-3">
         <div class="js-filter-box elevation-2">

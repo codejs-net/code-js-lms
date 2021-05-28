@@ -151,6 +151,48 @@ class ResourceController extends Controller
         $data=resource_rack::all();
         return response()->json($data);
     }
+    
+    public function load_creator(Request $request)
+    {
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+        $creator="name".$lang;
+
+        $page= $request->page;
+        $resultCount = 10;  
+        $end = ($page - 1) * $resultCount;       
+        $start = $end + $resultCount;
+
+
+        // $cdata=resource_creator::select('id',$creator.' AS text')
+        // ->where( $creator,'LIKE','%'.$request->term.'%')
+        // ->skip($end)
+        // ->take($resultCount)
+        // ->get();
+
+         $cdata=resource_creator::select('id',$creator.' AS text')
+        ->where( $creator,'LIKE','%'.$request->term.'%')
+        ->skip($end)->take($resultCount)
+        ->get();
+
+        $count = $cdata->count();
+        // $endCount = $offset + $resultCount;
+        // $morePages = $endCount > $count;
+
+        // $results = array(
+        //     "results" => $cdata,
+        //     "pagination" => array(
+        //       "more" => $morePages
+        //     )
+        //   );
+
+        $results = array(
+            "results" => $cdata,
+            "total_count" => $count
+          );
+        return response()->json($results);
+    }
+
     public function load_floor(Request $request)
     {
         $data = resource_floor::where('rack_id',$request->rack)->get();
@@ -186,13 +228,14 @@ class ResourceController extends Controller
 
     public function create()
     {
-        // $locale = session()->get('locale');
-        // $lang="_".$locale;
+        $locale = session()->get('locale');
+        $lang="_".$locale;
+        $creator="name".$lang;
 
         $categorydata=resource_category::all();
         $languagedata=resource_language::all();
         $publisherdata=resource_publisher::all();
-        $creatordata=resource_creator::all();
+        // $creatordata=resource_creator::select('id',$creator.' AS text')->get();
         $dd_classdata=resource_dd_class::all();
         $titledata=title::all();
         $genderdata=gender::all();
@@ -208,7 +251,7 @@ class ResourceController extends Controller
             ->with('lang_data',$languagedata)
             ->with('pub_data',$publisherdata)
             ->with('dd_class_data',$dd_classdata)
-            ->with('creator_data',$creatordata)
+            // ->with('creatr_data',$_creatordata)
             ->with('tdata',$titledata)
             ->with('gedata',$genderdata)
             ->with('rdata',$rackdata)
