@@ -135,7 +135,7 @@ $center="name".$lang;
                             <select class="form-control" id="resource_creator" name="resource_creator" value="{{old('resource_creator')}}">
                                 <option value="" selected disabled>Choose here</option>
                             </select>
-                        <span class="text-danger">{{ $errors->first('authors') }}</span>
+                        <span class="text-danger" id="error_creator">{{ $errors->first('authors') }}</span>
                     </div>
                     <div class="form-group col-md-1">
                         <label>&nbsp;</label></br>
@@ -146,6 +146,7 @@ $center="name".$lang;
                     <input type="hidden" name="creator1" id="creator1">
                     <input type="hidden" name="creator2" id="creator2">
                     <input type="hidden" name="creator3" id="creator3">
+                    <input type="hidden" name="creator_more" id="creator_more">
                     <span id="crlist"></span>
                 </div>
                 <hr>
@@ -451,12 +452,26 @@ $(document).ready(function()
     $('#resource_center').val("{{$resouredata->center_id}}");
 
     var cdata = @json($creator_data);
+    var cdata_more = @json($resouredata->cretor_more);
     cdata_length=cdata.length;
     for (i = 0; i < cdata_length; i++)
     {
         cid=cdata[i].id;
         cname=cdata[i].text;
         select_creator(cid.toString(),cname.toString());   
+    }
+    
+    if(cdata_more=="1"){
+        var op='';
+        var cid='more';
+        op+='<span class="badge badge-pill text-primary mx-1 select-list list-more">';
+        op+= '{{trans("more...")}}';
+        op+='<button type="button" class="close" value="'+cid+'"><span aria-hidden="true">&times;</span></button>';
+        op+='</span>';
+        $('#crlist').append(op);
+        creator_list.push(cid);
+        $('#resource_creator').val('').trigger('change');
+        $('#resource_creator').prop('disabled', true);
     }
     
 
@@ -505,6 +520,22 @@ $(document).ready(function()
    
 //     $('#resource_creator').val(creator_list[creator_list.length-1]).trigger('change');
 // });
+
+$('#resource_save').on('submit', function(event){
+    if(creator_list.length==0){
+        event.preventDefault();
+        toastr.warning("Select at least one Creator/Author");
+        // $('#error_creator').html("Select at least one Creator/Author")
+    }
+    else{
+        $('#creator1').val((creator_list[0])?creator_list[0]:null);
+        $('#creator2').val((creator_list[1])?creator_list[1]:null);
+        $('#creator3').val((creator_list[2])?creator_list[2]:null);
+        $('#creator_more').val((creator_list[3])?1:0);
+    }
+   
+  
+});
 
 function select_creator(cid,cname){
         var excist=false;

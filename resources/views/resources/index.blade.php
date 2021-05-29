@@ -98,7 +98,7 @@ $dd_section="section".$lang;
     <div class="card card-body">
             <div class="form-row">   
             <div class="table-responsive"style="overflow-x: auto;">               
-            <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
+            <table  class="table display wrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
                             <th scope="col">{{__('Resource ID')}}</th>
@@ -106,7 +106,7 @@ $dd_section="section".$lang;
                             <th scope="col">{{__('Accession No')}}</th>
                             <!-- <th scope="col">ISBN/ISSN</th> -->
                             <th scope="col"style="width: 20%">{{__('Resource Title')}}</th>
-                            <th scope="col"style="width: 15%">{{__('Creator')}}</th>
+                            <th scope="col"style="width: 20%;">{{__('Creator/Author')}}</th>
                             <th scope="col">{{__('DDC')}}</th>
                             <!-- <th scope="col">Publisher</th> -->
                             <!-- <th scope="col">Price</th> -->
@@ -114,7 +114,7 @@ $dd_section="section".$lang;
                             <th scope="col"style="width: 10%">{{__('Action')}}</th>
                         </tr>
                     </thead>
-                    <tbody>  
+                    <tbody class="tbody_resource_main">  
                     <!-- @push('scripts')
                     
                     @endpush -->
@@ -359,7 +359,7 @@ function load_datatable(catdata,centerdata,typedata)
         {data: "accessionNo",name: "AccessionNo",orderable: true},
         // {data: "standard_number",name: "standard_number",orderable: true},
         {data: "title<?php echo $lang; ?>",name: "title"},
-        {data: "name<?php echo $lang; ?>",name: "creator"},
+        {data: "creator",name: "creator"},
         {data: "ddc",name: "ddc",orderable: true},
         // {data: "publisher",name: "publisher",orderable: false},
         // {data: "price",name: "price",orderable: true},

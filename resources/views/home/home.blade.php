@@ -277,8 +277,8 @@ $(document).ready(function()
         url: "{{route('latast_lending')}}", 
 
         success:function(data){
-            // console.log(data);
-            for(var i=0;i<4;i++)
+            console.log(data.issue.length);
+            for(var i=0;i< data.issue.length;i++)
             {
                 op+= '<div class="card card-notify">';
                 op+= '<div class="card-header card-notify-header1 px-2 py-1">';
@@ -291,7 +291,7 @@ $(document).ready(function()
                 op+= '</div></div>';                  
             }
             op+= '<div class="notification-separate"></div>';   
-           for(var j=0;j<4;j++)
+           for(var j=0;j<data.return.length;j++)
            {
                 op+= '<div class="card card-notify">';
                 op+= '<div class="card-header card-notify-header1 px-2 py-1">';

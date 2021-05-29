@@ -39,6 +39,7 @@ class CreateResourceView extends Migration
                         resources.cretor_id,
                         resources.cretor2_id,
                         resources.cretor3_id,
+                        resources.cretor_more,
                         resources.center_id,
                         resources.publisher_id,
                         resources.image,

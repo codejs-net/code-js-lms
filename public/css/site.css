@@ -47,6 +47,9 @@
         margin-bottom:10px;
         opacity: 0.4;
     }
+    /* .tbody_resource_main td{
+        word-wrap: break-word;
+    } */
    
     @keyframes growDown {
         0% {

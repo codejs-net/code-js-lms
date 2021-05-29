@@ -153,6 +153,7 @@ $center="name".$lang;
                     <input type="hidden" name="creator1" id="creator1">
                     <input type="hidden" name="creator2" id="creator2">
                     <input type="hidden" name="creator3" id="creator3">
+                    <input type="hidden" name="creator_more" id="creator_more">
                     <span id="crlist"></span>
                 </div>
                 <hr>
@@ -552,6 +553,7 @@ $center="name".$lang;
         $('#creator1').val((creator_list[0])?creator_list[0]:null);
         $('#creator2').val((creator_list[1])?creator_list[1]:null);
         $('#creator3').val((creator_list[2])?creator_list[2]:null);
+        $('#creator_more').val((creator_list[3])?1:0);
 
         var formData = new FormData(this);
         $.ajax
@@ -576,7 +578,9 @@ $center="name".$lang;
                     $("#resource_save").trigger("reset");
                     $("#resource_save").removeClass( "was-validated" ).addClass( "needs-validation" );
                     $("#resource_creator").val('');
-                    $(".validator-error").html('')
+                    $(".validator-error").html('');
+                    $("#crlist").html('');
+                    $('#resource_creator').val('').trigger('change');
                 }
                 else{
                     toastr.warning('Validation Error Plese Check again');

@@ -49,19 +49,10 @@ class ResourceController extends Controller
 
     public function index(Request $request)
     {
-        // dd($request->dta);
-        // error_log($request->centerdata);
+
         $locale = session()->get('locale');
         $setting = setting::where('setting','locale_db')->first();
-
-        if($setting->value=="0")
-        {
-            $lang="_".$locale;
-        }
-        else
-        {
-            $lang="_".$setting->value;
-        }
+        $lang=($setting->value=="0")?"_".$locale:"_".$setting->value;
         Session::put('db_locale', $lang);
         
         $resource_title="title".$lang;
@@ -75,6 +66,7 @@ class ResourceController extends Controller
 
             if(request()->ajax())
             {
+               
                 $catg="";
                 $type="";
                 $cent= $request->centerdata;
@@ -123,8 +115,20 @@ class ResourceController extends Controller
                             return  $images;
                             
                         })
+                        ->addColumn('creator', function ($data) {
+                            $lang = session()->get('db_locale');
+                            $crtor1="name".$lang;
+                            $crtor2="name2".$lang;
+                            $crtor3="name3".$lang;
+                            $creator=$data->$crtor1;
+                            $creator.=($data->cretor2_id !=null)?",\r\n".$data->$crtor2:"";
+                            $creator.=($data->cretor3_id !=null)?",\r\n".$data->$crtor3:"";
+                            $creator.=($data->cretor_more =="1")?",\r\n".trans('more...'):"";
+                           
+                            return  $creator;  
+                        })
 
-                        ->rawColumns(['action','status','images'])
+                        ->rawColumns(['action','status','images','creator'])
                         ->make(true);
                         
             }
@@ -270,6 +274,7 @@ class ResourceController extends Controller
             $res->cretor_id         =  $request->creator1;
             $res->cretor2_id        =  $request->creator2;
             $res->cretor3_id        =  $request->creator3;
+            $res->cretor_more       =  $request->creator_more;
             $res->category_id       =  $request->resoure_category;
             $res->type_id           =  $request->resoure_type;
             $res->dd_class_id       =  $request->resource_dd_class;
@@ -392,7 +397,10 @@ class ResourceController extends Controller
         $res->title_si          =  ($request->resource_title_si==null)?'':$request->resource_title_si;
         $res->title_ta          =  ($request->resource_title_ta==null)?'':$request->resource_title_ta;
         $res->title_en          =  ($request->resource_title_en==null)?'':$request->resource_title_en;
-        $res->cretor_id         =  $request->resource_creator;
+        $res->cretor_id         =  $request->creator1;
+        $res->cretor2_id        =  $request->creator2;
+        $res->cretor3_id        =  $request->creator3;
+        $res->cretor_more       =  $request->creator_more;
         $res->category_id       =  $request->resoure_category;
         $res->type_id           =  $request->resoure_type;
         $res->dd_class_id       =  $request->resource_dd_class;
