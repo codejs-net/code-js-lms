@@ -12,7 +12,9 @@ $type="type".$lang;
 $center="name".$lang;
 $publisher="publisher".$lang;
 $title="title".$lang;
-$creator="name".$lang;
+$creator1="name".$lang;
+$creator2="name2".$lang;
+$creator3="name3".$lang;
 $language="language".$lang;
 $dd_class="class".$lang;
 $dd_devision="devision".$lang;
@@ -135,6 +137,8 @@ $dd_section="section".$lang;
                   <th style="width: 25%;">Title</th>
                   <th style="width: 20%;">Creator</th>
                   <th>Publisher</th>
+                  <th>Price</th>
+                  <th>Physical</th>
                   <th>DDC</th>
               </tr>
       </thead>
@@ -145,8 +149,15 @@ $dd_section="section".$lang;
                   <td>{{ $value->accessionNo}}</td>
                   <td>{{ $value->$type}}</td>
                   <td>{{ $value->$title}}</td>
-                  <td>{{ $value->$creator}}</td>  
-                  <td>{{ $value->$publisher}}</td>  
+                  <td>
+                        {{$value->$creator1}}
+                        {{($value->cretor2_id !=null)?",\r\n".$value->$creator2:""}}
+                        {{($value->cretor3_id !=null)?",\r\n".$value->$creator3:""}}
+                        {{($value->cretor_more =="1")?",\r\n".trans('more...'):""}}
+                  </td>
+                  <td>{{ $value->$publisher}}</td> 
+                  <td>{{ $value->price}}</td>  
+                  <td>{{ $value->phydetails}}</td> 
                   <td>{{ $value->ddc}}</td>
             </tr>
 	    @endforeach

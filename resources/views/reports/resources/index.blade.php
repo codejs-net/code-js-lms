@@ -7,7 +7,9 @@
 $locale = session()->get('locale');
 $lang="_".$locale;
 $category="category".$lang;
+$type="type".$lang;
 $center="name".$lang;
+$center_indix="center".$lang;
 $publisher="publisher".$lang;
 $title="title".$lang;
 $creator="name".$lang;
@@ -27,7 +29,7 @@ $dd_section="section".$lang;
 
 <div class="row mb-2">
     <div class="col-md-12 col-sm-12 ml-3 text-left"> 
-        <h5> <i class="fa fa-file-text">&nbsp;Range Resource Report</i></h5>
+        <h5> <i class="fa fa-file-text">&nbsp;Indexing Resource Report</i></h5>
     </div>  
 </div> 
 
@@ -36,10 +38,40 @@ $dd_section="section".$lang;
     <div class="row">
         <div class="col-md-9 pl-4 pr-4">
             <div class="row pl-4 pt-3">
-                <label>Provide Resource Range to Genarate Report (example: 1-1000)</label>
+                <label>Provide Order and Resource Range to Genarate Report (example: 1-1000)</label>
             </div>
             <div class="row pl-3">
-                <div class="col-sm-12 col-md-6 text-center">
+                <div class="col-md-4 col-sm-4 text-left">
+                    <div class="form-group js-select-box">
+                        <div class="ml-2 mr-2 fdiv">
+                            <span for="indexing" class="">Order By</span>
+                            <select class="form-control form-control-sm mb-3"name="select_indexing" id="select_indexing">
+                                <option value="id" selected>ID</option>
+                                <option value="accessionNo">Accession Number</option>
+                                <option value="standard_number">Standard Number</option>
+                                <option value="{{$title}}">Title</option>
+                                <option value="{{$category}}">Category</option>
+                                <option value="{{$type}}">Type</option>
+                                <option value="{{$creator}}">Creator</option>
+                                <option value="{{$publisher}}">Publisher</option>
+                                <option value="{{$language}}">Language</option>
+                                <option value="{{$center_indix}}">Center</option>
+                                <option value="class_code">DD Class</option>
+                                <option value="devision_code">DD Devision</option>
+                                <option value="section_code">DD Section</option>
+                                <option value="ddc">DDC</option>
+                                <option value="price">Price</option>
+                                <option value="purchase_date">Purchase Date</option>
+                                <option value="edition">Edition</option>
+                                <option value="publishyear">Publish Year</option>
+                                <option value="phydetails">Physical Details</option>
+
+                            </select>     
+                            </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 text-center">
                     <div class="input-group mb-3 mt-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">From</span>
@@ -47,7 +79,7 @@ $dd_section="section".$lang;
                         <input type="text" name="txt_start" id="txt_start" class="form-control" placeholder="Start ID" aria-label="Start Number" aria-describedby="basic-addon1"required>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6 text-center">
+                <div class="col-sm-12 col-md-4 text-center">
                     <div class="input-group mb-3 mt-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">To</span>
@@ -56,25 +88,31 @@ $dd_section="section".$lang;
                     </div>
                 </div>
             </div>
+            <div class="row pl-4 pt-1">
+                <label>{{__('Total Resources :')}} {{$reso_count}}</label>
+            </div>
+            
         </div>
         <div class="col-md-3 col-3 p-2">
             <div class="elevation-2 card1">
               
-                <h5>Range Resources</h5>
+                <h5>Indexing Resources Report</h5>
                  <p class="small">Range Resources Report in LMS. Provide Number Range and Download PDF or Excel</p>
-                 <form class="form-inline pull-left" action="{{ route('report_recource') }}" id="report_form" method="POST">
+                 <form class="form-inline pull-left" action="{{ route('report_recource_indexing') }}" id="report_indexing_form" class="indexing_form" method="POST">
                     {{ csrf_field() }}
                         <input type="hidden" name="resource_from" class="resource_from">
                         <input type="hidden" name="resource_to" class="resource_to">
+                        <input type="hidden" name="resource_order" class="resource_order">
                         <button type="submit" class="btn-pdf btn btn-secondary btn-sm elevation-2 mr-2">
                             <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
                             <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
                         </button>
                 </form>
-                <form class="form-inline" action="{{ route('export_recource') }}" id="export_form" method="POST">
+                <form class="form-inline" action="{{ route('export_recource_indexing') }}" id="export_indexing_form" class="indexing_form" method="POST">
                     {{ csrf_field() }}
                         <input type="hidden" name="resource_from" class="resource_from">
                         <input type="hidden" name="resource_to" class="resource_to">
+                        <input type="hidden" name="resource_order" class="resource_order">
                         <button type="submit" class="btn-excel btn btn-primary btn-sm elevation-2 mr-2">
                             <span class="excel-icon"><i class="fa fa-file-excel-o"></i></span>
                             <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; Excel
@@ -368,15 +406,15 @@ $(document).ready(function()
         theme: 'bootstrap4',
     });
 
-    var inputfrom = document.getElementById("txt_start");
-    inputfrom.addEventListener("keyup", function(event) {
-        $('.resource_from').val($('#txt_start').val());  
-    });
+    // var inputfrom = document.getElementById("txt_start");
+    // inputfrom.addEventListener("keyup", function(event) {
+    //     $('.resource_from').val($('#txt_start').val());  
+    // });
 
-    var inputto = document.getElementById("txt_end");
-    inputto.addEventListener("keyup", function(event) {
-        $('.resource_to').val($('#txt_end').val()); 
-    });
+    // var inputto = document.getElementById("txt_end");
+    // inputto.addEventListener("keyup", function(event) {
+    //     $('.resource_to').val($('#txt_end').val()); 
+    // });
 
     $('.select_type').val("All");
 
@@ -385,6 +423,30 @@ $(document).ready(function()
         filtertag(filter_tag);
     });
    
+});
+
+$('#report_indexing_form').on('submit', function(event){
+    if($('#txt_start').val()=="" && $('#txt_end').val()==""){
+        event.preventDefault();
+        toastr.warning("Plese Provide Resource Range to Genarate Report");
+    }
+    else{
+        $('.resource_from').val($('#txt_start').val());  
+        $('.resource_to').val($('#txt_end').val()); 
+        $('.resource_order').val($('#select_indexing').val()); 
+    }
+});
+
+$('#export_indexing_form').on('submit', function(event){
+    if($('#txt_start').val()=="" && $('#txt_end').val()==""){
+        event.preventDefault();
+        toastr.warning("Plese Provide Resource Range to Genarate Report");
+    }
+    else{
+        $('.resource_from').val($('#txt_start').val());  
+        $('.resource_to').val($('#txt_end').val()); 
+        $('.resource_order').val($('#select_indexing').val()); 
+    }
 });
 
 $('.filter_section').click(function() { 
@@ -411,6 +473,7 @@ $(document).on("click", ".close", function(){
     if(fcolse=="Type"){$('.select_type').val('All');}
 
     $(this).closest('.tag').fadeOut();
+    tag_array.splice( $.inArray(fcolse, tag_array), 1 ); 
 });
 
 function filtertag(filter_tag){
@@ -478,8 +541,8 @@ $("#category").change(function () {
 });
 
 $('.btn-pdf').click(function() { 
-    // $(this).find('.pdf-icon').hide();
-    // $(this).find('.loader').show();
+    $(this).find('.pdf-icon').hide();
+    $(this).find('.loader').show();
 }); 
 
 $('.btn-excel').click(function() { 
@@ -487,11 +550,11 @@ $('.btn-excel').click(function() {
     $(this).find('.loader').show();
 }); 
 
-function downloadFile(response) {
-  var blob = new Blob([response], {type: 'application/pdf'})
-  var url = URL.createObjectURL(blob);
-  location.assign(url);
-} 
+// function downloadFile(response) {
+//   var blob = new Blob([response], {type: 'application/pdf'})
+//   var url = URL.createObjectURL(blob);
+//   location.assign(url);
+// } 
 
 $("#report_filter_form").submit(function(event){
     

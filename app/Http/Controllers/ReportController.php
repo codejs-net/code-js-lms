@@ -40,6 +40,7 @@ use App\Models\view_lending_data_all;
 use Carbon\Carbon;
 use Auth;
 use App\Exports\ResourceExport;
+use App\Exports\Resource_indexingExport;
 use App\Exports\LendingExport;
 use App\Exports\Survey_tempExport;
 use Session;
@@ -75,6 +76,13 @@ class ReportController extends Controller
         $resource_center = center_allocation::where('staff_id',  Auth::user()->detail_id)->with(['staff','center'])
         ->get();
         
+        $center_array= array();
+        foreach($resource_center as $value)
+        {
+            array_push($center_array,$value->center->id);
+        }
+        $reso_count = resource::where('status',1)->whereIn('center_id', $center_array)->count();
+
         return view('reports.resources.index')
         ->with('cat_data',$categorydata)
         ->with('center_data',$resource_center)
@@ -83,7 +91,8 @@ class ReportController extends Controller
         ->with('creator_data',$creatordata)
         ->with('ddclass_data',$dd_classdata)
         ->with('dddevision_data',$dd_devisiondata)
-        ->with('ddsection_data',$dd_sectiondata);
+        ->with('ddsection_data',$dd_sectiondata)
+        ->with('reso_count',$reso_count);
        
     }
     public function support_index()
@@ -92,9 +101,9 @@ class ReportController extends Controller
        
     }
     
-    function report_recource(Request $request) {
+    function report_recource_indexing(Request $request) {
        
-        try {
+        // try {
             ini_set('max_execution_time', '1200');
             ini_set("pcre.backtrack_limit", "90000000");
             ini_set('memory_limit', '-1');
@@ -117,11 +126,17 @@ class ReportController extends Controller
             }
             $rpt_from=$request->resource_from;
             $rpt_to=$request->resource_to;
-            $resouredata = view_resource_data::select('*')
-            ->whereBetween('id', [$request->resource_from, $request->resource_to])
+            $rpt_order=$request->resource_order;
+
+            $resouredata = view_resource_data_all::select('*')
+            // ->whereBetween('id', [$request->resource_from, $request->resource_to])
+            ->where('status',1)
             ->whereIn('center_id', $center_array)
+            ->skip($rpt_from)
+            ->take($rpt_to-$rpt_from)
+            ->orderBy($rpt_order, 'ASC')
             ->get();
-            
+
             $pdf = PDF::loadView('reports.resources.rpt_resource',compact('resouredata','rpt_from','rpt_to','center_name_array'),[],
                 [
                 'format' => 'A4',
@@ -130,10 +145,10 @@ class ReportController extends Controller
            
 
             return $pdf->stream('resource.pdf');
-        }
-        catch (\Exception $e) {
-            return redirect()->back()->with('error','Report genarate Fail.');
-        }
+        // }
+        // catch (\Exception $e) {
+        //     return redirect()->back()->with('error','Report genarate Fail.');
+        // }
 
 
     }
@@ -312,6 +327,13 @@ class ReportController extends Controller
         ini_set('max_execution_time', '1200');
         return Excel::download(new ResourceExport($request), 'resource.xlsx');
     }
+    public function export_recource_indexing(Request $request) 
+    {
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', '1200');
+        return Excel::download(new Resource_indexingExport($request), 'resource.xlsx');
+    }
+
 
     public function member_card(Request $request)
     {

@@ -74,7 +74,7 @@ class HomeController extends Controller
         {
            
             $today = Carbon::now()->isoFormat('YYYY-MM-DD');
-            $reso_count = resource::where('status',1)->count();
+            $reso_count = resource::where('status',1)->whereIn('center_id', $center_array)->count();
             $mem_count = member::where('status',1)->count();
             $issue_count = lending_detail::where('issue_date',$today)->count();
             $return_count = lending_detail::where('return_date',$today)->count();
