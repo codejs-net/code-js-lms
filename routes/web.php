@@ -330,6 +330,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::POST('report_recource_indexing', [ReportController::class, 'report_recource_indexing'])->name('report_recource_indexing');
     Route::POST('report_recource_filter', [ReportController::class, 'report_recource_filter'])->name('report_recource_filter');
     Route::POST('report_recource_filter_all', [ReportController::class, 'report_recource_filter_all'])->name('report_recource_filter_all');
+    Route::POST('recource_card_range', [ReportController::class, 'recource_card_range'])->name('recource_card_range');
     Route::POST('report_lending', [ReportController::class, 'report_lending'])->name('report_lending');
     Route::POST('report_lending_account', [ReportController::class, 'report_lending_account'])->name('report_lending_account');
     Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');

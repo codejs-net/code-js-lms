@@ -13,6 +13,9 @@ $language="language".$lang;
 $dd_class="class".$lang;
 $dd_devision="devision".$lang;
 $dd_section="section".$lang;
+$type="type".$lang;
+$center_indix="center".$lang;
+
 
 @endphp
 
@@ -36,17 +39,19 @@ $dd_section="section".$lang;
                 <input type="hidden" name="select_cent" class="select_cent">
                 <input type="hidden" name="select_type" class="select_type">
                 <!-- <a href="{{ route('create_resource') }}" class="btn btn-sm btn-js" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a> -->
-                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; {{__('PDF')}}</button>
+                <button type="submit" class="btn btn-outline-primary btn-sm text-dark mr-2"><i class="fa fa-file-pdf-o"></i>&nbsp; {{__('PDF')}}</button>
             </form>
             <form class="form-inline pull-right" action="{{ route('export_recource') }}" id="export_form" method="POST">
             {{ csrf_field() }}
                 <input type="hidden" name="export_catg" class="select_catg">
                 <input type="hidden" name="export_cent" class="select_cent">
                 <input type="hidden" name="export_type" class="select_type">
-                <button type="submit" class="btn btn-outline-warning btn-sm text-dark mr-2" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; {{__('Excel')}}</button>
+                <button type="submit" class="btn btn-outline-primary btn-sm text-dark mr-2" name="rpt_excel" id="rpt_excel" ><i class="fa fa-file-excel-o"></i>&nbsp; {{__('Excel')}}</button>
             </form>
-            @can('data-import')
-                <!-- <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a> -->
+            @can('resource-report')
+            <div class="form-inline pull-right mx-2">
+                <a class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#resource_card_range" ><i class="fa fa-file-pdf-o" ></i>&nbsp;Resource Card</a>
+            </div>
             @endcan
         </div>
     </div>
@@ -101,7 +106,7 @@ $dd_section="section".$lang;
             <table  class="table display wrap table-hover" width="100%" cellspacing="0" id="resource_datatable">
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
-                            <th scope="col">{{__('Resource ID')}}</th>
+                            <th scope="col">{{__('ID')}}</th>
                             <th scope="col">{{__('Resource')}}</th>
                             <th scope="col">{{__('Accession No')}}</th>
                             <!-- <th scope="col">ISBN/ISSN</th> -->
@@ -210,10 +215,8 @@ $dd_section="section".$lang;
     </div>
 </div>
 
-@php
-$lang = session()->get('db_locale');
-@endphp
 
+@include('resources.resource_card_modal')
 @endsection
 
 
@@ -330,7 +333,7 @@ function load_datatable(catdata,centerdata,typedata)
     $('#resource_datatable').DataTable({
         columnDefs: [
         {"targets": [0],
-        "visible": false,
+        // "visible": false,
         "searchable": false},
         ],
         responsive: true,

@@ -321,6 +321,43 @@ class ReportController extends Controller
 
     }
 
+    public function recource_card_range(Request $request)
+    {
+        ini_set('max_execution_time', '1200');
+        ini_set("pcre.backtrack_limit", "90000000");
+        ini_set('memory_limit', '-1');
+
+        $locale = session()->get('locale');
+            $db_setting = setting::where('setting', 'locale_db')->first();
+            if ($db_setting->value == "0") {
+                $lang = "_" . $locale;
+            } else {
+                $lang = "_" . $db_setting->value;
+            }
+            $center_array= array();
+            $resource_center = center_allocation::where('staff_id', Auth::user()->detail_id)->with(['center'])->get();
+            foreach($resource_center as $value)
+            {
+                array_push($center_array,$value->center->id);
+            }
+            $rpt_from=$request->resource_from;
+            $rpt_to=$request->resource_to;
+            $rpt_order=$request->resource_order;
+
+            $rdata = view_resource_data_all::select('*')
+            ->where('status',1)
+            ->whereIn('center_id', $center_array)
+            ->skip($rpt_from)
+            ->take($rpt_to-$rpt_from)
+            ->orderBy($rpt_order, 'ASC')
+            ->get();
+        $pdf = PDF::loadView('reports.resources.rpt_resource_card_range',compact('rdata'),[],
+            [
+            'format' => [85,54],
+            ]);
+        return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Resource Card.pdf');
+    }
+
     public function export_recource(Request $request) 
     {
         ini_set('memory_limit', '-1');
