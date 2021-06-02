@@ -9,12 +9,15 @@ $lang="_".$locale;
 $category="category".$lang;
 $type="type".$lang;
 
+$librarydata = session()->get('library');
+$lib_name="name".$lang;
+
 @endphp
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Lending&nbsp;</a></li>
+    <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Lending&nbsp;</a></li>
     <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> Resources Return&nbsp;</a></li>
 </ol>
 </nav>
@@ -32,94 +35,89 @@ $type="type".$lang;
 </div>
 
 <div class="container-fluid">
-    <div class="card card-body">
-        <div class="row">
-        <input type="hidden" name="member_Name_id"id="member_Name_id">
-        <input type="hidden" name="member_Name_sms"id="member_Name_sms">
-        <input type="hidden" name="member_mobile"id="member_mobile">
+    <input type="hidden" name="member_Name_id"id="member_Name_id">
+    <input type="hidden" name="member_Name_sms"id="member_Name_sms">
+    <input type="hidden" name="member_mobile"id="member_mobile">
 
-            <div class="col-md-3 col-sm-12 text-left mt-1">
+    <div class="main-content">
+        <div class="row elevation-1">
+            <div class="col-md-3 col-sm-12 text-left mt-1 p-3  js-rightbar-bg">
               <div class="input-group">
                   <div class="input-group-prepend">
-                     <span class="input-group-addon"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
+                     <span class="input-group-addon elevation-1"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-success" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
+                    <input type="text" class="form-control elevation-1" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
+                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
                 </div>  
             </div>
 
-             <div class="col-md-5 col-sm-12 text-left mt-1">
+             <div class="col-md-6 col-sm-12 text-left p-3 mt-1 bg-white">
               <div class="input-group">
                   <div class="input-group-prepend">
-                     <span class="input-group-addon"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
+                     <span class="input-group-addon elevation-1"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fa fa-check-square-o fa-lg" id="loader_icon"></i><span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
-                    <button type="button" class="btn btn-sm btn-outline-success" id="addbarrow_serch"><i class="fa fa-search"></i></button>
+                    <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
+                    <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fas fa-cart-plus"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
             </div>
-             <div class="col-md-1 col-sm-12">
-             </div>
-            <div class="col-md-3 col-sm-12 text-right mt-1">
-                <div class="input-group pull-right">
+            <div class="col-md-3 col-sm-12 text-right mt-1 p-3 bg-white">
+                <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-addon"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
+                        <span class="input-group-addon elevation-1"id="basic-addon1"><i class="fa fa-calendar fa-lg mt-2"></i></span>
                     </div>
                     @if(auth()->user()->can('date-change'))
-                    <input type="date" class="form-control" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1">
+                    <input type="date" class="form-control elevation-1" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1">
                     @else
-                    <input type="date" class="form-control" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1" disabled>
+                    <input type="date" class="form-control elevation-1" name="returndte" id="returndte" value="{{$returndate}}" aria-describedby="basic-addon1"disabled>
                     @endif
-                   
                 </div>
             </div>
-
         </div>
-
-        <div class="row text-center mt-4">
-            <div class="col-md-12">
-                <!-- small box -->
-                    <div class="card card-name" style="height:2.5rem;">
-                        <div class="text-center">
-                        <span><i class="fa fa-user-circle-o">&nbsp;
-                            <span id="member_Name"class="text-dark font-weight-bold"></span>
-                            <!-- <span id="member_show_id"class="font-weight-bold badge badge-info"></span> -->
-                        </i></span>
-                        
-                        </div>
+        <div class="row elevation-1" id="return-cart" style="display: none;">
+            <div class="col-md-3 col-3 p-3 js-rightbar-bg">
+                <div class="text-center ">
+                    <h6 id="member_Name"class="text-indigo font-weight-bold"></h6>
+                    <div id="member_lend"class="mt-2">
+                        <table style="width: 100%;" id="resourceTable">
+                            <tbody class="tbody_data" id="resourcedata">    
+                            </tbody>
+                        </table>
                     </div>
-
-            </div>
-        </div>
-
-            <div class="form-row ">
-            <div class="table-responsive"style="overflow-x: auto;"> 
-                <table class="table table-hover" id="resourceTable">
-                <thead class="thead-light">
-                    <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Resource ID</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Accession No</th>
-                    <th scope="col">ISBN/ISSN</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Issue Date</th>
-                    <th scope="col">Dateof Return</th>
-                    <th scope="col">Fine(Rs)</th>
-                    <th scope="col">Return</th>
-                    <th scope="col">Fine Status</th>
-                    <th scope="col" style="width:10%;">Action</th>
-                    </tr>    
-                    </thead>
-
-                    <tbody class="tbody_data" id="resourcedata">
-                           
-                    </tbody>
-                </table>
                 </div>
             </div>
-
+            <form  id="form_returntable" class="">
+            {{ csrf_field() }}
+            <div class="col-md-9 col-9 p-3 bg-white">
+                <div class="table-responsive"style="overflow-x: auto;"> 
+                    <table class="table table-hover" id="returnTable">
+                        <thead class="js-tbl-header">
+                            <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Resource</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Accession</th>
+                            <th scope="col">ISBN/ISSN</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Issue</th>
+                            <th scope="col">ToBeReturn</th>
+                            <th scope="col">Fine(Rs)</th>
+                            {{-- <th scope="col">Return</th> --}}
+                            {{-- <th scope="col">Fine Status</th> --}}
+                            <th scope="col">Action</th>
+                            <th scope="col">&nbsp;</th>
+                            </tr>    
+                            </thead>
+        
+                            <tbody class="tbody_data" id="returndata">    
+                            </tbody>
+                    </table>
+                </div>
+               
+            </div>
+        </form>
+        </div>
     </div>
     <hr>
     <div class="row mt-4">
@@ -132,10 +130,14 @@ $type="type".$lang;
         </div>
         <div class="col-md-6">
             <div class="input-group box-footer clearfix pull-right">
-                <button type="button" class="btn btn-sm btn-primary btn-md ml-2" id="print_return">
-                <i class="fa fa-print"></i> Print</button>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check_print">
+                    <label class="form-check-label" for="check_print">Print Recipt</label>
+                </div>
+                <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="return_resource">
+                <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
                 &nbsp; &nbsp;
-                <button type="button" class="btn btn-sm btn-warning btn-md ml-2" id="reset_issue">
+                <button type="button" class="btn btn-sm btn-secondary elevation-2" id="btn_reset">
                 <i class="fa fa-times"></i> Reset</button>
             </div> 
         </div>
@@ -147,25 +149,35 @@ $type="type".$lang;
 <div id="printdiv" style="display: none;">
     <div class="col-md-4">
         <div id="print_lendding" style="text-align: center;">
-            <div class="text-center"><u><h3>Issue Receipt</h3></u></div>
+            <div class="text-center"><u><h3>Return Receipt</h3></u></div>
             </br>
-            
+                <h4 id="print_library">{{$librarydata->$lib_name}}</h4>
                 <h5 >Member : <span id="print_member"></span></h5>
-                <h5 >Issue Date : <span id="print_issuedate"></span></h5>
-                <h5>Return Date :<span id="print_returndate"></span></h5>
+                <h5>Returned Date :<span id="print_returndate"></span></h5>
                 
-                <table id="print_table">
-                    <!-- <thead>
+                <table id="print_table_return">
+                    <thead>
                         <tr>
-                            <th>Accession No</th>
-                            <th>Title</th>
-                            <th>&nbsp;</th>
+                            <th>Resources</th>
                         </tr>    
-                    </thead> -->
+                    </thead> 
                     <tbody> 
                     </tbody>
                 </table>
-
+                <hr>
+               <div id="div_extend" style="display: none;">
+                <h5>Issue Date :<span id="print_issuedate"></span></h5>
+                <table id="print_table_issue">
+                    <thead>
+                        <tr>
+                            <th>Resources</th>
+                        </tr>    
+                    </thead> 
+                    <tbody> 
+                    </tbody>
+                </table>
+                <h5>To Be Return :<span id="print_tobe_return"></span></h5>
+               </div>
                 </br>
                 <div class="text-center mb-3"><h3>Thank You!</h3></div>
             </div>
@@ -178,9 +190,9 @@ $type="type".$lang;
             <div class="text-center"><u><h3>Fine Receipt</h3></u></div>
             </br>
             
-                <h5 >Member : <span id="print_member"></span></h5>
-                <h5 >Issue Date : <span id="print_issuedate"></span></h5>
-                <h5>Return Date :<span id="print_returndate"></span></h5>
+                <h5 >Member : <span id="receipt_member"></span></h5>
+                <h5 >Receipt Date : <span id="receipt_date"></span></h5>
+                <h5 >Total Amount : <span id="receipt_tot_fine"></span></h5>
                 
                 <table id="fine_receiptTable">
                     <!-- <thead>
@@ -269,16 +281,12 @@ $type="type".$lang;
 
                 <div class="modal-footer">
                     <div class="form-group text-center">
-                        <div class="form-check form-check-inline text-primary" >
-                            <label class="form-check-label"><i class="fa fa-check"></i> &nbsp;save&nbsp;</label>
-                            <input type="radio" class="form-check-input methord" name="methord" value="1" required>|
-                        </div>
                         <div class="form-check form-check-inline text-info" >
-                            <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;save & Extend&nbsp;</label>
+                            <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;Extend&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="2" required>|
                         </div>
                         <div class="form-check form-check-inline text-success" >
-                            <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp; save & Return&nbsp;</label>
+                            <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp;Return&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="3" required>
                         </div>
                         
@@ -297,10 +305,10 @@ $type="type".$lang;
     </div>
 </div>
 <!-- end settle model -->
-                            
-                        
+                                                   
+<br>                    
 @endsection
-@push('scripts')
+@section('script')
 
     <script>
     $(document).ready(function() {
@@ -336,38 +344,40 @@ $type="type".$lang;
         $("#fineTable tbody").empty();
 
             $('#resourceTable tr').each(function(){
-                if($(this).find(".fine_settle").html() == "unsettled"){
+                if($(this).find(".r_fine").html() != 0.00){
                     op+='<tr>';
-                    op+='<td class="td_id">'+$(this).find(".td_id").html()+'</td>';
-                    op+='<td class="td_acceno">'+$(this).find(".td_acceno").html()+'</td>';
-                    op+='<td class="td_title">'+$(this).find(".td_title").html()+'</td>';
-                    op+='<td class="fine_amount">'+$(this).find(".fine_amount").html()+'</td>';
+                    op+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
+                    op+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
+                    op+='<td class="td_title">'+$(this).find(".r_title").html()+'</td>';
+                    op+='<td class="fine_amount">'+$(this).find(".r_fine").html()+'</td>';
                     op+='<td class="fine_pay"><input class="form-check-input pay_check" type="checkbox" value="1"></td>';
                     op+='</tr>';  
-                    tot_fine += parseFloat($(this).find(".fine_amount").html());
+                    tot_fine += parseFloat($(this).find(".r_fine").html());
                 }
             });
             $("#fineTable tbody").append(op);
             $("#tot_fine").html(tot_fine);
-
-           
-        
         
         });
         // --------end settel Model------------------------------------------
 
         $('#settel_show').on('hidden.bs.modal', function (event) {
-            var memberid=$('#member_Name_id').val();
-            memberSelect(memberid);
+            // var memberid=$('#member_Name_id').val();
+            // memberSelect(memberid);
             $('#form_settle_fine')[0].reset();
         })
 
     });
-// --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
 
     $('#addbarrowmember').on("click",function(){
         var memberid = $("#member_id").val();
         memberSelect(memberid);
+    });
+
+    $('#addbarrow').on("click",function(){
+        var resourceinput = $("#resource_details").val();
+        add_to_retun_table(resourceinput,"Return");
     });
     // ------------------------------------------------------------------------
     function memberSelect(member)
@@ -378,8 +388,12 @@ $type="type".$lang;
         $('#member_Name_id').val('');
         $('#member_Name').html('');
         $("#resourceTable tbody").empty();
+        $("#returnTable tbody").empty();
         $("#fineTable tbody").empty();
-        $("#print_table tbody").empty();
+        $("#print_table_issue tbody").empty();
+        $("#print_table_return tbody").empty();
+        $('#return-cart').hide();
+        $('#div_extend').hide();
         var op="";
         $.ajaxSetup({
             headers: {
@@ -400,44 +414,57 @@ $type="type".$lang;
                 $('#member_id').val('');
                 if(data[0]['status']=="success")
                 {
+                    $('#return-cart').show();
                     var membr=data[0]['member_id']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
                     $('#member_Name').html(membr);
                     $('#member_Name_id').val(data[0]['member_id']);
                     $('#member_Name_sms').val(data[0]['member_name']);
                     $('#member_mobile').val(data[0]['mobile']);
-                    // ------------table-----------------------------
+                    $('#print_member').html(membr);
+                    $('#print_returndate').html(dtereturn);
+                   
+                    // --------resource list-------
                     for (j = 0; j < data.length; j++)
                     {
-                        if(data[j]['fine_settle']=="unsettled"){op+='<tr class="text-danger font-weight-bold">';}
-                        else if(data[j]['fine_settle']=="settled"){op+='<tr class="text-info font-weight-bold">';}
+                        if(data[j]['fine_amount']!=0.00){op+='<tr class="text-danger font-weight-bold">';}
                         else{op+='<tr>';}
-                        op+='<td class="td_id">'+data[j]['id']+'</td>';
-                        op+='<td>'+data[j]['resource_id']+'</td>';
-                        op+='<td>'+data[j]['resource_cat']+"-"+data[j]['resource_type']+'</td>';
-                        op+='<td class="td_input td_acceno">'+data[j]['resource_accno']+'</td>';
-                        op+='<td class="td_input">'+data[j]['resource_isn']+'</td>';
-                        op+='<td class="td_title">'+data[j]['resource_title']+'</td>';
-                        op+='<td>'+data[j]['issue_date']+'</td>';
-                        op+='<td>'+data[j]['return_date']+'</td>';
-                        op+='<td class="fine_amount">'+data[j]['fine_amount']+'</td>';
-                        op+='<td>'+data[j]['return']+'</td>';
-                        op+='<td class="fine_settle">'+data[j]['fine_settle']+'</td>';
-
                         op+='<td>';
-                        if(data[j]['fine_settle']=="unsettled")
-                        {
-                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine" data-toggle="modal" data-target="#settel_show"><i class="fa fa-money"></i></button>';
-                        }
-                        else
-                        {
-                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
-                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
-                        }
+                        op+='<div class="card">';
+                            op+='<div class="card-body">';
+                                op+='<div class="row issue-card">';
+                                    op+='<div class="col-md-4 col-4">';
+                                        op+='<img class="img-resource-80" src="images/resources/'+data[j]['image']+'" alt="image">';
+                                        op+='<h6><span class="r_type">'+data[j]['resource_cat']+'-'+data[j]['resource_type']+'</span></h6>';
+                                    op+='</div>';
+                                    op+='<div class="col-md-8 col-8 pl-2">';                                      
+                                        op+='<h5><span class="r_title">'+data[j]['resource_title']+'</span></h5>';
+                                        op+='<div><span>ResourceID:</span><span class="r_resoid">'+data[j]['resource_id']+'</span></div>';
+                                        op+='<div><span>AccessionNo:</span><span class="r_accno">'+data[j]['resource_accno']+'</span></div>';
+                                        op+='<div><span>Lending ID:</span><span class="r_lendid">'+data[j]['id']+'</span></div>';
+                                        op+='<div><span>SNumber:</span><span class="r_snumber">'+data[j]['resource_isn']+'</span></div>';
+                                        op+='<div><span>IssueDate: </span><span class="r_issuedate">'+data[j]['issue_date']+'</span></div>';
+                                        op+='<div><span>To Be Return: </span><span class="r_returndate">'+data[j]['return_date']+'</span></div>';
+                                        op+='<div><span> Fine: </span><span class="r_fine">'+data[j]['fine_amount']+'</span></div>';
+
+                                        if(data[j]['fine_amount']!=0.00)
+                                        {
+                                            op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine" data-toggle="modal" data-target="#settel_show"><i class="fa fa-money"></i></button>';
+                                        }
+                                        else
+                                        {
+                                            op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
+                                            op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
+                                        }
+                                        
+                                    op+='</div>';
+                                op+='</div>';
+                            op+='</div>';
+                        op+='</div>';
                         op+='</td>';
-                        op+='</tr>';  
+                        op+='</tr>';
                     }
-                    //-------------end table-------------------------
                     $("#resourceTable tbody").append(op);
+                    // ----------------------------
                     document.getElementById("resource_details").focus();
                 }
                 else if(data[0]['status']=="no")
@@ -459,88 +486,54 @@ $type="type".$lang;
             }
         });
     }
-
-    $('#addbarrow').on("click",function(){
-        var resourceinput = $("#resource_details").val();
-        var limit = $("#lending_limit").val();
+    function add_to_retun_table(resourceinput,returnaction)
+    {
         var op ="";
-        var bexsist=false;
+        var exsist=false;
+        var resource_found=0;
         if($('#member_Name_id').val())
         {    
             if(resourceinput)
             {
-                var rowCount = $('#resourceTable tr').length;
-                var oTable = document.getElementById('resourceTable');
-                var mem_id = $("#member_Name_id").val();
-                var dtereturn = $("#returndte").val();
-                var membername=$('#member_Name_sms').val();
-                var membermobile=$('#member_mobile').val();
-                var resource_found=0;
-                for (j = 1; j < rowCount; j++)
-                {
-                    var oCells = oTable.rows.item(j).cells;
-                    var cellVal_accno = oCells.item(3).innerHTML;
-                    var cellVal_snumber = oCells.item(4).innerHTML;
-                    var cellVal_lend_id = oCells.item(0).innerHTML;
-                    var cellVal_fine = oCells.item(8).innerHTML;
-                    var description=oCells.item(5).innerHTML +"("+oCells.item(3).innerHTML+")";
-                    if(resourceinput.toUpperCase()==cellVal_accno.toUpperCase() || resourceinput.toUpperCase()==cellVal_snumber.toUpperCase() )
-                    { 
+                // --------add to return Table------------------
+                $('#resourceTable tbody tr').each(function(){
+                    var accno=$(this).find(".r_accno").html();
+                    var snumber=$(this).find(".r_snumber").html();
+                    var fine=$(this).find(".r_fine").html();
+                    if(resourceinput.toUpperCase()==accno.toUpperCase() || resourceinput.toUpperCase()==snumber.toUpperCase() )
+                    {
                         resource_found=1;
-                        if(cellVal_fine==0)
+                        if(fine==0.00)
                         {
-                            //-------------------------------------------------------
-                            $.ajaxSetup({
-                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-                                $.ajax({
-                                    type: 'POST',
-                                    dataType : 'json',
-                                    data:{
-                                        mem_id: mem_id,
-                                        dtereturn: dtereturn,
-                                        cellVal_lend_id: cellVal_lend_id,
-                                        cellVal_fine:cellVal_fine,
-                                        membername:membername,
-                                        membermobile:membermobile,
-                                        description:description
-                                        },
-                                    url: "{{route('store_return')}}",
-                                    beforeSend: function(){
-                                        $("#loader_icon").hide();
-                                        $("#loader").show();
-                                    },
-                                    success: function(data){  
-                                        // console.log(data);
-                                        if(data.massage=="success")
-                                        {
-                                            
-                                            $('#resourceTable').find('.td_id').each(function(){
-                                                if($(this).text() == data.lendid){
-                                                    $(this).parent('tr').remove();
-                                                }
-                                            });
-                                            toastr.success('Resources Successfully Returnd');
-                                        }
-                                    },
-                                    error: function(data){
-                                        toastr.error('Returing Error');
-                                    },
-                                    complete:function(data){
-                                    $("#loader").hide();
-                                    $("#loader_icon").show();
-                                    }
-                                });
-                            //---------------------------------------------------------
+                            $('#returnTable tbody tr').each(function(){
+                                var td_accno=$(this).find(".td_acceno").html();
+                                if(accno.toUpperCase()==td_accno.toUpperCase())
+                                {exsist=true;}   
+                            });
+                            if(exsist==false)
+                            {
+                                op+='<tr>';
+                                op+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
+                                op+='<td class="td_reso_id">'+$(this).find(".r_resoid").html()+'</td>';
+                                op+='<td class="td_type">'+$(this).find(".r_type").html()+'</td>';
+                                op+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
+                                op+='<td class="td_snumber">'+$(this).find(".r_snumber").html()+'</td>';
+                                op+='<td class="td_title">'+$(this).find(".r_title").html()+'</td>';
+                                op+='<td class="td_issuedate">'+$(this).find(".r_issuedate").html()+'</td>';
+                                op+='<td class="td_tobereturn">'+$(this).find(".r_returndate").html()+'</td>';
+                                op+='<td class="td_fine_amount">'+$(this).find(".r_fine").html()+'</td>';
+                                op+='<td class="td_action">'+returnaction+'</td>';
+                                op+='<td><button type="button" value="'+$(this).find(".r_lendid").html()+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>'
+                                op+='</tr>';  
+                            }
+                            else{toastr.error('Resource Alrady in Return Cart')} 
                         }
-                        else
-                        {
-                            toastr.warning('Plese Settle the Fine Before Return');
-                        }
-                    
-                    }
-                }
-               
+                        else{toastr.warning('Plese Settle the Fine Before Return');}  
+                    } 
+                });
                 if(resource_found==0){  toastr.error('Resource Not Found!');}
+                $("#returnTable tbody").append(op);
+                // --------------------------------------------     
             }
             else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
         }
@@ -549,11 +542,14 @@ $type="type".$lang;
             toastr.error('Plese Select Member first');
             document.getElementById("member_id").focus();
         }
-        
+    }
+    // -----------------------------------------------------
+    $("#returnTable").on('click', '.remove_resources', function () {
+        $(this).closest('tr').remove();
+        document.getElementById("resource_details").focus();
 
     });
-    // -----------------------------------------------------
-    
+
     $('#btn_fine_settle').on("click",function(event){
 
         if ($('#form_settle_fine')[0].checkValidity() === false) {
@@ -565,6 +561,7 @@ $type="type".$lang;
             var opp_status=0;
             var payment_check=0; 
             var mem_id = $("#member_Name_id").val();
+            var membername=$('#member_Name_sms').val();
             var settlement_type = $("#settle_type").val();
             var receipt_type= "system";
             if($("#receipt_type").prop("checked") == true)
@@ -577,8 +574,10 @@ $type="type".$lang;
             var receipt="fine";
             var receipt_id="";
             var methord= $("input[name='methord']:checked").val();
+            var referance= $("#receipt_no").val();
+            $("#fine_receiptTable tbody").empty();
             // ==============receipt=============================
-            if(settlement_type=="Payment" && receipt_type=="system")
+            if(settlement_type=="Payment")
             {
                 $('#fineTable tbody tr').each(function(){
 
@@ -598,42 +597,46 @@ $type="type".$lang;
 
                 }).promise().done(function(){
                 
-                        if(payment_check==0){
-                            toastr.error('Plece Check the resources to settle fine');
-                        }
-                        else{
-                            //-------------------------------------------------------
-                            $.ajaxSetup({
-                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-                            });
-                            $.ajax({
-                                type: 'POST',
-                                dataType : 'json',
-                                data:{
-                                    receipt: receipt,
-                                    mem_id: mem_id,
-                                    date_settle: date_settle,
-                                    receipt_tot_fine:receipt_tot_fine
-                                    },
-                                url: "{{route('fine_receipt')}}",
-                                success: function(data){ 
-                                    if(data.massage=="success"){
-                                    toastr.success('Receipt Success');
-                                    }
+                    if(payment_check==1)
+                    {
+                        //-------------------------------------------------------
+                        $.ajaxSetup({
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            dataType : 'json',
+                            async: false,
+                            data:{
+                                receipt: receipt,
+                                receipt_type:receipt_type,
+                                mem_id: mem_id,
+                                date_settle: date_settle,
+                                receipt_tot_fine:receipt_tot_fine,
+                                referance:referance
                                 },
-                                error: function(data){
-                                    toastr.error('Receipt Error');
+                            url: "{{route('fine_receipt')}}",
+                            success: function(data){ 
+                                if(data.massage=="success"){
+                                toastr.success('Receipt Success');
+                                receipt_id=data.receipt_id;
                                 }
-                            });
-                            //---------------------------------------------------------
-                        }
-
+                            },
+                            error: function(data){
+                                toastr.error('Receipt Error');
+                            }
+                        });
+                        //---------------------------------------------------------
+                    }
                 });
                 $("#fine_receiptTable tbody").append(op);
-                $("#receipt_tot_fine").html(tot_fine);
+                $("#receipt_tot_fine").html(receipt_tot_fine);
+                $("#receipt_member").html(membername);
+                $("#receipt_date").html(date_settle);
+                
             }
-            receipt_id= $("#receipt_no").val();
             //================end================================
+            //---------------settal fine---- receipt details-----
             $('#fineTable tbody tr').each(function(){
 
                 if($(this).find(".pay_check").prop("checked") == true)
@@ -645,7 +648,8 @@ $type="type".$lang;
                     var discrtpt_si= $("#description_si").val();
                     var discrtpt_ta= $("#description_ta").val();
                     var discrtpt_en= $("#description_en").val();
-                
+                    var op1="";
+                    var returnaction="";
                     //-------------------------------------------------------
                     $.ajaxSetup({
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
@@ -662,23 +666,47 @@ $type="type".$lang;
                             methord:methord,
                             accno:accno,
                             receipt_id:receipt_id,
+                            referance:referance,
                             discrtpt_si:discrtpt_si,
                             discrtpt_ta:discrtpt_ta,
                             discrtpt_en:discrtpt_en
                             },
                         url: "{{route('settle_fine')}}",
                         success: function(data){ 
-                            //
                             if(data.massage=="success"){
-                                opp_status=1; 
+                                // opp_status=1; 
                                 toastr.success('Fine Settled Successfully');
-                                // console.log(data.massage);
-                                // $("#opp_status").val(data.massage);
+                            // -------------add to return table-------------
+                            if(methord==2){returnaction="Extend";}
+                            else if(methord==3){returnaction="Return";}
+
+                                $('#resourceTable tbody tr').each(function(){
+                                    var r_lendid=$(this).find(".r_lendid").html();
+                                    if(lend_id==r_lendid)
+                                    {
+                                        op1+='<tr>';
+                                        op1+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
+                                        op1+='<td class="td_reso_id">'+$(this).find(".r_resoid").html()+'</td>';
+                                        op1+='<td class="td_type">'+$(this).find(".r_type").html()+'</td>';
+                                        op1+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
+                                        op1+='<td class="td_snumber">'+$(this).find(".r_snumber").html()+'</td>';
+                                        op1+='<td class="td_title">'+$(this).find(".r_title").html()+'</td>';
+                                        op1+='<td class="td_issuedate">'+$(this).find(".r_issuedate").html()+'</td>';
+                                        op1+='<td class="td_title">'+$(this).find(".r_returndate").html()+'</td>';
+                                        op1+='<td class="td_fine_amount">'+$(this).find(".r_fine").html()+'</td>';
+                                        op1+='<td class="td_action">'+returnaction+'</td>';
+                                        op1+='<td><button type="button" value="'+$(this).find(".r_lendid").html()+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>'
+                                        op1+='</tr>';  
+                                        $("#returnTable tbody").append(op1);
+                                    }   
+                                });
+
+                            // ---------------------------------------------
                             }
                         },
                         error: function(data){
                             toastr.error('Fine Settled Error');
-                            opp_status=0; 
+                            // opp_status=0; 
                         }
                     });
                     //---------------------------------------------------------
@@ -691,19 +719,24 @@ $type="type".$lang;
                 {
                     if(payment_check==1)
                     {
-                        print_receiptDiv();
+                        print_div($('#fine_receipt').html());
+                        
                         $("#settel_show").modal('hide');
+                    }
+                    else
+                    {
+                        toastr.error('Plece Check the resources to settle fine');
                     }
                 }
                 else
                 {
-                    if(payment_check==0)
+                    if(payment_check==1)
                     {
-                        toastr.error('Plece Check the resources to settle fine');
+                        $("#settel_show").modal('hide');
                     }
                     else
                     {
-                        $("#settel_show").modal('hide');
+                        toastr.error('Plece Check the resources to settle fine');
                     }
                 }
             });
@@ -713,81 +746,139 @@ $type="type".$lang;
 
     });
 
+    $('#return_resource').on("click",function(){
+        var oTable = document.getElementById('returnTable');
+        var rowLength = oTable.rows.length;
 
-    $("#resourceTable").on('click', '.return_lending', function () {
-        // $(this).closest('tr').remove();
+        var mem_id = $("#member_Name_id").val();
         var dtereturn = $("#returndte").val();
-        var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
-        var cellVal_lend_id=$(this).val();
-        // toastr.error("lend id:"+lend_id+" fine:"+fine_amount);
-        //-------------------------------------------------------
-        $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-            $.ajax({
-                type: 'POST',
-                dataType : 'json',
-                data:{
-                    dtereturn: dtereturn,
-                    cellVal_lend_id: cellVal_lend_id
-                    },
-                url: "{{route('store_return')}}",
-                success: function(data){  
-                    // console.log(data);
-                    if(data.massage=="success")
-                    {
-                        $('#resourceTable').find('.td_id').each(function(){
-                            if($(this).text() == data.lendid){
-                                $(this).parent('tr').remove();
-                            }
-                        });
-                        toastr.success('Resources Successfully Returnd');
+        var membername=$('#member_Name_sms').val();
+        var membermobile=$('#member_mobile').val();
+        var _return_descript = [];
+        var _extend_descript = [];
+        var reso_extend=false;
+
+        if($('#member_Name_id').val())
+        {
+            if(rowLength>1)
+            {
+                for (i = 1; i < rowLength; i++)
+                {
+                    var oCells = oTable.rows.item(i).cells;
+                    var resourceaccno = oCells.item(3).innerHTML;
+                    var resourcetitles = oCells.item(5).innerHTML;
+                    var return_action = oCells.item(9).innerHTML;
+                    var desc=resourcetitles+"("+resourceaccno+")";
+                    if(return_action=="Extend")
+                    { 
+                        _extend_descript.push(desc);
+                        reso_extend=true;
                     }
-                },
-                error: function(data){
-                    toastr.error('Returing Error');
+                    _return_descript.push(desc);
                 }
-            });
-        //---------------------------------------------------------
-        document.getElementById("resource_details").focus();
+                var extend_descript = _extend_descript.toString();
+                var return_descript = _return_descript.toString();
+                var lend_data = [];
+                var return_data = [];
+                var lend_id, reso_id, type,accno,snumber,title,issuedate,tobe_return,fine_amount,return_action;
+
+                lend_data.push({
+                    mem_id: mem_id,
+                    dtereturn: dtereturn,
+                    membername: membername,
+                    membermobile: membermobile,
+                    return_descript:return_descript,
+                    extend_descript:extend_descript
+                    });
+
+                $('#returnTable tbody tr').each(function(){
+                    lend_id = $(this).find(".td_id").html();
+                    reso_id = $(this).find(".td_reso_id").html();
+                    type = $(this).find(".td_type").html();
+                    accno = $(this).find(".td_acceno").html();
+                    snumber = $(this).find(".td_snumber").html();
+                    title = $(this).find(".td_title").html();
+                    issuedate = $(this).find(".td_issuedate").html();
+                    tobe_return = $(this).find(".td_tobereturn").html();
+                    fine_amount = $(this).find(".td_fine_amount").html();
+                    return_action = $(this).find(".td_action").html();
+
+                    return_data.push({
+                        lend_id: lend_id,
+                        reso_id: reso_id,
+                        type:type,
+                        accno: accno,
+                        snumber: snumber,
+                        title: title,
+                        issuedate: issuedate,
+                        tobe_return: tobe_return,
+                        fine_amount: fine_amount,
+                        return_action:return_action
+                        });
+                });
+        
+                $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                $.ajax({
+                    type: 'POST',
+                    dataType : 'json',
+                    // async:false,
+                    data: {
+                    'lend_data':JSON.stringify(lend_data),
+                    'return_data':JSON.stringify(return_data)
+                    },
+                    url: "{{route('return.store')}}",
+                    beforeSend: function(){
+                        $("#loader").show();
+                    },
+                    success: function(data){  
+                        if(data.status=="success")
+                        {
+                            toastr.success('Return Processe Successfuly Completed'); 
+                            if(reso_extend==true){$('#div_extend').show();}
+                            if($("#check_print").prop("checked") == true)
+                            {
+                                $("#print_table_return tbody").append(data.print_r);
+                                $("#print_table_issue tbody").append(data.print_i);
+                                $("#print_member").html(membername);
+                                $("#print_returndate").html(dtereturn);
+                                $("#print_issuedate").html(dtereturn);
+                                $("#print_tobe_return").html(data.tobe_return);
+                                print_div($("#print_lendding").html());
+                            }
+                            memberSelect(mem_id);
+                        }
+                        
+                    },
+                    error: function(data){
+                        toastr.error('Processe Faild'); 
+                    },
+                    complete:function(data){
+                    $("#loader").hide();
+                    }
+                });
+
+            }
+            else
+            {toastr.warning('Lending Cart is empty');}
+        }
+        else
+        {
+            toastr.error('Plese Select Member first');
+            document.getElementById("member_id").focus();
+        }
 
     });
 
-    $("#resourceTable").on('click', '.extend_lending', function () {
-        // $(this).closest('tr').remove();
-        var dtereturn = $("#returndte").val();
-        var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
-        var accno =  $(this).closest('tr').find(".td_acceno").html();
-        var lend_id=$(this).val();
-        // toastr.error("lend id:"+lend_id+" fine:"+fine_amount);
-        //-------------------------------------------------------
-        $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-            $.ajax({
-                type: 'POST',
-                dataType : 'json',
-                data:{
-                    dtereturn: dtereturn,
-                    lend_id: lend_id,
-                    fine_amount: fine_amount,
-                    accno: accno
-                    },
-                url: "{{route('extend_lending')}}",
-                success: function(data){  
-                    // console.log(data);
-                    if(data.massage=="success")
-                    {
-                        var memberid=$('#member_Name_id').val();
-                        memberSelect(memberid);
-                        toastr.success('Lending Period Extend Successfully');
-                    }
-                },
-                error: function(data){
-                    toastr.error('Extend Error');
-                }
-            });
-        //---------------------------------------------------------
-        document.getElementById("resource_details").focus();
+    $("#resourceTable").on('click', '.return_lending', function () {
+        // var fine_amount =  $(this).closest('tr').find(".fine_amount").html();
+        var resourceinput=$(this).val();
+        add_to_retun_table(resourceinput,"Return");
+    });
 
+    $("#resourceTable").on('click', '.extend_lending', function () {
+        var resourceinput=$(this).val();
+        add_to_retun_table(resourceinput,"Extend");
     });
 
     $('#returndte').change(function() {
@@ -843,10 +934,12 @@ $type="type".$lang;
         $("#receipt_no").val('');
 
     });
-
-    function print_receiptDiv(){
-        var contents = $("#fine_receipt").html();
-        
+    // $('#print_return').on("click",function(event){
+    //     print_div($('#print_lendding').html());
+    // });
+    function print_div(print_content){
+        // var contents = $("#fine_receipt").html();
+        var contents = print_content;
         var frame1 = $('<iframe />');
         frame1[0].name = "frame1";
         frame1[0].id = "frame1";
@@ -873,4 +966,4 @@ $type="type".$lang;
     
 
 </script>
-@endpush
+@endsection

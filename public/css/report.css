@@ -1,0 +1,31 @@
+
+ .card1 {
+	 display: block;
+	 position: relative;
+	 max-width: auto;
+	 background-color: #f2f8f9;
+	 border-radius: 4px;
+	 padding: 12px 8px;
+	 margin: 5px;
+	 text-decoration: none;
+	 z-index: 0;
+	 overflow: hidden;
+	 border: #f2f8f9 solid 1px;
+}
+
+ .card1:hover p {
+	 transition: all 0.3s ease-out;
+	 color: rgba(14, 72, 233, 0.8);
+}
+ .card1:hover h5 {
+	 transition: all 0.3s ease-out;
+	 color: rgb(7, 0, 1);
+}
+.card1:hover {
+	transition: all 0.3s ease-out;
+	border: #0c0c0c solid 1px;
+	cursor:pointer;
+}
+/* ----------------------- */
+
+ 

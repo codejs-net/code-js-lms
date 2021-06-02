@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, LogsActivity;
+    
 
     /**
      * The attributes that are mass assignable.
@@ -21,10 +23,12 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $fillable = [
+        'user_type',
         'email',
         'username',
         'password',
-        'staff_id',
+        'detail_id',
+        'status',
     ];
 
     /**
@@ -46,8 +50,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function staff()
-    {
-        return $this->belongsTo('App\Models\staff','staff_id');
-    }
+    // public function staff()
+    // {
+    //     return $this->belongsTo('App\Models\staff','staff_id');
+    // }
 }

@@ -14,7 +14,7 @@ $category="category".$lang;
 <div class="container-fluid">
     <div class="row text-center mt-1 mb-3">
         <div class="col-md-12 col-sm-12 text-center"> 
-            <h4> <i class="fa fa-cog"> {{__("LMS Configuration")}}</i></h4>
+            <h5> <i class="fa fa-cog"> {{__("LMS Configuration")}}</i></h5>
         </div>  
     </div>
     
@@ -51,7 +51,7 @@ $category="category".$lang;
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
           <div class="card card-body">
              <div class="col-md-12">
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-plus-circle">&nbsp;Create Library</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-plus-circle">&nbsp;Create Library</i></h5> </div>
              <form method="post"  name="form_library" id="form_library" class="form_library"  novalidate>
              {{ csrf_field() }}
                  <div class="form-row">
@@ -108,9 +108,9 @@ $category="category".$lang;
                      </div>
                  </div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset1"><i class="fa fa-times"></i> &nbsp;Clear</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous1" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_next" id="btn_next1" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset1"><i class="fa fa-times"></i> &nbsp;Clear</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous1" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_next" id="btn_next1" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
                 </div>   
             </form>
             <br><br>          
@@ -122,7 +122,7 @@ $category="category".$lang;
     <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
         <div class="card card-body">
              <div class="col-md-12">
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-plus-circle">&nbsp;Administrator Details</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-plus-circle">&nbsp;Administrator Details</i></h5> </div>
              <form method="POST" name="form_admin_staff" id="form_admin_staff" class="form_admin_staff"  novalidate>
              {{ method_field('POST') }}
              {{ csrf_field() }}
@@ -216,9 +216,9 @@ $category="category".$lang;
             </div>
             
             <div class="pull-right">
-                <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset2"><i class="fa fa-times"></i> &nbsp;Clear</button>
-                <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous2" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                <button type="button" class="btn btn-primary btn-md mr-2 btn_next" id="btn_next2" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
+                <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset2"><i class="fa fa-times"></i> &nbsp;Clear</button>
+                <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous2" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                <button type="button" class="btn btn-primary btn-sm mr-2 btn_next" id="btn_next2" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
             </div>   
             </form>
             <br><br>          
@@ -229,7 +229,7 @@ $category="category".$lang;
      <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
         <div class="card card-body">
 
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-plus-circle">&nbsp;Administrator Details- login</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-plus-circle">&nbsp;Administrator Details- login</i></h5> </div>
              <form method="post" name="form_admin_login" id="form_admin_login" class="form_admin_login"  novalidate>
              {{ method_field('POST') }}
              {{ csrf_field() }}
@@ -271,9 +271,9 @@ $category="category".$lang;
             </div>
 
                 <div class="pull-right">
-                    <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset3"><i class="fa fa-times"></i> &nbsp;Clear</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous3" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_next" id="btn_next3" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset3"><i class="fa fa-times"></i> &nbsp;Clear</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous3" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_next" id="btn_next3" ><i class="fa fa-chevron-circle-right"></i> &nbsp;Next</button>
                 </div>   
             </form>
             <br><br>          
@@ -283,7 +283,7 @@ $category="category".$lang;
      <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
          <div class="card card-body">
 
-             <div class="text-center text-indigo"> <h4>  <i class="fa fa-check-circle">&nbsp;Finish</i></h4> </div>
+             <div class="text-center text-indigo"> <h5>  <i class="fa fa-check-circle">&nbsp;Finish</i></h5> </div>
              <form name="form_finish" id="form_finish" class="form_finish"  novalidate>
              {{ csrf_field() }}
              
@@ -320,9 +320,9 @@ $category="category".$lang;
                 </div>
 
                 <div class="pull-right">
-                    <button type="button" class="btn btn-warning btn-md mr-2 btn_reset" id="btn_reset_form"><i class="fa fa-window-restore"></i> &nbsp;Reset</button>
-                    <button type="button" class="btn btn-primary btn-md mr-2 btn_previous" id="btn_previous4" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
-                    <button type="button" class="btn btn-success btn-md mr-2 toastrDefaultError toastsDefaultSuccess btn_submit" id="btn_submit" ><i class="fa fa-check"></i> &nbsp;Submit</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-2 btn_reset" id="btn_reset_form"><i class="fa fa-window-restore"></i> &nbsp;Reset</button>
+                    <button type="button" class="btn btn-primary btn-sm mr-2 btn_previous" id="btn_previous4" ><i class="fa fa-chevron-circle-left"></i>&nbsp;Previous</button>
+                    <button type="button" class="btn btn-success btn-sm mr-2 toastrDefaultError toastsDefaultSuccess btn_submit" id="btn_submit" ><i class="fa fa-check"></i> &nbsp;Submit</button>
                 </div>   
             </form>
             <br><br>          

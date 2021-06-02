@@ -92,8 +92,7 @@ class ConfigController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $mbr=new staff;
-        // $mbr->center_id=0;
-        $mbr->title=$request->title;
+        // $mbr->title=$request->title;
         $mbr->name_si=$request->name_si;
         $mbr->name_ta=$request->name_ta;
         $mbr->name_en=$request->name_en;
@@ -107,10 +106,11 @@ class ConfigController extends Controller
         $mbr->nic=$request->nic;
         $mbr->mobile=$request->Mobile;
         $mbr->birthday=$request->birthday;
-        $mbr->gender=$request->gender;
+        // $mbr->gender=$request->gender;
         $mbr->description=$request->Description_staff;
         $mbr->regdate=$request->registeredDate;
-        $mbr->image="";
+        $mbr->status="1";
+        // $mbr->image="";
 
         Session::put('mob', $request->Mobile);
         $mbr->save();
@@ -123,10 +123,12 @@ class ConfigController extends Controller
     {
         $staff= staff::latest()->first();
         $user = User::create([
+            'user_type'=>"staff",
             'email' => $request->email,
             'username' => $request->uname,
             'password' =>  Hash::make($request->password),
-            'staff_id' => $staff->id
+            'detail_id' => $staff->id,
+            'user_status' => "1"
         ]);
 
         $role = Role::where('name','Admin')->first();
@@ -135,7 +137,11 @@ class ConfigController extends Controller
         $SoapController =new SoapController;
         $mobile_no = session()->get('mob');
         $message_text="Welcome To LMS"."\r\n"."**Admin-User**"."\r\n"."User name :".$request->uname."\r\n"."Password : ".$request->password."\r\n"."Thank you..!";
-        $msgStatus=$SoapController->Singal_msg_Send($mobile_no,$message_text);
+        
+        if($SoapController->is_connected()==true)
+        {
+            $msgStatus=$SoapController->Singal_msg_Send($mobile_no,$message_text);
+        } 
         // error_log("massage report".$msgStatus);
         //--------------------------------------
         

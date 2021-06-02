@@ -7,17 +7,31 @@
 @section('content')
 @php
 $theme = session()->get('theme');
+$locale = session()->get('locale');
+$library = session()->get('library');
+$lang="_".$locale;
+$title="title".$lang;
+$member="member".$lang;
+$center_name="name".$lang;
+$lib_name="name".$lang;
+$lib_add1="address1".$lang;
+$lib_add2="address2".$lang;
 @endphp
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-               
                 <div class="col-12 col-sm-6 col-md-9 js-bg">
                     <div class="content-header pl-3 pb-1 mt-2">
                         <div class="box box-info">
                             <div class="box-header text-left ml-4 pl-3">
-                                <div class=" header js-dash-h"> <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Public Library")}}&nbsp;-&nbsp;{{ __("Library Management System")}}</h5></div>
+                                <div class=" header js-dash-h">
+                                    <h5><i class="fa fa-inbox"></i>&nbsp;{{ __("Library Management System")}} -&nbsp;{{$library->$lib_name}}&nbsp;({{$library->$lib_add1}},&nbsp;{{$library->$lib_add2}})</h5>
+                                    <span><b>{{__('Centers :')}}</b> </span>
+                                    @foreach($cent_name as $center)
+                                        <span class="text-dark">{{$center}} ,&nbsp;</span>
+                                    @endforeach
+                                </div>
                                 <!-- <div class=" header"> <h5><i class="fa fa-inbox">&nbsp;{{ __("Library Management System")}}</i></h5></div> -->
                             </div>
                         </div>
@@ -31,9 +45,7 @@ $theme = session()->get('theme');
                                     </div>
                                     <h4 class="text-left js-dashboard-side-text-heding font-weight-bold">Code-JS LMS</h4>
                                     <p class="js-dashboard-side-text col-md-10 mt-1">
-                                        Code-JS LMS is an interactive solution that allows librarians and staff to keep real-time track of inventory and media assets and allows Members digital means of discovery and reading.
-                                        an interactive solution that allows Code-JS LMS is an interactive solution that allows 
-                                        librarians and staff to keep real-time track of inventory and media assets
+                                        {{__('code-js-descript')}}
                                     </p>
                     
                             </div> 
@@ -45,8 +57,8 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-1 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>10658</h3>
-                                    <p>Total Resources</p>
+                                    <h3>{{$rcount}}</h3>
+                                    <p>{{__('Total Resources')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-star-o"></i>
@@ -59,8 +71,8 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-2 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>825</h3>
-                                    <p>Total members</p>
+                                    <h3>{{$mcount}}</h3>
+                                    <p>{{__('Total members')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-user-o"></i>
@@ -73,9 +85,9 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-3 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>44</h3>
+                                    <h3>{{$issucount}}</h3>
         
-                                    <p>Issue-Today</p>
+                                    <p>{{__('Issue-Today')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-cart-arrow-down"></i>
@@ -88,9 +100,9 @@ $theme = session()->get('theme');
                             <!-- small box -->
                             <div class="small-box js-box-bg-4 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>38</h3>
+                                    <h3>{{$rtncount}}</h3>
         
-                                    <p>Retund-Today</p>
+                                    <p>{{__('Retund-Today')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-shopping-bag"></i>
@@ -101,9 +113,9 @@ $theme = session()->get('theme');
                         <div class="col">
                             <div class="small-box js-box-bg-5 elevation-5">
                                 <div class="inner js-box-text">
-                                    <h3>Rs 150</h3>
+                                    <h3>Rs&nbsp;{{$income}}</h3>
         
-                                    <p>Income-today</p>
+                                    <p>{{__('Income-today')}}</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-money"></i>
@@ -115,7 +127,7 @@ $theme = session()->get('theme');
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-12">
                             <div class="box-header text-left ml-5 pl-3">
-                                <h6 class="info-box-icon"><u>Quick Links</u></h6>
+                                <h6 class="info-box-icon"><u>{{__('Quick Links')}}</u></h6>
                                 <!-- <h6 class="info-box-icon"><i class="fas fa-cog"></i>&nbsp;Quick Links</h6> -->
                             </div>
                             <!-- <hr> -->
@@ -124,86 +136,57 @@ $theme = session()->get('theme');
                         
                     <div class="row pl-2 ml-3 pr-2 js-dash-link">
                         
-                        <a href="" class="col-md-2 btn btn-block  mt-2 js-dash-link-btn elevation-2">
+                        <a href="{{ route('create_resource') }}" class="col-md-2 btn btn-block  mt-2 js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon pt-2"><i class="fas fa-plus fa-md"></i></span> --}}
-                            <span class="info-box-text pt-2">Add Resources</span>
+                            <span class="info-box-text pt-2">{{__('Add Resources')}}</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
+                        <a href="{{ route('create_member') }}" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-plus fa-md "></i></span> --}}
-                            <span class="info-box-text">Add Members</span>
+                            <span class="info-box-text">{{__('Add Members')}}</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('resource_catelog') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-book fa-md"></i></span> --}}
-                            <span class="info-box-text">Catalog</span>
+                            <span class="info-box-text">{{__('Catalog')}}</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('resource_catagory.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span> --}}
-                            <span class="info-box-text">Supports</span>
+                            <span class="info-box-text">{{__('Supports')}}</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('issue.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-cart-plus fa-md"></i></span> --}}
-                            <span class="info-box-text">Issue</span>
+                            <span class="info-box-text">{{__('Issue')}}</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('return.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fa fa-level-down fa-md"></i></span> --}}
-                            <span class="info-box-text">Return</span>
+                            <span class="info-box-text">{{__('Return')}}</span>
                         </a>
 
                         <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-file-text fa-md"></i></span> --}}
-                            <span class="info-box-text">Receipt</span>
+                            <span class="info-box-text">{{__('Receipt')}}</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block   js-dash-link-btn elevation-2">
+                        <a href="{{ route('rpt_lending_index') }}" class="col-md-2 btn btn-block   js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-file fa-md"></i></span> --}}
-                            <span class="info-box-text">Reports</span>
+                            <span class="info-box-text">{{__('Lending Reports')}}</span>
                         </a>
 
-                        <a href="" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
+                        <a href="{{ route('staff.index') }}" class="col-md-2 btn btn-block  js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fa fa-user fa-md"></i></span> --}}
-                            <span class="info-box-text">Staff</span>
+                            <span class="info-box-text">{{__('Staff')}}</span>
                         </a>
 
 
-                        <a href="" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
+                        <a href="{{ route('members.index') }}" class="col-md-2 btn btn-block js-dash-link-btn elevation-2">
                             {{-- <span class="info-box-icon  "><i class="fas fa-users fa-md pt-2"></i></span> --}}
-                            <span class="info-box-text">Members</span>
+                            <span class="info-box-text">{{__('Members')}}</span>
                         </a>
-                        <!-- 
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-user-circle fa-md"></i></span>
-                            <span class="info-box-text">Member Account</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon"><i class="fas fa-cog fa-md  pt-2"></i></span>
-                            <span class="info-box-text">Setting</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-barcode fa-md pt-2"></i></span>
-                            <span class="info-box-text">Code Genarate</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-list fa-md pt-2"></i></span>
-                            <span class="info-box-text">Board of Survey</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-cube fa-md"></i></span>
-                            <span class="info-box-text">Member Support</span>
-                        </a>
-
-                        <a href="" class="col-md-2 btn btn-block  bg-white js-dash-link-btn elevation-2">
-                            <span class="info-box-icon  "><i class="fas fa-bars fa-md"></i></span>
-                            <span class="info-box-text">Resource Support</span>
-                        </a>  -->
+                      
                        
                     </div>
                     <div class="row mt-3 pt-4">
@@ -211,11 +194,12 @@ $theme = session()->get('theme');
                            
                             <div class="box-header text-left ml-5 pl-3">
                                 <!-- <h6 class="info-box-icon"><i class="fas fa-cog"></i>&nbsp;Transaction Summary</h6> -->
-                                <h6 class="info-box-icon"><u>Transaction Summary</u></h6>
+                                <h6 class="info-box-icon"><u>{{__('Transaction Summary')}}</u></h6>
                             </div>
                             <!-- <hr> -->
                         </div>
                     </div>
+                    @can('dashboard')
                     <div class="row pl-4 pr-4 mb-4">
                        <div class="col-12 col-sm-12 col-md-6 p-3">
                             <div class="js-chart elevation-3">
@@ -228,6 +212,7 @@ $theme = session()->get('theme');
                             </div>
                        </div>
                     </div>
+                    @endcan
             </div>
         
             <div class="col-12 col-sm-6 col-md-3 p-3 js-rightbar-bg">
@@ -235,7 +220,7 @@ $theme = session()->get('theme');
                         <div id="MyClockDisplay" class="clock text-center" onload="showTime()"></div>
                     </div>
                    
-                    <div class="calendar mt-3">
+                    <div class="calendar mt-3 mb-3 pb-3">
                         <div class="header">
                             <a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
                             <div class="text" data-render="month-year"></div>
@@ -282,6 +267,51 @@ $theme = session()->get('theme');
 <script src="{{ asset('plugins/calendar/js/calendar.js') }}"defer></script>
 
 <script>
+$(document).ready(function()
+{
+    var op="";
+    $.ajax
+    ({
+        type: "GET",
+        dataType : 'json',
+        url: "{{route('latast_lending')}}", 
+
+        success:function(data){
+            console.log(data.issue.length);
+            for(var i=0;i< data.issue.length;i++)
+            {
+                op+= '<div class="card card-notify">';
+                op+= '<div class="card-header card-notify-header1 px-2 py-1">';
+                op+= '<h5 class="card-title">'+(i+1)+'-{{trans('Latest Resource Issue') }}</h5>';
+                op+= '<div class="card-tools">';
+                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '</i></button></div></div>';
+                op+= '<div class="card-body px-2 py-1">';
+                op+= data.issue[i].accessionNo+'-'+data.issue[i].{{$title}}+'&nbsp;{{trans('Issue to') }} '+data.issue[i].{{$member}};
+                op+= '</div></div>';                  
+            }
+            op+= '<div class="notification-separate"></div>';   
+           for(var j=0;j<data.return.length;j++)
+           {
+                op+= '<div class="card card-notify">';
+                op+= '<div class="card-header card-notify-header1 px-2 py-1">';
+                op+= '<h5 class="card-title">'+(j+1)+'-{{trans('Latest Resource Return') }}</h5>';
+                op+= '<div class="card-tools">';
+                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '</i></button></div></div>';
+                op+= '<div class="card-body px-2 py-1">';
+                op+= data.return[j].accessionNo+'-'+ data.return[j].{{$title}}+'&nbsp;{{trans('Return by') }} '+data.return[j].{{$member}};
+                op+= '</div></div>';               
+           }
+           $("#notificetion").append(op);
+        },
+        error:function(data){
+        }
+    })
+    
+});
+
+
  var options = {
             chart: {
                 height: 280,
@@ -336,8 +366,8 @@ $theme = session()->get('theme');
                 }
             },
             series: [{
-
-                 data: [2500, 11600, 3400, 5500, 7900, 5500, 2500, 1025, 10254, 6524,5245, 3254]
+                name: 'Issued',
+                data: [<?php echo $i_summary; ?>]
             }],
             stroke: {
                 width: 1,
@@ -354,12 +384,12 @@ $theme = session()->get('theme');
                     },
                 },
             yaxis: {
-                labels: {
-                    show: false
+                title: {
+                    text: 'Issued Count'
                 }
             },
             title: {
-                text: 'Book return - 2021',
+                text: 'Resource Issue-'+ new Date().getFullYear(),
                 align: 'center',
                 floating: true
             },
@@ -373,11 +403,9 @@ $theme = session()->get('theme');
                     show: false
                 },
                 y: {
-                    title: {
-                        formatter: function() {
-                            return ''
-                        }
-                    }
+                    formatter: function (val) {
+                    return val+ " Resources"
+                    }  
                 }
             }
         }
@@ -434,8 +462,8 @@ var options1 = {
                 colors: ['#010101']
             },
             series: [ {
-                name: 'Hours',
-                data: [150, 165, 30, 210, 56, 94, 120, 40, 260, 20,0, 0]
+                name: 'Returned',
+                data: [<?php echo $r_summary; ?>]
             }],
             xaxis: {
                 type: 'category',
@@ -449,11 +477,11 @@ var options1 = {
                 },
             yaxis: {
                 title: {
-                    text: 'Hours'
+                    text: 'Returned Count'
                 }
             },
             title: {
-                text: 'Book Lending -2021',
+                text: 'Resource Returned-'+ new Date().getFullYear(),
                 align: 'center',
                 floating: true
             },
@@ -464,7 +492,7 @@ var options1 = {
             tooltip: {
                 y: {
                     formatter: function (val) {
-                        return "$ " + val + " thousands"
+                        return val+ " Resources"
                     }
                 }
             }
@@ -478,35 +506,6 @@ var options1 = {
         chart1.render();
 
 
-        $(document).ready(function()
-        {
-           var op="";
-           for(var i=0;i<3;i++)
-           {
-                op+= '<div class="card card-notify">';
-                op+= '<div class="card-header card-notify-header1">';
-                op+= '<h4 class="card-title">Latest Resource Issue</h4>';
-                op+= '<div class="card-tools">';
-                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
-                op+= '</i></button></div></div>';
-                op+= '<div class="card-body">';
-                op+= 'BKPS-1524 issued to Member-1';
-                op+= '</div></div>';                  
-           }
-           for(var j=0;j<3;j++)
-           {
-                op+= '<div class="card card-notify">';
-                op+= '<div class="card-header card-notify-header2">';
-                op+= '<h4 class="card-title">latest Resource Return</h4>';
-                op+= '<div class="card-tools">';
-                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
-                op+= '</i></button></div></div>';
-                op+= '<div class="card-body">';
-                op+= 'BKPS-1524 returnd by Member-2';
-                op+= '</div></div>';                  
-           }
-           $("#notificetion").append(op);
-
-        });
+       
 </script>
 @endsection

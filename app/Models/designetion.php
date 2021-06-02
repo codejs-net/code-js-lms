@@ -9,4 +9,5 @@ class designetion extends Model
 {
     use HasFactory;
     protected $table="designetions";
+    protected $fillable = ['designetion_si','designetion_ta','designetion_en'];
 }

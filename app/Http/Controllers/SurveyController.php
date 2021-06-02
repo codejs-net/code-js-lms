@@ -25,6 +25,15 @@ use Crypt;
 
 class SurveyController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:survey-list|survey-create|survey-edit|survey-delete', ['only' => ['index','view_survey','survey_history']]);
+         $this->middleware('permission:survey-create', ['only' => ['create','store']]);
+         $this->middleware('permission:survey-edit', ['only' => ['edit']]);
+         $this->middleware('permission:survey-delete', ['only' => ['delete']]);
+         $this->middleware('permission:survey-finalize', ['only' => ['finalize_survey']]);
+         $this->middleware('permission:survey-unfinalize', ['only' => ['unfinalize_survey']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -164,7 +173,6 @@ class SurveyController extends Controller
             $lang = "_" . $db_setting->value;
         }
         Session::put('db_locale', $lang);
-
         if(request()->ajax())
         {
             $surveydata = view_survey::select('*')
@@ -212,49 +220,159 @@ class SurveyController extends Controller
         ->where('survey_id', $request->surveyid)
         ->where('accessionNo', $request->resourceinput)
         ->orWhere('standard_number', $request->resourceinput)
-        ->first();
-        
-        if ($reso) 
-        {
-            $lend = lending_detail::select('*')
-            ->where('resource_id', $reso->resource_id)
-            ->Where('return', 0)
-            ->first();
-            if(!$lend) 
-            {
-                if($reso->survey==0)
-                {$massage="success";}
-                else
-                {$massage="check";}
+        ->get();
 
-                $data_update=survey_detail_temp::find($reso->id);
+        if ($reso->count()>0) {
+            if ($reso->count()==1) {
+                $lend = lending_detail::select('*')
+                ->where('resource_id', $reso[0]->resource_id)
+                ->Where('return', 0)
+                ->first();
+                if(!$lend) 
+                {
+                    if($reso[0]->survey==0)
+                    {$massage="success";}
+                    else
+                    {$massage="check";}
+    
+                    $data_update=survey_detail_temp::find($reso[0]->id);
+                        $data_update->survey=1;
+                        $data_update->suggestion_id=$request->suggetion;
+                        $data_update->check_by=Auth::user()->id;
+                        $data_update->save();
+    
+                        $survey_count = view_survey::select('id')
+                        ->where('survey_id',$request->surveyid)
+                        ->where('survey',1)
+                        ->count();
+                        return response()->json([
+                                'title' => $reso[0]->$title,
+                                'accno' => $reso[0]->accessionNo,
+                                'snumber' => $reso[0]->standard_number,
+                                'category' => $reso[0]->$category,
+                                'type' => $reso[0]->$type,
+                                'creator' => $reso[0]->$creator,
+                                'scount'=>$survey_count,
+                                'massage' => $massage
+                                ]);
+                }
+                else{
+                    return response()->json(['massage' => "lend",'title' => $reso[0]->$title]);
+                }
+            }
+            else{
+                // ---------same isbn------------
+                return response()->json(['resos'=>$reso,'massage' => "duplicate"]);
+            }
+        } 
+        else {
+            return response()->json(['massage' => "error"]);
+        }
+    }
+
+    public function same_reso_check(Request $request)
+    {
+        $lang = session()->get('db_locale');
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
+        $massage="";
+
+        $reso = view_survey::select('*')
+        ->where('survey_id', $request->surveyid)
+        ->where('id', $request->select_resoid)
+        ->first();
+
+        if ($reso) {
+                $lend = lending_detail::select('*')
+                ->where('resource_id', $reso->resource_id)
+                ->Where('return', 0)
+                ->first();
+                if(!$lend) 
+                {
+                    if($reso->survey==0)
+                    {$massage="success";}
+                    else
+                    {$massage="check";}
+    
+                    $data_update=survey_detail_temp::find($reso->id);
                     $data_update->survey=1;
                     $data_update->suggestion_id=$request->suggetion;
                     $data_update->check_by=Auth::user()->id;
                     $data_update->save();
-
+    
                     $survey_count = view_survey::select('id')
                     ->where('survey_id',$request->surveyid)
                     ->where('survey',1)
                     ->count();
                     return response()->json([
-                            'title' => $reso->$title,
-                            'accno' => $reso->accessionNo,
-                            'snumber' => $reso->standard_number,
-                            'category' => $reso->$category,
-                            'type' => $reso->$type,
-                            'creator' => $reso->$creator,
-                            'scount'=>$survey_count,
-                            'massage' => $massage
-                            ]);
+                        'title' => $reso->$title,
+                        'accno' => $reso->accessionNo,
+                        'snumber' => $reso->standard_number,
+                        'category' => $reso->$category,
+                        'type' => $reso->$type,
+                        'creator' => $reso->$creator,
+                        'scount'=>$survey_count,
+                        'massage' => $massage
+                        ]);
+                }
+                else{
+                    return response()->json(['massage' => "lend",'title' => $reso->$title]);
+                }
+        } 
+        else {
+            return response()->json(['massage' => "error"]);
+        }
+    }
+
+    public function same_reso_uncheck(Request $request)
+    {
+        $lang = session()->get('db_locale');
+        $title = "title" . $lang;
+        $category = "category" . $lang;
+        $type = "type" . $lang;
+        $creator = "name" . $lang;
+        $massage="";
+
+        $reso = view_survey::select('*')
+        ->where('survey_id', $request->surveyid)
+        ->where('id', $request->select_resoid)
+        ->first();
+
+        if ($reso) 
+        {
+            if($reso->survey==1)
+            {
+               
+                $data_update=survey_detail_temp::find($reso->id);
+                $data_update->survey=0;
+                $data_update->suggestion_id=null;
+                $data_update->check_by=null;
+                $data_update->save();
+
+                $survey_count = view_survey::select('id')
+                ->where('survey_id',$request->surveyid)
+                ->where('survey',1)
+                ->count();
+                return response()->json([
+                        'title' => $reso->$title,
+                        'accno' => $reso->accessionNo,
+                        'snumber' => $reso->standard_number,
+                        'category' => $reso->$category,
+                        'type' => $reso->$type,
+                        'creator' => $reso->$creator,
+                        'scount'=>$survey_count,
+                        'massage' => "success"
+                        ]);
+
             }
             else
             {
-                return response()->json(['massage' => "lend",'title' => $reso->$title]);
+                return response()->json(['massage' => "check",'title' => $reso->$title]);
             }
         } 
-        else 
-        {
+        else {
             return response()->json(['massage' => "error"]);
         }
     }
@@ -470,6 +588,10 @@ class SurveyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function unfinalize_survey(Request $request)
+    {
+
+    }
     public function update(Request $request, $id)
     {
         //

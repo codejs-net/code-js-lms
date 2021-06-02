@@ -14,7 +14,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard
+                                {{__('Dashboard')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -22,7 +22,7 @@
                             <li class="nav-item">
                                 <a href="{{ url('/home') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Library</p>
+                                    <p>{{__('Library')}}</p>
                                 </a>
                             </li>
                             
@@ -34,24 +34,35 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-windows"></i>
                             <p>
-                                Resources
+                                {{__('Resources')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('resource-catalogue')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('resource_catelog') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Resources Catelog')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('resource-list')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('resource.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Resources</p>
+                                    <p>{{__('Search Resources')}}</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('resource-create')
                             <li class="nav-item">
                             <a href="{{ route('create_resource') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Resources</p>
+                                    <p>{{__('Add Resources')}}</p>
                                 </a>
                             </li> 
-                           
+                            @endcan
                         </ul>
                     </li>
                    
@@ -60,123 +71,194 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>
-                                 Lending
+                                 {{__('Lending')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('Lenging-issue')
                             <li class="nav-item">
                             <a href="{{ route('issue.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Issue Resources</p>
+                                    <p>{{__('Issue Resources')}}</p>
                                 </a>
                             </li>
-                          
+                            @endcan
+                            @can('Lenging-return')
                             <li class="nav-item">
                                 <a href="{{ route('return.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Return Resources</p>
+                                    <p>{{__('Return Resources')}}</p>
                                 </a>
                             </li>
-                            
+                            @endcan
+                            @can('lenging-list')
+                            <li class="nav-item">
+                                <a href="{{ route('lending.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Search Lending')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('lenging-list')
+                            <li class="nav-item">
+                                <a href="{{ route('lending_history') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Lending History')}}</p>
+                                </a>
+                            </li>
+                            @endcan
                         </ul>
                     </li>
                     <!-- members -->
+                    @can('member-list')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-users"></i>
+                            <i class="nav-icon fa fa-address-card-o"></i>
                             <p>
-                               Members
+                               {{__('Members')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                            <a href="{{ route('create_member') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Member</p>
-                                </a>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('members.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Search Member</p>
+                                    <p>{{__('Search Member')}}</p>
                                 </a>
                             </li>
+                
+                            @can('member-create')
+                            <li class="nav-item">
+                                <a href="{{ route('create_member') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Add Member')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                          
                             <li class="nav-item">
                                 <a href="{{ route('codes.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Member Details</p>
+                                    <p>{{__('Member Account')}}</p>
                                 </a>
                             </li>
+                         
                             
                         </ul>
                     </li>
-
+                    @endcan
                     <!-- Support Data -->
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-laptop"></i>
                             <p>
-                                Support Data
+                                {{__('Support Data')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('resource_support_data-list')
                             <li class="nav-item">
                             <a href="{{ route('resource_catagory.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Resources Support</p>
+                                    <p>{{__('Resources Support')}}</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('member_support_data-list')
                             <li class="nav-item">
-                                <a class="nav-link" href="{!! url('/createOT') !!}">
+                                <a class="nav-link" href="{{ route('member_catagory.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Members Support</p>
+                                    <p>{{__('Members Support')}}</p>
                                 </a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
+                            @endcan
+                            @can('staff_support_data-list')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('designation.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Impots</p>
+                                    <p>{{__('Staff Support')}}</p>
                                 </a>
-                            </li> -->
-                            
+                            </li>
+                            @endcan
+                            @can('library_support_data-list')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('titles.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Library Support')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('survey_support_data-list')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('survey_suggestion.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Survey Support')}}</p>
+                                </a>
+                            </li>
+                            @endcan
                         </ul>
                     </li>
                     <!-- Codes -->
+                    @can('code-genarate')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-barcode"></i>
                             <p>
-                                Code Genarate
+                                {{__('Code Genarate')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                           
                             <li class="nav-item">
                             <a href="{{ route('Barcoderange') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Custom Codes</p>
-                                </a>
-                            </li>
-                           
-                            <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Excel Impots</p>
+                                    <p>{{__('Genarate Codes')}}</p>
                                 </a>
                             </li>
                             
                         </ul>
                     </li>
-
+                    @endcan
                     <!-- Board Of Survay -->
+                    @can('survey-list')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-briefcase"></i>
+                            <i class="nav-icon fa fa-check-square-o"></i>
                             <p>
-                            library Survay
+                            {{__('library Survay')}}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                           
+                            <li class="nav-item">
+                            <a href="{{ route('view_survey',0) }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Survey')}}</p>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a href="{{ route('view_survey',1) }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('History')}}</p>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    @endcan
+                    <!-- receipts -->
+                    @can('receipt-list')
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-file-o"></i>
+                            <p>
+                            {{__('Receipts')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -184,142 +266,307 @@
                             <li class="nav-item">
                             <a href="{{ route('view_survey',0) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Survey</p>
-                                </a>
-                            </li>
-                           
-                            <li class="nav-item">
-                                <a href="{{ route('view_survey',1) }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>History</p>
+                                    <p>{{__('Receipts')}}</p>
                                 </a>
                             </li>
                             
                         </ul>
                     </li>
-
+                    @endcan
+                    
+                    {{-- staff --}}
+                    @can('staff-list')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-briefcase"></i>
+                            <i class="nav-icon fa fa-users"></i>
                             <p>
-                            Settings
+                            {{__('Staff')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('staff-create')
                             <li class="nav-item">
-                            <a href="{{ route('theme.index') }}" class="nav-link">
+                            <a href="{{ route('staff.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Theme Settings</p>
+                                    <p>{{__('Add Staff')}}</p>
                                 </a>
                             </li>
-                           
+                            @endcan
                             <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
+                                <a href="{{ route('staff.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Lending Settings</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('codes.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>DataBase Settings</p>
+                                    <p>{{__('Search Staff')}}</p>
                                 </a>
                             </li>
                             
                         </ul>
                     </li>
+                    @endcan
 
-                    @can('role-list')
+                    {{-- center --}}
+                    @can('center-list')
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-home"></i>
+                            <p>
+                            {{__('Centers')}}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            
+                            <li class="nav-item">
+                                <a href="{{ route('center.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Search Center')}}</p>
+                                </a>
+                            </li>
+                            @can('center-create')
+                            <li class="nav-item">
+                                <a href="{{ route('center.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Add Center')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
+                   
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-user-circle"></i>
                             <p>
-                                User Account
+                                {{__('User Account')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                          
                             <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Users Account</p>
+                                    <p>{{__('My Account')}}</p>
+                                </a>
+                            </li>
+                          
+                            @can('user-list')
+                            <li class="nav-item">
+                            <a href="{{ route('staff_users') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Staff Users')}} Account</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('roles.index') }}" class="nav-link">
+                            <a href="{{ route('member_users') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Roles & Permisions</p>
+                                    <p>{{__('Member Users Account')}}</p>
                                 </a>
                             </li>
-                           
-                            
+                            @endcan
                         </ul>
                     </li>
-                    
+                    @can('role-list')
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-lock"></i>
+                            <p>
+                            {{__('Roles & Permisions')}}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('roles.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Roles & Permisions')}}</p>
+                                </a>
+                            </li>
+ 
+                        </ul>
+                    </li>
                     @endcan
 
-                   
+                    @can('activity-log')
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-tasks"></i>
+                            <p>
+                            {{__('Activity Log')}}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('roles.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Search Log')}}</p>
+                                </a>
+                            </li>
+ 
+                        </ul>
+                    </li>
+                    @endcan
+                    {{-- setting --}}
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-cog"></i>
+                            <p>
+                            {{__('Settings')}}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('basic_setting-list')
+                            <li class="nav-item">
+                                <a href="{{ route('basic_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
+                                    <p>{{__('Basic Settings')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('lms_setting-list')
+                            <li class="nav-item">
+                            <a href="{{ route('lms_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
+                                    <p>{{__('LMS Settings')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('lending_setting-list')
+                            <li class="nav-item">
+                                <a href="{{ route('lending_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
+                                    <p>{{__('Lending Settings')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('notification_setting-list')
+                            <li class="nav-item">
+                                <a href="{{ route('notification_setting') }}" class="nav-link">
+                                    <i class="fa fa-wrench nav-icon"></i>
+                                    <p>{{__('Notification Settings')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+
+                    {{-- backup --}}
+                    @can('backup')
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-database"></i>
+                            <p>
+                            {{__('Backup & Restore')}}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('backup_db') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Backup DataBase')}}</p>
+                                </a>
+                            </li>
+ 
+                        </ul>
+                    </li>
+                    @endcan
                    
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
-                                Reports
+                                {{__('Reports')}}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('resource-report')
                             <li class="nav-item">
-                                <a href="{{ route('generate_pdf') }}" class="nav-link">
+                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Test Report</p>
+                                    <p>{{__('Resource Reports')}}</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('member-report')
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Member Reports')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('lending-report')
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_lending_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Lending Reports')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('resource_support_data-report')
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_support_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Resource Support Data Reports')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('member_support_data-report')
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_support_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Member Support Data Reports')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('staff_support_data-report')
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_support_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Staff Support Data Reports')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('library_support_data-report')
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_support_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Library Support Data Reports')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('survey-report')
+                            <li class="nav-item">
+                                <a href="{{ route('rpt_resource_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('Survey Reports')}}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('user-report')
                             <li class="nav-item">
                                 <a class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Books Summary Report</p>
+                                    <p>{{__('User Reports')}}</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('log-report')
                             <li class="nav-item">
                                 <a class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Members Details Report</p>
+                                    <p>{{__('Log Reports')}}</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Members Summary Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Book Lending Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Fine Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Bord Of Survey Report</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>User Details Report</p>
-                                </a>
-                            </li>
-
-
+                            @endcan
                         </ul>
                     </li>
 

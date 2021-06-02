@@ -94,7 +94,6 @@ class RoleController extends Controller
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
-    
         return view('roles.edit',compact('role','permission','rolePermissions'));
     }
     
@@ -108,7 +107,7 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:roles,name,'.$id,
             'permission' => 'required',
         ]);
     
@@ -127,9 +126,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        DB::table("roles")->where('id',$id)->delete();
+        DB::table("roles")->where('id',$request->id_delete)->delete();
         return redirect()->route('roles.index')
                         ->with('success','Role deleted successfully');
     }

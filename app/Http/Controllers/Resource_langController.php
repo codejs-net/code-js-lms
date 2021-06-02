@@ -18,11 +18,11 @@ class Resource_langController extends Controller
   
     function __construct()
     {
-         $this->middleware('permission:support_data-list|support_data-create|support_data-edit|support_data-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
-         $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
-         $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
-         $this->middleware('permission:data-import', ['only' => ['import']]);
+         $this->middleware('permission:resource_support_data-list|resource_support_data-create|resource_support_data-edit|resource_support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:resource_support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:resource_support_data-edit', ['only' => ['update_detail']]);
+         $this->middleware('permission:resource_support_data-delete', ['only' => ['delete']]);
+         $this->middleware('permission:resource_support_data-import', ['only' => ['import']]);
     }
     /**
      * Display a listing of the resource.
@@ -55,20 +55,30 @@ class Resource_langController extends Controller
     public function store(Request $request)
     {
         
-        // $locale = session()->get('locale');
-        // $lang="_".$locale;
+        $locale = session()->get('locale');
+        $lang="_".$locale;
 
-        // request()->validate([
-        //     'name'.$lang => 'required',
-        // ]);
-    
+        $this->validate($request,[
+            'name'.$lang=>'required|max:255|min:5',
+            ]);
+
         $form_data = array(
             'language_si' =>  $request->name_si,
             'language_ta' =>  $request->name_ta,
             'language_en' =>  $request->name_en, 
         );
-        resource_language::create($form_data);
-        return redirect()->route('resource_language.index')->with('success','Details created successfully.');
+        $dta=resource_language::create($form_data);
+      
+
+        if(request()->ajax())
+        {
+            $alldata = resource_language::select('id','language_si AS name_si','language_ta AS name_ta','language_en AS name_en')->get();
+            return response()->json(['data' =>$alldata ,'dataid'=>$dta->id]);
+        }
+        else
+        {
+            return redirect()->route('resource_language.index')->with('success','Details created successfully.');
+        }
     }
     
     /**

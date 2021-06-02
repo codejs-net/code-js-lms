@@ -4,16 +4,20 @@
 @php
 $locale = session()->get('locale');
 $lang="_".$locale;
+$title="title".$lang;
 $category="category".$lang;
 $suggetion="suggestion".$lang;
 $description="description".$lang;
+$type="type".$lang;
+$publisher="publisher".$lang;
+$creator="name".$lang;
 
 @endphp
 
 <nav aria-label="breadcrumb ">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item ml-4"><a href="{{ route('home') }}" class="js-text"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('survey.index') }}" class="js-text"><i class="fa fa-book"></i> Survey&nbsp;</a></li>
+    <li class="breadcrumb-item ml-4"><a href="{{ route('home') }}" class="js-text"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('survey.index') }}" class="js-text"><i class="fa fa-folder-open"></i> Survey&nbsp;</a></li>
     <li class="breadcrumb-item active" aria-current="page"><a class="js-text"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Survey&nbsp;</a></li>
 </ol>
 </nav>
@@ -126,11 +130,40 @@ $description="description".$lang;
    <div class="row">
         <div class="col-md-10 col-sm-8 col-8 text-left">
             <label class="ml-2" for="report" >Survey Reports:  </label><br>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;All Resources</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;Checked Resources</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;Checked Resources with Suggetion</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;UnChecked Resources</i></a>
-            <a href="" class="btn btn-outline-success btn-sm ml-2 mb-2" id=""><i class="fa fa-bar-chart">&nbsp;&nbsp;lend Resources</i></a>
+            <div class="row ml-2">
+                <div class="col-10 input-group border border-secondary">
+                    <div class=" py-1 px-2 mr-2">
+                        <div class="form-check form-check-inline text-primary" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp;All&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="All" checked >
+                        </div>
+                        <div class="form-check form-check-inline text-primary" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp;Checked&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="1" >
+                        </div>
+                        <div class="form-check form-check-inline text-info" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp;Non Checked&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="0" >
+                        </div>
+                        <div class="form-check form-check-inline text-success" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp; Suggested&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="Suggested" >
+                        </div>
+                        <div class="form-check form-check-inline text-danger" >
+                            <label class="form-check-label"><i class="fa fa-bar-chart"></i> &nbsp; Non Return&nbsp;</label>
+                            <input type="radio" class="form-check-input methord" name="export_type" value="Lend" >
+                        </div>
+                    </div>
+                </div>
+                <diV class="col-2">
+                    <form class="form-inline pull-left" action="{{ route('export_survey_temp') }}" id="export_survey_temp_form" name="export_survey_temp_form" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="survey_id" class="survey_id" value="{{$sdata->id}}">
+                        <input type="hidden" name="export_type" class="export_type">
+                        <button type="submit" class="btn btn-outline-success btn-sm ml-2  elevation-2"><i class="fa fa-file-excel-o">&nbsp;&nbsp;Report</i></button>
+                    </form>
+                </diV>
+            </div>
         </div>
         <div class="col-md-2 col-sm-4 col-4">
            <div class="pull-right">
@@ -144,6 +177,7 @@ $description="description".$lang;
     <hr>
 </div>
 @include('survey.survey_finalize_modal')
+@include('survey.same_resource_modal')    
 @endsection
 @section('script')
 <script>
@@ -163,6 +197,10 @@ $(document).ready(function()
         document.getElementById("resource_details").focus();
         }
     });
+
+    $('#same_resource_modal').on('hidden.bs.modal', function () {
+        document.getElementById("resource_details").focus();
+    })
 
 });
 
@@ -206,6 +244,8 @@ function load_datatable()
     $('#resource_title').html("");
     $('#resource_creator').html("");
     $('#resource_category').html("");
+    var op1 ="";
+    $("#same_resource_table tbody").empty();
     if(resourceinput!="")
     {
          // -------------------------------------------------------
@@ -245,6 +285,27 @@ function load_datatable()
                 else if(data.massage=="lend")
                 {
                     toastr.warning(data.title+' - Resource lend, Plese Return first');
+                }
+                else if(data.massage=="duplicate")
+                {
+                    for (j = 0; j < data.resos.length; j++)
+                    {
+                        op1+='<tr>';
+                        op1+='<td class="td_id">'+data.resos[j].id+'</td>';
+                        op1+='<td>'+data.resos[j].accessionNo+'</td>';
+                        op1+='<td>'+data.resos[j].standard_number+'</td>';
+                        op1+='<td>'+data.resos[j].{{$title}}+'</td>';
+                        op1+='<td>'+data.resos[j].{{$creator}}+'</td>';
+                        op1+='<td>'+data.resos[j].{{$category}}+"-"+data.resos[j].{{$type}}+'</td>';
+                        op1+='<td class="btn-group"><button type="button" value="'+data.resos[j].id+'" class="btn btn-sm btn-outline-primary check_resos"><i class="fa fa-plus"></i></button>';
+                        op1+='<button type="button" value="'+data.resos[j].id+'" class="btn btn-sm btn-outline-success uncheck_resos"><i class="fa fa-minus"></i></button></td>';
+                        op1+='</tr>';
+                    }
+
+                    $("#same_resource_table tbody").append(op1);
+                    $('#same_resource_modal').modal('show');
+                    toastr.info('Multiple Resources found for Input');
+                    
                 }
                 else
                 {toastr.error('Resource Not Found!');}
@@ -373,7 +434,130 @@ $("#finalize").click(function () {
        })
        
 });
-//--------------------------end finalize-----------------------------
+//--------------------------same_reso_check-----------------------------
+
+$("#same_resource_table").on('click', '.check_resos', function () {
+    var select_resoid= $(this).val();
+    var suggetion = $("#survey_suggestion").val();
+    var surveyid = $("#surveyid").val();
+    $('#resource_title').html("");
+    $('#resource_creator').html("");
+    $('#resource_category').html("");
+         // -------------------------------------------------------
+         $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            dataType : 'json',
+            url: "{{route('same_reso_check')}}",
+            data:{
+                    select_resoid: select_resoid,
+                    suggetion:suggetion,
+                    surveyid:surveyid
+                },
+            success: function(data){
+            if(data.massage=="success")
+                {
+                    toastr.success(data.title+' - Resource Checked Successfuly');
+                    $('#survey_count').html(data.scount);
+                    $('#resource_title').html(data.title);
+                    $('#resource_creator').html(data.creator);
+                    $('#resource_category').html(data.category+"-"+data.type);
+                    $('#same_resource_modal').modal('hide');
+                }
+                else if(data.massage=="check")
+                {
+                    toastr.info(data.title+' - Resource Alredy Checked, Details Updated Successfuly');
+                    $('#survey_count').html(data.scount);
+                    $('#resource_title').html(data.title);
+                    $('#resource_creator').html(data.creator);
+                    $('#resource_category').html(data.category+"-"+data.type);
+                    $('#same_resource_modal').modal('hide');
+                
+                }
+                else if(data.massage=="lend")
+                {
+                    toastr.warning(data.title+' - Resource lend, Plese Return first');
+                }
+                
+                else
+                {toastr.error('Resource Not Found!');}
+
+                $('#resource_details').val('');
+                $("#survey_suggestion").val($("#survey_suggestion option:first").val());
+                document.getElementById("resource_details").focus();
+                $('#survey_datatable').DataTable().ajax.reload()
+        
+            },
+            error: function(data){
+            toastr.error('Something Went Wrong!')
+            }
+        });
+        // -------------------------------------------------------------
+        
+    });
+
+//--------------------------same_reso_uncheck-----------------------------
+
+$("#same_resource_table").on('click', '.uncheck_resos', function () {
+    var select_resoid= $(this).val();
+    var surveyid = $("#surveyid").val();
+    $('#resource_title').html("");
+    $('#resource_creator').html("");
+    $('#resource_category').html("");
+         // -------------------------------------------------------
+         $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            dataType : 'json',
+            url: "{{route('same_reso_uncheck')}}",
+            data:{
+                    select_resoid: select_resoid,
+                    surveyid:surveyid
+                },
+            success: function(data){
+            if(data.massage=="success")
+                {
+                    toastr.success(data.title+' - Resource UnChecked');
+                    $('#survey_count').html(data.scount);
+                    $('#resource_title').html(data.title);
+                    $('#resource_creator').html(data.creator);
+                    $('#resource_category').html(data.category+"-"+data.type);
+                    $('#same_resource_modal').modal('hide');
+                }
+                else if(data.massage=="check")
+                {
+                    toastr.info(data.title+' - Resource Not Checked');
+                }
+                else
+                {toastr.error('Resource Not Found!');}
+
+                $('#resource_details').val('');
+                $("#survey_suggestion").val($("#survey_suggestion option:first").val());
+                document.getElementById("resource_details").focus();
+                $('#survey_datatable').DataTable().ajax.reload()
+            },
+            error: function(data){
+            toastr.error('Something Went Wrong!')
+            }
+        });
+        // -------------------------------------------------------------
+        
+    });
+
+// ----report---------
+$("#export_survey_temp_form").submit(function(){
+    $('.export_type').val($("input[name='export_type']:checked").val());
+});
 
 </script>
 

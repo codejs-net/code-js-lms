@@ -76,3 +76,34 @@ function printDiv1()
     $categoires=implode(',',$request->category);
         $integercat = array_map('intval', explode(',', $categoires));
 
+
+
+        @role('Admin')
+                    @if($item->name=="role-list" || $item->name=="role-create" || $item->name=="role-edit" || $item->name=="role-delete")
+                @else
+                    I am not a writer...
+                @endrole
+
+//------------------------------------------------------------------------------
+    @hasrole('Admin')
+    @foreach($roles as $item)
+        <option value="{{ $item->id }}">{{ $item->name }}</option>
+    @endforeach
+@else
+    @foreach($roles as $item)
+        @if($item->name!="Admin")
+            <option value="{{ $item->id }}">{{ $item->name }}</option>
+        @endif
+    @endforeach 
+@endhasrole
+
+<!-- ----------------------------------------------- -->
+
+$catg= ($request->select_catg!="All")?$request->select_catg:"%";
+$type= ($request->select_type!="All")?$request->select_type:"%";
+$creator= ($request->select_creator!="All")?$request->select_creator:"%";
+$publisher= ($request->select_publisher!="All")?$request->select_publisher:"%";
+$ddclass= ($request->select_ddclass!="All")?$request->select_ddclass:"%";
+$dddevision= ($request->select_dddevision!="All")?$request->select_dddevision:"%";
+$ddsection= ($request->select_ddsection!="All")?$request->select_ddsection:"%";
+$center= ($request->select_cent!="All")?$request->select_cent:$center_array;

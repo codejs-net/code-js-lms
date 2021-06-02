@@ -1,5 +1,4 @@
 /* -----------navbar---------------------------------- */
-
 .js-nav-bg {
     background: #1d6af0;
     background: linear-gradient(90deg, rgba(28, 66, 235, 0.603))0%, rgba(243, 241, 247, 1) 50%, rgba(148, 187, 233, 0.639093137254902) 100%;
@@ -10,6 +9,13 @@
     font-weight: 300 !important;
 }
 
+.js-catalog-box {
+    background: #ffffff;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
 
 /* -------------------background------------------- */
 
@@ -18,7 +24,7 @@
 }
 
 .js-rightbar-bg {
-    background: #e1ebf0;
+    background: #f6fcff;
 }
 
 .js-img-box {
@@ -228,7 +234,7 @@
 
 .btntype {
     border-radius: 5px;
-    height: 70px;
+    height: 65px;
     position: relative;
     width: auto;
     -webkit-transition: all .1s linear;
@@ -236,6 +242,15 @@
     text-align: center;
     color: #1b1a19;
     border: #039BE5 solid 1px;
+    margin-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 12px;
 }
 
 .btntype:hover {
@@ -254,14 +269,16 @@
 
 .js-select-box {
     border-radius: 5px;
-    height: 70px;
+    height: auto;
     color: #2c78e9;
     border: #039BE5 solid 1px;
+    /* padding-right: 5px; */
+
 }
 
 .js-select-box:hover {
     border-radius: 5px;
-    height: 70px;
+    height: auto;
     color: #2c78e9;
     border: #0f0f0f solid 1px;
     /* background: #039BE5; */
@@ -269,7 +286,13 @@
 
 
 /* ---------------button--------------------------------- */
-
+.search-feild-btn{
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+    color: #060913;
+    /* padding:0; */
+}
 .btn-js {
     background: #007bff;
     color: #fff;
@@ -296,33 +319,38 @@ a.btn-js:hover {
 /* -------------table--------------------------------- */
 
 .js-tbl-header {
-    background: rgb(184, 221, 246);
-    background: linear-gradient(90deg, rgba(184, 221, 246, 1) 0%, rgba(242, 242, 242, 1) 35%, rgba(184, 222, 242, 1) 100%);
+    background: rgb(184,221,246);
+    background: linear-gradient(90deg, rgba(184,221,246,1) 0%, rgba(242,242,242,1) 35%, rgba(184,222,242,1) 100%); 
 }
 
-.js-tbl-header th:first-child {
+.js-tbl-header th {
+    border: unset !important;
+}
+
+/* .js-tbl-header th {
     border: unset;
-}
-
-.js-tbl-header th:last-child {
-    border: unset;
-}
+} */
 
 .js-tbl-header th:first-child {
-    border-top-left-radius: 10px;
-}
-
-.js-tbl-header th:first-child {
-    border-bottom-left-radius: 10px;
-}
-
-.js-tbl-header th:last-child {
-    border-top-right-radius: 10px;
+    /* border-left: #007bff solid 1px !important; */
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    
 }
 
 .js-tbl-header th:last-child {
-    border-bottom-right-radius: 10px;
+    /* border-right: #007bff solid 1px !important; */
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+   
+
 }
+/* .js-tbl-header th{
+    border-top: #007bff solid 1px !important;
+    border-bottom: #007bff solid 1px !important;
+   
+} */
+
 
 tbody:before {
     content: "~";
@@ -357,9 +385,6 @@ tbody:before {
     background: #ffffff;
 }
 
-.js-bg {
-    background: #ffffff;
-}
 
 .js-roboto {
     font-family: 'Roboto', sans-serif;
@@ -369,16 +394,16 @@ tbody:before {
     font-family: 'Archivo', sans-serif;
 }
 
-.border {
+.js-border {
     border: #039BE5 solid 1px;
 }
 
-.js.border-radius-1 {
+.js-border-radius-1 {
     border: #039BE5 solid 1px;
     border-radius: 5px;
 }
 
-.js.border-radius-2 {
+.js-border-radius-2 {
     border: #039BE5 solid 1px;
     border-radius: 10px;
 }
@@ -455,4 +480,134 @@ tbody:before {
 
 .js-pb-5 {
     padding-bottom: 5px;
+}
+
+/* -------------------survey------------ */
+
+.js-survey-box-text {
+    color: #ffffff;
+}
+
+.js-survey-box-text p {
+    color: #fdfdff;
+    margin-top: -10px;
+}
+
+
+.js-survey-box1 {
+    background: #16b301;
+    font-family: 'Roboto', sans-serif;
+    color: #f7f1f1;
+    border-radius: 10px;
+}
+
+.js-survey-box1 h1 {
+    font-weight: 900;
+    font-family: 'Archivo', sans-serif;
+}
+
+.js-survey-box2 h1 {
+    font-weight: 500;
+    font-family: 'Archivo', sans-serif;
+}
+
+.js-survey-box2 {
+    background: #0091d5;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    border-radius: 10px;
+}
+
+.js-survey-box1 h1 {
+    animation: blinker 3s infinite;
+}
+
+@keyframes blinker {
+    0% {
+        color: transparent;
+    }
+    49% {
+        color: rgb(252, 250, 250);
+    }
+    60% {
+        color: transparent;
+    }
+    100% {
+        color: rgb(252, 250, 250);
+    }
+}
+
+.js-survey-box-6 {
+    background-color: #0091d5;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-7 {
+    background-color: #4cb5f5;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-3 {
+    background-color: #b3c100;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-4 {
+    background-color: #4cb5f5;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.js-survey-box-5 {
+    background-color: #dbae58;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+/* -------notificetion */
+.card-notify{
+    border-radius: 10px !important;
+}
+.card-notify-header1{
+    background-color: #ffffff;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    font-family: 'Roboto', sans-serif;
+    color: #1a1b1d;
+    font-size: 8px;
+   
+}
+.card-notify-header2{
+    background-color: #ffffff;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    font-family: 'Roboto', sans-serif;
+    color: #1a1b1d;
+    font-size: 8px;
+
+}
+.card-notify i{
+    color: #0f0f0f;
+}
+
+.category-card{
+    background-color: #fefefe;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    border-radius: 5px;
+    line-height: 25px;
+
+}
+.category-card-left{
+    background-color: #eff8fc;
+    color: #552306;
+    text-align: center;
 }

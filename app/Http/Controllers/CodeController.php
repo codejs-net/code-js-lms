@@ -16,13 +16,13 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use file;
 
 class CodeController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:code-import|code-genarate', ['only' => ['index','import','barcoderange','barcodeview','importExportView','export','import']]);
-         $this->middleware('permission:code-genarate', ['only' => ['generateCodePDF','CodeRangepdf']]);
+         $this->middleware('permission:code-genarate|code-genarate', ['only' => ['index','import','barcoderange','barcodeview','importExportView','export','import','generateCodePDF','CodeRangepdf']]);
     }
 
     public function index(Request $request)
@@ -132,6 +132,12 @@ class CodeController extends Controller
             'orientation' => 'P',
             ]);
         return $pdf->stream('document.pdf');
+
+        // $mpdf = new \Mpdf\Mpdf();
+        // $mpdf->WriteHTML('Hello World');
+
+        // // Saves file on the server as 'filename.pdf'
+        // $mpdf->Output('filename.pdf', \Mpdf\Output\Destination::FILE);
 
     }
 }

@@ -17,11 +17,11 @@ class Resource_PublisherController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:support_data-list|support_data-create|support_data-edit|support_data-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:support_data-create', ['only' => ['create','store']]);
-         $this->middleware('permission:support_data-edit', ['only' => ['update_detail']]);
-         $this->middleware('permission:support_data-delete', ['only' => ['delete']]);
-         $this->middleware('permission:data-import', ['only' => ['import']]);
+         $this->middleware('permission:resource_support_data-list|resource_support_data-create|resource_support_data-edit|resource_support_data-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:resource_support_data-create', ['only' => ['create','store']]);
+         $this->middleware('permission:resource_support_data-edit', ['only' => ['update_detail']]);
+         $this->middleware('permission:resource_support_data-delete', ['only' => ['delete']]);
+         $this->middleware('permission:resource_support_data-import', ['only' => ['import']]);
     }
     /**
      * Display a listing of the resource.
@@ -53,21 +53,30 @@ class Resource_PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        
-        // $locale = session()->get('locale');
-        // $lang="_".$locale;
+        $locale = session()->get('locale');
+        $lang="_".$locale;
 
-        // request()->validate([
-        //     'name'.$lang => 'required',
-        // ]);
-    
+        $this->validate($request,[
+            'name'.$lang=>'required|max:255|min:5',
+            ]);
+
         $form_data = array(
             'publisher_si' =>  $request->name_si,
             'publisher_ta' =>  $request->name_ta,
             'publisher_en' =>  $request->name_en, 
         );
-        resource_publisher::create($form_data);
-        return redirect()->route('resource_publisher.index')->with('success','Details created successfully.');
+        $dta=resource_publisher::create($form_data);
+
+        if(request()->ajax())
+        {
+            $alldata = resource_publisher::select('id','publisher_si AS name_si','publisher_ta AS name_ta','publisher_en AS name_en')->get();
+            return response()->json(['data' =>$alldata ,'dataid'=>$dta->id]);
+        }
+        else
+        {
+            return redirect()->route('resource_publisher.index')->with('success','Details created successfully.');
+        }
+     
     }
     
     /**

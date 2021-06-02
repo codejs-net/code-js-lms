@@ -45,11 +45,18 @@
      <!-- Fonts -->
      <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- select2 -->
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2-bootstrap4.min.css') }}">
+
+    {{-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" /> --}}
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Open+Source+Sans+Condensed+Pro+Shippori:300,400,400i,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet"> --}}
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Archivo&family=Roboto:wght@300&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre&display=swap" rel="stylesheet">
 
@@ -132,6 +139,12 @@
       <?php
       }
     }
+    else
+    { 
+    ?>
+    <link href="{{ asset('css/theme/js-default.css') }}" rel="stylesheet">
+    <?php
+    }
     ?>
 
     <!-- ======================================================================== -->
@@ -143,7 +156,7 @@
 
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
-<body class="hold-transition sidebar-mini layout-fixed">
+{{-- <body class="hold-transition sidebar-mini layout-fixed"> --}}
 
 <div class="wrapper">
 
@@ -158,7 +171,7 @@
         @include('partials.sidebar')
     </aside>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper  @yield('class')">
         <main role="main">
         @yield('content')
         </main>
@@ -197,7 +210,12 @@
     <!-- smart_wizard -->
     <script src="{{ asset('plugins/smart_wizard/js/smart_wizard.min.js') }}"defer></script>
 
+    <!-- select2 -->
+    <script src="{{ asset('plugins/select2/js/select2.min.js') }}"defer></script>
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"defer></script>
     
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.js"defer></script> --}}
     <!-- <script>
     $.widget.bridge('uibutton', $.ui.button)
     </script> -->
@@ -214,8 +232,8 @@
 
     <!-- ======================================================================== -->
 
-    <script>
-    
+<script>
+$('#footer-year').html(new Date().getFullYear());
  //- ---------------------alert Auto Close---------------------->
 
     window.setTimeout(function() {
@@ -255,9 +273,38 @@ $('.nav-link').on('click',function(){
 });
 
 toastr.options = {
-    positionClass: 'toast-top-center'
-};
+  "debug": false,
+  "positionClass": "toast-top-center",
+  "onclick": null,
+  "fadeIn": 300,
+  "fadeOut": 500,
+  "timeOut": 3000,
+  // "extendedTimeOut": 1000
+ 
+}
 
+// $.fn.select2.defaults.set( "theme", "bootstrap" );
+
+function add_by_modal(rout) {
+
+$('#create_by_modal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) 
+  var opp = button.data('opp_name') 
+  var modal = $(this)
+ 
+  document.getElementById("opp_title").innerHTML = 'Add New '+ opp;
+  document.getElementById("opp_lbl").innerHTML = opp;
+  document.getElementById("modalform").action = rout;
+})
+}
+
+// ------------------disable source---------------------
+  // $(function() {
+  //     $(this).bind("contextmenu", function(e) {
+  //         e.preventDefault();
+  //     });
+  // }); 
+// -----------------------------------------------------
 </script>
 
 

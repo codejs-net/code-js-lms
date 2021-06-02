@@ -11,8 +11,8 @@ $class="class".$db_locale;
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item ml-4"><a href="#"><i class="fa fa-home"></i> Home&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="#"><i class="fa fa-book"></i> Support&nbsp;</a></li>
+    <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Support&nbsp;</a></li>
     <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-info"></i> Resource Support&nbsp;</a></li>
 </ol>
 </nav>
@@ -21,16 +21,17 @@ $class="class".$db_locale;
     <div class="row text-center">
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-        
-            <a href="{{ route('resource_catagory.index') }}" class="btn btn-outline-success btn-sm ml-2" type="button">Resource Category</a>
-            <a href="{{ route('resource_type.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Type</a>
-            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Class</a>
-            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Devision</a>
-            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource DD Section</a>
-            <a href="{{ route('resource_creator.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Creator</a>
-            <a href="{{ route('resource_language.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Language</a>
-            <a href="{{ route('resource_publisher.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Publisher</a>
-            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-outline-success btn-sm ml-2" type="button">Resource Donates</a>
+            <a href="{{ route('resource_catagory.index') }}" class="btn btn-sm btn-outline-primary ml-2" type="button"><i class="fa fa-cube"></i>&nbsp;Category</a>
+            <a href="{{ route('resource_type.index') }}"class="btn btn-sm btn-outline-primary ml-2" type="button"><i class="fa fa-object-group"></i>&nbsp;Type</a>
+            <a href="{{ route('resource_dd_class.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button"><i class="fa fa-tasks"></i>&nbsp;DD Class</a>
+            <a href="{{ route('resource_dd_devision.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button"><i class="fa fa-tasks"></i>&nbsp;DD Devision</a>
+            <a href="{{ route('resource_dd_section.index') }}"class="btn btn-sm btn-outline-success ml-2" type="button"><i class="fa fa-tasks"></i>&nbsp;DD Section</a>
+            <a href="{{ route('resource_language.index') }}"class="btn btn-sm btn-outline-warning ml-2" type="button"><i class="fa fa-language"></i>&nbsp;Language</a>
+            <a href="{{ route('resource_publisher.index') }}"class="btn btn-sm btn-outline-warning ml-2" type="button"><i class="fa fa-building-o"></i>&nbsp;Publisher</a>
+            <a href="{{ route('resource_creator.index') }}"class="btn btn-sm btn-outline-secondary ml-2" type="button"><i class="fa fa-user"></i>&nbsp;Creator</a>
+            <a href="{{ route('resource_dd_donate.index') }}"class="btn btn-sm btn-outline-secondary ml-2" type="button"><i class="fa fa-user-o"></i>&nbsp;Donates</a>
+            <a href="{{ route('resource_rack.index') }}"class="btn btn-sm btn-outline-info ml-2" type="button"><i class="fa fa-fa fa-location-arrow"></i>&nbsp;Rack/Cupboard</a>
+            <a href="{{ route('resource_floor.index') }}"class="btn btn-sm btn-outline-info ml-2" type="button"><i class="fa fa-fa fa-location-arrow"></i>&nbsp;Floor</a>
         </form>
     </nav>
     </div>
@@ -47,8 +48,10 @@ $class="class".$db_locale;
             </div>  
             <div class="col-md-2 col-sm-6 text-right">
                 <h5>
+                    @can('resource_support_data-create')
                     <a class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#data_create" ><i class="fa fa-plus" ></i>&nbsp;New</a>
-                    @can('data-import')
+                    @endcan
+                    @can('resource_support_data-import')
                     <a class="btn btn-sm btn-outline-primary bg-indigo" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
                     @endcan
                 </h5>   
@@ -78,10 +81,10 @@ $class="class".$db_locale;
                             <td>
                                
                             <a class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#data_show" data-detail_id="{{ $data->id }}" ><i class="fa fa-eye" ></i>&nbsp;Show</a>
-                            @can('support_data-edit')
+                            @can('resource_support_data-edit')
                             <a class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}"><i class="fa fa-pencil" ></i>&nbsp;Edit</a>
                             @endcan
-                            @can('support_data-delete')
+                            @can('resource_support_data-delete')
                             <a class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#data_delete" data-detail_id="{{ $data->id }}" data-detail_name="{{ $data->$devision }}"><i class="fa fa-trash" ></i>&nbsp;Delete</a>
                             @endcan
                             
@@ -430,7 +433,7 @@ $(document).ready(function()
         $.ajax
         ({
             type: "GET",
-            url: "{{route('load_resource_dd_class')}}", 
+            url: "{{route('load_dd_class')}}", 
             success:function(data){
                 for(var i=0;i<data.length;i++)
                 {
