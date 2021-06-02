@@ -343,6 +343,7 @@ class ReportController extends Controller
             $rpt_from=$request->resource_from;
             $rpt_to=$request->resource_to;
             $rpt_order=$request->resource_order;
+            $rpt_print=$request->resource_print;
 
             $rdata = view_resource_data_all::select('*')
             ->where('status',1)
@@ -351,11 +352,26 @@ class ReportController extends Controller
             ->take($rpt_to-$rpt_from)
             ->orderBy($rpt_order, 'ASC')
             ->get();
-        $pdf = PDF::loadView('reports.resources.rpt_resource_card_range',compact('rdata'),[],
-            [
-            'format' => [85,54],
-            ]);
-        return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Resource Card.pdf');
+            $rcount=$rdata->count();
+            // dd($rpt_print);
+            if($rpt_print=="Single")
+            {
+                $pdf = PDF::loadView('reports.resources.rpt_resource_card_range',compact('rdata'),[],
+                [
+                'format' => [85,54],
+                ]);
+                return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Resource Card.pdf');
+            }
+            else if($rpt_print=="Multipal")
+            {
+                $pdf = PDF::loadView('reports.resources.rpt_resource_card_range_multi',compact('rdata','rcount'),[],
+                [
+                    'format' => 'A4',
+                    'orientation' => 'L',
+                ]);
+                return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Resource Card.pdf');
+            }
+        
     }
 
     public function export_recource(Request $request) 

@@ -115,6 +115,7 @@ $dd_section="section".$lang;
             line-height: 10px;
             vertical-align: top;
             padding-bottom: 2px;
+            font-size: 12px;
           
       }
       .pb-2{
@@ -150,7 +151,7 @@ $dd_section="section".$lang;
                               <img src="data:image/png;base64,{{DNS2D::getBarcodePNG((string)$data->accessionNo, 'QRCODE',40,40)}}" alt="barcode" />
                         </td>
                   </tr> 
-                  <tr><td class="text-left">{{$data->accessionNo}}</td></tr>
+                  <tr><td class="text-center">{{$data->accessionNo}}</td></tr>
                  
             </table>  
             </div>

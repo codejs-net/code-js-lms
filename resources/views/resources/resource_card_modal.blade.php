@@ -20,7 +20,7 @@
                 <h6>Provide Resource Range to Genarate Cards</h6>
                 <span>(example: 1-1000)</span>
                     <div class="row bg-gradient-white">
-                        <div class="col-md-4 col-12 text-center">
+                        <div class="col-md-12 col-12 text-center">
                             <div class="input-group mb-3 mt-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Order</span>
@@ -48,7 +48,7 @@
                                 </select>     
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 text-center">
+                        <div class="col-12 col-md-6 text-center">
                             <div class="input-group mb-3 mt-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">From</span>
@@ -56,13 +56,26 @@
                                 <input type="text" name="resource_from" class="form-control" placeholder="Start" aria-label="Start Number" aria-describedby="basic-addon1"required>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 text-center">
+                        <div class="col-12 col-md-6 text-center">
                             <div class="input-group mb-3 mt-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">To</span>
                                 </div>
                                 <input type="text" name="resource_to" class="form-control" placeholder="End" aria-label="End Number" aria-describedby="basic-addon1"required>
                             </div>
+                        </div>
+                        <div class="col-md-12 col-12 input-group border border-secondary">
+                            <div class=" py-1 px-2 mr-2">
+                                <div class="form-check form-check-inline text-primary" >
+                                    <label class="form-check-label"><i class="fa fa-print"></i> &nbsp;Single&nbsp;</label>
+                                    <input type="radio" class="form-check-input methord" name="resource_print" value="Single" checked required>
+                                </div>
+                                <div class="form-check form-check-inline text-primary" >
+                                    <label class="form-check-label"><i class="fa fa-print"></i> &nbsp;Multipal&nbsp;</label>
+                                    <input type="radio" class="form-check-input methord" name="resource_print" value="Multipal" required>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
