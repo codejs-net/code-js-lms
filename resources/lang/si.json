@@ -242,10 +242,44 @@
     "Member Card":"සාමාජික කාඩ්පත",
     "Remove Library Members":"",
     "Are you sure Remove Member":"",
+    "Genarate Member Cards":"",
+    "Provide Member ID Range to Genarate Cards":"",
+    "(example: 1-1000)":"",
+    "From":"",
+    "Start ID":"",
+    "To":"",
+    "End ID":"",
 
     "--------------------member create------------------------":"",
+
+    "Member Image":"",
+    "Select Members Category":"",
+    "Name in Sinahala":"",
+    "Name in Tamil":"",
+    "Name in English":"",
+    "Address Line1":"",
+    "Address Line 1 Sinhala":"",
+    "Address Line 1 Tamil":"",
+    "Address Line 1 English":"",
+    "Address Line2":"",
+    "Address Line 2 Sinhala":"",
+    "Address Line 2 Tamil":"",
+    "Address Line 2 English":"",
+    "Description":"",
+    "Description Sinhala":"",
+    "Description Tamil":"",
+    "Description English":"",
+    "Registerd Date":"",
+    "registered Date":"",
+    "Guarantor":"",
+    "Select Guarantor":"",
+    "Import Members":"",
     
     "--------------------member edit--------------------------":"",
+
+    "New Category":"",
+    "Birth Day":"",
+  
     
     "--------------------member show--------------------------":"",
     
@@ -274,6 +308,13 @@
     "--------------------support data-member-category---------":"",
     
     "--------------------support data-member-gurantor---------":"",
+
+    "Create Guarantor":"",
+    "Address Line 1 in Sinhala":"",
+    "Address Line 1 in Tamil":"",
+    "Address Line 1 in English":"",
+    "Address2":"",
+    "Mobile No":"",
     
     "--------------------support data-library-title-----------":"",
     

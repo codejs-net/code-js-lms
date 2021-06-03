@@ -94,14 +94,17 @@
       }
       .card-heading{
             padding-bottom: 15px;
+            /* font-size: 14px !important; */
       }
-      h4{
-            font-size:15px !important;
-            padding-bottom:10px;
 
+      .card-heading1{
+            padding-bottom: 15px;
+            /* font-size: 16px !important; */
       }
+
       .card-name{
             color: #272c66;
+            font-size: 15px !important;
       }
 
       </style>

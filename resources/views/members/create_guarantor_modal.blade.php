@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Create Guarantor</h5>
+                    <h5 class="modal-title" id="modaltitle">{{__('Create Guarantor')}}</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -18,7 +18,7 @@
             <div class="modal-body">
             <div class="form-group col-md-6">
                 <div class="form-check form-check-inline" >
-                    <label for="name">Title:</label> &nbsp;
+                    <label for="name">{{__('Title')}}:</label> &nbsp;
                 </div>
                 @foreach($tdata as $item)
                 <div class="form-check form-check-inline" >
@@ -30,20 +30,20 @@
 
     
             <div class="form-group">
-                <label for="name">Name :</label>
-                <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="{{old('name_si')}}" placeholder="Name in Sinhala">
-                <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="{{old('name_si')}}" placeholder="Name in Tamil">
-                <input type="text" class="form-control mb-1" id="name_en" name="name_en" value="{{old('name_si')}}" placeholder="Name in English">
+                <label for="name">{{__('Name')}} :</label>
+                <input type="text" class="form-control mb-1" id="name_si" name="name_si" value="{{old('name_si')}}" placeholder="{{__('Name in Sinhala')}}">
+                <input type="text" class="form-control mb-1" id="name_ta" name="name_ta" value="{{old('name_si')}}" placeholder="{{__('Name in Tamil')}}">
+                <input type="text" class="form-control mb-1" id="name_en" name="name_en" value="{{old('name_si')}}" placeholder="{{__('Name in English')}}">
             </div>
             <div class="form-group">
-                <label for="Address">Address1 :</label>
-                <input type="text" class="form-control mb-1"id="Address1_si" name="Address1_si" placeholder="Address Line 1 in Sinhala" value="{{old('Address1_si')}}">
-                <input type="text" class="form-control mb-1"id="Address1_ta" name="Address1_ta" placeholder="Address Line 1 in Tamil" value="{{old('Address1_ta')}}">
-                <input type="text" class="form-control mb-1"id="Address1_en" name="Address1_en" placeholder="Address Line 1 in English" value="{{old('Address1_en')}}">
+                <label for="Address">{{__('Address1')}} :</label>
+                <input type="text" class="form-control mb-1"id="Address1_si" name="Address1_si" placeholder="{{__('Address Line 1 in Sinhala')}}" value="{{old('Address1_si')}}">
+                <input type="text" class="form-control mb-1"id="Address1_ta" name="Address1_ta" placeholder="{{__('Address Line 1 in Tamil')}}" value="{{old('Address1_ta')}}">
+                <input type="text" class="form-control mb-1"id="Address1_en" name="Address1_en" placeholder="{{__('Address Line 1 in English')}}" value="{{old('Address1_en')}}">
                 <span class="text-danger">{{ $errors->first('Address1') }}</span>
             </div>
             <div class="form-group">
-            <label for="Address">Address2 :</label>
+            <label for="Address">{{__('Address2')}} :</label>
                 <input type="text" class="form-control mb-1"id="Address2_si" name="Address2_si" placeholder="Address Line 2 in Sinhala" value="{{old('Address2_si')}}">
                 <input type="text" class="form-control mb-1"id="Address2_ta" name="Address2_ta" placeholder="Address Line 2 in Tamil" value="{{old('Address2_ta')}}">
                 <input type="text" class="form-control mb-1"id="Address2_en"name="Address2_en" placeholder="Address Line 2 in English" value="{{old('Address2_en')}}">
@@ -51,12 +51,12 @@
             </div>
             <div class=" row form-group">
                 <div class="form-group col-md-6">
-                    <label for="NIC">NIC :</label>
+                    <label for="NIC">{{__('NIC')}} :</label>
                     <input type="text" class="form-control" name="nic" placeholder="NIC" value="{{old('nic')}}">
                     <span class="text-danger">{{ $errors->first('nic') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="Mobile">Mobile No :</label>
+                    <label for="Mobile">{{__('Mobile No')}} :</label>
                     <input type="text" class="form-control" name="Mobile" placeholder="Mobile No" value="{{old('Mobile')}}">
                     <span class="text-danger">{{ $errors->first('Mobile') }}</span>
                 </div>
@@ -65,7 +65,7 @@
             <div class=" row form-group">
 
                 <div class="form-group col-md-12">
-                    <label for="name">Gender:</label> <br>
+                    <label for="name">{{__('Gender')}}:</label> <br>
                     <div class="bg-light p-2">
                         <div class="form-check form-check-inline" >
                             @foreach($gedata as $item)
@@ -79,8 +79,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="Description">Description :</label>
-                <textarea class="form-control" rows="2" id="description" name="description" placeholder="Description" value=""></textarea>
+                <label for="Description">{{__('Description')}} :</label>
+                <textarea class="form-control" rows="2" id="description" name="description" placeholder="{{__('Description')}}" value=""></textarea>
                 <span class="text-danger">{{ $errors->first('description') }}</span>
             </div>
           
@@ -88,8 +88,8 @@
         </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; {{__('Save')}}</button>
                 </div>
             </form>
            
