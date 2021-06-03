@@ -13,22 +13,22 @@ $address2="address2".$lang;
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Books&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-search"></i> Search Members&nbsp;</li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> {{__('Members')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-search"></i> {{__('Search Members')}}&nbsp;</li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
         <div class="col-md-10 col-sm-6 text-left p-2"> 
-            <h5> <i class="fa fa-search ml-4 pl-2"> Search Members</i></h5>
+            <h5> <i class="fa fa-search ml-4 pl-2"> {{__('Search Members')}}</i></h5>
         </div>  
         <div class="col-md-2 col-sm-6 text-right p-2">
             @can('member-create')
-            <a href="{{ route('create_member') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            <a href="{{ route('create_member') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; {{__('New')}}</a>
             @endcan
             @can('member-report')
-            <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#member_card_range" ><i class="fa fa-file-pdf-o" ></i>&nbsp;Member Card</a>
+            <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#member_card_range" ><i class="fa fa-file-pdf-o" ></i>&nbsp;{{__('Member Card')}}</a>
             @endcan
         </div>
     </div>
@@ -43,17 +43,17 @@ $address2="address2".$lang;
             <table  class="table display nowrap table-hover" width="100%" cellspacing="0" id="member_datatable">
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
-                            <th scope="col">Member ID</th>
-                            <th scope="col">Avatar</th>
-                            <th scope="col">Title</th>
-                            <th scope="col" style="width: 15%">Name</th>
-                            <th scope="col" style="width: 15%">Address1</th>
-                            <th scope="col" style="width: 15%">Addresss2</th>
-                            <th scope="col">NIC</th>
-                            <th scope="col">Mobile</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Status</th>
-                            <th scope="col"style="width: 10%">Action</th>
+                            <th scope="col">{{__('Member ID')}}</th>
+                            <th scope="col">{{__('Avatar')}}</th>
+                            <th scope="col">{{__('Title')}}</th>
+                            <th scope="col" style="width: 15%">{{__('Name')}}</th>
+                            <th scope="col" style="width: 15%">{{__('Address1')}}</th>
+                            <th scope="col" style="width: 15%">{{__('Addresss2')}}</th>
+                            <th scope="col">{{__('NIC')}}</th>
+                            <th scope="col">{{__('Mobile')}}</th>
+                            <th scope="col">{{__('Gender')}}</th>
+                            <th scope="col">{{__('Status')}}</th>
+                            <th scope="col"style="width: 10%">{{__('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>  
@@ -76,7 +76,7 @@ $address2="address2".$lang;
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Remove Library Members</h5>
+                    <h5 class="modal-title" id="modaltitle">{{__('Remove Library Members')}}</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -92,7 +92,7 @@ $address2="address2".$lang;
                     <input type="hidden" id="delete_member_id" name="delete_member_id">
                     <div class="row form-group">
                         <div class="col-md-6">
-                            <h5 id="modallabel">Are you sure Remove Member </h5>
+                            <h5 id="modallabel">{{__('Are you sure Remove Member')}} </h5>
                         </div>
                         <div class="col-md-8">
                             <h5><label type="text"  id="delete_member_name"></label></h5>
@@ -101,8 +101,8 @@ $address2="address2".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">{{__('Close')}}</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> &nbsp; {{__('Delete')}}</button>
                 </div>
             </form>
            
