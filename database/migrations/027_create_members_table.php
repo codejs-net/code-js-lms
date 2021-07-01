@@ -62,6 +62,9 @@ class CreateMembersTable extends Migration
             $table->integer('guarantor_id')->unsigned()->nullable();
             $table->foreign('guarantor_id')->references('id')->on('member_guarantors');
 
+            $table->integer('center_id')->unsigned()->default(1);
+            $table->foreign('center_id')->references('id')->on('centers')->default(1);
+
             $table->string('status')->default(1);
             $table->timestamps();
         });

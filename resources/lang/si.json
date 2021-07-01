@@ -323,17 +323,51 @@
     "--------------------support data-staff-designetion-------":"",
     
     "--------------------center index-------------------------":"",
+
+    "Search Centers":"",
+    "Search centers":"",
+    "Remove Library Center":"",
+    "Are you sure Remove center":"",
     
     "--------------------center create------------------------":"",
+
+    "Select Library":"",
+    "Center Name":"",
+    "Library Name in sinhala":"",
+    "Library Name in Tamil":"",
+    "Library Name in English":"",
+    "Center Address1":"",
+    "Library Address1 in Sinhala":"",
+    "Library Address1 in Tamil":"",
+    "Library Address1 in English":"",
+    "Center Address2":"",
+    "Library Address2 in Sinhala":"",
+    "Library Address2 in Tamil":"",
+    "Library Address2 in English":"",
+    "Telephone":"",
+    "telephone No":"",
+    "Fax":"",
+    "fax No":"",
     
     "--------------------center edit--------------------------":"",
+
+    "Edit center":"",
+    "Edit Center":"",
     
     "--------------------center show--------------------------":"",
     
     "--------------------staff index--------------------------":"",
+
+    "Remove Library Staff":"",
+    "Are you sure Remove Staff":"",
     
     "--------------------staff create-------------------------":"",
-    
+
+    "Staff Image":"",
+    "Select Staff's Designation":"",
+    "Centers Allocation":"",
+    "Import Staff":"",
+
     "--------------------staff edit---------------------------":"",
     
     "--------------------staff show---------------------------":"",
@@ -351,8 +385,44 @@
     "--------------------lendig history-----------------------":"",
     
     "--------------------issue--------------------------------":"",
+
+    "Resources Issue":"",
+    "Resources Lending":"",
+    "AccessionNo / ISBN / ISSN / ISMN":"",
+    "ID":"",
+    "ISBN/ISSN":"",
+    "Print Recipt":"",
+    "Issue Receipt":"",
+    "Member":"",
+    "Issue Date":"",
+    "Return Date":"",
     
     "--------------------return-------------------------------":"",
+
+    "Accession":"",
+    "ToBeReturn":"",
+    "Actions":"",
+    "Settle Fine":"",
+    "Return Resource":"",
+    "Extend Days":"",
+    "Return Receipt":"",
+    "Returned Date":"",
+    "To Be Return":"",
+    "Fine Receipt":"",
+    "Receipt Date":"",
+    "Fine Settlement":"",
+    "Fine(Rs)":"",
+    "Pay":"",
+    "Total Amount":"",
+    "Settle Type":"",
+    "Payment":"",
+    "Ignore":"",
+    "Mannal Receipt":"",
+    "Receipt No":"",
+    "Description in Sinhala":"",
+    "Description in Tamil":"",
+    "Description in English":"",
+    "Extend":"",
     
     "--------------------survey index-------------------------":"",
     

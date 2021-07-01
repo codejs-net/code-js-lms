@@ -15,19 +15,19 @@ $center="name".$lang;
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Staff&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> Add Staff&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('staff.index') }}"><i class="fa fa-folder-open"></i> {{__('Staff')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> {{__('Add Staff')}}&nbsp;</a></li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container">
     <div class="row text-center mb-2">
         <div class="col-md-11 col-sm-6 text-center"> 
-            <h5> <i class="fa fa-plus"> Add Staff</i></h5>
+            <h5> <i class="fa fa-plus"> {{__('Add Staff')}}</i></h5>
         </div>  
         <div class="col-md-1 col-sm-6 text-right">
             @can('staff-import')
-            <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;Import</a>
+            <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#data_import" ><i class="fa fa-file-excel-o" ></i>&nbsp;{{__('Import')}}</a>
             @endcan
         </div>
     </div>
@@ -47,7 +47,7 @@ $center="name".$lang;
             <div class="col-md-10 col-12">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="image">Staff Image</label>
+                        <label for="image">{{__('Staff Image')}}</label>
                         <input type="file" id="image_member" name="image_member" class="form-control-file bg-white p-1 elevation-1">
                     </div>
                 </div>
@@ -55,7 +55,7 @@ $center="name".$lang;
                     
                     <div class="form-group col-md-6">
                         <div class="form-check form-check-inline" >
-                            <label for="name">Title:</label> &nbsp;
+                            <label for="name">{{__('Title')}}:</label> &nbsp;
                         </div>
                         @foreach($tdata as $item)
                         <div class="form-check form-check-inline" >
@@ -74,9 +74,9 @@ $center="name".$lang;
 
             <div class="row form-group">
                 <div class="form-group col-md-5">
-                    <label for="designation">Designation : </label>
+                    <label for="designation">{{__('Designation')}} : </label>
                     <select class="form-control"name="designation" id="designation" value="{{old('designation')}}"required>
-                    <option value="" disabled selected>Select Staff's Designation</option>
+                    <option value="" disabled selected>{{__('Select Staffs Designation')}}</option>
                     @foreach($Mdata as $item)
                         <option value="{{ $item->id }}">{{ $item->$designetion }}</option>
                     @endforeach
@@ -91,54 +91,54 @@ $center="name".$lang;
                     <button type="button" id="btn_newdesignetion" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></button>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="regdate">Registerd Date :</label>
+                    <label for="regdate">{{__('Registerd Date')}} :</label>
                     <input type="date" class="form-control" name="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
                     <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
                 
             </div>
             <div class="form-group">
-                <label for="name">Name :</label>
-                <input type="text" class="form-control mb-1" name="name_si" id="name_si" value="{{old('name_si')}}" placeholder="Name in Sinahala">
-                <input type="text" class="form-control mb-1" name="name_ta" id="name_ta" value="{{old('name_ta')}}" placeholder="Name in Tamil">
-                <input type="text" class="form-control mb-1" name="name_en" id="name_en" value="{{old('name_en')}}" placeholder="Name in English">
+                <label for="name">{{__('Name')}} :</label>
+                <input type="text" class="form-control mb-1" name="name_si" id="name_si" value="{{old('name_si')}}" placeholder="{{__('Name in Sinahala')}}">
+                <input type="text" class="form-control mb-1" name="name_ta" id="name_ta" value="{{old('name_ta')}}" placeholder="{{__('Name in Tamil')}}">
+                <input type="text" class="form-control mb-1" name="name_en" id="name_en" value="{{old('name_en')}}" placeholder="{{__('Name in English')}}">
                 <span class="text-danger">{{ $errors->first('name') }}</span>
             </div>
             <div class="form-group">
-                <label for="Address">Address Line1 :</label>
-                <input type="text" class="form-control mb-1" name="Address1_si" id="Address1_si" placeholder="Address Line 1 Sinhala" value="{{old('Address1_si')}}">
-                <input type="text" class="form-control mb-1" name="Address1_ta" id="Address1_ta" placeholder="Address Line 1 Tamil" value="{{old('Address1_ta')}}">
-                <input type="text" class="form-control mb-1" name="Address1_en" id="Address1_en" placeholder="Address Line 1 English" value="{{old('Address1_en')}}">
+                <label for="Address">{{__('Address Line1')}} :</label>
+                <input type="text" class="form-control mb-1" name="Address1_si" id="Address1_si" placeholder="{{__('Address Line 1 Sinhala')}}" value="{{old('Address1_si')}}">
+                <input type="text" class="form-control mb-1" name="Address1_ta" id="Address1_ta" placeholder="{{__('Address Line 1 Tamil')}}" value="{{old('Address1_ta')}}">
+                <input type="text" class="form-control mb-1" name="Address1_en" id="Address1_en" placeholder="{{__('Address Line 1 English')}}" value="{{old('Address1_en')}}">
                 <span class="text-danger">{{ $errors->first('Address1') }}</span>
             </div>
             <div class="form-group">
-                <label for="Address">Address Line2 :</label>
-                <input type="text" class="form-control mb-1" name="Address2_si" placeholder="Address Line 2 Sinhala" value="{{old('Address2_si')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_ta" placeholder="Address Line 2 Tamil" value="{{old('Address2_ta')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_en" placeholder="Address Line 2 English" value="{{old('Address2_en')}}"> 
+                <label for="Address">{{__('Address Line2')}} :</label>
+                <input type="text" class="form-control mb-1" name="Address2_si" placeholder="{{__('Address Line 2 Sinhala')}}" value="{{old('Address2_si')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_ta" placeholder="{{__('Address Line 2 Tamil')}}" value="{{old('Address2_ta')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_en" placeholder="{{__('Address Line 2 English')}}" value="{{old('Address2_en')}}"> 
                 <span class="text-danger">{{ $errors->first('Address2') }}</span>
             </div>
 
             <div class=" row form-group">
                 <div class="form-group col-md-6">
-                    <label for="NIC">NIC :</label>
-                    <input type="text" class="form-control" name="nic" placeholder="NIC" value="{{old('nic')}}"required>
+                    <label for="NIC">{{__('NIC')}} :</label>
+                    <input type="text" class="form-control" name="nic" placeholder="{{__('NIC')}}" value="{{old('nic')}}"required>
                     <span class="text-danger">{{ $errors->first('nic') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="Mobile">Mobile No :</label>
-                    <input type="text" class="form-control" name="Mobile" placeholder="Mobile No" value="{{old('Mobile')}}"required>
+                    <label for="Mobile">{{__('Mobile No')}} :</label>
+                    <input type="text" class="form-control" name="Mobile" placeholder="{{__('Mobile No')}}" value="{{old('Mobile')}}"required>
                     <span class="text-danger">{{ $errors->first('Mobile') }}</span>
                 </div>
             </div>
             <div class=" row form-group">
                 <div class="form-group col-md-6">
-                    <label for="NIC">Birth Day :</label>
-                    <input type="date" class="form-control" name="birthday" placeholder="Birth Day" value="{{old('birthday')}}"required>
+                    <label for="NIC">{{__('Birth Day')}} :</label>
+                    <input type="date" class="form-control" name="birthday" placeholder="{{__('Birth Day')}}" value="{{old('birthday')}}"required>
                     <span class="text-danger">{{ $errors->first('birthday') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="name">Gender:</label> <br>
+                    <label for="name">{{__('Gender')}}:</label> <br>
                     <div class="bg-light p-2">
                         <div class="form-check form-check-inline" >
                             @foreach($gedata as $item)
@@ -153,14 +153,14 @@ $center="name".$lang;
 
             </div>
             <div class="row form-group">
-                <label for="descrip">Description :</label>
-                <textarea class="form-control" rows="3" id="comment" name="Description" placeholder="Description" value="{{old('Description')}}"></textarea>
+                <label for="descrip">{{__('Description')}} :</label>
+                <textarea class="form-control" rows="3" id="comment" name="Description" placeholder="{{__('Description')}}" value="{{old('Description')}}"></textarea>
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
            
             <div class="row border border-secondary bg-light">
                 <div class="form-group col-md-12">
-                    <label for="center">Centers Allocation: </label><br>
+                    <label for="center">{{__('Centers Allocation')}}: </label><br>
                     @foreach($cdata as $item)
                     <label class="ml-3 pl-1">
                         <input type="checkbox" name="center[]" value="{{$item->id}}" class="form-check-input"id="" >{{ $item->$center }}
@@ -175,7 +175,7 @@ $center="name".$lang;
             
             <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_staff"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Save")}}</button>
             &nbsp; &nbsp;
-            <button type="button" class="btn btn-secondary btn-sm" id="cler">Reset
+            <button type="button" class="btn btn-secondary btn-sm" id="cler">{{__('Reset')}}
             <i class="fa fa-times"></i></button>
             <!-- Image loader -->
             <div id='loader' style='display: none;' >
@@ -196,7 +196,7 @@ $center="name".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Import Staff</h5>
+                    <h5 class="modal-title" id="modaltitle">{{__('Import Staff')}}</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -212,7 +212,7 @@ $center="name".$lang;
                 <div class="custom-file form-group text-center m-3">
                     <div class="col-md-10">
                         <input type="file" class="form-control-file custom-file-input" id="file" name="file" required>
-                        <label class="custom-file-label " for="customFile">Choose Excel file</label>
+                        <label class="custom-file-label " for="customFile">{{__('Choose Excel file')}}</label>
                     </div>
                     <div class="col-md-2">
                    
@@ -224,9 +224,9 @@ $center="name".$lang;
 
                 <div class="modal-footer">
                     
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
                     @can('data-import')
-                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; Import Data</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp; {{__('Import Data')}}</button>
                     @endcan
                 </div>
             </form>

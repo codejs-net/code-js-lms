@@ -22,8 +22,8 @@ $creator="name".$lang;
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Lending&nbsp;</a></li>
-    <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> Resources Issue&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('issue.index') }}"><i class="fa fa-folder-open"></i> {{__('Lending')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> {{__('Resources Issue')}}&nbsp;</a></li>
 </ol>
 </nav>
       <!-- Content Header (Page header) -->
@@ -32,7 +32,7 @@ $creator="name".$lang;
 <div class="container-fluid">
     <div class="row text-center mb-2">
         <div class="col-md-12 col-sm-12 text-center"> 
-            <h5> <i class="fa fa-shopping-cart">&nbsp;Resources Lending</i></h5>
+            <h5> <i class="fa fa-shopping-cart">&nbsp;{{__('Resources Lending')}}</i></h5>
              {{-- --------webcam --}}
              {{-- <div id="cam-box">
                 <video id="preview"></video>
@@ -58,7 +58,7 @@ $creator="name".$lang;
                   <div class="input-group-prepend">
                      <span class="input-group-addon elevation-1"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control elevation-1" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
+                    <input type="text" class="form-control elevation-1" id="member_id" placeholder="{{__('Member ID')}}"aria-describedby="basic-addon2">&nbsp;&nbsp;
                     <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
                 </div>
@@ -69,7 +69,7 @@ $creator="name".$lang;
                   <div class="input-group-prepend">
                      <span class="input-group-addon elevation-1"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
+                    <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="{{__('AccessionNo / ISBN / ISSN / ISMN')}}" aria-describedby="basic-addon3">&nbsp;&nbsp;
                     <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fas fa-cart-plus"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
@@ -99,12 +99,12 @@ $creator="name".$lang;
                     <table class="table" id="resourceTable">
                         <thead class="js-tbl-header">
                             <tr>
-                            <th scope="col" class="td_id">ID</th>
-                            <th scope="col">Accession No</th>
-                            <th scope="col">ISBN/ISSN</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Creator</th>
-                            <th scope="col">Type</th>
+                            <th scope="col" class="td_id">{{__('ID')}}</th>
+                            <th scope="col">{{__('Accession No')}}</th>
+                            <th scope="col">{{__('ISBN/ISSN')}}</th>
+                            <th scope="col">{{__('Resource Title')}}</th>
+                            <th scope="col">{{__('Creator')}}</th>
+                            <th scope="col">{{__('Type')}}</th>
                             <th scope="col">&nbsp;</th>
                             </tr>    
                         </thead>
@@ -122,13 +122,13 @@ $creator="name".$lang;
     <div class="input-group box-footer clearfix pull-right">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="check_print">
-            <label class="form-check-label" for="check_print">Print Recipt</label>
+            <label class="form-check-label" for="check_print">{{__('Print Recipt')}}</label>
         </div>
         <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="issue_resource">
-        <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
+        <i class="fa fa-floppy-o"></i> {{__('Save')}}&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
         &nbsp; &nbsp;
         <button type="button" class="btn btn-sm btn-secondary elevation-2" id="reset_issue">
-        <i class="fa fa-times"></i> Reset</button>
+        <i class="fa fa-times"></i> {{__('Reset')}}</button>
     </div> 
     </div>
     
@@ -146,12 +146,12 @@ $creator="name".$lang;
 <div id="printdiv" style="display: none;">
     <div class="col-md-4">
         <div id="print_lendding" style="text-align: center;">
-            <div class="text-center"><u><h3>Issue Receipt</h3></u></div>
+            <div class="text-center"><u><h3>{{__('Issue Receipt')}}</h3></u></div>
             </br>
             {{-- <p style="page-break-before: always"></p> --}}
-                <h5 >Member : <span id="print_member"></span></h5>
-                <h5 >Issue Date : <span id="print_issuedate"></span></h5>
-                <h5>Return Date :<span id="print_returndate"></span></h5>
+                <h5 >{{__('Member')}} : <span id="print_member"></span></h5>
+                <h5 >{{__('Issue Date')}} : <span id="print_issuedate"></span></h5>
+                <h5>{{__('Return Date')}} :<span id="print_returndate"></span></h5>
                 
                 <table id="print_table">
                     <!-- <thead>
@@ -166,7 +166,7 @@ $creator="name".$lang;
                 </table>
 
                 </br>
-                <div class="text-center mb-3"><h3>Thank You!</h3></div>
+                <div class="text-center mb-3"><h3>{{__('Thank You!')}}</h3></div>
             </div>
         </div>
 </div>
