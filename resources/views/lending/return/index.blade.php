@@ -311,6 +311,7 @@ $lib_name="name".$lang;
 @section('script')
 
     <script>
+    let viewState=0;
     $(document).ready(function() {
 
         document.getElementById("member_id").focus();
@@ -367,8 +368,16 @@ $lib_name="name".$lang;
             $('#form_settle_fine')[0].reset();
         })
 
+
     });
     // --------------------------------------------------------------------------
+    window.addEventListener("beforeunload", function(event) {
+        if(viewState==1){
+            event.preventDefault();
+            event.returnValue = 'Plese Save Changes Before Exit'; 
+        } 
+    });
+
 
     $('#addbarrowmember').on("click",function(){
         var memberid = $("#member_id").val();
@@ -536,6 +545,7 @@ $lib_name="name".$lang;
                 });
                 if(resource_found==0){  toastr.error('Resource Not Found!');}
                 $("#returnTable tbody").append(op);
+                viewState=1;
                 // --------------------------------------------     
             }
             else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
@@ -677,7 +687,7 @@ $lib_name="name".$lang;
                         url: "{{route('settle_fine')}}",
                         success: function(data){ 
                             if(data.massage=="success"){
-                                // opp_status=1; 
+                                viewState=1;
                                 toastr.success('Fine Settled Successfully');
                             // -------------add to return table-------------
                             if(methord==2){returnaction="Extend";}
@@ -847,9 +857,11 @@ $lib_name="name".$lang;
                                 $("#print_returndate").html(dtereturn);
                                 $("#print_issuedate").html(dtereturn);
                                 $("#print_tobe_return").html(data.tobe_return);
+                               
                                 print_div($("#print_lendding").html());
                             }
                             memberSelect(mem_id);
+                            viewState=0;
                         }
                         
                     },

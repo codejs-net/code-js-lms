@@ -180,6 +180,7 @@ $creator="name".$lang;
 @section('script')
 {{-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> --}}
     <script>
+    let viewState=0;
     $(document).ready(function() {
 
         document.getElementById("member_id").focus();
@@ -209,6 +210,13 @@ $creator="name".$lang;
 
        
 
+    });
+
+    window.addEventListener("beforeunload", function(event) {
+        if(viewState==1){
+            event.preventDefault();
+            event.returnValue = 'Plese Save Changes Before Exit'; 
+        } 
     });
 // -------------------webcam----------------------------
     //  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
@@ -389,6 +397,7 @@ $creator="name".$lang;
                                     op+='<td class="td_id">'+data.id+'</td><td class="td_acceno">'+data.accno+'</td><td>'+data.snumber+'</td><td>'+data.title+'</td><td>'+data.creator+'</td><td>'+data.category+"-"+data.type+'</td><td><button type="button" value="'+data.id+'" class="btn btn-sm btn-outline-danger remove_resources"><i class="fa fa-trash"></i></button></td>';
                                     op+='</tr>';
                                     $("#resourceTable tbody").append(op);
+                                    viewState=1;
                                 }
                                 else{toastr.error('Resource Alrady in Issue Cart')} 
                                 
@@ -566,6 +575,7 @@ $creator="name".$lang;
                             $("#print_table tbody").empty();
                             $('#member_lend').html('');
                             $('#issue-cart').hide();
+                            viewState=0;
                             document.getElementById("member_id").focus();
                         },
                         error: function(data){
