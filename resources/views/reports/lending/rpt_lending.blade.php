@@ -129,39 +129,35 @@ $member_category="member_category".$lang;
                   <th>Issue Date</th>
                   <th>Accession No</th>
                   <th style="width: 25%;">Title</th>
-                  <th style="width: 25%;">Member</th>
+                  <th style="width: 30%;">Member</th>
                   <th>Return Date</th>
             </tr>
       </thead>
-      @php
-        $i=0
-      @endphp
+
       <tbody>
-            @for ($i = 0; $i<$lendingdata->count();)
-            <tr class="row-1">
-                  <td>{{ $i+1 }}</td>
-                  <td>{{ $lendingdata[$i]->id}}</td>
-                  <td>{{ $lendingdata[$i]->issue_date}}</td>
-                  <td>{{ $lendingdata[$i]->accessionNo}}</td>
-                  <td>{{ $lendingdata[$i]->$title}}</td>
-                  <td>{{ $lendingdata[$i]->$member}}</td>  
-                  <td>{{ $lendingdata[$i]->return_date}}</td>  
-            </tr>
-                  @php
-                  ++$i
-                  @endphp
-            <tr class="row-2">
-                  <td>{{ $i+1 }}</td>
-                  <td>{{ $lendingdata[$i]->id}}</td>
-                  <td>{{ $lendingdata[$i]->issue_date}}</td>
-                  <td>{{ $lendingdata[$i]->accessionNo}}</td>
-                  <td>{{ $lendingdata[$i]->$title}}</td>
-                  <td>{{ $lendingdata[$i]->$member}}</td>  
-                  <td>{{ $lendingdata[$i]->return_date}}</td>  
-            </tr>
-                  @php
-                  ++$i
-                  @endphp
+            @for ($i=0 ; $i<$lendingdata->count();$i++)
+                  @if($i % 2==0)
+                        <tr class="row-1">
+                              <td>{{ $i+1 }}</td>
+                              <td>{{ $lendingdata[$i]->id}}</td>
+                              <td>{{ $lendingdata[$i]->issue_date}}</td>
+                              <td>{{ $lendingdata[$i]->accessionNo}}</td>
+                              <td>{{ $lendingdata[$i]->$title}}</td>
+                              <td>{{ $lendingdata[$i]->member_id}}- {{ $lendingdata[$i]->$member}}</td>  
+                              <td>{{ $lendingdata[$i]->return_date}}</td>  
+                        </tr>
+                  @else
+                        <tr class="row-2">
+                              <td>{{ $i+1 }}</td>
+                              <td>{{ $lendingdata[$i]->id}}</td>
+                              <td>{{ $lendingdata[$i]->issue_date}}</td>
+                              <td>{{ $lendingdata[$i]->accessionNo}}</td>
+                              <td>{{ $lendingdata[$i]->$title}}</td>
+                              <td>{{ $lendingdata[$i]->member_id}}- {{ $lendingdata[$i]->$member}}</td>  
+                              <td>{{ $lendingdata[$i]->return_date}}</td>  
+                        </tr>
+                  @endif
+
             @endfor
       </tbody>
     </table>

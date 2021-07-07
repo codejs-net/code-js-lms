@@ -184,12 +184,8 @@ $dd_section="section".$lang;
                             <span class="pdf-icon"><i class="fa fa-file-pdf-o"></i></span>
                             <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; PDF
                         </button>
-                        {{-- <button type="button" class="btn-excel btn btn-primary btn-sm elevation-2 mr-2" id="btn_export_lending">
-                            <span class="excel-icon"><i class="fa fa-file-excel-o"></i></span>
-                            <span class="spinner-border spinner-border-sm text-white loader" role="status" aria-hidden="true"  style="display: none;"></span>&nbsp; Excel
-                        </button> --}}
                 </form>
-                <form class="form-inline" action="{{ route('export_lending')}}" id="report_form" method="POST">
+                <form class="form-inline" action="{{ route('export_lending_account')}}" id="export_lending_acc_form" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="rpt_member" class="rpt_member">
                     <input type="hidden" name="rpt_resource" class="rpt_resource">
@@ -296,6 +292,17 @@ $("#report_lending_acc_form").submit(function(){
     $('.rpt_member').val($('#member').val());
 });
 
+$("#export_lending_acc_form").submit(function(){
+    if($('#resource').val()==""){
+        $('.rpt_resource').val("All");
+    }
+    else{
+        $('.rpt_resource').val($('#resource').val());
+    }
+    $('.rpt_filter_account').val($("input[name='filter_account']:checked").val());
+    $('.rpt_member').val($('#member').val());
+});
+
 $("input[name='returned']").click(function(){
     var returnfilter=$(this).val();
     var from_date= $('#dte_from').val();
@@ -320,22 +327,6 @@ $('.filter-date').change(function() {
     $('.rpt_filter').val(returnfilter);
 }); 
 
-// $('#member').change(function() { 
-//     $('.rpt_filter_account').val($("input[name='filter_account']:checked").val());
-//     $('.rpt_member').val($('#member').val());
-//     $('.rpt_resource').val($('#resource').val());
-// }); 
-
-// $('#resource').on('input',function(e){
-//     if($(this).val()==""){
-//         $('.rpt_resource').val("All");
-//     }
-//     else{
-//         $('.rpt_resource').val($(this).val());
-//     }
-//     $('.rpt_filter_account').val($("input[name='filter_account']:checked").val());
-//     $('.rpt_member').val($('#member').val());
-// });
 
 $('.btn-pdf').click(function() { 
     $(this).find('.pdf-icon').hide();

@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Auth;
 use Session;
 
-class LendingExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents
+class Lending_accountExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents
 {
 
     protected $request;
@@ -38,9 +38,16 @@ class LendingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
 
         $today = Carbon::now();
         $_return="";
-        $rpt_from=$this->request->rpt_from;
-        $rpt_to=$this->request->rpt_to;
-        $rpt_filter=$this->request->rpt_filter;
+        $rpt_member="";
+        $rpt_resource="";
+        $rpt_filter=$this->request->rpt_filter_account;
+
+        if($this->request->rpt_member=="All"){$rpt_member="%";}
+        else{ $rpt_member=$this->request->rpt_member;}
+
+        if($this->request->rpt_resource=="All"){$rpt_resource="%";}
+        else{ $rpt_resource=strtoupper($this->request->rpt_resource);}
+
         $center_array= array();
         $resource_center = center_allocation::where('staff_id', Auth::user()->detail_id)->with(['center'])->get();
         foreach($resource_center as $value)
@@ -62,34 +69,12 @@ class LendingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                 $member_category
             )
             ->whereIn('center_id', $center_array)
-            ->whereBetween('issue_date', [$rpt_from, $rpt_to])
-            ->orwhereBetween('return_date', [$rpt_from, $rpt_to])
-            ->whereIn('center_id', $center_array)
+            ->where('member_id','LIKE',$rpt_member)
+            ->where('accessionNo','LIKE',$rpt_resource)
             ->orderBy('updated_at', 'DESC')
             ->get(); 
         }
-        elseif($rpt_filter=="Non Return")
-        {
-            $_return=0;
-            $lendingdata = view_lending_data_all::select( 
-                'id',
-                'issue_date',
-                'accessionNo',
-                'standard_number',
-                $title,
-                'member_id',
-                $member,
-                'return_date',
-                'fine_amount',
-                $center,
-                $member_category
-            )
-            ->where('return','LIKE',$_return)
-            ->whereIn('center_id', $center_array)
-            ->whereBetween('issue_date', [$rpt_from, $rpt_to])
-            ->orderBy('updated_at', 'DESC')
-            ->get(); 
-        }
+       
         elseif($rpt_filter=="Return")
         {
             $_return=1;
@@ -108,7 +93,31 @@ class LendingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
             )
             ->where('return','LIKE',$_return)
             ->whereIn('center_id', $center_array)
-            ->whereBetween('return_date', [$rpt_from, $rpt_to])
+            ->where('member_id','LIKE',$rpt_member)
+            ->where('accessionNo','LIKE',$rpt_resource)
+            ->orderBy('updated_at', 'DESC')
+            ->get(); 
+        }
+        elseif($rpt_filter=="Non Return")
+        {
+            $_return=0;
+            $lendingdata = view_lending_data_all::select(
+                'id',
+                'issue_date',
+                'accessionNo',
+                'standard_number',
+                $title,
+                'member_id',
+                $member,
+                'return_date',
+                'fine_amount',
+                $center,
+                $member_category
+            )
+            ->where('return','LIKE',$_return)
+            ->whereIn('center_id', $center_array)
+            ->where('member_id','LIKE',$rpt_member)
+            ->where('accessionNo','LIKE',$rpt_resource)
             ->orderBy('updated_at', 'DESC')
             ->get(); 
         }
@@ -128,46 +137,10 @@ class LendingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                 $member_category
             )
             ->whereIn('center_id', $center_array)
-            ->whereBetween('issue_date', [$rpt_from, $rpt_to])
+            ->where('member_id','LIKE',$rpt_member)
+            ->where('accessionNo','LIKE',$rpt_resource)
             ->orderBy('updated_at', 'DESC')
             ->get(); 
-        }
-        elseif($rpt_filter=="Late")
-        {
-            $_return=0;
-            $lendingdata_array=array();
-            $_lendingdata = view_lending_data_all::select(
-                'id',
-                'issue_date',
-                'accessionNo',
-                'standard_number',
-                $title,
-                'member_id',
-                $member,
-                'return_date',
-                'fine_amount',
-                $center,
-                $member_category
-            )
-            ->where('return','LIKE',$_return)
-            ->whereIn('center_id', $center_array)
-            ->whereBetween('issue_date', [$rpt_from, $rpt_to])
-            ->orderBy('updated_at', 'DESC')
-            ->get();
-            // ------------------------
-            foreach( $_lendingdata as $item)
-            {
-                $lending_period = $item->lending_period;
-                $issudate = Carbon::parse($item->issue_date);
-                $diff =  $today->diffInDays($issudate);
-
-                if($diff>$lending_period)
-                {
-                    array_push($lendingdata_array,$item);
-                }
-            }
-            $lendingdata = collect($lendingdata_array);
-            // ------------------------
         }
         return $lendingdata;
     }

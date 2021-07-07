@@ -344,7 +344,7 @@ $lib_name="name".$lang;
         $("#fineTable tbody").empty();
 
             $('#resourceTable tr').each(function(){
-                if($(this).find(".r_fine").html() != 0.00){
+                if($(this).find(".r_fine").html() != 0.00 && $(this).find(".r_fine_settleId").html() == "N/A"){
                     op+='<tr>';
                     op+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
                     op+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
@@ -446,12 +446,14 @@ $lib_name="name".$lang;
                                         op+='<div><span>To Be Return: </span><span class="r_returndate">'+data[j]['return_date']+'</span></div>';
                                         op+='<div><span> Fine: </span><span class="r_fine">'+data[j]['fine_amount']+'</span></div>';
 
-                                        if(data[j]['fine_amount']!=0.00)
+                                        if(data[j]['fine_amount']!=0.00 && data[j]['fine_settle_id']==null)
                                         {
+                                            op+='<div><span> Fine settleId: </span><span class="r_fine_settleId">'+"N/A"+'</span></div>';
                                             op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine" data-toggle="modal" data-target="#settel_show"><i class="fa fa-money"></i></button>';
                                         }
                                         else
                                         {
+                                            op+='<div><span> Fine settleId: </span><span class="r_fine_settleId">'+data[j]['fine_settle_id']+'</span></div>';
                                             op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
                                             op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
                                         }
@@ -500,10 +502,11 @@ $lib_name="name".$lang;
                     var accno=$(this).find(".r_accno").html();
                     var snumber=$(this).find(".r_snumber").html();
                     var fine=$(this).find(".r_fine").html();
+                    var fine_settelId= $(this).find(".r_fine_settleId").html();
                     if(resourceinput.toUpperCase()==accno.toUpperCase() || resourceinput.toUpperCase()==snumber.toUpperCase() )
                     {
                         resource_found=1;
-                        if(fine==0.00)
+                        if(fine_settelId!="N/A")
                         {
                             $('#returnTable tbody tr').each(function(){
                                 var td_accno=$(this).find(".td_acceno").html();

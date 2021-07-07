@@ -94,13 +94,20 @@
       }
       .card-heading{
             padding-bottom: 15px;
+            margin-bottom: 10px;
             /* font-size: 14px !important; */
       }
 
-      .card-heading1{
-            padding-bottom: 15px;
-            /* font-size: 16px !important; */
+      .card-heading1 {
+            padding-bottom: 30px !important;
+            padding-top: 20px !important;
+            color: #530549 !important;
       }
+
+      .card-heading1 span {
+            color: #530549 !important;
+      }
+
 
       .card-name{
             color: #272c66;
@@ -135,34 +142,34 @@ $lib_name="name".$lang;
             <div class="column-2">
             <table class="tbl_card">
                   <tr class="card-heading">
-                        <td colspan="3" class="text-center"><h4 class="card-name"><u>{{__("Member Card")}} &nbsp;-{{$data->id}}</u></h4></td><br>
+                        <td colspan="3" class="text-left"><span class="card-name"><u>{{__("Member Card")}} &nbsp;-{{$data->id}}</u></span></td>
                   </tr>
                   <tr class="card-heading1">
-                        <td colspan="3" class="text-left"><h4 class="">{{ $library->$lib_name}}</h4></td><br>
+                        <td colspan="3" class="text-left"><b><span class="">{{ $library->$lib_name}}</span></b></td><br><br>
                   </tr>
                  
                   <tr>
-                        <td style="width: 30%"><b>{{__("Category")}}</b></td>
+                        <td style="width: 20%"><b>{{__("Category")}}</b></td>
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left pb-0">{{$data->$category}}</td>
                   </tr>
                   <tr>
-                        <td style="width: 30%"><b>{{__("Name")}}</b></td>
+                        <td style="width: 20%"><b>{{__("Name")}}</b></td>
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->$name}}</td>
                   </tr>
                   <tr>
-                        <td style="width: 30%"><b>{{__("Address")}}</b></td>
+                        <td style="width: 20%"><b>{{__("Address")}}</b></td>
                         <td style="width: 5%">&nbsp;:&nbsp;</td>
                         <td class="text-left pb-2">{{$data->$address1}},&nbsp;{{$data->$address2}}</td>
                   </tr>
                   <tr>
-                        <td style="width: 30%"><b>{{__("NIC")}}</b></td>
+                        <td style="width: 20%"><b>{{__("NIC")}}</b></td>
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->nic}}</td>
                   </tr>
                   <tr>
-                        <td style="width: 30%"><b>{{__("Mobile")}}</b></td>
+                        <td style="width: 20%"><b>{{__("Mobile")}}</b></td>
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->mobile}}</td>
                   </tr>

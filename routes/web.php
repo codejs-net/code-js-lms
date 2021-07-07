@@ -342,6 +342,7 @@ Route::group(['middleware' => ['auth']], function() {
      Route::POST('export_recource_filter', [ReportController::class, 'export_recource_filter'])->name('export_recource_filter');
      Route::POST('export_recource_filter_all', [ReportController::class, 'export_recource_filter_all'])->name('export_recource_filter_all');
      Route::POST('export_lending', [ReportController::class, 'export_lending'])->name('export_lending');
+     Route::POST('export_lending_account', [ReportController::class, 'export_lending_account'])->name('export_lending_account');
      Route::POST('export_survey_temp', [ReportController::class, 'export_survey_temp'])->name('export_survey_temp');
 
     //  ---------Email-------------
