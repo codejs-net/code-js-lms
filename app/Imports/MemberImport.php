@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\member;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Carbon\Carbon;
 
 
 class MemberImport implements ToModel, WithHeadingRow
@@ -31,7 +32,7 @@ class MemberImport implements ToModel, WithHeadingRow
             'address2_en' => $row['address2_en'],
             'nic'         => $row['nic'],
             'mobile'      => $row['mobile'],
-            // 'birthday'    => $row['birthday'],
+            'birthday'    => Carbon::parse($row['birthday']),
             'genderid'    => $row['genderid'],
             // 'description_si' => $row['description'],
             'image'       => $row['image'],

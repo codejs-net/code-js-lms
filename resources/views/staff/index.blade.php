@@ -14,19 +14,19 @@ $address2="address2".$lang;
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Staff&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-search"></i> Search Staff&nbsp;</li>
+    <li class="breadcrumb-item"><a href="{{ route('staff.index') }}"><i class="fa fa-folder-open"></i> {{__('Staff')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-search"></i> {{__('Search Staff')}}&nbsp;</li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
         <div class="col-md-10 col-sm-6 text-left p-2"> 
-            <h5> <i class="fa fa-search ml-4 pl-2"> Search Staff</i></h5>
+            <h5> <i class="fa fa-search ml-4 pl-2"> {{__('Search Staff')}}</i></h5>
         </div>  
         <div class="col-md-2 col-sm-6 text-right p-2">
             @can('staff-create')
-            <a href="{{ route('create_staff') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; New</a>
+            <a href="{{ route('create_staff') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; {{__('New')}}</a>
             @endcan
         </div>
     </div>
@@ -75,7 +75,7 @@ $address2="address2".$lang;
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Remove Library Staff</h5>
+                    <h5 class="modal-title" id="modaltitle">{{__('Remove Library Staff')}}</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -91,7 +91,7 @@ $address2="address2".$lang;
                     <input type="hidden" id="delete_staff_id" name="delete_staff_id">
                     <div class="row form-group">
                         <div class="col-md-6">
-                            <h5 id="modallabel">Are you sure Remove Staff </h5>
+                            <h5 id="modallabel">{{__('Are you sure Remove Staff')}} </h5>
                         </div>
                         <div class="col-md-8">
                             <h5><label type="text"  id="delete_staff_name"></label></h5>
@@ -100,8 +100,8 @@ $address2="address2".$lang;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> &nbsp; Delete</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">{{__('Close')}}</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> &nbsp; {{__('Delete')}}</button>
                 </div>
             </form>
            

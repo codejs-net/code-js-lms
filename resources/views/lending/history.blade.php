@@ -145,15 +145,6 @@ $(document).ready(function()
     $('.rpt_filter').val(returnfilter);
     load_datatable(returnfilter,from_date,to_date);
 
-    // start member delete function
-    $('#member_delete').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) 
-        var m_id = button.data('mid') 
-        var m_name = button.data('mname')
-        document.getElementById("delete_member_id").value= m_id; 
-        document.getElementById("delete_member_name").innerHTML = m_name;
-        })
-    // end member delete function
 
 });
 

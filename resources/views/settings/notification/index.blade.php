@@ -71,6 +71,25 @@ $category="category".$lang;
       </div>
      </form>              
     </div>
+
+    <div class="card card-body">
+      <div><h6>Backup Email</h6></div>
+     <form method="POST" action="{{ route('update_email_backup') }}">
+      {{ csrf_field() }}
+       <div class="form-group">
+        <div class="form-check">
+          <label class="ml-3 pl-1">
+            <input type="checkbox" name="email_backup" value="1" class="form-check-input"id="email_backup" >Email Backup
+          </label><br>
+         
+         
+        </div>
+       </div>
+       <div class="box-footer clearfix pull-right">   
+        <button type="submit" class="btn btn-outline-success btn-sm" id=""><i class="fa fa-check" aria-hidden="true"></i> {{ __("Apply")}}</button>
+      </div>
+     </form>              
+    </div>
    
 
 </div>
@@ -105,6 +124,10 @@ $(document).ready(function()
   @endif
   @if($email_user->value==1)
   $("#email_user_add").prop( "checked", true );
+  @endif
+
+  @if($email_backup->value==1)
+  $("#email_backup").prop( "checked", true );
   @endif
                             
 

@@ -89,7 +89,7 @@ $category="category".$db_locale;
                             <td>{{ $data->lending_limit }}</td>
                             <td>{{ $data->lending_period }}</td>
                             <td>
-                            @can('setting-edit')
+                            @can('lending_setting-edit')
                             <a class="btn btn-sm btn-outline-info " data-toggle="modal" data-target="#data_update" data-detail_id="{{ $data->id }}" data-detail_category="{{ $data->member_cat->$category }}" data-detail_limit="{{ $data->lending_limit }}" data-detail_period="{{ $data->lending_period }}">
                                 <i class="fa fa-pencil" ></i>&nbsp;Edit
                             </a>

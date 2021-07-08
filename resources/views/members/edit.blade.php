@@ -17,15 +17,15 @@ $address2="address2".$lang;
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Members&nbsp;</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> Edit Member&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('members.index') }}"><i class="fa fa-folder-open"></i> {{__('Members')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a><i class="fa fa-plus"></i> {{__('Edit Member')}}&nbsp;</a></li>
 </ol>
 </nav>
         <!-- Content Header (Page header) -->
 <div class="container">
     <div class="row text-center mb-2">
         <div class="col-md-12 col-sm-6 text-center"> 
-            <h5> <i class="fa fa-plus"> Edit Member</i></h5>
+            <h5> <i class="fa fa-plus"> {{__('Edit Member')}}</i></h5>
         </div>  
     </div>
     
@@ -44,7 +44,7 @@ $address2="address2".$lang;
             <div class="col-md-10 col-12">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="image">Member Image</label>
+                        <label for="image">{{__('Member Image')}}</label>
                         <input type="file" id="image_member" name="image_member" class="form-control-file bg-white p-1 elevation-1">
                     </div>
                 </div>
@@ -52,7 +52,7 @@ $address2="address2".$lang;
                     
                     <div class="form-group col-md-6">
                         <div class="form-check form-check-inline" >
-                            <label for="name">Title:</label> &nbsp;
+                            <label for="name">{{__('Title')}}:</label> &nbsp;
                         </div>
                         @foreach($tdata as $item)
                         <div class="form-check form-check-inline" >
@@ -72,9 +72,9 @@ $address2="address2".$lang;
 
             <div class="row form-group">
                 <div class="form-group col-md-6">
-                    <label for="categry">Category : </label>
+                    <label for="categry">{{__('Category')}} : </label>
                     <select class="form-control"name="category" id="category" value="{{old('category')}}"required>
-                    <option value="" disabled selected>Select Member's Category</option>
+                    <option value="" disabled selected>{{__('Select Members Category')}}</option>
                     @foreach($Mdata as $item)
                         <option value="{{ $item->id }}">{{ $item->$category }}</option>
                     @endforeach
@@ -87,51 +87,51 @@ $address2="address2".$lang;
                     <label for="categry">&nbsp;</label><br>
                     
                     <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addModal" data-backdrop="static" data-opp_name="Member Category" onclick="add_by_modal('/save_member_cat')" >
-                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New Category</label>
+                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; {{__('New Category')}}</label>
                 </div>
             </div>
             <div class="form-group">
-                <label for="name">Name :</label>
-                <input type="text" class="form-control mb-1" name="name_si" id="name_si" value="{{old('name_si')}}" placeholder="Name in Sinahala">
-                <input type="text" class="form-control mb-1" name="name_ta" id="name_ta" value="{{old('name_ta')}}" placeholder="Name in Tamil">
-                <input type="text" class="form-control mb-1" name="name_en" id="name_en" value="{{old('name_en')}}" placeholder="Name in English">
+                <label for="name">{{__('Name')}} :</label>
+                <input type="text" class="form-control mb-1" name="name_si" id="name_si" value="{{old('name_si')}}" placeholder="{{__('Name in Sinahala')}}">
+                <input type="text" class="form-control mb-1" name="name_ta" id="name_ta" value="{{old('name_ta')}}" placeholder="{{__('Name in Tamil')}}">
+                <input type="text" class="form-control mb-1" name="name_en" id="name_en" value="{{old('name_en')}}" placeholder="{{__('Name in English')}}">
                 <span class="text-danger">{{ $errors->first('name') }}</span>
             </div>
             <div class="form-group">
-                <label for="Address">Address Line1 :</label>
-                <input type="text" class="form-control mb-1" name="Address1_si" id="Address1_si" placeholder="Address Line 1 Sinhala" value="{{old('Address1_si')}}">
-                <input type="text" class="form-control mb-1" name="Address1_ta" id="Address1_ta" placeholder="Address Line 1 Tamil" value="{{old('Address1_ta')}}">
-                <input type="text" class="form-control mb-1" name="Address1_en" id="Address1_en" placeholder="Address Line 1 English" value="{{old('Address1_en')}}">
+                <label for="Address">{{__('Address Line1')}} :</label>
+                <input type="text" class="form-control mb-1" name="Address1_si" id="Address1_si" placeholder="{{__('Address Line 1 Sinhala')}}" value="{{old('Address1_si')}}">
+                <input type="text" class="form-control mb-1" name="Address1_ta" id="Address1_ta" placeholder="{{__('Address Line 1 Tamil')}}" value="{{old('Address1_ta')}}">
+                <input type="text" class="form-control mb-1" name="Address1_en" id="Address1_en" placeholder="{{__('Address Line 1 English')}}" value="{{old('Address1_en')}}">
                 <span class="text-danger">{{ $errors->first('Address1') }}</span>
             </div>
             <div class="form-group">
-                <label for="Address">Address Line2 :</label>
-                <input type="text" class="form-control mb-1" name="Address2_si" id="Address2_si" placeholder="Address Line 2 Sinhala" value="{{old('Address2_si')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_ta" id="Address2_si" placeholder="Address Line 2 Tamil" value="{{old('Address2_ta')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_en" id="Address2_si" placeholder="Address Line 2 English" value="{{old('Address2_en')}}"> 
+                <label for="Address">{{__('Address Line2')}} :</label>
+                <input type="text" class="form-control mb-1" name="Address2_si" id="Address2_si" placeholder="{{__('Address Line 2 Sinhala')}}" value="{{old('Address2_si')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_ta" id="Address2_si" placeholder="{{__('Address Line 2 Tamil')}}" value="{{old('Address2_ta')}}"> 
+                <input type="text" class="form-control mb-1" name="Address2_en" id="Address2_si" placeholder="{{__('Address Line 2 English')}}" value="{{old('Address2_en')}}"> 
                 <span class="text-danger">{{ $errors->first('Address2') }}</span>
             </div>
 
             <div class=" row form-group">
                 <div class="form-group col-md-6">
-                    <label for="NIC">NIC :</label>
-                    <input type="text" class="form-control" name="nic" id="nic" placeholder="NIC" value="{{old('nic')}}"required>
+                    <label for="NIC">{{__('NIC')}} :</label>
+                    <input type="text" class="form-control" name="nic" id="nic" placeholder="{{__('NIC')}}" value="{{old('nic')}}"required>
                     <span class="text-danger">{{ $errors->first('nic') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="Mobile">Mobile No :</label>
-                    <input type="text" class="form-control" name="Mobile" id="Mobile" placeholder="Mobile No" value="{{old('Mobile')}}"required>
+                    <label for="Mobile">{{__('Mobile No')}} : {{__('( 94xxxxxxxxx )')}}</label>
+                    <input type="text" class="form-control" name="Mobile" id="Mobile" placeholder="{{__('Mobile No')}}" value="{{old('Mobile')}}"required>
                     <span class="text-danger">{{ $errors->first('Mobile') }}</span>
                 </div>
             </div>
             <div class=" row form-group">
                 <div class="form-group col-md-6">
-                    <label for="NIC">Birth Day :</label>
-                    <input type="date" class="form-control" name="birthday" id="birthday" placeholder="Birth Day" value="{{old('birthday')}}"required>
+                    <label for="NIC">{{__('Birth Day')}} :</label>
+                    <input type="date" class="form-control" name="birthday" id="birthday" placeholder="{{__('Birth Day')}}" value="{{old('birthday')}}"required>
                     <span class="text-danger">{{ $errors->first('birthday') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="name">Gender:</label> <br>
+                    <label for="name">{{__('Gender')}}:</label> <br>
                     <div class="bg-light p-2">
                         <div class="form-check form-check-inline" >
                             @foreach($gedata as $item)
@@ -146,21 +146,21 @@ $address2="address2".$lang;
             </div>
             <div class="form-group">
                 <div class="col-12 col-md-12">
-                    <label for="email">Email : </label>
-                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="{{old('email')}}">
+                    <label for="email">{{__('Email')}} : </label>
+                    <input type="text" name="email" id="email" class="form-control" placeholder="{{__('Email')}}" value="{{old('email')}}">
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="descrip">Description :</label>
-                <input type="text" class="form-control mb-1" name="description_si" id="description_si" placeholder="Description Sinhala" value="{{old('description_si')}}"> 
-                <input type="text" class="form-control mb-1" name="description_ta" id="description_ta" placeholder="Description Tamil" value="{{old('description_ta')}}"> 
-                <input type="text" class="form-control mb-1" name="description_en" id="description_en" placeholder="Description English" value="{{old('description_en')}}"> 
+                <label for="descrip">{{__('Description')}} :</label>
+                <input type="text" class="form-control mb-1" name="description_si" id="description_si" placeholder="{{__('Description Sinhala')}}" value="{{old('description_si')}}"> 
+                <input type="text" class="form-control mb-1" name="description_ta" id="description_ta" placeholder="{{__('Description Tamil')}}" value="{{old('description_ta')}}"> 
+                <input type="text" class="form-control mb-1" name="description_en" id="description_en" placeholder="{{__('Description English')}}" value="{{old('description_en')}}"> 
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
             <div class=" row form-group">
                 <div class="form-group col-md-6">
-                    <label for="regdate">Registerd Date :</label>
+                    <label for="regdate">{{__('Registerd Date')}} :</label>
                     <input type="date" class="form-control" name="registeredDate" id="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
                     <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
@@ -172,9 +172,9 @@ $address2="address2".$lang;
               <div class="m-2">
               <div class="row">
                <div class="col-md-11">
-                   <label for="member_guarantor">Guarantor : </label>
+                   <label for="member_guarantor">{{__('Guarantor')}} : </label>
                         <select class="form-control" id="member_guarantor" name="member_guarantor">
-                            <option value="" class="" selected disabled>Select Guarantor</option>
+                            <option value="" class="" selected disabled>{{__('Select Guarantor')}}</option>
                             @foreach($gdata as $item)
                                     <option value="{{ $item->id }}">{{ $item->$guarantor}}-{{$item->$address1}}-{{$item->nic}}</option>
                             @endforeach
@@ -183,7 +183,7 @@ $address2="address2".$lang;
                 <div class="col-md-1">
                     <label for="categry">&nbsp;</label><br>
                     <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#guarantor_create" >
-                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; New</label>
+                    <i class="fa fa-plus"></i></button><label for="categry">&nbsp; {{__('New')}}</label>
                 </div>
 
                </div>
@@ -193,16 +193,16 @@ $address2="address2".$lang;
 
             <div class="form-row border border-secondary bg-light">
                 <div class="form-group col-md-3 col-3 p-2 mt-2">
-                    <label for="status">Change Status</label><br>
+                    <label for="status">{{__('Change Status')}}</label><br>
                    <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="status" id="status" value="1">Active
+                            <input type="radio" class="form-check-input" name="status" id="status" value="1">{{__('Active')}}
                         </label> &nbsp;
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="status" id="status" value="0">Remove
+                            <input type="radio" class="form-check-input" name="status" id="status" value="0">{{__('Remove')}}
                         </label> &nbsp;
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="status" id="status" value="2">Backlist
+                            <input type="radio" class="form-check-input" name="status" id="status" value="2">{{__('Backlist')}}
                         </label> &nbsp;
                    </div>
                    <span class="text-danger">{{ $errors->first('status') }}</span>
@@ -216,7 +216,7 @@ $address2="address2".$lang;
             
             <button type="submit" class="btn btn-success btn-sm toastrDefaultError toastsDefaultSuccess" id="save_member"><i class="fa fa-check" aria-hidden="true"></i> {{ __("Update")}}</button>
             &nbsp; &nbsp;
-            <button type="button" class="btn btn-secondary btn-sm" id="cler">Reset
+            <button type="button" class="btn btn-secondary btn-sm" id="cler">{{__('Reset')}}
             <i class="fa fa-times"></i></button>
             <!-- Image loader -->
             <div id='loader' style='display: none;' >

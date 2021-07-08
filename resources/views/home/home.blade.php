@@ -284,7 +284,7 @@ $(document).ready(function()
                 op+= '<div class="card-header card-notify-header1 px-2 py-1">';
                 op+= '<h5 class="card-title">'+(i+1)+'-{{trans('Latest Resource Issue') }}</h5>';
                 op+= '<div class="card-tools">';
-                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '<button type="button" class="btn btn-tool mr-1" data-card-widget="remove"><i class="fas fa-times-circle text-danger">';
                 op+= '</i></button></div></div>';
                 op+= '<div class="card-body px-2 py-1">';
                 op+= data.issue[i].accessionNo+'-'+data.issue[i].{{$title}}+'&nbsp;{{trans('Issue to') }} '+data.issue[i].{{$member}};
@@ -297,7 +297,7 @@ $(document).ready(function()
                 op+= '<div class="card-header card-notify-header1 px-2 py-1">';
                 op+= '<h5 class="card-title">'+(j+1)+'-{{trans('Latest Resource Return') }}</h5>';
                 op+= '<div class="card-tools">';
-                op+= '<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times">';
+                op+= '<button type="button" class="btn btn-tool mr-1" data-card-widget="remove"><i class="fas fa-times-circle text-danger">';
                 op+= '</i></button></div></div>';
                 op+= '<div class="card-body px-2 py-1">';
                 op+= data.return[j].accessionNo+'-'+ data.return[j].{{$title}}+'&nbsp;{{trans('Return by') }} '+data.return[j].{{$member}};

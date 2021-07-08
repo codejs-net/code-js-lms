@@ -17,8 +17,8 @@ $lib_name="name".$lang;
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item ml-2"><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{ __('Home') }}&nbsp;</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-folder-open"></i> Lending&nbsp;</a></li>
-    <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> Resources Return&nbsp;</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('return.index') }}"><i class="fa fa-folder-open"></i> {{__('Lending')}}&nbsp;</a></li>
+    <li class="breadcrumb-item active" ><a><i class="fa fa-plus"></i> {{__('Resources Return')}}&nbsp;</a></li>
 </ol>
 </nav>
       <!-- Content Header (Page header) -->
@@ -27,7 +27,7 @@ $lib_name="name".$lang;
 <div class="container-fluid">
     <div class="row text-center mb-2">
         <div class="col-md-12 col-sm-12 text-center"> 
-            <h5> <i class="fa fa-shopping-cart">&nbsp;Resources Return</i></h5>
+            <h5> <i class="fa fa-shopping-cart">&nbsp;{{__('Resources Return')}}</i></h5>
         </div> 
 
     </div>
@@ -46,7 +46,7 @@ $lib_name="name".$lang;
                   <div class="input-group-prepend">
                      <span class="input-group-addon elevation-1"id="basic-addon2"><i class="fa fa-user-circle-o fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control elevation-1" id="member_id" placeholder="Member ID"aria-describedby="basic-addon2">&nbsp;&nbsp;
+                    <input type="text" class="form-control elevation-1" id="member_id" placeholder="{{__('Member ID')}}"aria-describedby="basic-addon2">&nbsp;&nbsp;
                     <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrowmember"><i class="fas fa-check-circle"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrowmember_serch"><i class="fa fa-search"></i></button> 
                 </div>  
@@ -57,7 +57,7 @@ $lib_name="name".$lang;
                   <div class="input-group-prepend">
                      <span class="input-group-addon elevation-1"id="basic-addon3"><i class="fa fa-list fa-lg mt-2"></i></span>
                   </div>
-                    <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="AccessionNo / ISBN / ISSN / ISMN" aria-describedby="basic-addon3">&nbsp;&nbsp;
+                    <input type="text" class="form-control elevation-1" id="resource_details" onfocus="this.value=''" placeholder="{{__('AccessionNo / ISBN / ISSN / ISMN')}}" aria-describedby="basic-addon3">&nbsp;&nbsp;
                     <button type="button" class="btn btn-sm btn-outline-primary elevation-1" id="addbarrow" data-toggle="tooltip" data-placement="top"><i class="fas fa-cart-plus"></i></button>
                     <button type="button" class="btn btn-sm btn-outline-success elevation-1" id="addbarrow_serch"><i class="fa fa-search"></i></button>
                 </div> 
@@ -94,18 +94,18 @@ $lib_name="name".$lang;
                     <table class="table table-hover" id="returnTable">
                         <thead class="js-tbl-header">
                             <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Resource</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Accession</th>
-                            <th scope="col">ISBN/ISSN</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Issue</th>
-                            <th scope="col">ToBeReturn</th>
-                            <th scope="col">Fine(Rs)</th>
+                            <th scope="col">{{__('ID')}}</th>
+                            <th scope="col">{{__('Resource')}}</th>
+                            <th scope="col">{{__('Type')}}</th>
+                            <th scope="col">{{__('Accession')}}</th>
+                            <th scope="col">{{__('ISBN/ISSN')}}</th>
+                            <th scope="col">{{__('Resource Title')}}</th>
+                            <th scope="col">{{__('Issue')}}</th>
+                            <th scope="col">{{__('ToBeReturn')}}</th>
+                            <th scope="col">{{__('Fine(Rs)')}}</th>
                             {{-- <th scope="col">Return</th> --}}
                             {{-- <th scope="col">Fine Status</th> --}}
-                            <th scope="col">Action</th>
+                            <th scope="col">{{__('Action')}}</th>
                             <th scope="col">&nbsp;</th>
                             </tr>    
                             </thead>
@@ -122,23 +122,23 @@ $lib_name="name".$lang;
     <hr>
     <div class="row mt-4">
         <div class="col-md-6">
-            <span class="text-dark ml-3">&nbsp;Actions :</span>
-            <span class="text-warning ml-3"><i class="fa fa-money"></i>&nbsp;Settle Fine&nbsp;|</span>
-            <span class="text-success ml-3"><i class="fa fa-check-square-o"></i>&nbsp;Return Resource&nbsp;|</span>
-            <span class="text-info ml-3"><i class="fa fa-calendar-plus-o"></i>&nbsp;Extend Days</span>
+            <span class="text-dark ml-3">&nbsp;{{__('Actions')}} :</span>
+            <span class="text-warning ml-3"><i class="fa fa-money"></i>&nbsp;{{__('Settle Fine')}}&nbsp;|</span>
+            <span class="text-success ml-3"><i class="fa fa-check-square-o"></i>&nbsp;{{__('Return Resource')}}&nbsp;|</span>
+            <span class="text-info ml-3"><i class="fa fa-calendar-plus-o"></i>&nbsp;{{__('Extend Days')}}</span>
 
         </div>
         <div class="col-md-6">
             <div class="input-group box-footer clearfix pull-right">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="check_print">
-                    <label class="form-check-label" for="check_print">Print Recipt</label>
+                    <label class="form-check-label" for="check_print">{{__('Print Recipt')}}</label>
                 </div>
                 <button type="button" class="btn btn-sm btn-primary elevation-2 mx-2" id="return_resource">
-                <i class="fa fa-floppy-o"></i> Save&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
+                <i class="fa fa-floppy-o"></i> {{__('Save')}}&nbsp;<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"  style="display: none;" id='loader'></span></button>
                 &nbsp; &nbsp;
                 <button type="button" class="btn btn-sm btn-secondary elevation-2" id="btn_reset">
-                <i class="fa fa-times"></i> Reset</button>
+                <i class="fa fa-times"></i> {{__('Reset')}}</button>
             </div> 
         </div>
     </div>
@@ -149,16 +149,16 @@ $lib_name="name".$lang;
 <div id="printdiv" style="display: none;">
     <div class="col-md-4">
         <div id="print_lendding" style="text-align: center;">
-            <div class="text-center"><u><h3>Return Receipt</h3></u></div>
+            <div class="text-center"><u><h3>{{__('Return Receipt')}}</h3></u></div>
             </br>
                 <h4 id="print_library">{{$librarydata->$lib_name}}</h4>
-                <h5 >Member : <span id="print_member"></span></h5>
-                <h5>Returned Date :<span id="print_returndate"></span></h5>
+                <h5 >{{__('Member')}} : <span id="print_member"></span></h5>
+                <h5>{{__('Returned Date')}} :<span id="print_returndate"></span></h5>
                 
                 <table id="print_table_return">
                     <thead>
                         <tr>
-                            <th>Resources</th>
+                            <th>{{__('Resources')}}</th>
                         </tr>    
                     </thead> 
                     <tbody> 
@@ -166,20 +166,20 @@ $lib_name="name".$lang;
                 </table>
                 <hr>
                <div id="div_extend" style="display: none;">
-                <h5>Issue Date :<span id="print_issuedate"></span></h5>
+                <h5>{{__('Issue Date')}} :<span id="print_issuedate"></span></h5>
                 <table id="print_table_issue">
                     <thead>
                         <tr>
-                            <th>Resources</th>
+                            <th>{{__('Resources')}}</th>
                         </tr>    
                     </thead> 
                     <tbody> 
                     </tbody>
                 </table>
-                <h5>To Be Return :<span id="print_tobe_return"></span></h5>
+                <h5>{{__('To Be Return')}} :<span id="print_tobe_return"></span></h5>
                </div>
                 </br>
-                <div class="text-center mb-3"><h3>Thank You!</h3></div>
+                <div class="text-center mb-3"><h3>{{__('Thank You!')}}</h3></div>
             </div>
         </div>
 </div>
@@ -187,12 +187,12 @@ $lib_name="name".$lang;
 <div id="receiptdiv" style="display: none;">
     <div class="col-md-6">
         <div id="fine_receipt" style="text-align: center;">
-            <div class="text-center"><u><h3>Fine Receipt</h3></u></div>
+            <div class="text-center"><u><h3>{{__('Fine Receipt')}}</h3></u></div>
             </br>
             
-                <h5 >Member : <span id="receipt_member"></span></h5>
-                <h5 >Receipt Date : <span id="receipt_date"></span></h5>
-                <h5 >Total Amount : <span id="receipt_tot_fine"></span></h5>
+                <h5 >{{__('Member')}} : <span id="receipt_member"></span></h5>
+                <h5 >{{__('Receipt Date')}} : <span id="receipt_date"></span></h5>
+                <h5 >{{__('Total Amount')}} : <span id="receipt_tot_fine"></span></h5>
                 
                 <table id="fine_receiptTable">
                     <!-- <thead>
@@ -218,7 +218,7 @@ $lib_name="name".$lang;
         <div class="modal-content">
             <div class="modal-header bg-indigo">
                 <div class="text-center">
-                    <h5 class="modal-title" id="modaltitle">Fine Settlement</h5>
+                    <h5 class="modal-title" id="modaltitle">{{__('Fine Settlement')}}</h5>
                 </div>
                 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -235,11 +235,11 @@ $lib_name="name".$lang;
                         <table class="table" id="fineTable">
                         <thead class="thead-light">
                             <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Accession No</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Fine(Rs)</th>
-                            <th scope="col">Pay</th>
+                            <th scope="col">{{__('ID')}}</th>
+                            <th scope="col">{{__('Accession No')}}</th>
+                            <th scope="col">{{__('Title')}}</th>
+                            <th scope="col">{{__('Fine(Rs)')}}</th>
+                            <th scope="col">{{__('Pay')}}</th>
                             </tr>    
                             </thead>
 
@@ -248,32 +248,32 @@ $lib_name="name".$lang;
                             </tbody>
                         </table>
                     </div>
-                    <h6 class="font-weight-bold text-info">Total Amount :<span id="tot_fine"></span></h6>
+                    <h6 class="font-weight-bold text-info">{{__('Total Amount')}} :<span id="tot_fine"></span></h6>
                 </div>
                     <hr>
                     <div class="form-row">
-                        <label for="settle_ype">Settle Type :</label>
+                        <label for="settle_ype">{{__('Settle Type')}} :</label>
                         <select class="form-control mb-3"name="settle_type" id="settle_type" value=""required>
-                            <option value="Payment" selected>Payment</option>
-                            <option value="Ignore">Ignore</option>
+                            <option value="Payment" selected>{{__('Payment')}}</option>
+                            <option value="Ignore">{{__('Ignore')}}</option>
                         </select>      
                     </div>
 
                     <div class="form-row" id="div_mannual">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="receipt_type">
-                            <label class="form-check-label" for="receipt_type">Mannal Receipt</label>
+                            <label class="form-check-label" for="receipt_type">{{__('Mannal Receipt')}}</label>
                         </div>
                     </div>
                     <div class="form-row" style="display: none;" id="div_receiptno">
-                        <label for="category">Receipt No</label>
+                        <label for="category">{{__('Receipt No')}}</label>
                         <input type="text" class="form-control mb-1" id="receipt_no" name="receipt_no" value="" placeholder="Receipt no" >
                     </div>
                     <div class="form-row" style="display: none;" id="div_description">
-                        <label for="category">Description</label>
-                        <input type="text" class="form-control mb-1" id="description_si" name="description_si" value="" placeholder="Description in Sinhala" >   
-                        <input type="text" class="form-control mb-1" id="description_ta" name="description_ta" value="" placeholder="Description in Tamil" >
-                        <input type="text" class="form-control mb-1" id="description_en" name="description_en" value="" placeholder="Description in English" > 
+                        <label for="category">{{__('Description')}}</label>
+                        <input type="text" class="form-control mb-1" id="description_si" name="description_si" value="" placeholder="{{__('Description in Sinhala')}}" >   
+                        <input type="text" class="form-control mb-1" id="description_ta" name="description_ta" value="" placeholder="{{__('Description in Tamil')}}" >
+                        <input type="text" class="form-control mb-1" id="description_en" name="description_en" value="" placeholder="{{__('Description in English')}}" > 
                     </div>
                    
                     
@@ -282,18 +282,18 @@ $lib_name="name".$lang;
                 <div class="modal-footer">
                     <div class="form-group text-center">
                         <div class="form-check form-check-inline text-info" >
-                            <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;Extend&nbsp;</label>
+                            <label class="form-check-label"><i class="fa fa-calendar-plus-o"></i> &nbsp;{{__('Extend')}}&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="2" required>|
                         </div>
                         <div class="form-check form-check-inline text-success" >
-                            <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp;Return&nbsp;</label>
+                            <label class="form-check-label"><i class="fa fa-check-square-o"></i> &nbsp;{{__('Return')}}&nbsp;</label>
                             <input type="radio" class="form-check-input methord" name="methord" value="3" required>
                         </div>
                         
                     </div>
                     <div class="form-group text-right mt-3">
-                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="btn_fine_settle" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> &nbsp; Save</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                        <button type="submit" id="btn_fine_settle" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> &nbsp; {{__('Save')}}</button>
                     </div>
                     
                     
@@ -311,6 +311,7 @@ $lib_name="name".$lang;
 @section('script')
 
     <script>
+    let viewState=0;
     $(document).ready(function() {
 
         document.getElementById("member_id").focus();
@@ -344,7 +345,7 @@ $lib_name="name".$lang;
         $("#fineTable tbody").empty();
 
             $('#resourceTable tr').each(function(){
-                if($(this).find(".r_fine").html() != 0.00){
+                if($(this).find(".r_fine").html() != 0.00 && $(this).find(".r_fine_settleId").html() == "N/A"){
                     op+='<tr>';
                     op+='<td class="td_id">'+$(this).find(".r_lendid").html()+'</td>';
                     op+='<td class="td_acceno">'+$(this).find(".r_accno").html()+'</td>';
@@ -367,8 +368,16 @@ $lib_name="name".$lang;
             $('#form_settle_fine')[0].reset();
         })
 
+
     });
     // --------------------------------------------------------------------------
+    window.addEventListener("beforeunload", function(event) {
+        if(viewState==1){
+            event.preventDefault();
+            event.returnValue = 'Plese Save Changes Before Exit'; 
+        } 
+    });
+
 
     $('#addbarrowmember').on("click",function(){
         var memberid = $("#member_id").val();
@@ -446,12 +455,14 @@ $lib_name="name".$lang;
                                         op+='<div><span>To Be Return: </span><span class="r_returndate">'+data[j]['return_date']+'</span></div>';
                                         op+='<div><span> Fine: </span><span class="r_fine">'+data[j]['fine_amount']+'</span></div>';
 
-                                        if(data[j]['fine_amount']!=0.00)
+                                        if(data[j]['fine_amount']!=0.00 && data[j]['fine_settle_id']==null)
                                         {
+                                            op+='<div><span> Fine settleId: </span><span class="r_fine_settleId">'+"N/A"+'</span></div>';
                                             op+='<button type="button" value="'+data[j]['id']+'" class="btn btn-sm btn-outline-warning ml-1 settel_fine" data-toggle="modal" data-target="#settel_show"><i class="fa fa-money"></i></button>';
                                         }
                                         else
                                         {
+                                            op+='<div><span> Fine settleId: </span><span class="r_fine_settleId">'+data[j]['fine_settle_id']+'</span></div>';
                                             op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-success ml-1 return_lending"><i class="fa fa-check-square-o"></i></button>';
                                             op+='<button type="button" value="'+data[j]['resource_accno']+'" class="btn btn-sm btn-outline-info ml-1 extend_lending"><i class="fa fa-calendar-plus-o"></i></button>';
                                         }
@@ -500,10 +511,11 @@ $lib_name="name".$lang;
                     var accno=$(this).find(".r_accno").html();
                     var snumber=$(this).find(".r_snumber").html();
                     var fine=$(this).find(".r_fine").html();
+                    var fine_settelId= $(this).find(".r_fine_settleId").html();
                     if(resourceinput.toUpperCase()==accno.toUpperCase() || resourceinput.toUpperCase()==snumber.toUpperCase() )
                     {
                         resource_found=1;
-                        if(fine==0.00)
+                        if(fine_settelId!="N/A")
                         {
                             $('#returnTable tbody tr').each(function(){
                                 var td_accno=$(this).find(".td_acceno").html();
@@ -533,6 +545,7 @@ $lib_name="name".$lang;
                 });
                 if(resource_found==0){  toastr.error('Resource Not Found!');}
                 $("#returnTable tbody").append(op);
+                viewState=1;
                 // --------------------------------------------     
             }
             else{toastr.error('Enter Resource AccessionNo / ISBN / ISSN / ISMN')}
@@ -674,7 +687,7 @@ $lib_name="name".$lang;
                         url: "{{route('settle_fine')}}",
                         success: function(data){ 
                             if(data.massage=="success"){
-                                // opp_status=1; 
+                                viewState=1;
                                 toastr.success('Fine Settled Successfully');
                             // -------------add to return table-------------
                             if(methord==2){returnaction="Extend";}
@@ -844,9 +857,11 @@ $lib_name="name".$lang;
                                 $("#print_returndate").html(dtereturn);
                                 $("#print_issuedate").html(dtereturn);
                                 $("#print_tobe_return").html(data.tobe_return);
+                               
                                 print_div($("#print_lendding").html());
                             }
                             memberSelect(mem_id);
+                            viewState=0;
                         }
                         
                     },

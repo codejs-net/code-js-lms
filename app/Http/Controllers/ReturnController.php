@@ -108,6 +108,7 @@ class ReturnController extends Controller
                     $lenddata[$i]['return_date']      =$returndate;
                     $lenddata[$i]['return']           =$lend[$i]['return'];
                     $lenddata[$i]['fine_amount']      =$fine_amount;
+                    $lenddata[$i]['fine_settle_id']      =$lend[$i]['fine_settle'];
                     
                 }
             }

@@ -42,6 +42,7 @@ use Auth;
 use App\Exports\ResourceExport;
 use App\Exports\Resource_indexingExport;
 use App\Exports\LendingExport;
+use App\Exports\lending_accountExport;
 use App\Exports\Survey_tempExport;
 use Session;
 
@@ -415,7 +416,7 @@ class ReportController extends Controller
             ]);
         return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Member Card.pdf');
     }
-//lending Reports
+//===============================lending Reports========================================
     public function lending_index()
     {
         
@@ -605,6 +606,19 @@ class ReportController extends Controller
             ini_set('memory_limit', '-1');
             ini_set('max_execution_time', '1200');
             return Excel::download(new lendingExport($request), 'lending.xlsx');
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('error','Report Export Fail.');
+        }
+
+    }
+
+    public function export_lending_account(Request $request) 
+    {
+        try {
+            ini_set('memory_limit', '-1');
+            ini_set('max_execution_time', '1200');
+            return Excel::download(new lending_accountExport($request), 'lending account.xlsx');
         }
         catch (\Exception $e) {
             return redirect()->back()->with('error','Report Export Fail.');

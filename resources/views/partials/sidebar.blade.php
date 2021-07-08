@@ -355,7 +355,7 @@
                             <li class="nav-item">
                             <a href="{{ route('staff_users') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{__('Staff Users')}} Account</p>
+                                    <p>{{__('Staff Users Account')}}</p>
                                 </a>
                             </li>
                             <li class="nav-item">

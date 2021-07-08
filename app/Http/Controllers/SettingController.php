@@ -75,6 +75,8 @@ class SettingController extends Controller
         $email_member = setting::where('setting','email_member_create')->first();
         $email_user = setting::where('setting','email_user_create')->first();
 
+        $email_backup = setting::where('setting','email_backup')->first();
+
         return view('settings.notification.index',compact( 'sms_issue',
                                                             'sms_return',
                                                             'sms_member',
@@ -82,7 +84,8 @@ class SettingController extends Controller
                                                             'email_issue',
                                                             'email_return',
                                                             'email_member',
-                                                            'email_user'
+                                                            'email_user',
+                                                            'email_backup'
                                                             ));
     }
 
@@ -154,6 +157,16 @@ class SettingController extends Controller
         $email_return->value=$request->email_return == 1 ? 1:0; $email_return->save();
         $email_member->value=$request->email_member_add == 1 ? 1:0; $email_member->save();
         $email_user->value=$request->email_user_add == 1 ? 1:0; $email_user->save();
+
+        return redirect()->route('notification_setting')->with('success','Email Option Apply successfully.');
+    }
+
+    public function update_email_backup(Request $request)
+    {
+       
+        $email_backup = setting::where('setting','email_backup')->first();
+
+        $email_backup->value=$request->email_backup == 1 ? 1:0; $email_backup->save();
 
         return redirect()->route('notification_setting')->with('success','Email Option Apply successfully.');
     }
