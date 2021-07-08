@@ -314,6 +314,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('update_locale', [SettingController::class, 'update_locale'])->name('update_locale');
     Route::post('update_sms_option', [SettingController::class, 'update_sms_option'])->name('update_sms_option');
     Route::post('update_email_option', [SettingController::class, 'update_email_option'])->name('update_email_option');
+    Route::post('update_email_backup', [SettingController::class, 'update_email_backup'])->name('update_email_backup');
     Route::post('update_lending_config', [SettingController::class, 'update_lending_config'])->name('update_lending_config');
     Route::post('update_fine', [SettingController::class, 'update_fine'])->name('update_fine');
     Route::post('update_period', [SettingController::class, 'update_period'])->name('update_period');

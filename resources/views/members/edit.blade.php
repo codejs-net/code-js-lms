@@ -119,7 +119,7 @@ $address2="address2".$lang;
                     <span class="text-danger">{{ $errors->first('nic') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="Mobile">{{__('Mobile No')}} :</label>
+                    <label for="Mobile">{{__('Mobile No')}} : {{__('( 94xxxxxxxxx )')}}</label>
                     <input type="text" class="form-control" name="Mobile" id="Mobile" placeholder="{{__('Mobile No')}}" value="{{old('Mobile')}}"required>
                     <span class="text-danger">{{ $errors->first('Mobile') }}</span>
                 </div>
