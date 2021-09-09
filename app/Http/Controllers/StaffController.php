@@ -124,7 +124,7 @@ class StaffController extends Controller
         $image = $request->file('image_member');
         if ($image){
             $imageName = $request->nic.'-'.time().'.'.$image->extension(); 
-            $image->move(public_path('images/staffs'), $imageName);
+            $image->move(base_path('images/staffs'), $imageName);
         }
 
 
@@ -233,7 +233,7 @@ class StaffController extends Controller
         if($request->hasFile('image_member')){
             
             $imageName = $request->nic.'-'.time().'.'.$request->image_member->extension();   
-            $request->image_member->move(public_path('images/staffs'), $imageName);
+            $request->image_member->move(base_path('images/staffs'), $imageName);
 
             if($mbr->image!="default_avatar.png")
             {

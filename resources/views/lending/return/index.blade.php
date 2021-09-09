@@ -149,6 +149,7 @@ $lib_name="name".$lang;
 <div id="printdiv" style="display: none;">
     <div class="col-md-4">
         <div id="print_lendding" style="text-align: center;">
+            </br>
             <div class="text-center"><u><h3>{{__('Return Receipt')}}</h3></u></div>
             </br>
                 <h4 id="print_library">{{$librarydata->$lib_name}}</h4>
@@ -187,6 +188,7 @@ $lib_name="name".$lang;
 <div id="receiptdiv" style="display: none;">
     <div class="col-md-6">
         <div id="fine_receipt" style="text-align: center;">
+            </br>
             <div class="text-center"><u><h3>{{__('Fine Receipt')}}</h3></u></div>
             </br>
             
@@ -964,6 +966,7 @@ $lib_name="name".$lang;
         var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
         frameDoc.document.open();
         frameDoc.document.write('<html><head><title>Riceipt</title>');
+        frameDoc.document.write('<style>@media print {@page { margin-top: 0; margin-bottom: 0;}body { margin: 1.6cm; }}</style>');
         frameDoc.document.write('</head><body>');
         frameDoc.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
         frameDoc.document.write('<link href="{{ asset('css/riceipt.css') }}" rel="stylesheet">');
@@ -974,9 +977,9 @@ $lib_name="name".$lang;
         // window.frames["frame1"].print();
         
         $("#frame1").get(0).contentWindow.print();
-        setTimeout(function () {
-           frame1.remove();
-        }, 10000);
+        // setTimeout(function () {
+        //    frame1.remove();
+        // }, 10000);
     }
     
 
