@@ -231,8 +231,7 @@
 
 
 /* -----------type icon------------------------- */
-
-.btntype {
+.btntype{
     border-radius: 5px;
     height: 65px;
     position: relative;
@@ -241,7 +240,7 @@
     transition: all .1s linear;
     text-align: center;
     color: #1b1a19;
-    border: #039BE5 solid 1px;
+    border: #0338e5 solid 1px;
     margin-left: 5px;
     padding-bottom: 5px;
     padding-top: 5px;
@@ -251,20 +250,18 @@
     font-size: 12px;
     font-weight: 600;
     line-height: 12px;
-}
-
-.btntype:hover {
+  }
+  
+  .btntype:hover{
     background: #ffffff;
-    color: #070707;
+    color:#070707;
     border: #070707 solid 1px;
-}
-
-.btntype:focus {
-    background: #e0f4ff;
-    color: rgb(14, 13, 13);
-}
-
-
+  }
+  
+  .btntype:focus{
+      background: #e0f4ff;
+      color: rgb(14, 13, 13);
+  }
 /* --------------selectbox---------------------------------- */
 
 .js-select-box {

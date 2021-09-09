@@ -207,18 +207,26 @@ border: #121313 solid 1px !important;
     color: #b9621b;
     text-transform: uppercase
 }
-
 /* -----------type icon------------------------- */
 .btntype{
     border-radius: 5px;
-    height: 70px;
+    height: 65px;
     position: relative;
-    width: auto;			
+    width: auto;
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
     text-align: center;
     color: #1b1a19;
-    border: #039BE5 solid 1px;
+    border: #9e4e03 solid 1px;
+    margin-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 12px;
   }
   
   .btntype:hover{
