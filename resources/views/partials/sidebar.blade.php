@@ -264,7 +264,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                            <a href="{{ route('view_survey',0) }}" class="nav-link">
+                            <a href="{{ route('receipt.index',0) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{__('Receipts')}}</p>
                                 </a>

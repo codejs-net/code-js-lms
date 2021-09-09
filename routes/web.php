@@ -37,6 +37,7 @@ use App\Http\Controllers\Staff_designetionController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\Member_guarantorController;
+use App\Http\Controllers\ReceiptController;
 
 
 
@@ -351,6 +352,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('sendhtmlemail', [MailController::class, 'html_email'])->name('sendhtmlemail');
     Route::get('sendattachmentemail', [MailController::class, 'attachment_email'])->name('sendattachmentemail');
 
+    //--------Receipt----------------------------------
+     Route::resource('receipt', ReceiptController::class);
+     Route::POST('cancel_receipt', [ReceiptController::class, 'cancel'])->name('cancel_receipt');
 });
 
 Route::get('/sms', [SoapController::class, 'msg_test'])->name('msg_test');
