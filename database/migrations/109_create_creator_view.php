@@ -30,7 +30,7 @@ class CreateCreatorView extends Migration
     private function createView(): string
     {
         return <<<SQL
-            CREATE VIEW view_creator_data AS
+            CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER() SQL SECURITY DEFINER VIEW view_creator_data AS
                 SELECT  resource_creators.*,
                         titles.title_si,
                         titles.title_ta,

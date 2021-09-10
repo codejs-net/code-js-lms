@@ -30,7 +30,7 @@ class CreateSurveyView extends Migration
     private function createView(): string
     {
         return <<<SQL
-            CREATE VIEW view_survey AS
+            CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER() SQL SECURITY DEFINER VIEW view_survey AS
                 SELECT  survey_detail_temps.*,
                         resources.accessionNo,
                         resources.standard_number,

@@ -30,7 +30,7 @@ class CreateResourceViewAll extends Migration
     private function createView(): string
     {
         return <<<SQL
-            CREATE VIEW view_resource_data_all AS
+            CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER() SQL SECURITY DEFINER VIEW view_resource_data_all AS
                 SELECT  resources.*,
                         resource_categories.category_si,
                         resource_categories.category_ta,

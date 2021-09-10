@@ -28,7 +28,7 @@ class CreateLendingViewAll extends Migration
     private function createView(): string
     {
         return <<<SQL
-            CREATE VIEW view_lending_data_all AS
+            CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER() SQL SECURITY DEFINER VIEW view_lending_data_all AS
                 SELECT  lending_details.*,
                         resources.accessionNo,
                         resources.standard_number,
