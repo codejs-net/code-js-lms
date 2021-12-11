@@ -17,6 +17,9 @@ $dd_devision="devision".$lang;
 $dd_section="section".$lang;
 $creator="name".$lang;
 
+$librarydata = session()->get('library');
+$lib_name="name".$lang;
+
 @endphp
 
 <nav aria-label="breadcrumb">
@@ -146,7 +149,9 @@ $creator="name".$lang;
 <div id="printdiv" style="display: none;">
     <div class="col-md-4">
         <div id="print_lendding" style="text-align: center;">
+            </br>
             <div class="text-center"><u><h3>{{__('Issue Receipt')}}</h3></u></div>
+            <h4 id="print_library">{{$librarydata->$lib_name}}</h4>
             </br>
             {{-- <p style="page-break-before: always"></p> --}}
                 <h5 >{{__('Member')}} : <span id="print_member"></span></h5>
@@ -680,6 +685,7 @@ $creator="name".$lang;
         var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
         frameDoc.document.open();
         frameDoc.document.write('<html><head><title>Riceipt</title>');
+        frameDoc.document.write('<style>@media print {@page { margin-top: 0;  margin-bottom: 0; }body { margin: 1.6cm; }}</style>');
         frameDoc.document.write('</head><body>');
         frameDoc.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
         frameDoc.document.write('<link href="{{ asset('css/riceipt.css') }}" rel="stylesheet">');
@@ -690,9 +696,9 @@ $creator="name".$lang;
         // window.frames["frame1"].print();
         
         $("#frame1").get(0).contentWindow.print();
-        setTimeout(function () {
-           frame1.remove();
-        }, 10000);
+        // setTimeout(function () {
+        //    frame1.remove();
+        // }, 10000);
     }
     
 

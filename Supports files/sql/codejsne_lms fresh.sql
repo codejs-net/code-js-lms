@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2021 at 07:39 PM
+-- Generation Time: Jul 08, 2021 at 06:21 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -40,13 +40,6 @@ CREATE TABLE `activity_log` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `activity_log`
---
-
-INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_type`, `subject_id`, `causer_type`, `causer_id`, `properties`, `created_at`, `updated_at`) VALUES
-(1, 'default', 'created', 'App\\Models\\User', 1, 'App\\Models\\User', 1, '[]', '2021-05-27 17:37:52', '2021-05-27 17:37:52');
-
 -- --------------------------------------------------------
 
 --
@@ -72,13 +65,6 @@ CREATE TABLE `centers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `centers`
---
-
-INSERT INTO `centers` (`id`, `library_id`, `name_si`, `name_ta`, `name_en`, `address1_si`, `address1_ta`, `address1_en`, `address2_si`, `address2_ta`, `address2_en`, `telephone`, `fax`, `email`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'ප්‍රාදේශීය සභා මහජන පුස්ථකාලය', 'பிரதேச சபா பொது நூலகம்', 'Pradeshiya Sabha Public Library', 'ප්‍රාදේශීය සභාව', 'பிரதேச சபா', 'Pradeshiya Sabha', 'බුලත්කොහුපිටිය', 'புலத்கோஹுபிட்டி', 'Bulathkohupitiya', '0362247575', '0362247575', 'bulathps@gmail.com', NULL, '2021-05-27 17:37:50', '2021-05-27 17:37:50');
 
 -- --------------------------------------------------------
 
@@ -149,7 +135,7 @@ CREATE TABLE `fine_settles` (
   `id` int(10) UNSIGNED NOT NULL,
   `lending_detail_id` int(10) UNSIGNED DEFAULT NULL,
   `settlement_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `settlement_date` date NOT NULL DEFAULT '2021-05-27',
+  `settlement_date` date NOT NULL DEFAULT '2021-07-08',
   `receipt_id` int(11) DEFAULT NULL,
   `description_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -200,7 +186,7 @@ CREATE TABLE `lending_details` (
   `lending_return_id` int(10) UNSIGNED DEFAULT NULL,
   `member_id` int(10) UNSIGNED DEFAULT NULL,
   `resource_id` int(10) UNSIGNED DEFAULT NULL,
-  `issue_date` date NOT NULL DEFAULT '2021-05-27',
+  `issue_date` date NOT NULL DEFAULT '2021-07-08',
   `return` int(11) NOT NULL DEFAULT 0,
   `return_date` date DEFAULT NULL,
   `fine_amount` double(8,2) DEFAULT NULL,
@@ -221,7 +207,7 @@ CREATE TABLE `lending_details` (
 
 CREATE TABLE `lending_issues` (
   `id` int(10) UNSIGNED NOT NULL,
-  `lending_date` date NOT NULL DEFAULT '2021-05-27',
+  `lending_date` date NOT NULL DEFAULT '2021-07-08',
   `member_id` int(10) UNSIGNED DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remark_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -239,7 +225,7 @@ CREATE TABLE `lending_issues` (
 
 CREATE TABLE `lending_returns` (
   `id` int(10) UNSIGNED NOT NULL,
-  `lending_date` date NOT NULL DEFAULT '2021-05-27',
+  `lending_date` date NOT NULL DEFAULT '2021-07-08',
   `member_id` int(10) UNSIGNED DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remark_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -275,13 +261,6 @@ CREATE TABLE `libraries` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `libraries`
---
-
-INSERT INTO `libraries` (`id`, `name_si`, `name_ta`, `name_en`, `address1_si`, `address1_ta`, `address1_en`, `address2_si`, `address2_ta`, `address2_en`, `telephone`, `fax`, `email`, `description`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'ප්‍රාදේශීය සභා මහජන පුස්ථකාලය', 'பிரதேச சபா பொது நூலகம்', 'Pradeshiya Sabha Public Library', 'ප්‍රාදේශීය සභාව', 'பிரதேச சபா', 'Pradeshiya Sabha', 'බුලත්කොහුපිටිය', 'புலத்கோஹுபிட்டி', 'Bulathkohupitiya', '0362247575', '0362247575', 'bulathps@gmail.com', NULL, NULL, '2021-05-27 17:37:50', '2021-05-27 17:37:50');
-
 -- --------------------------------------------------------
 
 --
@@ -315,9 +294,10 @@ CREATE TABLE `members` (
   `description_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `regdate` date NOT NULL DEFAULT '2021-05-27',
+  `regdate` date NOT NULL DEFAULT '2021-07-08',
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `guarantor_id` int(10) UNSIGNED DEFAULT NULL,
+  `center_id` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -460,13 +440,6 @@ CREATE TABLE `model_has_roles` (
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `model_has_roles`
---
-
-INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
-(1, 'App\\Models\\User', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -601,7 +574,7 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `category`, `created_at`,
 
 CREATE TABLE `receipts` (
   `id` int(10) UNSIGNED NOT NULL,
-  `receipt_date` date NOT NULL DEFAULT '2021-05-27',
+  `receipt_date` date NOT NULL DEFAULT '2021-07-08',
   `member_id` int(10) UNSIGNED DEFAULT NULL,
   `receipts` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `receipt_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -655,6 +628,7 @@ CREATE TABLE `resources` (
   `cretor_id` int(10) UNSIGNED DEFAULT NULL,
   `cretor2_id` int(10) UNSIGNED DEFAULT NULL,
   `cretor3_id` int(10) UNSIGNED DEFAULT NULL,
+  `cretor_more` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `type_id` bigint(20) UNSIGNED DEFAULT NULL,
   `dd_class_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -664,7 +638,7 @@ CREATE TABLE `resources` (
   `center_id` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `language_id` bigint(20) UNSIGNED DEFAULT NULL,
   `publisher_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `purchase_date` date NOT NULL DEFAULT '2021-05-27',
+  `purchase_date` date NOT NULL DEFAULT '2021-07-08',
   `edition` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` double(8,2) NOT NULL,
   `publishyear` year(4) DEFAULT NULL,
@@ -795,7 +769,7 @@ CREATE TABLE `resource_donates` (
   `doner_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `genderid` int(10) UNSIGNED DEFAULT NULL,
   `donete_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `donate_date` date NOT NULL DEFAULT '2021-05-27',
+  `donate_date` date NOT NULL DEFAULT '2021-07-08',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -913,7 +887,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'web', '2021-05-27 17:36:13', '2021-05-27 17:36:13');
+(1, 'Admin', 'web', '2021-07-08 16:21:15', '2021-07-08 16:21:15');
 
 -- --------------------------------------------------------
 
@@ -1090,19 +1064,12 @@ CREATE TABLE `staff` (
   `birthday` date DEFAULT NULL,
   `genderid` int(10) UNSIGNED DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `regdate` date NOT NULL DEFAULT '2021-05-27',
+  `regdate` date NOT NULL DEFAULT '2021-07-08',
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `staff`
---
-
-INSERT INTO `staff` (`id`, `titleid`, `name_si`, `name_ta`, `name_en`, `address1_si`, `address1_ta`, `address1_en`, `address2_si`, `address2_ta`, `address2_en`, `designetion_id`, `nic`, `mobile`, `birthday`, `genderid`, `description`, `regdate`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'ඒ.එම්.එන්.එස් අලහකෝන්', 'ஏ.எம்.என் சானுகா அலககூன்', 'A.M.N.Shanuka Alahakoon', 'ගැටියමුල්ල', 'பிரதேச சபா', 'Getiyamulla', 'අලවතුර', NULL, 'Alawathura', NULL, '910053094V', '94715151050', '1991-01-05', NULL, NULL, '2021-05-01', NULL, '1', '2021-05-27 17:37:51', '2021-05-27 17:37:51');
 
 -- --------------------------------------------------------
 
@@ -1112,7 +1079,7 @@ INSERT INTO `staff` (`id`, `titleid`, `name_si`, `name_ta`, `name_en`, `address1
 
 CREATE TABLE `surveys` (
   `id` int(10) UNSIGNED NOT NULL,
-  `start_date` date NOT NULL DEFAULT '2021-05-27',
+  `start_date` date NOT NULL DEFAULT '2021-07-08',
   `description_si` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description_ta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1276,13 +1243,6 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `user_type`, `email`, `email_verified_at`, `username`, `password`, `detail_id`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'staff', 'shanuka.pvt@gmail.com', NULL, 'shanuka', '$2y$10$5BdLxPhrTIRhBvE/u3VoSuhRsEE5ga8qyo9FWuE80GwVJyqWL2M7.', 1, '1', NULL, '2021-05-27 17:37:52', '2021-05-27 17:37:52');
 
 -- --------------------------------------------------------
 
@@ -1471,6 +1431,7 @@ CREATE TABLE `view_member_data` (
 ,`regdate` date
 ,`image` varchar(255)
 ,`guarantor_id` int(10) unsigned
+,`center_id` int(10) unsigned
 ,`status` varchar(255)
 ,`created_at` timestamp
 ,`updated_at` timestamp
@@ -1505,6 +1466,7 @@ CREATE TABLE `view_resource_data` (
 ,`cretor_id` int(10) unsigned
 ,`cretor2_id` int(10) unsigned
 ,`cretor3_id` int(10) unsigned
+,`cretor_more` varchar(255)
 ,`center_id` int(10) unsigned
 ,`publisher_id` bigint(20) unsigned
 ,`image` varchar(255)
@@ -1554,6 +1516,7 @@ CREATE TABLE `view_resource_data_all` (
 ,`cretor_id` int(10) unsigned
 ,`cretor2_id` int(10) unsigned
 ,`cretor3_id` int(10) unsigned
+,`cretor_more` varchar(255)
 ,`category_id` bigint(20) unsigned
 ,`type_id` bigint(20) unsigned
 ,`dd_class_id` bigint(20) unsigned
@@ -1820,7 +1783,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY D
 --
 DROP TABLE IF EXISTS `view_member_data`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY DEFINER VIEW `view_member_data`  AS  select `members`.`id` AS `id`,`members`.`titleid` AS `titleid`,`members`.`categoryid` AS `categoryid`,`members`.`name_si` AS `name_si`,`members`.`name_ta` AS `name_ta`,`members`.`name_en` AS `name_en`,`members`.`address1_si` AS `address1_si`,`members`.`address1_ta` AS `address1_ta`,`members`.`address1_en` AS `address1_en`,`members`.`address2_si` AS `address2_si`,`members`.`address2_ta` AS `address2_ta`,`members`.`address2_en` AS `address2_en`,`members`.`nic` AS `nic`,`members`.`mobile` AS `mobile`,`members`.`birthday` AS `birthday`,`members`.`genderid` AS `genderid`,`members`.`occupation_si` AS `occupation_si`,`members`.`occupation_ta` AS `occupation_ta`,`members`.`occupation_en` AS `occupation_en`,`members`.`Workplace_si` AS `Workplace_si`,`members`.`Workplace_ta` AS `Workplace_ta`,`members`.`Workplace_en` AS `Workplace_en`,`members`.`email` AS `email`,`members`.`description_si` AS `description_si`,`members`.`description_ta` AS `description_ta`,`members`.`description_en` AS `description_en`,`members`.`regdate` AS `regdate`,`members`.`image` AS `image`,`members`.`guarantor_id` AS `guarantor_id`,`members`.`status` AS `status`,`members`.`created_at` AS `created_at`,`members`.`updated_at` AS `updated_at`,`member_cats`.`category_si` AS `category_si`,`member_cats`.`category_ta` AS `category_ta`,`member_cats`.`category_en` AS `category_en`,`titles`.`title_si` AS `title_si`,`titles`.`title_ta` AS `title_ta`,`titles`.`title_en` AS `title_en`,`genders`.`gender_si` AS `gender_si`,`genders`.`gender_ta` AS `gender_ta`,`genders`.`gender_en` AS `gender_en`,`member_guarantors`.`name_si` AS `guarantor_si`,`member_guarantors`.`name_ta` AS `guarantor_ta`,`member_guarantors`.`name_en` AS `guarantor_en`,`member_guarantors`.`nic` AS `guarantor_nic`,`member_guarantors`.`mobile` AS `guarantor_mobile` from ((((`members` left join `member_cats` on(`members`.`categoryid` = `member_cats`.`id`)) left join `titles` on(`members`.`titleid` = `titles`.`id`)) left join `genders` on(`members`.`genderid` = `genders`.`id`)) left join `member_guarantors` on(`members`.`guarantor_id` = `member_guarantors`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY DEFINER VIEW `view_member_data`  AS  select `members`.`id` AS `id`,`members`.`titleid` AS `titleid`,`members`.`categoryid` AS `categoryid`,`members`.`name_si` AS `name_si`,`members`.`name_ta` AS `name_ta`,`members`.`name_en` AS `name_en`,`members`.`address1_si` AS `address1_si`,`members`.`address1_ta` AS `address1_ta`,`members`.`address1_en` AS `address1_en`,`members`.`address2_si` AS `address2_si`,`members`.`address2_ta` AS `address2_ta`,`members`.`address2_en` AS `address2_en`,`members`.`nic` AS `nic`,`members`.`mobile` AS `mobile`,`members`.`birthday` AS `birthday`,`members`.`genderid` AS `genderid`,`members`.`occupation_si` AS `occupation_si`,`members`.`occupation_ta` AS `occupation_ta`,`members`.`occupation_en` AS `occupation_en`,`members`.`Workplace_si` AS `Workplace_si`,`members`.`Workplace_ta` AS `Workplace_ta`,`members`.`Workplace_en` AS `Workplace_en`,`members`.`email` AS `email`,`members`.`description_si` AS `description_si`,`members`.`description_ta` AS `description_ta`,`members`.`description_en` AS `description_en`,`members`.`regdate` AS `regdate`,`members`.`image` AS `image`,`members`.`guarantor_id` AS `guarantor_id`,`members`.`center_id` AS `center_id`,`members`.`status` AS `status`,`members`.`created_at` AS `created_at`,`members`.`updated_at` AS `updated_at`,`member_cats`.`category_si` AS `category_si`,`member_cats`.`category_ta` AS `category_ta`,`member_cats`.`category_en` AS `category_en`,`titles`.`title_si` AS `title_si`,`titles`.`title_ta` AS `title_ta`,`titles`.`title_en` AS `title_en`,`genders`.`gender_si` AS `gender_si`,`genders`.`gender_ta` AS `gender_ta`,`genders`.`gender_en` AS `gender_en`,`member_guarantors`.`name_si` AS `guarantor_si`,`member_guarantors`.`name_ta` AS `guarantor_ta`,`member_guarantors`.`name_en` AS `guarantor_en`,`member_guarantors`.`nic` AS `guarantor_nic`,`member_guarantors`.`mobile` AS `guarantor_mobile` from ((((`members` left join `member_cats` on(`members`.`categoryid` = `member_cats`.`id`)) left join `titles` on(`members`.`titleid` = `titles`.`id`)) left join `genders` on(`members`.`genderid` = `genders`.`id`)) left join `member_guarantors` on(`members`.`guarantor_id` = `member_guarantors`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1829,7 +1792,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY D
 --
 DROP TABLE IF EXISTS `view_resource_data`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY DEFINER VIEW `view_resource_data`  AS  select `resources`.`id` AS `id`,`resources`.`accessionNo` AS `accessionNo`,`resources`.`standard_number` AS `standard_number`,`resources`.`category_id` AS `category_id`,`resources`.`type_id` AS `type_id`,`resources`.`cretor_id` AS `cretor_id`,`resources`.`cretor2_id` AS `cretor2_id`,`resources`.`cretor3_id` AS `cretor3_id`,`resources`.`center_id` AS `center_id`,`resources`.`publisher_id` AS `publisher_id`,`resources`.`image` AS `image`,`resources`.`title_si` AS `title_si`,`resources`.`title_ta` AS `title_ta`,`resources`.`title_en` AS `title_en`,`resources`.`ddc` AS `ddc`,`resources`.`price` AS `price`,`resources`.`phydetails` AS `phydetails`,`resources`.`status` AS `status`,`resource_categories`.`category_si` AS `category_si`,`resource_categories`.`category_ta` AS `category_ta`,`resource_categories`.`category_en` AS `category_en`,`resource_types`.`type_si` AS `type_si`,`resource_types`.`type_ta` AS `type_ta`,`resource_types`.`type_en` AS `type_en`,`creator1`.`name_si` AS `name_si`,`creator1`.`name_ta` AS `name_ta`,`creator1`.`name_en` AS `name_en`,`creator2`.`name_si` AS `name2_si`,`creator2`.`name_ta` AS `name2_ta`,`creator2`.`name_en` AS `name2_en`,`creator3`.`name_si` AS `name3_si`,`creator3`.`name_ta` AS `name3_ta`,`creator3`.`name_en` AS `name3_en`,`resource_publishers`.`publisher_si` AS `publisher_si`,`resource_publishers`.`publisher_ta` AS `publisher_ta`,`resource_publishers`.`publisher_en` AS `publisher_en`,`centers`.`name_si` AS `center_si`,`centers`.`name_ta` AS `center_ta`,`centers`.`name_en` AS `center_en` from (((((((`resources` left join `resource_categories` on(`resources`.`category_id` = `resource_categories`.`id`)) left join `resource_types` on(`resources`.`type_id` = `resource_types`.`id`)) left join `resource_creators` `creator1` on(`resources`.`cretor_id` = `creator1`.`id`)) left join `resource_creators` `creator2` on(`resources`.`cretor2_id` = `creator2`.`id`)) left join `resource_creators` `creator3` on(`resources`.`cretor3_id` = `creator3`.`id`)) left join `resource_publishers` on(`resources`.`publisher_id` = `resource_publishers`.`id`)) left join `centers` on(`resources`.`center_id` = `centers`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY DEFINER VIEW `view_resource_data`  AS  select `resources`.`id` AS `id`,`resources`.`accessionNo` AS `accessionNo`,`resources`.`standard_number` AS `standard_number`,`resources`.`category_id` AS `category_id`,`resources`.`type_id` AS `type_id`,`resources`.`cretor_id` AS `cretor_id`,`resources`.`cretor2_id` AS `cretor2_id`,`resources`.`cretor3_id` AS `cretor3_id`,`resources`.`cretor_more` AS `cretor_more`,`resources`.`center_id` AS `center_id`,`resources`.`publisher_id` AS `publisher_id`,`resources`.`image` AS `image`,`resources`.`title_si` AS `title_si`,`resources`.`title_ta` AS `title_ta`,`resources`.`title_en` AS `title_en`,`resources`.`ddc` AS `ddc`,`resources`.`price` AS `price`,`resources`.`phydetails` AS `phydetails`,`resources`.`status` AS `status`,`resource_categories`.`category_si` AS `category_si`,`resource_categories`.`category_ta` AS `category_ta`,`resource_categories`.`category_en` AS `category_en`,`resource_types`.`type_si` AS `type_si`,`resource_types`.`type_ta` AS `type_ta`,`resource_types`.`type_en` AS `type_en`,`creator1`.`name_si` AS `name_si`,`creator1`.`name_ta` AS `name_ta`,`creator1`.`name_en` AS `name_en`,`creator2`.`name_si` AS `name2_si`,`creator2`.`name_ta` AS `name2_ta`,`creator2`.`name_en` AS `name2_en`,`creator3`.`name_si` AS `name3_si`,`creator3`.`name_ta` AS `name3_ta`,`creator3`.`name_en` AS `name3_en`,`resource_publishers`.`publisher_si` AS `publisher_si`,`resource_publishers`.`publisher_ta` AS `publisher_ta`,`resource_publishers`.`publisher_en` AS `publisher_en`,`centers`.`name_si` AS `center_si`,`centers`.`name_ta` AS `center_ta`,`centers`.`name_en` AS `center_en` from (((((((`resources` left join `resource_categories` on(`resources`.`category_id` = `resource_categories`.`id`)) left join `resource_types` on(`resources`.`type_id` = `resource_types`.`id`)) left join `resource_creators` `creator1` on(`resources`.`cretor_id` = `creator1`.`id`)) left join `resource_creators` `creator2` on(`resources`.`cretor2_id` = `creator2`.`id`)) left join `resource_creators` `creator3` on(`resources`.`cretor3_id` = `creator3`.`id`)) left join `resource_publishers` on(`resources`.`publisher_id` = `resource_publishers`.`id`)) left join `centers` on(`resources`.`center_id` = `centers`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1838,7 +1801,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY D
 --
 DROP TABLE IF EXISTS `view_resource_data_all`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY DEFINER VIEW `view_resource_data_all`  AS  select `resources`.`id` AS `id`,`resources`.`accessionNo` AS `accessionNo`,`resources`.`standard_number` AS `standard_number`,`resources`.`title_si` AS `title_si`,`resources`.`title_ta` AS `title_ta`,`resources`.`title_en` AS `title_en`,`resources`.`cretor_id` AS `cretor_id`,`resources`.`cretor2_id` AS `cretor2_id`,`resources`.`cretor3_id` AS `cretor3_id`,`resources`.`category_id` AS `category_id`,`resources`.`type_id` AS `type_id`,`resources`.`dd_class_id` AS `dd_class_id`,`resources`.`dd_devision_id` AS `dd_devision_id`,`resources`.`dd_section_id` AS `dd_section_id`,`resources`.`ddc` AS `ddc`,`resources`.`center_id` AS `center_id`,`resources`.`language_id` AS `language_id`,`resources`.`publisher_id` AS `publisher_id`,`resources`.`purchase_date` AS `purchase_date`,`resources`.`edition` AS `edition`,`resources`.`price` AS `price`,`resources`.`publishyear` AS `publishyear`,`resources`.`phydetails` AS `phydetails`,`resources`.`note_si` AS `note_si`,`resources`.`note_ta` AS `note_ta`,`resources`.`note_en` AS `note_en`,`resources`.`status` AS `status`,`resources`.`br_qr_code` AS `br_qr_code`,`resources`.`image` AS `image`,`resources`.`received_type` AS `received_type`,`resources`.`created_at` AS `created_at`,`resources`.`updated_at` AS `updated_at`,`resource_categories`.`category_si` AS `category_si`,`resource_categories`.`category_ta` AS `category_ta`,`resource_categories`.`category_en` AS `category_en`,`resource_types`.`type_si` AS `type_si`,`resource_types`.`type_ta` AS `type_ta`,`resource_types`.`type_en` AS `type_en`,`creator1`.`name_si` AS `name_si`,`creator1`.`name_ta` AS `name_ta`,`creator1`.`name_en` AS `name_en`,`creator2`.`name_si` AS `name2_si`,`creator2`.`name_ta` AS `name2_ta`,`creator2`.`name_en` AS `name2_en`,`creator3`.`name_si` AS `name3_si`,`creator3`.`name_ta` AS `name3_ta`,`creator3`.`name_en` AS `name3_en`,`resource_publishers`.`publisher_si` AS `publisher_si`,`resource_publishers`.`publisher_ta` AS `publisher_ta`,`resource_publishers`.`publisher_en` AS `publisher_en`,`resource_languages`.`language_si` AS `language_si`,`resource_languages`.`language_ta` AS `language_ta`,`resource_languages`.`language_en` AS `language_en`,`centers`.`name_si` AS `center_si`,`centers`.`name_ta` AS `center_ta`,`centers`.`name_en` AS `center_en`,`resource_dd_classes`.`class_si` AS `class_si`,`resource_dd_classes`.`class_ta` AS `class_ta`,`resource_dd_classes`.`class_en` AS `class_en`,`resource_dd_classes`.`class_code` AS `class_code`,`resource_dd_divisions`.`devision_si` AS `devision_si`,`resource_dd_divisions`.`devision_ta` AS `devision_ta`,`resource_dd_divisions`.`devision_en` AS `devision_en`,`resource_dd_divisions`.`devision_code` AS `devision_code`,`resource_dd_sections`.`section_si` AS `section_si`,`resource_dd_sections`.`section_ta` AS `section_ta`,`resource_dd_sections`.`section_en` AS `section_en`,`resource_dd_sections`.`section_code` AS `section_code`,`resource_placements`.`rack_id` AS `rack_id`,`resource_placements`.`floor_id` AS `floor_id`,`resource_placements`.`placement_index` AS `placement_index`,`resource_racks`.`rack_si` AS `rack_si`,`resource_racks`.`rack_ta` AS `rack_ta`,`resource_racks`.`rack_en` AS `rack_en`,`resource_floors`.`floor_si` AS `floor_si`,`resource_floors`.`floor_ta` AS `floor_ta`,`resource_floors`.`floor_en` AS `floor_en` from ((((((((((((((`resources` left join `resource_categories` on(`resources`.`category_id` = `resource_categories`.`id`)) left join `resource_types` on(`resources`.`type_id` = `resource_types`.`id`)) left join `resource_creators` `creator1` on(`resources`.`cretor_id` = `creator1`.`id`)) left join `resource_creators` `creator2` on(`resources`.`cretor2_id` = `creator2`.`id`)) left join `resource_creators` `creator3` on(`resources`.`cretor3_id` = `creator3`.`id`)) left join `resource_publishers` on(`resources`.`publisher_id` = `resource_publishers`.`id`)) left join `centers` on(`resources`.`center_id` = `centers`.`id`)) left join `resource_languages` on(`resources`.`language_id` = `resource_languages`.`id`)) left join `resource_dd_classes` on(`resources`.`dd_class_id` = `resource_dd_classes`.`id`)) left join `resource_dd_divisions` on(`resources`.`dd_devision_id` = `resource_dd_divisions`.`id`)) left join `resource_dd_sections` on(`resources`.`dd_section_id` = `resource_dd_sections`.`id`)) left join `resource_placements` on(`resources`.`id` = `resource_placements`.`resource_id`)) left join `resource_racks` on(`resource_placements`.`rack_id` = `resource_racks`.`id`)) left join `resource_floors` on(`resource_placements`.`floor_id` = `resource_floors`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`codejsne_shanuka`@`localhost` SQL SECURITY DEFINER VIEW `view_resource_data_all`  AS  select `resources`.`id` AS `id`,`resources`.`accessionNo` AS `accessionNo`,`resources`.`standard_number` AS `standard_number`,`resources`.`title_si` AS `title_si`,`resources`.`title_ta` AS `title_ta`,`resources`.`title_en` AS `title_en`,`resources`.`cretor_id` AS `cretor_id`,`resources`.`cretor2_id` AS `cretor2_id`,`resources`.`cretor3_id` AS `cretor3_id`,`resources`.`cretor_more` AS `cretor_more`,`resources`.`category_id` AS `category_id`,`resources`.`type_id` AS `type_id`,`resources`.`dd_class_id` AS `dd_class_id`,`resources`.`dd_devision_id` AS `dd_devision_id`,`resources`.`dd_section_id` AS `dd_section_id`,`resources`.`ddc` AS `ddc`,`resources`.`center_id` AS `center_id`,`resources`.`language_id` AS `language_id`,`resources`.`publisher_id` AS `publisher_id`,`resources`.`purchase_date` AS `purchase_date`,`resources`.`edition` AS `edition`,`resources`.`price` AS `price`,`resources`.`publishyear` AS `publishyear`,`resources`.`phydetails` AS `phydetails`,`resources`.`note_si` AS `note_si`,`resources`.`note_ta` AS `note_ta`,`resources`.`note_en` AS `note_en`,`resources`.`status` AS `status`,`resources`.`br_qr_code` AS `br_qr_code`,`resources`.`image` AS `image`,`resources`.`received_type` AS `received_type`,`resources`.`created_at` AS `created_at`,`resources`.`updated_at` AS `updated_at`,`resource_categories`.`category_si` AS `category_si`,`resource_categories`.`category_ta` AS `category_ta`,`resource_categories`.`category_en` AS `category_en`,`resource_types`.`type_si` AS `type_si`,`resource_types`.`type_ta` AS `type_ta`,`resource_types`.`type_en` AS `type_en`,`creator1`.`name_si` AS `name_si`,`creator1`.`name_ta` AS `name_ta`,`creator1`.`name_en` AS `name_en`,`creator2`.`name_si` AS `name2_si`,`creator2`.`name_ta` AS `name2_ta`,`creator2`.`name_en` AS `name2_en`,`creator3`.`name_si` AS `name3_si`,`creator3`.`name_ta` AS `name3_ta`,`creator3`.`name_en` AS `name3_en`,`resource_publishers`.`publisher_si` AS `publisher_si`,`resource_publishers`.`publisher_ta` AS `publisher_ta`,`resource_publishers`.`publisher_en` AS `publisher_en`,`resource_languages`.`language_si` AS `language_si`,`resource_languages`.`language_ta` AS `language_ta`,`resource_languages`.`language_en` AS `language_en`,`centers`.`name_si` AS `center_si`,`centers`.`name_ta` AS `center_ta`,`centers`.`name_en` AS `center_en`,`resource_dd_classes`.`class_si` AS `class_si`,`resource_dd_classes`.`class_ta` AS `class_ta`,`resource_dd_classes`.`class_en` AS `class_en`,`resource_dd_classes`.`class_code` AS `class_code`,`resource_dd_divisions`.`devision_si` AS `devision_si`,`resource_dd_divisions`.`devision_ta` AS `devision_ta`,`resource_dd_divisions`.`devision_en` AS `devision_en`,`resource_dd_divisions`.`devision_code` AS `devision_code`,`resource_dd_sections`.`section_si` AS `section_si`,`resource_dd_sections`.`section_ta` AS `section_ta`,`resource_dd_sections`.`section_en` AS `section_en`,`resource_dd_sections`.`section_code` AS `section_code`,`resource_placements`.`rack_id` AS `rack_id`,`resource_placements`.`floor_id` AS `floor_id`,`resource_placements`.`placement_index` AS `placement_index`,`resource_racks`.`rack_si` AS `rack_si`,`resource_racks`.`rack_ta` AS `rack_ta`,`resource_racks`.`rack_en` AS `rack_en`,`resource_floors`.`floor_si` AS `floor_si`,`resource_floors`.`floor_ta` AS `floor_ta`,`resource_floors`.`floor_en` AS `floor_en` from ((((((((((((((`resources` left join `resource_categories` on(`resources`.`category_id` = `resource_categories`.`id`)) left join `resource_types` on(`resources`.`type_id` = `resource_types`.`id`)) left join `resource_creators` `creator1` on(`resources`.`cretor_id` = `creator1`.`id`)) left join `resource_creators` `creator2` on(`resources`.`cretor2_id` = `creator2`.`id`)) left join `resource_creators` `creator3` on(`resources`.`cretor3_id` = `creator3`.`id`)) left join `resource_publishers` on(`resources`.`publisher_id` = `resource_publishers`.`id`)) left join `centers` on(`resources`.`center_id` = `centers`.`id`)) left join `resource_languages` on(`resources`.`language_id` = `resource_languages`.`id`)) left join `resource_dd_classes` on(`resources`.`dd_class_id` = `resource_dd_classes`.`id`)) left join `resource_dd_divisions` on(`resources`.`dd_devision_id` = `resource_dd_divisions`.`id`)) left join `resource_dd_sections` on(`resources`.`dd_section_id` = `resource_dd_sections`.`id`)) left join `resource_placements` on(`resources`.`id` = `resource_placements`.`resource_id`)) left join `resource_racks` on(`resource_placements`.`rack_id` = `resource_racks`.`id`)) left join `resource_floors` on(`resource_placements`.`floor_id` = `resource_floors`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -1984,7 +1947,8 @@ ALTER TABLE `members`
   ADD KEY `members_titleid_foreign` (`titleid`),
   ADD KEY `members_categoryid_foreign` (`categoryid`),
   ADD KEY `members_genderid_foreign` (`genderid`),
-  ADD KEY `members_guarantor_id_foreign` (`guarantor_id`);
+  ADD KEY `members_guarantor_id_foreign` (`guarantor_id`),
+  ADD KEY `members_center_id_foreign` (`center_id`);
 
 --
 -- Indexes for table `member_cats`
@@ -2245,13 +2209,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `centers`
 --
 ALTER TABLE `centers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `center_allocations`
@@ -2317,7 +2281,7 @@ ALTER TABLE `lending_returns`
 -- AUTO_INCREMENT for table `libraries`
 --
 ALTER TABLE `libraries`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `members`
@@ -2455,7 +2419,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `surveys`
@@ -2503,7 +2467,7 @@ ALTER TABLE `titles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -2562,6 +2526,7 @@ ALTER TABLE `lending_returns`
 --
 ALTER TABLE `members`
   ADD CONSTRAINT `members_categoryid_foreign` FOREIGN KEY (`categoryid`) REFERENCES `member_cats` (`id`),
+  ADD CONSTRAINT `members_center_id_foreign` FOREIGN KEY (`center_id`) REFERENCES `centers` (`id`),
   ADD CONSTRAINT `members_genderid_foreign` FOREIGN KEY (`genderid`) REFERENCES `genders` (`id`),
   ADD CONSTRAINT `members_guarantor_id_foreign` FOREIGN KEY (`guarantor_id`) REFERENCES `member_guarantors` (`id`),
   ADD CONSTRAINT `members_titleid_foreign` FOREIGN KEY (`titleid`) REFERENCES `titles` (`id`);

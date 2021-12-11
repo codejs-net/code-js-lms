@@ -30,7 +30,7 @@ class CreateUserstaffView extends Migration
     private function createView(): string
     {
         return <<<SQL
-            CREATE VIEW view_userstaff_data AS
+            CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER() SQL SECURITY DEFINER VIEW view_userstaff_data AS
                 SELECT  users.*,
                         staff.name_si,
                         staff.name_ta,

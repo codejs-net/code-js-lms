@@ -30,7 +30,7 @@ class CreateMemberView extends Migration
     private function createView(): string
     {
         return <<<SQL
-            CREATE VIEW view_member_data AS
+            CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER() SQL SECURITY DEFINER VIEW view_member_data AS
                 SELECT  members.*,
                         member_cats.category_si,
                         member_cats.category_ta,

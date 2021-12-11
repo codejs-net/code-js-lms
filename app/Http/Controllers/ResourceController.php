@@ -263,7 +263,7 @@ class ResourceController extends Controller
             $imageName ="default_book.jpg";
             if($request->hasFile('resource_image')){
                 $imageName = $request->resoure_accession.'-'.time().'.'.$request->resource_image->extension();   
-                $request->resource_image->move(public_path('images/resources'), $imageName);
+                $request->resource_image->move(base_path('images/resources'), $imageName);
             }
     
             $res->accessionNo       =  $request->resoure_accession;
@@ -381,7 +381,7 @@ class ResourceController extends Controller
         if($request->hasFile('image_update')){
             
             $imageName = $request->resoure_accession.'-'.time().'.'.$request->image_update->extension();   
-            $request->image_update->move(public_path('images/resources'), $imageName);
+            $request->image_update->move(base_path('images/resources'), $imageName);
 
             if($res->image!="default_book.jpg")
             {

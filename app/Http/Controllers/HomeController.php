@@ -10,7 +10,6 @@ use App\Models\resource;
 use App\Models\member;
 use App\Models\receipt;
 use App\Models\lending_detail;
-use App\Models\view_lending_data;
 use App\Models\view_lending_data_all;
 use App\Models\center_allocation;
 use App\Models\setting;
@@ -87,12 +86,12 @@ class HomeController extends Controller
             $thisyear = Carbon::now()->isoFormat('YYYY');
             for($i=1;$i<=12;$i++)
             {
-                $_issue = view_lending_data::select('id')
+                $_issue = view_lending_data_all::select('id')
                     ->whereIn('center_id', $center_array)
                     ->whereYear('issue_date',$thisyear)
                     ->whereMonth('issue_date',$i)
                     ->count();
-                $_return = view_lending_data::select('id')
+                $_return = view_lending_data_all::select('id')
                     ->whereIn('center_id', $center_array)
                     ->where('return',1)
                     ->whereYear('return_date',$thisyear)
@@ -122,12 +121,12 @@ class HomeController extends Controller
 
     public function latast_lending()
     {
-        $latast_issue = view_lending_data::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
+        $latast_issue = view_lending_data_all::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
         ->orderBy('created_at', 'DESC')
         ->take(5)
         ->get();
 
-        $latast_return = view_lending_data::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
+        $latast_return = view_lending_data_all::select('resource_id','member_id','accessionNo','title_si','title_ta','title_en','member_si','member_ta','member_en')
         ->where('return',1)
         ->take(5)
         ->orderBy('updated_at', 'DESC')
