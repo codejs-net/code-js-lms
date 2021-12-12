@@ -140,7 +140,7 @@ class MemberController extends Controller
         $image = $request->file('image_member');
         if ($image){
             $imageName = $request->nic.'-'.time().'.'.$image->extension(); 
-            $image->move(base_path('images/members'), $imageName);
+            $image->move(public_path('images/members'), $imageName);
         }
 
 
@@ -270,7 +270,7 @@ class MemberController extends Controller
         if($request->hasFile('image_member')){
             
             $imageName = $request->nic.'-'.time().'.'.$request->image_member->extension();   
-            $request->image_member->move(base_path('images/members'), $imageName);
+            $request->image_member->move(public_path('images/members'), $imageName);
 
             if($mbr->image!="default_avatar.png")
             {

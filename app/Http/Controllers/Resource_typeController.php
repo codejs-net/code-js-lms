@@ -76,7 +76,7 @@ class Resource_typeController extends Controller
     {
         
         $imageName = time().'.'.$request->image->extension();   
-        $request->image->move(base_path('images'), $imageName);
+        $request->image->move(public_path('images'), $imageName);
     
         $form_data = array(
             'category_id' =>  $request->category,
@@ -126,7 +126,7 @@ class Resource_typeController extends Controller
         $imageName =$detail->image;
         if($request->hasFile('image_update')){
             $imageName = time().'.'.$request->image_update->extension();   
-            $request->image_update->move(base_path('images'), $imageName);
+            $request->image_update->move(public_path('images'), $imageName);
 
             $old_image = "images/".$detail->image;
             if(File::exists($old_image)) {

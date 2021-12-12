@@ -70,7 +70,7 @@ $category="category".$lang;
                     @foreach ($details as $data)
                         <tr>
                             <td>{{ $data->id }}</td>
-                            <td><img class="img-icon" src="images/{{ $data->image}}">&nbsp;{{ $data->$category }}</td>
+                            <td><img class="img-icon" src="{{ asset('images/'.$data->image)}}">&nbsp;{{ $data->$category }}</td>
                            
                             <td>
                                
