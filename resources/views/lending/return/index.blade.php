@@ -967,19 +967,17 @@ $lib_name="name".$lang;
         frameDoc.document.open();
         frameDoc.document.write('<html><head><title>Riceipt</title>');
         frameDoc.document.write('<style>@media print {@page { margin-top: 0; margin-bottom: 0;}body { margin: 1.6cm; }}</style>');
-        frameDoc.document.write('</head><body>');
         frameDoc.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
         frameDoc.document.write('<link href="{{ asset('css/riceipt.css') }}" rel="stylesheet">');
+        frameDoc.document.write('</head><body>');
         frameDoc.document.write(contents);
         frameDoc.document.write('</body></html>');
-        frameDoc.document.close();
-        // window.frames["frame1"].focus();
-        // window.frames["frame1"].print();
-        
+        console.log(contents);
         $("#frame1").get(0).contentWindow.print();
-        // setTimeout(function () {
-        //    frame1.remove();
-        // }, 10000);
+        setTimeout(function () {
+           frame1.remove();
+        }, 10000);
+        frameDoc.document.close();
     }
     
 

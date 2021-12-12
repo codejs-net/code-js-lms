@@ -156,7 +156,7 @@ $lib_name="name".$lang;
             {{-- <p style="page-break-before: always"></p> --}}
                 <h5 >{{__('Member')}} : <span id="print_member"></span></h5>
                 <h5 >{{__('Issue Date')}} : <span id="print_issuedate"></span></h5>
-                <h5>{{__('Return Date')}} :<span id="print_returndate"></span></h5>
+                <h5>{{__('To Be Return')}} :<span id="print_returndate"></span></h5>
                 
                 <table id="print_table">
                     <!-- <thead>
@@ -675,7 +675,7 @@ $lib_name="name".$lang;
    
     function printDiv(){
         var contents = $("#print_lendding").html();
-        
+       
         var frame1 = $('<iframe />');
         frame1[0].name = "frame1";
         frame1[0].id = "frame1";
@@ -686,19 +686,17 @@ $lib_name="name".$lang;
         frameDoc.document.open();
         frameDoc.document.write('<html><head><title>Riceipt</title>');
         frameDoc.document.write('<style>@media print {@page { margin-top: 0;  margin-bottom: 0; }body { margin: 1.6cm; }}</style>');
-        frameDoc.document.write('</head><body>');
         frameDoc.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
         frameDoc.document.write('<link href="{{ asset('css/riceipt.css') }}" rel="stylesheet">');
+        frameDoc.document.write('</head><body>');
         frameDoc.document.write(contents);
         frameDoc.document.write('</body></html>');
-        frameDoc.document.close();
-        // window.frames["frame1"].focus();
-        // window.frames["frame1"].print();
         
         $("#frame1").get(0).contentWindow.print();
-        // setTimeout(function () {
-        //    frame1.remove();
-        // }, 10000);
+        setTimeout(function () {
+           frame1.remove();
+        }, 10000);
+        frameDoc.document.close();
     }
     
 
