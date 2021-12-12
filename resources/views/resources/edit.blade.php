@@ -104,18 +104,23 @@ $center="name".$lang;
                 <hr>
                 <div class="form-row">
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                     <label for="isbn">{{__('ISBN/ISSN/ISMN')}}</label>
                         <input type="text" class="form-control" id="resoure_isn" name="resoure_isn"  value="{{old('resoure_isn')}}"  placeholder="{{__('ISBN/ISSN/ISMN')}}">
                         <span class="text-danger">{{ $errors->first('isbn') }}</span>
                     </div>
                    
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                        
                         <label for="accessionNo">{{__('Accession Number')}}</label>
                         <input type="text" class="form-control" id="resoure_accession" name="resoure_accession" value="{{old('resoure_accession')}}" placeholder="{{__('Accession Number')}}:" required>
                         <span class="text-danger" >{{ $errors->first('accessionNo') }}</span>
+                    </div>
+                    <div class="form-group col-md-2 pt-4">
+                        <a class="mx-1" href="">
+                            <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($resouredata->accessionNo, 'C128',1,60,array(0,0,0), true)}}" alt="barcode" />
+                        </a>
                     </div>
                     
                 </div>
