@@ -44,6 +44,7 @@ use App\Exports\Resource_indexingExport;
 use App\Exports\LendingExport;
 use App\Exports\lending_accountExport;
 use App\Exports\Survey_tempExport;
+use App\Exports\Survey_historyExport;
 use Session;
 
 
@@ -628,7 +629,7 @@ class ReportController extends Controller
 
 //end lending Reports
 
-//Start Survey Reports
+//Start Survey Reports temp
     public function export_survey_temp(Request $request) 
     {
         try {
@@ -641,5 +642,19 @@ class ReportController extends Controller
         }
 
     }
+
+//Start Survey Reports
+public function export_survey_history(Request $request) 
+{
+    // try {
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', '1200');
+        return Excel::download(new Survey_historyExport($request), 'Survey.xlsx');
+    // }
+    // catch (\Exception $e) {
+    //     return redirect()->back()->with('error','Report Export Fail.');
+    // }
+
+}
 
 }
