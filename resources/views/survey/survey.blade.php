@@ -414,6 +414,7 @@ $("#finalize").click(function () {
            },
 
            success:function(data){
+               console.log(data);
                if(data.massage=="success"){
                 toastr.success('Survey Finalized Successfully');
                 document.location = "{{ route('view_survey',0) }}";

@@ -469,7 +469,7 @@ class SurveyController extends Controller
             }
             if($value->check_by!="")
             {
-                $check_user = User::where('id', $value->check_by)->with(['staff'])->first();
+                $check_user = User::where('id', $value->check_by)->first();
                 $username= $check_user->username;
             }
             
@@ -481,7 +481,6 @@ class SurveyController extends Controller
                     'title_si' => $value->title_si,
                     'title_ta' => $value->title_ta,
                     'title_en' => $value->title_en,
-                    'cretor_id' => $value->cretor_id,
                     'cretor_name_si' => $value->name_si,
                     'cretor_name_ta' => $value->name_ta,
                     'cretor_name_en' => $value->name_en,
