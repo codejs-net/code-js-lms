@@ -38,7 +38,7 @@ class ResourceImport implements ToModel, WithHeadingRow
             'price'             => $row['price'],
             // 'publishyear'       => $row['publishyear'],
             'phydetails'        => $row['phydetails'],
-            // 'note_si'           => $row['note_si'],
+            'note_si'           => $row['note_si'],
             // 'note_ta'           => $row['note_ta'],
             // 'note_en'           => $row['note_en'],
             'status'            => $row['status'],
