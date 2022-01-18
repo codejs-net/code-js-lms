@@ -33,7 +33,10 @@
       }
       .text-left{
             text-align: left !important;
-           
+
+      }
+      .reg-num{
+            padding-top:15px !important;
       }
 
       .column-1 {
@@ -112,6 +115,7 @@
       .card-name{
             color: #272c66;
             font-size: 15px !important;
+           
       }
 
       </style>
@@ -142,7 +146,10 @@ $lib_name="name".$lang;
             <div class="column-2">
             <table class="tbl_card">
                   <tr class="card-heading">
-                        <td colspan="3" class="text-left"><span class="card-name"><u>{{__("Member Card")}} &nbsp;-{{$data->id}}</u></span></td>
+                        <td colspan="3" class="text-left">
+                              <span class="card-name"><u>{{__("Member Card")}} &nbsp;-{{$data->id}}&nbsp;</u></span>
+                              <span class="reg-num">&nbsp;{{empty($data->regnumber)?"":"(".$data->regnumber.")"}}&nbsp;</span>
+                        </td>
                   </tr>
                   <tr class="card-heading1">
                         <td colspan="3" class="text-left"><b><span class="">{{ $library->$lib_name}}</span></b></td><br><br>
@@ -173,11 +180,11 @@ $lib_name="name".$lang;
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->mobile}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                         <td style="width: 30%"><b>{{__("Register")}}</b></td>
                         <td style="width: 5%">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->regnumber}}</td>
-                  </tr>
+                  </tr> -->
             </table>
             </div>
       </div>
