@@ -168,6 +168,9 @@ $gender="gender".$lang;
                     <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
                 <div class="form-group col-md-6">
+                    <label for="regnumber">{{__('Registretion No')}} :</label>
+                    <input type="text" class="form-control" name="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}">
+                    <span class="text-danger">{{ $errors->first('regnumber') }}</span>
                 </div>
             </div>
 

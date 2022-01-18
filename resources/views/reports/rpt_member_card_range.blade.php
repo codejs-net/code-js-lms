@@ -173,11 +173,11 @@ $lib_name="name".$lang;
                         <td style="width: 5%" class="text-center">&nbsp;:&nbsp;</td>
                         <td class="text-left">{{$data->mobile}}</td>
                   </tr>
-                  {{-- <tr>
+                  <tr>
                         <td style="width: 30%"><b>{{__("Register")}}</b></td>
                         <td style="width: 5%">&nbsp;:&nbsp;</td>
-                        <td class="text-left">{{$data->regdate}}</td>
-                  </tr> --}}
+                        <td class="text-left">{{$data->regnumber}}</td>
+                  </tr>
             </table>
             </div>
       </div>

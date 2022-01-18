@@ -164,6 +164,7 @@ class MemberController extends Controller
         $mbr->description_ta=$request->description_ta;
         $mbr->description_en=$request->description_en;
         $mbr->regdate=$request->registeredDate;
+        $mbr->regnumber=$request->regnumber;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
 
@@ -302,6 +303,7 @@ class MemberController extends Controller
         $mbr->description_ta=$request->description_ta;
         $mbr->description_en=$request->description_en;
         $mbr->regdate=$request->registeredDate;
+        $mbr->regnumber=$request->regnumber;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
         $mbr->status=$request->status;

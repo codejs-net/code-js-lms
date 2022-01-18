@@ -165,6 +165,9 @@ $address2="address2".$lang;
                     <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
                 <div class="form-group col-md-6">
+                    <label for="regnumber">{{__('Registretion No')}} :</label>
+                    <input type="text" class="form-control" name="regnumber" id="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}">
+                    <span class="text-danger">{{ $errors->first('regnumber') }}</span>
                 </div>
             </div>
 
@@ -261,6 +264,7 @@ $(document).ready(function()
         $('#description_ta').val("{{$edata->description_ta}}");
         $('#description_en').val("{{$edata->description_en}}");
         $('#registeredDate').val("{{$edata->regdate}}");
+        $('#regnumber').val("{{$edata->regnumber}}");
         $('#member_guarantor').val("{{$edata->guarantor_id}}");
         $('input:radio[name="status"]').filter('[value="{{$edata->status}}"]').attr('checked', true);
        
