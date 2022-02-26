@@ -34,13 +34,22 @@
                     
                     <form action="{{route('member_card')}}" method="post">
                         {{ csrf_field() }}
-                        <input type="hidden" id="show_member_id" name="show_member_id">
+                        <input type="hidden" class="show_member_id" id="show_member_id" name="show_member_id">
                         <div class="box-footer mt-2 clearfix pull-right">
                             <button type="submit" class="btn btn-success btn-sm " id="save_member"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{ __("Member Card")}}</button>
-                            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
                         </div>
                     </form>
-                   
+                    <form action="{{route('report_member_reg')}}" method="post">
+                        {{ csrf_field() }}
+                        <input type="hidden" class="show_member_id" id="show_member_id" name="show_member_id">
+                        <div class="box-footer mt-2 clearfix pull-right">
+                            <button type="submit" class="btn btn-info btn-sm " id="reg_form"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{ __("Registretion Form")}}</button>
+                        </div>
+                    </form>
+                    <div class="box-footer mt-2 clearfix pull-right">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>    
+                    </div>
+
                 </div>
         
         </div>

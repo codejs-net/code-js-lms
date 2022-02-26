@@ -137,7 +137,7 @@ $(document).ready(function()
        var button = $(event.relatedTarget) ;
        var m_id = button.data('mid');
        
-       $("#show_member_id").val(m_id);
+       $(".show_member_id").val(m_id);
        $("#show_table_tbody").empty();
        var op='';
        // -------------------------------------------

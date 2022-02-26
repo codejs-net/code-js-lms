@@ -335,6 +335,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::POST('recource_card_range', [ReportController::class, 'recource_card_range'])->name('recource_card_range');
     Route::POST('report_lending', [ReportController::class, 'report_lending'])->name('report_lending');
     Route::POST('report_lending_account', [ReportController::class, 'report_lending_account'])->name('report_lending_account');
+    Route::POST('report_member_reg', [ReportController::class, 'report_member_reg'])->name('report_member_reg');
     Route::POST('member_card', [ReportController::class, 'member_card'])->name('member_card');
     Route::POST('member_card_range', [ReportController::class, 'member_card_range'])->name('member_card_range');
 

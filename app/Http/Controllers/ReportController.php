@@ -401,6 +401,17 @@ class ReportController extends Controller
         return $pdf->stream($data->id.'-Member Card.pdf');
     }
 
+    public function report_member_reg(Request $request)
+    {
+        $library = library::first();
+        $data = view_member_data::find($request->show_member_id);
+        $pdf = PDF::loadView('reports.members.rpt_member_reg',compact('data','library'),[],
+            [
+                'format' => 'A4'
+            ]);
+        return $pdf->stream($data->id.'-Member-Application.pdf');
+    }
+
     public function member_card_range(Request $request)
     {
         ini_set('max_execution_time', '1200');
