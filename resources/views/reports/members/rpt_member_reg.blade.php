@@ -27,9 +27,8 @@
         border-radius: 5px;
         border: 1px solid #010101;
       }
-      #tbl_member_card{
-            font-size: 10px;
-            line-height: 10px;
+      #tbl_office{
+            border: #4b4949 solid 1px;
       }
       .text-center{
             text-align: center;
@@ -40,16 +39,17 @@
 
       .column-1 {
       float: left;
-      width: 25%;
+      width: 70%;
+      text-align: right;
+      align-items: flex-end;
       /* background: #e1ebf0; */
       }
       .column-2 {
       float: left;
-      width: 70%;
+      width: 25%;
       padding-left:10px;
       }
 
-      /* Clear floats after the columns */
       .row:after {
       content: "";
       display: table;
@@ -59,23 +59,66 @@
             padding-left:2px;
             padding-right:5px;
             margin-top:15px;
+            width: 70px;
       }
       .image{
             padding-left:2px;
             padding-right:5px;
             padding-top:10px;
       }
-      td{
-            font-size:11px;
-            height:10px;
+      .number{
+    width:10%;
+    font-size: 16px;
+    height:50px;
       }
+      .title{
+      width:25%;
+      font-weight:bold;
+      }
+      .value{
+      width:50%;
+      text-align:left;
+      }
+      .index{
+      width:15%;
+      }
+      .number-date{
+      text-align:left;
+      }
+      .signature{
+      text-align:center;
+      }
+      .refarance{
+      position: fixed; 
+      text-align:right;
+      display: block;
+      top: -30px; 
+      margin-right: 0;
+
+      }
+      .signetute-containt{
+      text-align: justify;
+      }
+      .separate{
+      width:3%;
+      }
+      .tbl-data tr td{
+      /* border: 1px solid black; */
+      }
+      .footer {
+      position: fixed; 
+      bottom: -40px; 
+      height: 50px; 
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      }
+     
       h5{
-            font-size:14px;
+      font-size:14px;
       }
-      .card-heading td{
-            padding-bottom: 10px;
-      }
-      </style>
+</style>
 </head>
 <body>
       @php
@@ -91,96 +134,128 @@
 
 
 <div class="container">
+      <div class="row text-center">
+            <span class=""><h5>{{ $library->$lib_name}}</h5></span>
+      </div>
       <div class="row">
-            
             <div class="column-1">
-                  <div class="row image">
+                  <div class="row">
                         <img class="img-member1" src="images/members/{{$data->image}}">
-                  </div>
-                  <div class="row qrcode">
-                        <!-- <img src="data:image/png;base64,{{DNS1D::getBarcodePNG((string)$data->id, "C128",1,60,array(0,0,0), true)}}" alt="barcode" /> -->
-                        <img src="data:image/png;base64,{{DNS2D::getBarcodePNG((string)$data->id, 'QRCODE',40,40)}}" alt="barcode" />
-                  </div>
+                        <img src="data:image/png;base64,{{DNS2D::getBarcodePNG((string)$data->id, 'QRCODE',40,40)}}" alt="barcode" class="qrcode"/>
+                  </div>  
             </div>
             <div class="column-2">
-            <table>
-                  <tr class="card-heading">
-                        <td colspan="3" class="text-left"><h5>{{ $library->$lib_name}}</h5></td>
-                  </tr>
-                  <tr>
-                        <td><b>{{__("Category")}}</b></td>
-                        <td>&nbsp;:&nbsp;</td>
-                        <td>{{$data->$category}}</td>
-                  </tr>
-                  <tr>
-                        <td><b>{{__("Name")}}</b></td>
-                        <td>&nbsp;:&nbsp;</td>
-                        <td>{{$data->$name}}</td>
-                  </tr>
-                  <tr>
-                        <td><b>{{__("Address")}}</b></td>
-                        <td>&nbsp;:&nbsp;</td>
-                        <td>{{$data->$address1}},{{$data->$address2}}</td>
-                  </tr>
-                  <tr>
-                        <td><b>{{__("NIC")}}</b></td>
-                        <td>&nbsp;:&nbsp;</td>
-                        <td>{{$data->nic}}</td>
-                  </tr>
-                  <tr>
-                        <td><b>{{__("Mobile")}}</b></td>
-                        <td>&nbsp;:&nbsp;</td>
-                        <td>{{$data->mobile}}</td>
-                  </tr>
-                  <tr>
-                        <td><b>{{__("Register Date")}}</b></td>
-                        <td>&nbsp;:&nbsp;</td>
-                        <td>{{$data->regdate}}</td>
-                  </tr>
-            </table>
+                  <table class="table" id="tbl_office" style="width: 100%">
+                        <tr>
+                              <td colspan="2" class="text-left" >{{__("Office Use")}}</td>
+                        </tr>
+                        <tr>
+                              <td style="width: 70%">{{__("Member ID")}}</td>
+                              <td style="width: 30%">{{$data->id}}</td>      
+                        </tr>
+                        <tr>
+                              <td>{{__("Registretion Number")}}</td>
+                              <td>{{$data->id}}</td>
+                        </tr>
+                        <tr>
+                              <td>{{__("Registretion Number")}}</td>
+                              <td>{{$data->id}}</td>
+                        </tr>
+                  </table>
             </div>
+      </div>
+      <div class="row">
+            <table class="table" id="tbl_member" style="width: 100%">
+                  <tbody>
+                      <tr>
+                          <td class="index"></td>
+                          <td colspan="4">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(01)</td>
+                          <td class="title">Full Name</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(02)</td>
+                          <td class="title">Designetion</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(03)</td>
+                          <td class="title">Title</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(04)</td>
+                          <td class="title">Date Of Birth</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(05)</td>
+                          <td class="title">National Identity-Card Number</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(06)</td>
+                          <td class="title">User Group</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(07)</td>
+                          <td class="title">Mobile Number</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td> 
+                          <td class="number">(08)</td>
+                          <td class="title">Email</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td colspan="5" class="number"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td colspan="4">I declare that the information given by me in this application is true and accurate. I hereby kindly request to create the “ElectionS” account.
+                          </td>  
+                      </tr>
+                      <tr>
+                      <td colspan="5" class="number"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number-date" colspan="2">Date- </td>
+                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>Signature</span></td>              
+                      </tr>
+                      <tr>
+                          <td class="index"></td> 
+                          <td colspan="4"><hr></td>
+                      </tr>
+                     
+                  </tbody>
+              </table>
       </div>
 </div>
 
 
 
-<!-- <table class="" id="tbl_member_card">
-        <tr>
-            <td colspan="4" class="text-center">{{ $library}}&nbsp; {{ __("Library Management System")}}</td>
-        </tr>
-      <tr>
-            <td rowspan="3"><img class="img-member1" src="images/members/{{$data->image}}"></td>
-            <td><b>{{__("Category")}}</b></td>
-            <td>&nbsp;:&nbsp;</td>
-            <td>{{$data->$category}}</td>
-      </tr>
-      <tr>
-            <td><b>{{__("Name")}}</b></td>
-            <td>&nbsp;:&nbsp;</td>
-            <td>{{$data->$name}}</td>
-      </tr>
-      <tr>
-            <td><b>{{__("Address")}}</b></td>
-            <td>&nbsp;:&nbsp;</td>
-            <td>{{$data->$address1}},{{$data->$address2}}</td>
-      </tr>
-      <tr>
-            <td class="text-center" rowspan="3"><img src="data:image/png;base64,{{DNS1D::getBarcodePNG((string)$data->id, "C128",1,60,array(0,0,0), true)}}" alt="barcode" /></td>
-            <td><b>{{__("NIC")}}</b></td>
-            <td>&nbsp;:&nbsp;</td>
-            <td>{{$data->nic}}</td>
-      </tr>
-      <tr>
-            <td><b>{{__("Mobile")}}</b></td>
-            <td>&nbsp;:&nbsp;</td>
-            <td>{{$data->mobile}}</td>
-      </tr>
-      <tr>
-            <td><b>{{__("Register Date")}}</b></td>
-            <td>&nbsp;:&nbsp;</td>
-            <td>{{$data->regdate}}</td>
-      </tr>
-    </table> -->
    
 </body>
 </html>
