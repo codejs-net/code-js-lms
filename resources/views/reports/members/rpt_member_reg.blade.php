@@ -103,6 +103,9 @@
       .signetute-containt{
       text-align: justify;
       }
+      .signature-row td{
+      height: 100px !important;
+      }
       .separate{
       width:3%;
       }
@@ -146,7 +149,7 @@
 
 <div class="container">
       <div class="row text-center">
-            <span class=""><h5>{{ $library->$lib_name}}</h5></span>
+            <span class=""><h4>{{ $library->$lib_name}} - {{__('Member Application')}}</h4></span>
       </div>
       <div class="row">
             <div class="column-1">
@@ -244,16 +247,142 @@
                       </tr>
                       <tr>
                           <td class="index"></td>
-                          <td colspan="4">I declare that the information given by me in this application is true and accurate. I hereby kindly request to create the “ElectionS” account.
-                          </td>  
+                          <td colspan="4">{{__('aplicant_statement')}}</td>  
                       </tr>
+                      <tr>
+                      <td colspan="5" class="number"></td>
+                      </tr>
+                      <tr class="signature-row">
+                          <td class="index"></td>
+                          <td class="number-date" colspan="2">Date- </td>
+                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br> Aplicant Signature</span></td>              
+                      </tr>
+                      <tr>
+                          <td class="index"></td> 
+                          <td colspan="4"><hr></td>
+                      </tr>
+                     
+                  </tbody>
+              </table>
+      </div>
+      <div class="row">
+            <table class="table" id="tbl_guarantor" style="width: 100%">
+                  <tbody>
+                      <tr>
+                          <td class="index"></td>
+                          <td colspan="4">{{__('Guarantor Statement')}}
+                          </td>
+                      </tr>
+                      <tr>
+                        <td class="index"></td>
+                        <td colspan="4">{{__('guarantor_statement')}}</td>  
+                        </tr>
+                      <tr>
+                        <td colspan="5" class="number"></td>
+                      </tr>
+                      <tr>
+                        <td class="index"></td>
+                        <td class="number">(02)</td>
+                        <td class="title">{{__('Full Name')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value">{{ $data->$title." ". $data->$name}}</td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(03)</td>
+                          <td class="title">{{__('Address')}}</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value">{{ $data->$address1}}</td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(04)</td>
+                          <td class="title">{{__('Street')}}</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value">{{$data->birthday}}</td>
+                      </tr>
+                      <tr>
+                        <td class="index"></td>
+                        <td class="number">(07)</td>
+                        <td class="title">{{__('Rate Number')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value">{{$data->$occupation}}</td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(05)</td>
+                          <td class="title">{{__('Identity-Card Number')}}</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value">{{$data->nic}}</td>
+                      </tr>
+                      <tr>
+                        <td class="index"></td>
+                        <td class="number">(06)</td>
+                        <td class="title">{{__('Mobile Number')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value">{{$data->mobile}}</td>
+                      </tr>
+                     
                       <tr>
                       <td colspan="5" class="number"></td>
                       </tr>
                       <tr>
                           <td class="index"></td>
                           <td class="number-date" colspan="2">Date- </td>
-                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>Signature</span></td>              
+                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>Guarantor Signature</span></td>              
+                      </tr>
+                      <tr>
+                          <td class="index"></td> 
+                          <td colspan="4"><hr></td>
+                      </tr>
+                     
+                  </tbody>
+              </table>
+      </div>
+      <div class="row">
+            <table class="table" id="tbl_certify" style="width: 100%">
+                  <tbody>
+                      <tr>
+                          <td class="index"></td>
+                          <td colspan="4">{{__('Certification Statement')}}
+                          </td>
+                      </tr>
+                      <tr>
+                        <td class="index"></td>
+                        <td colspan="4">{{__('certify_statement')}}</td>  
+                        </tr>
+                      <tr>
+                        <td colspan="5" class="number"></td>
+                      </tr>
+                      <tr>
+                        <td class="index"></td>
+                        <td class="number">(02)</td>
+                        <td class="title">{{__('Name')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(03)</td>
+                          <td class="title">{{__('Address')}}</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number">(04)</td>
+                          <td class="title">{{__('Designetion')}}</td>
+                          <td class="separate">&nbsp;-&nbsp;</td>
+                          <td class="value"></td>
+                      </tr>
+                     
+                      <tr>
+                      <td colspan="5" class="number"></td>
+                      </tr>
+                      <tr>
+                          <td class="index"></td>
+                          <td class="number-date" colspan="2">Date- </td>
+                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>Certification Officer Signature</span></td>              
                       </tr>
                       <tr>
                           <td class="index"></td> 
