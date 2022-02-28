@@ -29,6 +29,10 @@
       }
       #tbl_office{
             border: #4b4949 solid 1px;
+            margin-top:10px;
+      }
+      #tbl_member{
+            margin-top:10px;
       }
       .text-center{
             text-align: center;
@@ -58,7 +62,7 @@
       .qrcode{
             padding-left:2px;
             padding-right:5px;
-            margin-top:15px;
+            margin-top:10px;
             width: 70px;
       }
       .image{
@@ -69,7 +73,7 @@
       .number{
     width:10%;
     font-size: 16px;
-    height:50px;
+    height:20px;
       }
       .title{
       width:25%;
@@ -105,6 +109,9 @@
       .tbl-data tr td{
       /* border: 1px solid black; */
       }
+      #tbl_office tr td{
+            font-size: 10px;
+      }
       .footer {
       position: fixed; 
       bottom: -40px; 
@@ -126,8 +133,12 @@
       $lang="_".$locale;
       $category="category".$lang;
       $name="name".$lang;
+      $title="title".$lang;
       $address1="address1".$lang;
       $address2="address2".$lang;
+      $workplace="Workplace".$lang;
+      $occupation="occupation".$lang;
+      $guarantor="guarantor".$lang;
       $lib_name="name".$lang;
 
       @endphp
@@ -155,11 +166,11 @@
                         </tr>
                         <tr>
                               <td>{{__("Registretion Number")}}</td>
-                              <td>{{$data->id}}</td>
+                              <td>{{$data->regnumber}}</td>
                         </tr>
                         <tr>
-                              <td>{{__("Registretion Number")}}</td>
-                              <td>{{$data->id}}</td>
+                              <td>{{__("Registretion Date")}}</td>
+                              <td>{{$data->regdate}}</td>
                         </tr>
                   </table>
             </div>
@@ -175,58 +186,58 @@
                       <tr>
                           <td class="index"></td>
                           <td class="number">(01)</td>
-                          <td class="title">Full Name</td>
+                          <td class="title">{{__('Category')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                          <td class="value">{{ $data->$name}}</td>
                       </tr>
                       <tr>
-                          <td class="index"></td>
-                          <td class="number">(02)</td>
-                          <td class="title">Designetion</td>
-                          <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                        <td class="index"></td>
+                        <td class="number">(02)</td>
+                        <td class="title">{{__('Full Name')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value">{{ $data->$title." ". $data->$name}}</td>
                       </tr>
                       <tr>
                           <td class="index"></td>
                           <td class="number">(03)</td>
-                          <td class="title">Title</td>
+                          <td class="title">{{__('Address')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                          <td class="value">{{ $data->$address1.",". $data->$address2}}</td>
                       </tr>
                       <tr>
                           <td class="index"></td>
                           <td class="number">(04)</td>
-                          <td class="title">Date Of Birth</td>
+                          <td class="title">{{__('Date Of Birth')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                          <td class="value">{{$data->birthday}}</td>
                       </tr>
                       <tr>
                           <td class="index"></td>
                           <td class="number">(05)</td>
-                          <td class="title">National Identity-Card Number</td>
+                          <td class="title">{{__('Identity-Card Number')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                          <td class="value">{{$data->nic}}</td>
                       </tr>
                       <tr>
-                          <td class="index"></td>
-                          <td class="number">(06)</td>
-                          <td class="title">User Group</td>
-                          <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                        <td class="index"></td>
+                        <td class="number">(06)</td>
+                        <td class="title">{{__('Mobile Number')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value">{{$data->mobile}}</td>
                       </tr>
                       <tr>
-                          <td class="index"></td>
-                          <td class="number">(07)</td>
-                          <td class="title">Mobile Number</td>
-                          <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                        <td class="index"></td>
+                        <td class="number">(07)</td>
+                        <td class="title">{{__('Occupation')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value">{{$data->$occupation}}</td>
                       </tr>
                       <tr>
-                          <td class="index"></td> 
-                          <td class="number">(08)</td>
-                          <td class="title">Email</td>
-                          <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value"></td>
+                        <td class="index"></td>
+                        <td class="number">(08)</td>
+                        <td class="title">{{__('Offie/Collage/School')}}</td>
+                        <td class="separate">&nbsp;-&nbsp;</td>
+                        <td class="value">{{$data->$workplace}}</td>
                       </tr>
                       <tr>
                           <td colspan="5" class="number"></td>
