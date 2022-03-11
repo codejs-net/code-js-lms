@@ -167,9 +167,12 @@ $gender="gender".$lang;
                     <input type="date" class="form-control" name="registeredDate" placeholder="{{__('registered Date')}}" value="{{old('registeredDate')}}"required>
                     <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="regnumber">{{__('Registretion No')}} :</label>
-                    <input type="text" class="form-control" name="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}">
+                <div class="form-group col-md-6 p-2">
+                   <div class="mx-4">
+                    <input class="form-check-input" type="checkbox" value="" name="check_custom_reg" id="check_custom_reg">
+                    <label class="form-check-label" for="check_custom_reg">{{__('registered Member')}}</label>
+                   </div>
+                    <input type="text" class="form-control" name="regnumber"  id="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}" disabled>
                     <span class="text-danger">{{ $errors->first('regnumber') }}</span>
                 </div>
             </div>
@@ -301,6 +304,8 @@ $(document).ready(function()
                 success:function(data){
                     toastr.success('Member Added Successfully')
                     $("#member_save").trigger("reset");
+                    $("#member_save").removeClass('was-validated');
+                    
                 },
                 error:function(data){
                     toastr.error('Member Add faild Plese try again')
@@ -352,6 +357,13 @@ $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
+
+
+$('#check_custom_reg').change(function() {
+    $('input[name="regnumber"]').attr('disabled', !this.checked);
+    $("input[name='regnumber']").focus();
+});
+
 
 
 $('#guarantor_form').on('submit', function(event){

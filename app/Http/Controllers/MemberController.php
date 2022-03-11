@@ -143,7 +143,6 @@ class MemberController extends Controller
             $image->move(public_path('images/members'), $imageName);
         }
 
-
         $mbr->titleid=$request->title;
         $mbr->Categoryid=$request->category;
         $mbr->name_si=$request->name_si;
@@ -164,12 +163,18 @@ class MemberController extends Controller
         $mbr->description_ta=$request->description_ta;
         $mbr->description_en=$request->description_en;
         $mbr->regdate=$request->registeredDate;
-        $mbr->regnumber=$request->regnumber;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
-
         $mbr->save();
-       
+        
+        $_member = member::find($mbr->id);
+        if( $request->has('check_custom_reg')==1){
+            $_member->regnumber=$request->regnumber;
+        }
+        else{
+            $_member->regnumber=$_member->id;
+        }
+        $_member->save();
 
         $SoapController =new SoapController;
         $mobile_no=$request->Mobile;
@@ -186,20 +191,19 @@ class MemberController extends Controller
             $setting_sms_send = setting::where('setting', 'sms_member_create')->first();
             if ($setting_sms_send->value == "1") 
             {
-               
                 $SoapController->multilang_msg_Send($mobile_no, $message_text);
             } 
 
-            $setting_email_send = setting::where('setting', 'email_member_create')->first();
-            if ($setting_email_send->value == "1" && $request->email !="") 
-            {
-                $MailController = new MailController;
-                $MailController->send_email(
-                    $mbr->email,
-                    trans('Member Registretion'),
-                    $member_name,
-                    $message_text);
-            } 
+            // $setting_email_send = setting::where('setting', 'email_member_create')->first();
+            // if ($setting_email_send->value == "1" && $request->email !="") 
+            // {
+            //     $MailController = new MailController;
+            //     $MailController->send_email(
+            //         $mbr->email,
+            //         trans('Member Registretion'),
+            //         $member_name,
+            //         $message_text);
+            // } 
         }
        
         return response()->json(['data' => "Success"]);
