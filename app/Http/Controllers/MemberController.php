@@ -135,6 +135,11 @@ class MemberController extends Controller
             'Description'=>'max:150',
             'registeredDate'=>'required',
             ]);
+            if( $request->has('check_custom_reg')==1){
+                $this->validate($request,[
+                    'regnumber' => 'unique:members,regnumber',
+                    ]);
+            }
 
         $imageName ="default_avatar.png";
         $image = $request->file('image_member');
@@ -283,8 +288,7 @@ class MemberController extends Controller
                 if(File::exists($old_image)) {
                 File::delete($old_image);
                 }
-            }
-            
+            }   
         }
 
         $mbr->titleid=$request->title;
@@ -307,12 +311,21 @@ class MemberController extends Controller
         $mbr->description_ta=$request->description_ta;
         $mbr->description_en=$request->description_en;
         $mbr->regdate=$request->registeredDate;
-        $mbr->regnumber=$request->regnumber;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
         $mbr->status=$request->status;
 
+        if( $request->has('check_custom_reg')==1){
+            $this->validate($request,[
+                'regnumber' => 'unique:members,regnumber',
+                ]);
+            $mbr->regnumber=$request->regnumber;
+        }
+        else{
+            $mbr->regnumber=$mbr->id;
+        }
         $mbr->save();
+
         if($mbr)
         { return redirect()->route('members.index')->with("success","Member Update Successfully");}
         else

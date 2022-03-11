@@ -170,7 +170,7 @@ $gender="gender".$lang;
                 <div class="form-group col-md-6 p-2">
                    <div class="mx-4">
                     <input class="form-check-input" type="checkbox" value="" name="check_custom_reg" id="check_custom_reg">
-                    <label class="form-check-label" for="check_custom_reg">{{__('registered Member')}}</label>
+                    <label class="form-check-label" for="check_custom_reg">{{__('Custom Register Number')}}</label>
                    </div>
                     <input type="text" class="form-control" name="regnumber"  id="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}" disabled>
                     <span class="text-danger">{{ $errors->first('regnumber') }}</span>

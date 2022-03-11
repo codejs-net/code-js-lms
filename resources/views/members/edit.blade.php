@@ -164,11 +164,14 @@ $address2="address2".$lang;
                     <input type="date" class="form-control" name="registeredDate" id="registeredDate" placeholder="registered Date" value="{{old('registeredDate')}}"required>
                     <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="regnumber">{{__('Registretion No')}} :</label>
-                    <input type="text" class="form-control" name="regnumber" id="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}">
-                    <span class="text-danger">{{ $errors->first('regnumber') }}</span>
-                </div>
+                <div class="form-group col-md-6 p-2">
+                    <div class="mx-4">
+                     <input class="form-check-input" type="checkbox" value="" name="check_custom_reg" id="check_custom_reg">
+                     <label class="form-check-label" for="check_custom_reg">{{__('Custom Register Number')}}</label>
+                    </div>
+                     <input type="text" class="form-control" name="regnumber"  id="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}" disabled>
+                     <span class="text-danger">{{ $errors->first('regnumber') }}</span>
+                 </div>
             </div>
 
             <div class="border border-primary bg-light mb-4">
@@ -336,6 +339,11 @@ $(document).ready(function()
 
 
 });
+$('#check_custom_reg').change(function() {
+    $('input[name="regnumber"]').attr('disabled', !this.checked);
+    $("input[name='regnumber']").focus();
+});
+
 
 $('#guarantor_form').on('submit', function(event){
     event.preventDefault();
