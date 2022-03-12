@@ -426,7 +426,7 @@ $lib_name="name".$lang;
                 if(data[0]['status']=="success")
                 {
                     $('#return-cart').show();
-                    var membr=data[0]['member_id']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
+                    var membr=data[0]['regnumber']+" - "+data[0]['member_name']+"( "+data[0]['member_add1']+","+data[0]['member_add2']+" )";
                     $('#member_Name').html(membr);
                     $('#member_Name_id').val(data[0]['member_id']);
                     $('#member_Name_sms').val(data[0]['member_name']);
@@ -837,7 +837,7 @@ $lib_name="name".$lang;
                 $.ajax({
                     type: 'POST',
                     dataType : 'json',
-                    // async:false,
+                    async:false,
                     data: {
                     'lend_data':JSON.stringify(lend_data),
                     'return_data':JSON.stringify(return_data)

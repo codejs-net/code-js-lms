@@ -44,6 +44,7 @@ $address2="address2".$lang;
                     <thead class="js-tbl-header">
                         <tr class="js-tr">
                             <th scope="col">{{__('ID')}}</th>
+                            <th scope="col">{{__('MID')}}</th>
                             <th scope="col">{{__('Avatar')}}</th>
                             <th scope="col">{{__('Title')}}</th>
                             <th scope="col" style="width: 15%">{{__('Name')}}</th>
@@ -202,7 +203,7 @@ function load_datatable()
     $('#member_datatable').DataTable({
         columnDefs: [
         {"targets": [0],
-        // "visible": false,
+        "visible": false,
         "searchable": false},
         ],
         responsive: true,
@@ -220,6 +221,7 @@ function load_datatable()
     
     columns:[
         {data: "id",name: "ResourceID",orderable: true},
+        {data: "regnumber",name: "regnumber",orderable: true},
         {data: "images",name: "images",orderable: false},
         {data: "title<?php echo $lang; ?>",name: "title"},
         {data: "<?php echo $name; ?>",name: "name"},

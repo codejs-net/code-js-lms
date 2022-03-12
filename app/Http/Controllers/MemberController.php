@@ -53,7 +53,7 @@ class MemberController extends Controller
 
             if(request()->ajax())
             {
-                $memberdata = view_member_data::select('*')->get();
+                $memberdata = view_member_data::select('*')->orderBy('regnumber', 'DESC')->get();
                 return datatables()->of($memberdata)
                         ->addIndexColumn()
                         ->addColumn('action', function($data){

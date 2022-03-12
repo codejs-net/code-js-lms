@@ -271,7 +271,7 @@ $lib_name="name".$lang;
                 if(data.status=="success")
                 {
                     $('#issue-cart').show();
-                    var mem_detail=data.member_id+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
+                    var mem_detail=data.regnumber+" - "+data.member_nme+" ("+data.member_adds1+","+data.member_adds2+")";
                     $('#member_Name').html(mem_detail);
                     $('#member_Name_sms').val(data.member_nme);
                     $('#member_mobile').val(data.mobile);

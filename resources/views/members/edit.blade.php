@@ -268,6 +268,10 @@ $(document).ready(function()
         $('#description_en').val("{{$edata->description_en}}");
         $('#registeredDate').val("{{$edata->regdate}}");
         $('#regnumber').val("{{$edata->regnumber}}");
+        @if($edata->regnumber != $edata->id)
+        $('#check_custom_reg').prop('checked', true);
+        $('input[name="regnumber"]').attr('disabled', false);
+        @endif
         $('#member_guarantor').val("{{$edata->guarantor_id}}");
         $('input:radio[name="status"]').filter('[value="{{$edata->status}}"]').attr('checked', true);
        

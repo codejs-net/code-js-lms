@@ -57,7 +57,7 @@ class CreateMembersTable extends Migration
             $table->string('description_en')->nullable();
 
             $table->date('regdate')->default(Carbon::now());
-            $table->string('regnumber')->nullable();
+            $table->integer('regnumber')->nullable();
             $table->string('image')->nullable();
 
             $table->integer('guarantor_id')->unsigned()->nullable();

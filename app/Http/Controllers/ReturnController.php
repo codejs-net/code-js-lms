@@ -56,16 +56,19 @@ class ReturnController extends Controller
 
         $title="title".$lang;  $category="category".$lang;  $type="type".$lang; $member="member".$lang;$address1="address1".$lang; $address2="address2".$lang; $member_="name".$lang;
         $lenddata=array();
-        $mbr=member::find($request->memberid);
 
-        $lending_config = lending_config::where('categoryid',$mbr->categoryid)->first();
-        Session::put('lending_period', $lending_config->lending_period);
-        $lending_period = $lending_config->lending_period;
+        $mbr = member::select('*')
+        ->where('regnumber',$request->memberid)
+        ->first();
         
         if($mbr)
         {
+            $lending_config = lending_config::where('categoryid',$mbr->categoryid)->first();
+            Session::put('lending_period', $lending_config->lending_period);
+            $lending_period = $lending_config->lending_period;
+
             $lend = view_lending_data::select('*')
-                    ->where('member_id', $request->memberid)
+                    ->where('member_id', $mbr->id)
                     ->Where('return',0)
                     ->get();
             if($lend->count()!=0)
@@ -92,6 +95,7 @@ class ReturnController extends Controller
                     $lenddata[$i]['status']           ="success";
                     $lenddata[$i]['id']               =$lend[$i]['id'];
                     $lenddata[$i]['member_id']        =$lend[$i]['member_id'];
+                    $lenddata[$i]['regnumber']        =$lend[$i]['regnumber'];
                     $lenddata[$i]['member_name']      =$lend[$i][$member];
                     $lenddata[$i]['member_add1']      =$lend[$i][$address1];
                     $lenddata[$i]['member_add2']      =$lend[$i][$address2];

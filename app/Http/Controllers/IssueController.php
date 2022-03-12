@@ -67,9 +67,13 @@ class IssueController extends Controller
         $status="";
         $lenddata=array();
 
-        $mbr = member::find($request->memberid);
+        $mbr = member::select('*')
+        ->where('regnumber',$request->memberid)
+        ->first();
+        
         if($mbr)
         {
+            error_log("-----------------------------".$mbr);
             $lending_config = lending_config::where('categoryid',$mbr->categoryid)->first();
             $finerate = setting::where('setting','fine_rate')->first();
             $lending_period = $lending_config->lending_period;
@@ -131,6 +135,7 @@ class IssueController extends Controller
                 'status'=>$status,
                 'member_nme' => $mbr->$member, 
                 'member_id' => $mbr->id, 
+                'regnumber' => $mbr->regnumber, 
                 'member_adds1' => $mbr->$address1, 
                 'member_adds2' => $mbr->$address2, 
                 'mobile' => $mbr->mobile, 
@@ -143,6 +148,7 @@ class IssueController extends Controller
                 return response()->json(['status'=>$status,
                 'member_nme' => $mbr->$member, 
                 'member_id' => $mbr->id, 
+                'regnumber' => $mbr->regnumber, 
                 'member_adds1' => $mbr->$address1, 
                 'member_adds2' => $mbr->$address2, 
                 'mobile' => $mbr->mobile, 

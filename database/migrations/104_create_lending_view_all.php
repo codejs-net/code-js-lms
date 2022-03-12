@@ -39,6 +39,7 @@ class CreateLendingViewAll extends Migration
                         resources.type_id,
                         resources.image,
                         resources.center_id,
+                        members.regnumber,
                         members.categoryid AS member_categoryid,
                         members.name_si    AS member_si,
                         members.name_ta    AS member_ta,
