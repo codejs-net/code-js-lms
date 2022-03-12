@@ -20,15 +20,16 @@ $address2="address2".$lang;
         <!-- Content Header (Page header) -->
 <div class="container-fluid">
     <div class="row text-center">
-        <div class="col-md-10 col-sm-6 text-left p-2"> 
+        <div class="col-md-7 col-sm-6 text-left p-2"> 
             <h5> <i class="fa fa-search ml-4 pl-2"> {{__('Search Members')}}</i></h5>
         </div>  
-        <div class="col-md-2 col-sm-6 text-right p-2">
+        <div class="col-md-5 col-sm-6 text-right p-2">
             @can('member-create')
             <a href="{{ route('create_member') }}" class="btn btn-info btn-sm" name="create_recode" id="create_recode" ><i class="fa fa-plus"></i>&nbsp; {{__('New')}}</a>
             @endcan
             @can('member-report')
             <a class="btn btn-sm btn-js" data-toggle="modal" data-target="#member_card_range" ><i class="fa fa-file-pdf-o" ></i>&nbsp;{{__('Member Card')}}</a>
+            <a href="{{ route('export_member') }}" class="btn btn-outline-primary btn-sm text-dark mr-2" id="export_member" ><i class="fa fa-file-excel-o"></i>&nbsp; {{__('Export')}}</a>
             @endcan
         </div>
     </div>

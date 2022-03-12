@@ -40,6 +40,7 @@ use App\Models\view_lending_data_all;
 use Carbon\Carbon;
 use Auth;
 use App\Exports\ResourceExport;
+use App\Exports\MemberExport;
 use App\Exports\Resource_indexingExport;
 use App\Exports\LendingExport;
 use App\Exports\lending_accountExport;
@@ -389,7 +390,7 @@ class ReportController extends Controller
         return Excel::download(new Resource_indexingExport($request), 'resource.xlsx');
     }
 
-
+// ==============member=================================
     public function member_card(Request $request)
     {
         $library = library::first();
@@ -427,6 +428,12 @@ class ReportController extends Controller
             'format' => [85,54],
             ]);
         return $pdf->stream($request->txt_start.'-'.$request->txt_end.' Member Card.pdf');
+    }
+    public function export_member() 
+    {
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', '1200');
+        return Excel::download(new MemberExport(), 'Members.xlsx');
     }
 //===============================lending Reports========================================
     public function lending_index()

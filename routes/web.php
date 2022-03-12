@@ -348,6 +348,7 @@ Route::group(['middleware' => ['auth']], function() {
      Route::POST('export_lending_account', [ReportController::class, 'export_lending_account'])->name('export_lending_account');
      Route::POST('export_survey_temp', [ReportController::class, 'export_survey_temp'])->name('export_survey_temp');
      Route::POST('export_survey_history', [ReportController::class, 'export_survey_history'])->name('export_survey_history');
+     Route::GET('export_member', [ReportController::class, 'export_member'])->name('export_member');
 
     //  ---------Email-------------
     Route::get('sendbasicemail', [MailController::class, 'basic_email'])->name('sendbasicemail');
