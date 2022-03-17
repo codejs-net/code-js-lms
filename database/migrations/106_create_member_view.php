@@ -44,6 +44,13 @@ class CreateMemberView extends Migration
                         member_guarantors.name_si AS guarantor_si,
                         member_guarantors.name_ta AS guarantor_ta,
                         member_guarantors.name_en AS guarantor_en,
+                        member_guarantors.address1_si AS guarantor_address1_si,
+                        member_guarantors.address1_ta AS guarantor_address1_ta,
+                        member_guarantors.address1_en AS guarantor_address1_en,
+                        member_guarantors.address2_si AS guarantor_address2_si,
+                        member_guarantors.address2_ta AS guarantor_address2_ta,
+                        member_guarantors.address2_en AS guarantor_address2_en,
+                        member_guarantors.description AS guarantor_description,
                         member_guarantors.nic     AS guarantor_nic,
                         member_guarantors.mobile  AS guarantor_mobile
                 FROM    members 

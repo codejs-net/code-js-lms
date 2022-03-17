@@ -140,7 +140,7 @@ $lib_name="name".$lang;
                         <img class="img-member1" src="images/members/{{$data->image}}">
                   </div>
                   <div class="row qrcode">
-                        <img src="data:image/png;base64,{{DNS2D::getBarcodePNG((string)$data->id, 'QRCODE',40,40)}}" alt="barcode" />
+                        <img src="data:image/png;base64,{{DNS2D::getBarcodePNG((string)$data->regnumber, 'QRCODE',40,40)}}" alt="barcode" />
                   </div>
             </div>
             <div class="column-2">

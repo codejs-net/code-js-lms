@@ -16,9 +16,9 @@
             font-family: 'iskpota';
       }
       @page {
-            margin-top:10px;
+            margin-top:20px;
             margin-left:20px;
-            margin-right:10px;
+            margin-right:20px;
             margin-bottom:20px; 
       }
       .img-member1 {
@@ -29,10 +29,10 @@
       }
       #tbl_office{
             border: #4b4949 solid 1px;
-            margin-top:10px;
+            margin-top:5px;
       }
       #tbl_member{
-            margin-top:10px;
+            margin-top:5px;
       }
       .text-center{
             text-align: center;
@@ -62,13 +62,13 @@
       .qrcode{
             padding-left:2px;
             padding-right:5px;
-            margin-top:10px;
+            margin-top:5px;
             width: 70px;
       }
       .image{
             padding-left:2px;
             padding-right:5px;
-            padding-top:10px;
+            padding-top:5px;
       }
       .number{
     width:10%;
@@ -128,6 +128,9 @@
       h5{
       font-size:14px;
       }
+      .pt-3{
+            padding-top:1px !important; 
+      }
 </style>
 </head>
 <body>
@@ -143,19 +146,21 @@
       $occupation="occupation".$lang;
       $guarantor="guarantor".$lang;
       $lib_name="name".$lang;
+      $guarantor_address1="guarantor_address1".$lang;
+      $guarantor_address2="guarantor_address2".$lang;
 
       @endphp
 
 
 <div class="container">
       <div class="row text-center">
-            <span class=""><h4>{{ $library->$lib_name}} - {{__('Member Application')}}</h4></span>
+            <span class=""><h4>{{ $library->$lib_name." (".$library->$address1.",".$library->$address2.") "}} - {{__('Member Application')}}</h4></span>
       </div>
       <div class="row">
             <div class="column-1">
                   <div class="row">
                         <img class="img-member1" src="images/members/{{$data->image}}">
-                        <img src="data:image/png;base64,{{DNS2D::getBarcodePNG((string)$data->id, 'QRCODE',40,40)}}" alt="barcode" class="qrcode"/>
+                        <img src="data:image/png;base64,{{DNS2D::getBarcodePNG((string)$data->regnumber, 'QRCODE',40,40)}}" alt="barcode" class="qrcode"/>
                   </div>  
             </div>
             <div class="column-2">
@@ -164,16 +169,16 @@
                               <td colspan="2" class="text-left" >{{__("Office Use")}}</td>
                         </tr>
                         <tr>
-                              <td style="width: 70%">{{__("Member ID")}}</td>
-                              <td style="width: 30%">{{$data->id}}</td>      
-                        </tr>
-                        <tr>
-                              <td>{{__("Registretion Number")}}</td>
-                              <td>{{$data->regnumber}}</td>
+                              <td>{{__("Member ID")}}</td>
+                              <td><b>{{$data->regnumber}}</b></td>
                         </tr>
                         <tr>
                               <td>{{__("Registretion Date")}}</td>
                               <td>{{$data->regdate}}</td>
+                        </tr>
+                        <tr>
+                              <td style="width: 70%">{{__("Refarance No")}}</td>
+                              <td style="width: 30%">{{"00".$data->id}}</td>      
                         </tr>
                   </table>
             </div>
@@ -191,7 +196,7 @@
                           <td class="number">(01)</td>
                           <td class="title">{{__('Category')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value">{{ $data->$name}}</td>
+                          <td class="value">{{ $data->$category}}</td>
                       </tr>
                       <tr>
                         <td class="index"></td>
@@ -285,42 +290,42 @@
                         <td class="number">(02)</td>
                         <td class="title">{{__('Full Name')}}</td>
                         <td class="separate">&nbsp;-&nbsp;</td>
-                        <td class="value">{{ $data->$title." ". $data->$name}}</td>
+                        <td class="value">{{ $data->$guarantor}}</td>
                       </tr>
                       <tr>
                           <td class="index"></td>
                           <td class="number">(03)</td>
                           <td class="title">{{__('Address')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value">{{ $data->$address1}}</td>
+                          <td class="value">{{ $data->$guarantor_address1}}</td>
                       </tr>
                       <tr>
                           <td class="index"></td>
                           <td class="number">(04)</td>
                           <td class="title">{{__('Street')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value">{{$data->birthday}}</td>
+                          <td class="value">{{$data->$guarantor_address2}}</td>
                       </tr>
                       <tr>
                         <td class="index"></td>
                         <td class="number">(07)</td>
                         <td class="title">{{__('Rate Number')}}</td>
                         <td class="separate">&nbsp;-&nbsp;</td>
-                        <td class="value">{{$data->$occupation}}</td>
+                        <td class="value">{{$data->guarantor_description}}</td>
                       </tr>
                       <tr>
                           <td class="index"></td>
                           <td class="number">(05)</td>
                           <td class="title">{{__('Identity-Card Number')}}</td>
                           <td class="separate">&nbsp;-&nbsp;</td>
-                          <td class="value">{{$data->nic}}</td>
+                          <td class="value">{{$data->guarantor_nic}}</td>
                       </tr>
                       <tr>
                         <td class="index"></td>
                         <td class="number">(06)</td>
                         <td class="title">{{__('Mobile Number')}}</td>
                         <td class="separate">&nbsp;-&nbsp;</td>
-                        <td class="value">{{$data->mobile}}</td>
+                        <td class="value">{{$data->guarantor_mobile}}</td>
                       </tr>
                      
                       <tr>

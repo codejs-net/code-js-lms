@@ -74,8 +74,22 @@ $gender="gender".$lang;
         </div>
 
         <hr>
-
-            <div class="row form-group">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="regdate">{{__('Registerd Date')}} :</label>
+                    <input type="date" class="form-control" name="registeredDate" placeholder="{{__('registered Date')}}" value="{{$regdate}}" required>
+                    <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
+                </div>
+                <div class="form-group col-md-6 p-2">
+                   <div class="mx-4">
+                    <input class="form-check-input" type="checkbox" value="" name="check_custom_reg" id="check_custom_reg">
+                    <label class="form-check-label" for="check_custom_reg">{{__('Custom Register Number')}}</label>
+                   </div>
+                    <input type="text" class="form-control" name="regnumber"  id="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}" disabled>
+                    <span class="text-danger">{{ $errors->first('regnumber') }}</span>
+                </div>
+            </div>
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label for="categry">{{__('Category')}} : </label>
                     <select class="form-control"name="category" id="category" value="{{old('category')}}"required>
@@ -93,29 +107,31 @@ $gender="gender".$lang;
                     <button type="button" id="btn_newcategory" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="name">{{__('Name')}} :</label>
-                <input type="text" class="form-control mb-1" name="name_si" id="name_si" value="{{old('name_si')}}" placeholder="{{__('Name in Sinahala')}}">
-                <input type="text" class="form-control mb-1" name="name_ta" id="name_ta" value="{{old('name_ta')}}" placeholder="{{__('Name in Tamil')}}">
-                <input type="text" class="form-control mb-1" name="name_en" id="name_en" value="{{old('name_en')}}" placeholder="{{__('Name in English')}}">
-                <span class="text-danger">{{ $errors->first('name') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="Address">{{__('Address Line1')}} :</label>
-                <input type="text" class="form-control mb-1" name="Address1_si" id="Address1_si" placeholder="{{__('Address Line 1 Sinhala')}}" value="{{old('Address1_si')}}">
-                <input type="text" class="form-control mb-1" name="Address1_ta" id="Address1_ta" placeholder="{{__('Address Line 1 Tamil')}}" value="{{old('Address1_ta')}}">
-                <input type="text" class="form-control mb-1" name="Address1_en" id="Address1_en" placeholder="{{__('Address Line 1 English')}}" value="{{old('Address1_en')}}">
-                <span class="text-danger">{{ $errors->first('Address1') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="Address">{{__('Address Line2')}} :</label>
-                <input type="text" class="form-control mb-1" name="Address2_si" placeholder="{{__('Address Line 2 Sinhala')}}" value="{{old('Address2_si')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_ta" placeholder="{{__('Address Line 2 Tamil')}}" value="{{old('Address2_ta')}}"> 
-                <input type="text" class="form-control mb-1" name="Address2_en" placeholder="{{__('Address Line 2 English')}}" value="{{old('Address2_en')}}"> 
-                <span class="text-danger">{{ $errors->first('Address2') }}</span>
-            </div>
 
-            <div class=" row form-group">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="name">{{__('Name')}} :</label>
+                    <input type="text" class="form-control mb-1" name="name_si" id="name_si" value="{{old('name_si')}}" placeholder="{{__('Name in Sinahala')}}">
+                    <input type="text" class="form-control mb-1" name="name_ta" id="name_ta" value="{{old('name_ta')}}" placeholder="{{__('Name in Tamil')}}">
+                    <input type="text" class="form-control mb-1" name="name_en" id="name_en" value="{{old('name_en')}}" placeholder="{{__('Name in English')}}">
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="Address">{{__('Address Line1')}} :</label>
+                    <input type="text" class="form-control mb-1" name="Address1_si" id="Address1_si" placeholder="{{__('Address Line 1 Sinhala')}}" value="{{old('Address1_si')}}">
+                    <input type="text" class="form-control mb-1" name="Address1_ta" id="Address1_ta" placeholder="{{__('Address Line 1 Tamil')}}" value="{{old('Address1_ta')}}">
+                    <input type="text" class="form-control mb-1" name="Address1_en" id="Address1_en" placeholder="{{__('Address Line 1 English')}}" value="{{old('Address1_en')}}">
+                    <span class="text-danger">{{ $errors->first('Address1') }}</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="Address">{{__('Address Line2')}} :</label>
+                    <input type="text" class="form-control mb-1" name="Address2_si" placeholder="{{__('Address Line 2 Sinhala')}}" value="{{old('Address2_si')}}"> 
+                    <input type="text" class="form-control mb-1" name="Address2_ta" placeholder="{{__('Address Line 2 Tamil')}}" value="{{old('Address2_ta')}}"> 
+                    <input type="text" class="form-control mb-1" name="Address2_en" placeholder="{{__('Address Line 2 English')}}" value="{{old('Address2_en')}}"> 
+                    <span class="text-danger">{{ $errors->first('Address2') }}</span>
+                </div>
+            </div>
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label for="NIC">{{__('NIC')}} :</label>
                     <input type="text" class="form-control" name="nic" placeholder="{{__('NIC')}}" value="{{old('nic')}}"required>
@@ -127,7 +143,7 @@ $gender="gender".$lang;
                     <span class="text-danger">{{ $errors->first('Mobile') }}</span>
                 </div>
             </div>
-            <div class=" row form-group">
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label for="NIC">{{__('Birth Day')}} :</label>
                     <input type="date" class="form-control" name="birthday" placeholder="{{__('Birth Day')}}" value="{{old('birthday')}}"required>
@@ -161,23 +177,23 @@ $gender="gender".$lang;
                 <input type="text" class="form-control mb-1" name="description_en" id="description_en" placeholder="{{__('Description English')}}" value="{{old('description_en')}}"> 
                 <span class="text-danger">{{ $errors->first('Description') }}</span>
             </div>
-            <div class=" row form-group">
+            <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="regdate">{{__('Registerd Date')}} :</label>
-                    <input type="date" class="form-control" name="registeredDate" placeholder="{{__('registered Date')}}" value="{{old('registeredDate')}}"required>
-                    <span class="text-danger">{{ $errors->first('registeredDate') }}</span>
+                    <label for="Occupation">{{__('Occupation')}} :</label>
+                    <input type="text" class="form-control mb-1" name="occupation_si" id="occupation_si" placeholder="{{__('occupation Sinhala')}}" value="{{old('occupation_si')}}"> 
+                    <input type="text" class="form-control mb-1" name="occupation_ta" id="occupation_ta" placeholder="{{__('occupation Tamil')}}" value="{{old('occupation_ta')}}"> 
+                    <input type="text" class="form-control mb-1" name="occupation_en" id="occupation_en" placeholder="{{__('occupation English')}}" value="{{old('occupation_en')}}"> 
+                    <span class="text-danger">{{ $errors->first('occupation') }}</span>
                 </div>
-                <div class="form-group col-md-6 p-2">
-                   <div class="mx-4">
-                    <input class="form-check-input" type="checkbox" value="" name="check_custom_reg" id="check_custom_reg">
-                    <label class="form-check-label" for="check_custom_reg">{{__('Custom Register Number')}}</label>
-                   </div>
-                    <input type="text" class="form-control" name="regnumber"  id="regnumber" placeholder="{{__('Registretion No')}}" value="{{old('regnumber')}}" disabled>
-                    <span class="text-danger">{{ $errors->first('regnumber') }}</span>
+                <div class="form-group col-md-6">
+                    <label for="Workplace">{{__('Work Place/School')}} :</label>
+                    <input type="text" class="form-control mb-1" name="Workplace_si" id="Workplace_si" placeholder="{{__('Workplace Sinhala')}}" value="{{old('Workplace_si')}}"> 
+                    <input type="text" class="form-control mb-1" name="Workplace_ta" id="Workplace_ta" placeholder="{{__('Workplace Tamil')}}" value="{{old('Workplace_ta')}}"> 
+                    <input type="text" class="form-control mb-1" name="Workplace_en" id="Workplace_en" placeholder="{{__('Workplace English')}}" value="{{old('Workplace_en')}}"> 
+                    <span class="text-danger">{{ $errors->first('Workplace') }}</span>
                 </div>
             </div>
 
-           
             <div class="border border-primary bg-light mb-4">
               <div class="m-2">
               <div class="row">

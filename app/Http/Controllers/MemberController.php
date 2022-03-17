@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use File;
 use App\Models\setting;
 use App\Models\view_member_data;
@@ -100,12 +101,14 @@ class MemberController extends Controller
         $titledata=title::all();
         $genderdata=gender::all();
         $guarantdata=member_guarantor::all();
+        $regdate = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         return view('members.create')
             ->with('Mdata',$Memberdata)
             ->with('tdata',$titledata)
             ->with('gedata',$genderdata)
-            ->with('gdata',$guarantdata);
+            ->with('gdata',$guarantdata)
+            ->with('regdate',$regdate);
        
     }
 
@@ -167,6 +170,13 @@ class MemberController extends Controller
         $mbr->description_si=$request->description_si;
         $mbr->description_ta=$request->description_ta;
         $mbr->description_en=$request->description_en;
+        $mbr->occupation_si=$request->occupation_si;
+        $mbr->occupation_ta=$request->occupation_ta;
+        $mbr->occupation_en=$request->occupation_en;
+        $mbr->Workplace_si=$request->Workplace_si;
+        $mbr->Workplace_ta=$request->Workplace_ta;
+        $mbr->Workplace_en=$request->Workplace_en;
+       
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
@@ -310,6 +320,13 @@ class MemberController extends Controller
         $mbr->description_si=$request->description_si;
         $mbr->description_ta=$request->description_ta;
         $mbr->description_en=$request->description_en;
+        $mbr->occupation_si=$request->occupation_si;
+        $mbr->occupation_ta=$request->occupation_ta;
+        $mbr->occupation_en=$request->occupation_en;
+        $mbr->Workplace_si=$request->Workplace_si;
+        $mbr->Workplace_ta=$request->Workplace_ta;
+        $mbr->Workplace_en=$request->Workplace_en;
+
         $mbr->regdate=$request->registeredDate;
         $mbr->image=$imageName;
         $mbr->guarantor_id=$request->member_guarantor;
@@ -317,7 +334,7 @@ class MemberController extends Controller
 
         if( $request->has('check_custom_reg')==1){
             $this->validate($request,[
-                'regnumber' => 'unique:members,regnumber',
+                'regnumber' => 'unique:members,regnumber,'.$request->member_id,
                 ]);
             $mbr->regnumber=$request->regnumber;
         }
