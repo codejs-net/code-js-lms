@@ -203,7 +203,7 @@
                         <td class="number">(02)</td>
                         <td class="title">{{__('Full Name')}}</td>
                         <td class="separate">&nbsp;-&nbsp;</td>
-                        <td class="value">{{ $data->$title." ". $data->$name}}</td>
+                        <td class="value">{{ $data->$name}}</td>
                       </tr>
                       <tr>
                           <td class="index"></td>
@@ -259,8 +259,8 @@
                       </tr>
                       <tr class="signature-row">
                           <td class="index"></td>
-                          <td class="number-date" colspan="2">Date- </td>
-                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br> Aplicant Signature</span></td>              
+                          <td class="number-date" colspan="2">{{__('Date')}}- </td>
+                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br> {{__('Aplicant Signature')}}</span></td>              
                       </tr>
                       <tr>
                           <td class="index"></td> 
@@ -333,8 +333,8 @@
                       </tr>
                       <tr>
                           <td class="index"></td>
-                          <td class="number-date" colspan="2">Date- </td>
-                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>Guarantor Signature</span></td>              
+                          <td class="number-date" colspan="2">{{__('Date')}}- </td>
+                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>{{__('Guarantor Signature')}}</span></td>              
                       </tr>
                       <tr>
                           <td class="index"></td> 
@@ -386,8 +386,8 @@
                       </tr>
                       <tr>
                           <td class="index"></td>
-                          <td class="number-date" colspan="2">Date- </td>
-                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>Certification Officer Signature</span></td>              
+                          <td class="number-date" colspan="2">{{__('Date')}}- </td>
+                          <td class="signature" colspan="2"><span class=signetute-containt> --------------------------------- <br>{{__('Certification Officer Signature')}}</span></td>              
                       </tr>
                       <tr>
                           <td class="index"></td> 
